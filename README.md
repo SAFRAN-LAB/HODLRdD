@@ -65,4 +65,4 @@ Time to solution   (in s) : 32.8972
 Relative Error in matvec   ... 1.13781e-09
 Relative Error in solution ... 1.1206e-05
 ```
-The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeader.hpp` file.
+The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeaders.hpp` file.
