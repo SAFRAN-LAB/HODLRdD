@@ -1,8 +1,8 @@
 # Hierarchically off-diagonal low-rank matrix in $d$ dimensions (HODLR $d$ D), A black-box fast algorithm for particle simulations in $d$ dimensions
 ## Edit the following hyperparameters based on your kernel and application.    
-1) NDIM $\implies$ The dimension space of the particles.  
-1) Nmax -> The maximum number of particles at the leaf level (This decides the depth of the hierarchical tree)  
-3) eps_ACA -> Accuracy in compression by ACA  
+1) $NDIM$ $\implies$ The dimension space of the particles.  
+1) $Nmax$ -> The maximum number of particles at the leaf level (This decides the depth of the hierarchical tree)  
+3) $eps_ACA$ -> Accuracy in compression by ACA  
 4) SYS_SIZE -> Above this size the matrix operations are performed in an memory efficient way   
 5) INTERACTION_TYPE_ALLOWED -> This represents d' (to decide on which weak admissibility criteria)   
       
