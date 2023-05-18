@@ -20,7 +20,7 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $d' = -1$ $\implies$ $\mathcal{H}$-matrix with standard/strong admissibility criteria $\eta = \sqrt{NDIM}$.
     * $d' = 0$ $\implies$ Interaction list includes Vertex sharing neighbours, HODLR $d$ D matrix structure.
     * $\vdots$
-    * $d' = NDIM-1$ $\implies$ Interaction list includes all clusters that are not self. HODLR with $2^{NDIM}$ tree.
+    * $d' = NDIM-1$ $\implies$ Interaction list includes all non-self clusters. HODLR with $2^{NDIM}$ tree.
 ```
 HMATRIX START
 Root Formed
