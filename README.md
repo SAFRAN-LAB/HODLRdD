@@ -11,12 +11,12 @@ The following options are allowed in deciding the hierarchical tree and/or the a
 - In Two dimenstions ($2$ D):  
     * $d' = -1$ $\implies$ $\mathcal{H}$-matrix with standard admissibility criteria $\eta = \sqrt{2}$.
     * $d' = 0$ $\implies$ Interaction list includes Vertex sharing neighbours, HODLR2D matrix structure.
-    * $d' = 1$ $\implies$ Interaction list includes all clusters that are not self. HODLR with quad tree 
+    * $d' = 1$ $\implies$ Interaction list includes all non-self clusters. HODLR with quad tree 
 - In Three dimensions ($3$ D):
     * $d' = -1$ $\implies$ $\mathcal{H}$-matrix with standard/strong admissibility criteria $\eta = \sqrt{3}$.
     * $d' = 0$ $\implies$ Interaction list includes Vertex sharing neighbours, HODLR3D matrix structure.
     * $d' = 1$ $\implies$ Interaction list includes Vertex sharing and edge sharing neighbours
-    * $d' = 2$ $\implies$ Interaction list includes all clusters that are not self. HODLR with oct tree    
+    * $d' = 2$ $\implies$ Interaction list includes all non-self clusters. HODLR with oct tree    
 - In Higher dimensions:    
     * $d' = -1$ $\implies$ $\mathcal{H}$-matrix with standard/strong admissibility criteria $\eta = \sqrt{NDIM}$.
     * $d' = 0$ $\implies$ Interaction list includes Vertex sharing neighbours, HODLR $d$ D matrix structure.
