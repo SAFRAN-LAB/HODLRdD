@@ -1,4 +1,4 @@
-# HODLR$d$D
+# HODLRdD, A black-box fast algorithm for particle simulations in d dimensions
 
 ```
 HMATRIX START
