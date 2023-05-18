@@ -25,7 +25,7 @@ The following options are allowed in deciding the hierarchical tree and/or the a
 
 ## Please follow these steps to run the code.
 1. ``` git clone https://github.com/SAFRAN-LAB/HODLRdD ```
-```
+`
 HMATRIX START
 Root Formed
 Tree Formed with depth 2
@@ -45,4 +45,4 @@ Matrix-Vector time (in s) : 0.188097
 Time to solution   (in s) : 32.8972
 Relative Error in matvec   ... 1.13781e-09
 Relative Error in solution ... 1.1206e-05
-```
+`
