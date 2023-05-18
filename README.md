@@ -34,6 +34,7 @@ cd HODLRdD
 ```
 Step 3.
 Update the `Eigen` path in `Makefile`
+
 Step 4.
 Run the `Makefile` to get the executable
 
