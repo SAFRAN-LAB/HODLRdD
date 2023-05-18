@@ -24,13 +24,13 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $d' = NDIM-1$ $\implies$ Interaction list includes all non-self clusters. HODLR with $2^{NDIM}$ tree.
 
 ## Please follow these steps to run the code.
-1.
+Step 1.
 ```
 git clone https://github.com/SAFRAN-LAB/HODLRdD
 ```
+Step 2.
 
-```
-HMATRIX START
+`HMATRIX START
 Root Formed
 Tree Formed with depth 2
 HMATRIX DONE
@@ -48,5 +48,4 @@ Time to Initialize (in s) : 6.31187
 Matrix-Vector time (in s) : 0.188097
 Time to solution   (in s) : 32.8972
 Relative Error in matvec   ... 1.13781e-09
-Relative Error in solution ... 1.1206e-05
-```
+Relative Error in solution ... 1.1206e-05`
