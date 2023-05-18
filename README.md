@@ -12,15 +12,15 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $d' = 0$ -> Interaction list includes Vertex sharing neighbours, HODLR2D matrix structure.
     * $d' = 1$ -> Interaction list includes all clusters that are not self. HODLR with quad tree 
 - In Three dimensions ($3$ D):
-    * d' = -1 -> H-matrix with standard admissibility criteria $\eta = \sqrt{3}$.
-    * d' = 0 -> Interaction list includes Vertex sharing neighbours, HODLR3D matrix structure.
-    * d' = 1 -> Interaction list includes Vertex sharing and edge sharing neighbours
-    * d' = 2 -> Interaction list includes all clusters that are not self. HODLR with oct tree    
+    * $d' = -1$ -> H-matrix with standard admissibility criteria $\eta = \sqrt{3}$.
+    * $d' = 0$ -> Interaction list includes Vertex sharing neighbours, HODLR3D matrix structure.
+    * $d' = 1$ -> Interaction list includes Vertex sharing and edge sharing neighbours
+    * $d' = 2$ -> Interaction list includes all clusters that are not self. HODLR with oct tree    
 - In Higher dimensions:    
-    * d' = -1 -> H-matrix with standard admissibility criteria $\eta = \sqrt{NDIM}$.
-    * d' = 0 -> Interaction list includes Vertex sharing neighbours, HODLRnD matrix structure.
+    * $d' = -1$ -> H-matrix with standard admissibility criteria $\eta = \sqrt{NDIM}$.
+    * $d' = 0$ -> Interaction list includes Vertex sharing neighbours, HODLRnD matrix structure.
     * ....
-    * d' = NDIM-1 -> Interaction list includes all clusters that are not self. HODLR with $2^{NDIM}$ tree.
+    * $d' = NDIM-1$ -> Interaction list includes all clusters that are not self. HODLR with $2^{NDIM}$ tree.
 ```
 HMATRIX START
 Root Formed
