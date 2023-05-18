@@ -30,7 +30,7 @@ git clone https://github.com/SAFRAN-LAB/HODLRdD
 ```
 Step 2.
 ```
-cd HODLRdD
+cd HODLRdD && cd examples
 ```
 Step 3.
 Update the `Eigen` path in `Makefile`
