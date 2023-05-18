@@ -23,12 +23,18 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $\vdots$
     * $d' = NDIM-1$ $\implies$ Interaction list includes all non-self clusters. HODLR with $2^{NDIM}$ tree.
 
-## Please follow these steps to run the code.
+## Please follow these simple steps to run the code.
 Step 1.
 ```
 git clone https://github.com/SAFRAN-LAB/HODLRdD
 ```
 Step 2.
+```
+cd HODLRdD
+```
+Step 3.
+Update the `Eigen` path in `Makefile`
+
 ```
 HMATRIX START
 Root Formed
