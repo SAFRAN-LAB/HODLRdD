@@ -1,4 +1,4 @@
-# HODLR $d$ D, A black-box fast algorithm for particle simulations in $d$ dimensions
+# Hierarchically off-diagonal low-rank matrix in $d$ dimensions (HODLR $d$ D), A black-box fast algorithm for particle simulations in $d$ dimensions
 
 ```
 HMATRIX START
