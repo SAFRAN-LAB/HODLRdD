@@ -8,9 +8,9 @@
       
 The following options are allowed in deciding the hierarchical tree and/or the admissibility criteria   
 - In Two dimenstions ($2$ D):  
-    * d' = -1 -> H-matrix with standard admissibility criteria $\eta = \sqrt{2}$.
-    * d' = 0 -> Interaction list includes Vertex sharing neighbours, HODLR2D matrix structure.
-    * d' = 1 -> Interaction list includes all clusters that are not self. HODLR with quad tree 
+    * $d' = -1$ -> H-matrix with standard admissibility criteria $\eta = \sqrt{2}$.
+    * $d' = 0$ -> Interaction list includes Vertex sharing neighbours, HODLR2D matrix structure.
+    * $d' = 1$ -> Interaction list includes all clusters that are not self. HODLR with quad tree 
 - In Three dimensions ($3$ D):
     * d' = -1 -> H-matrix with standard admissibility criteria $\eta = \sqrt{3}$.
     * d' = 0 -> Interaction list includes Vertex sharing neighbours, HODLR3D matrix structure.
