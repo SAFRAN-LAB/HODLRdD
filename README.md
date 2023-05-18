@@ -24,7 +24,8 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $d' = NDIM-1$ $\implies$ Interaction list includes all non-self clusters. HODLR with $2^{NDIM}$ tree.
 
 ## Please follow these steps to run the code.
-```git clone https://github.com/SAFRAN-LAB/HODLRdD
+```
+git clone https://github.com/SAFRAN-LAB/HODLRdD
 ```
 
 ```
