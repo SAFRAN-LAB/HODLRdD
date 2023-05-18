@@ -4,7 +4,7 @@
 #include "myHeaders.hpp"
 #include "points_dt.hpp"
 #include "HDD_clusters.hpp"
-#include "../integral_equation_4D/integral4d.hpp"
+#include "integral4d.hpp"
 
 // Test Greens' function in 2d, 3d and 4d
 class kernel_2d_test{

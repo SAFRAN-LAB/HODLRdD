@@ -261,7 +261,7 @@ void Node<Kernel>::get_interaction_list()
             node_potential += LR[i] * my_intr_list_addr[i]->node_charge;
             tmp = omp_get_wtime();
             this->my_flop_il += LR[i].rank() * (n_particles + my_intr_list_addr[i]->n_particles);
-            if (this->node_rank < LR[i].rank())
+            if ((int) this->node_rank < LR[i].rank())
                 this->node_rank = LR[i].rank();
             meas_time += omp_get_wtime() - tmp;
         }

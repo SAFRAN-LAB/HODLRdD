@@ -1,11 +1,11 @@
 #include <cstdlib>
-#include "HDD_matrix.hpp"
-#include "HDD_clusters.hpp"
-#include "kernel_function.hpp"
-#include "myHeaders.hpp"
-#include "points_dt.hpp"
-#include "LowRank_matrix.hpp"
-#include "user_kernel.hpp"
+#include "../include/HDD_matrix.hpp"
+#include "../include/HDD_clusters.hpp"
+#include "../include/kernel_function.hpp"
+#include "../include/myHeaders.hpp"
+#include "../include/points_dt.hpp"
+#include "../include/LowRank_matrix.hpp"
+#include "../include/user_kernel.hpp"
 
 using namespace std;
 
@@ -51,12 +51,12 @@ int main(int argc, char *argv[])
     
     b_test = Kmat * x_true; // * Operator
     
-    //x_test = Kmat.solve(b_true);
+    x_test = Kmat.solve(b_true);
     Kmat.print_matrix_statistics();
-    //Kmat.print_matrix_details();
+    //Kmat.print_matrix_details();   // Uncomment if you want to see the details of the interactions
     
     std::cout << "Relative Error in matvec   ... " << Vec_ops::relative_error(b_true, b_test) << std::endl;
-    //std::cout << "Relative Error in solution ... " << Vec_ops::relative_error(x_true, x_test) << std::endl;
+    std::cout << "Relative Error in solution ... " << Vec_ops::relative_error(x_true, x_test) << std::endl;
 
     return 0;
 }
