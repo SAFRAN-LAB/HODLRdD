@@ -1,4 +1,5 @@
 # Hierarchically off-diagonal low-rank matrix in $d$ dimensions (HODLR $d$ D), A black-box fast algorithm for particle simulations in $d$ dimensions
+
 ## Edit the following hyperparameters based on your kernel and application.    
 1) $NDIM$ = The dimension space of the particles.  
 1) Nmax = The maximum number of particles at the leaf level (This decides the depth of the hierarchical tree)  
@@ -21,6 +22,8 @@ The following options are allowed in deciding the hierarchical tree and/or the a
     * $d' = 0$ $\implies$ Interaction list includes Vertex sharing neighbours, HODLR $d$ D matrix structure.
     * $\vdots$
     * $d' = NDIM-1$ $\implies$ Interaction list includes all non-self clusters. HODLR with $2^{NDIM}$ tree.
+
+## Please follow these steps to run the code.
 ```
 HMATRIX START
 Root Formed
