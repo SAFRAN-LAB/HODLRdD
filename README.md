@@ -39,6 +39,7 @@ Step 4.
 Run the `Makefile` to get the executable
 
 Step 5. 
+*If you want to get the results for HODLR4D matrix set `atoi(argv[2]) = 0`
 ```
 make clean && make  && ./exe 25 0
 ```
