@@ -47,22 +47,24 @@ If everything is fine you will get the following output.
 ```
 HMATRIX START
 Root Formed
-Tree Formed with depth 2
+Tree Formed with depth 3
 HMATRIX DONE
 Matrix operators formed...
-The size of K matrix 10000
-GMRES took 32.8972 with status 4
+The size of K matrix 390625
+GMRES took 310.595 with status 4
 
-May 18 2023,10:03:05
+Apr 11 2023,17:16:28
 
-Memory (in GB) : 4.57428
-Number of FLOP : 5.71785e+08
-Compression Ratio : 5.71785
-Maximum rank across the Tree : 92
-Time to Initialize (in s) : 6.31187
-Matrix-Vector time (in s) : 0.188097
-Time to solution   (in s) : 32.8972
-Relative Error in matvec   ... 1.13781e-09
-Relative Error in solution ... 1.1206e-05
+Memory (in GB) : 191.754
+Number of FLOP : 2.39693e+10
+Compression Ratio : 0.157085
+Maximum rank across the Tree : 200
+Time to Initialize (in s) : 1091.91
+Matrix-Vector time (in s) : 62.1719
+Time to solution   (in s) : 310.595
+The direct mat-vec time is (s): 386.084
+Relative Error in matvec   ... 6.29254e-07
+Relative Error in solution ... 1.17657e-06
+
 ```
 The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeaders.hpp` file.
