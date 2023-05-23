@@ -40,7 +40,7 @@ Run the `Makefile` to get the executable
 
 Step 5. 
 ```
-make clean && make  && ./exe 10 0
+make clean && make  && ./exe 25 0
 ```
 
 If everything is fine you will get the following output.
