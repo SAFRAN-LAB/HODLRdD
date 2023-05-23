@@ -43,7 +43,7 @@ Step 5.
 make clean && make  && ./exe 25 0
 ```
 
-If everything is fine you will get the following output.
+If everything is fine you will get the following output for HODLR4D matrix.
 ```
 HMATRIX START
 Root Formed
@@ -66,5 +66,9 @@ The direct mat-vec time is (s): 386.084
 Relative Error in matvec   ... 6.29254e-07
 Relative Error in solution ... 1.17657e-06
 
+```
+
+```
+make clean && make  && ./exe 25 -1
 ```
 The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeaders.hpp` file.
