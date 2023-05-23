@@ -39,7 +39,7 @@ Step 4.
 Run the `Makefile` to get the executable
 
 Step 5. 
-*If you want to get the results for HODLR4D matrix set `atoi(argv[2]) = 0`
+If you want to get the results for HODLR4D matrix set `atoi(argv[2]) = 0`
 ```
 make clean && make  && ./exe 25 0
 ```
@@ -66,10 +66,32 @@ Time to solution   (in s) : 310.595
 The direct mat-vec time is (s): 386.084
 Relative Error in matvec   ... 6.29254e-07
 Relative Error in solution ... 1.17657e-06
-
 ```
-
+If you want to get the results for $\mathcal{H}$ matrix with strong admissibility in 4D set `atoi(argv[2]) = -1`
 ```
 make clean && make  && ./exe 25 -1
+```
+If everything is fine you will get the following output for $\mathcal{H}$ matrix with strong admissibility in 4D.
+```
+HMATRIX START
+Root Formed
+Tree Formed with depth 3
+HMATRIX DONE
+Matrix operators formed...
+The size of K matrix 390625
+GMRES took 382.493 with status 5
+
+Apr 11 2023,17:16:28
+
+Memory (in GB) : 199.573
+Number of FLOP : 2.49466e+10
+Compression Ratio : 0.16349
+Maximum rank across the Tree : 189
+Time to Initialize (in s) : 1112
+Matrix-Vector time (in s) : 63.8459
+Time to solution   (in s) : 382.493
+The direct mat-vec time is (s): 375.311
+Relative Error in matvec   ... 2.38367e-07
+Relative Error in solution ... 2.38401e-07
 ```
 The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeaders.hpp` file.
