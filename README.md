@@ -45,7 +45,7 @@ make clean && make  && ./exe 25 0
 ```
 
 If everything is fine you will get the following output for HODLR4D matrix.
-```
+```c++
 HMATRIX START
 Root Formed
 Tree Formed with depth 3
