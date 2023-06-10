@@ -45,7 +45,7 @@ make clean && make  && ./exe 25 0
 ```
 
 If everything is fine you will get the following output for HODLR4D matrix.
-```c++
+```python
 HMATRIX START
 Root Formed
 Tree Formed with depth 3
@@ -72,7 +72,7 @@ If you want to get the results for $\mathcal{H}$ matrix with strong admissibilit
 make clean && make  && ./exe 25 -1
 ```
 If everything is fine you will get the following output for $\mathcal{H}$ matrix with strong admissibility in 4D.
-```
+```python
 HMATRIX START
 Root Formed
 Tree Formed with depth 3
