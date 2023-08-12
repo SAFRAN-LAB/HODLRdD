@@ -4,7 +4,9 @@
 #include "myHeaders.hpp"
 #include "points_dt.hpp"
 #include "HDD_clusters.hpp"
-#include "integral4d.hpp"
+// path to folder integral inside the include folder of the HODLRdD library
+#include "./../include/integral/integral4d.hpp"  
+ 
 
 // Test Greens' function in 2d, 3d and 4d
 class kernel_2d_test{
@@ -128,6 +130,7 @@ public:
             double *b = new double[4];
             a[0] = 0, a[1] = 0, a[2] = 0, a[3] = 0;
             b[0] = h * 0.5, b[1] = h * 0.5, b[2] = h * 0.5, b[3] = h * 0.5;
+            kii = 0.0; // Second kind
             kii = 1.0 + quadruple_integral(a, b); // Second kind
             kii /= h4;
             gridPoints = new std::vector<ptsnD>;

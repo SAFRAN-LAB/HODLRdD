@@ -2,6 +2,9 @@
 #define Hclustering_HPP
 
 
+// This Header is not used... 
+// This file is used just a development side header to optimize clustering operations and further improvements
+
 #include "myHeaders.hpp"
 
 const int NDIM = 2;
@@ -12,13 +15,12 @@ struct ptsnD{
     size_t id;  // User provides a unique identifier if not then kernel is defined by considering two points
 };
 
-// Eucledian distance between two points in any dimensions
+// Euclidean distance between two points in any dimensions
 double compute_distance(ptsnD& a,ptsnD& b){
     double sum = 0.0;
     for(int i=0;i< NDIM;i++){
         sum += (a.x[i] - b.x[i]) * (a.x[i] - b.x[i]);
     }
-    // TODO : Update the above to reduce operation in openMP
     sum = sqrt(sum);
     return sum;
 }
@@ -26,7 +28,7 @@ double compute_distance(ptsnD& a,ptsnD& b){
 class cluster{
     size_t N;
     // Bounding box of the cluster! [x1[1], x2[1]] is the interval in dimension 1 and x1[1] < x2[1]
-    // the bounding box here is provided by the user, TODO : If not provided the minimum possible hypercube that fits set of points needs to be done
+    // the bounding box here is provided by the user.
     // The center of the cluster is not determined now, this we can do it while forming the Node of the tree.
 public:
     double x1[NDIM], x2[NDIM];
@@ -55,12 +57,10 @@ public:
             gridPoints.erase(gridPoints.begin() + i);
             N--;
         }
-
         void remove_all_points(){
             gridPoints.clear();
             N = 0;
         } 
-
         size_t get_cluster_size(){
             return N;
         }
@@ -69,13 +69,13 @@ public:
         }
 };
 
-// Uniform clustering of points provided the bounding box, results in a set of clusters with N_max leaf points. TODO : Find the bounding box
+// Uniform clustering of points provided the bounding box, results in a set of clusters with N_max leaf points. 
 class Hclustering{
     int nLevel = 0 ;
     bool isLeaf = false;
     size_t N_max;
     size_t nClusters;
-    bool isAdaptive = false; // TODO: Needs work on Adaptive clustering
+    bool isAdaptive = false; // TODO: Needs work Adaptive clustering
     // this class takes a complete set of points and provides 
     std::vector<cluster> h_clusters;
     public:
@@ -148,10 +148,9 @@ class Hclustering{
                 cluster B(x1,x2);
                 // Assigning cluster id = parent*2+1 in binary subdivision (this holds being the binary division of the domain)
                 A.cluster_id = binary_clusters[0].cluster_id * 2 + 1;
-
                 // Here goes a while loop to subdivide the points in one dimension at the same time remove from source This ensure O(N) space for points at all times...
                 while (binary_clusters[0].gridPoints.size()!=0){
-                    // TODO : Use toggle to place the points inside the cluster A and B if it lies in the boundary
+                    // TODO : Use toggle to place the points inside the cluster A and B if it lies in the boundary (such that we have a quasi uniform distribution)
                     if (binary_clusters[0].gridPoints[0].x[dim_i]<bdy){
                         A.add_point(binary_clusters[0].gridPoints[0]);
                         binary_clusters[0].remove_point(0);
@@ -170,5 +169,6 @@ class Hclustering{
 
 // TODO : Adaptive clustering at different levels
 // TODO : Sort the points inside the cluster
+// TODO : Provide a GPU code on this clustering 
 #endif
 

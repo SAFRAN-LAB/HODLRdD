@@ -4,7 +4,7 @@
 // Iterative template routine -- GMRES
 //
 // Remodified from : https://github.com/amiraa127/Sparse_MultiFrontal/blob/master/IML/include/gmres.h
-// GMRES solves the unsymmetric linear system Ax = b using the
+// GMRES solves the non-symmetric/symmetric linear system Ax = b using the
 // Generalized Minimum Residual method
 //
 // GMRES follows the algorithm described on p. 20 of the

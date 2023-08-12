@@ -2,7 +2,7 @@
 #define Integral2D_HPP
 #include <iostream>
 #include <cmath>
-#include "myHeaders.hpp"
+#include "../include/myHeaders.hpp"
 #include "Gauss_Legendre_Nodes_and_Weights.hpp"
 
 int n_gauss_nodes = 32;
@@ -13,7 +13,7 @@ double Integrand(double x,double y, double z, double w)
     double c = -1.0 / (4 * PI * PI);
     //
     //return c * exp(-sqrt(x*x + y*y + z*z + w*w));
-    return c / (x * x + y * y + z * z + w * w);
+    return c/(x * x + y * y + z * z + w * w);
 }
 
 // a = [x_low,y_low] and b = [x_upper,y_upper]

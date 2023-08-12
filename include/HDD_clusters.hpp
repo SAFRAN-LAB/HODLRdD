@@ -25,17 +25,13 @@ public:
         this->gridPoints = gPoints;
         diam = 0.0;
         L = abs(x1_(0) - x2_(0));
-        // TODO : Optimize copy
-        for (int i = 0; i < NDIM; i++)
-        {
+        for (int i = 0; i < NDIM; i++){
             this->x1[i] = x1_(i);
             this->x2[i] = x2_(i);
             if (abs(this->x1[i] - this->x2[i]) > L)
                 L = abs(this->x1[i] - this->x2[i]);
             diam += (x1_(i) - x2_(i)) * (x1_(i) - x2_(i));
-            //std::cout << "[" << this->x1[i] << "," << this->x2[i] << "] "; 
         }
-        //std::cout << std::endl;
         diam = sqrt(diam);
         cluster_id = 0;
     }
@@ -50,40 +46,30 @@ public:
         }
         std::cout << std::endl;
     }
-    void add_point(size_t a)
-    {
+    void add_point(size_t a){
         index_of_points.push_back(a);
         N++;
     }
-    void add_points(std::vector<size_t> a)
-    {
+    void add_points(std::vector<size_t> a){
         index_of_points.insert(index_of_points.end(), a.begin(), a.end());
         N = index_of_points.size();
     }
-    size_t get_cluster_size()
-    {
+    size_t get_cluster_size(){
         return N;
     }
     double get_diameter(){
         return diam;
     }
     void compute_cluster_center(ptsnD& c){
-        // Compute cluster center
-        //std::cout << "cluster center.."<<std::endl;
         for (int i = 0; i < NDIM; i++){
-            //std::cout << "c.." << this->x1[i] << std::endl;
-            //std::cout << "c.." << this->x2[i] << std::endl;
             c.x[i] = 0.5 * (this->x1[i] + this->x2[i]);
         }
-        //std::cout << "cluster center computed.."<<std::endl;
     }
     void level_clustering(std::vector<cluster *>*& h_clusters){
         h_clusters->push_back(this);
         // Form 2^NDIM empty cluster by initialising through the bounding box of the parent
-        for (int i = 0; i < NDIM; i++)
-        {
+        for (int i = 0; i < NDIM; i++){
             binary_clustering(h_clusters, i);
-            //std::cout << i << " " << h_clusters->size() << std::endl;
         }
     }
     void binary_clustering(std::vector<cluster *>*& binary_clusters, int dim_i)
@@ -140,11 +126,6 @@ public:
 };
 
 int interaction_type(cluster*& A, cluster*& B){
-    // int type_sharing = NDIM;
-    // for(int i=0; i<NDIM; i++)
-    //     if (abs(A->x2[i] - B->x2[i]) != 0 && abs(A->x1[i] - B->x1[i]) != 0) 
-    //         type_sharing--;
-    // return type_sharing;
     int type_sharing = NDIM;
     ptsnD a,b;
     A->compute_cluster_center(a);
@@ -153,7 +134,6 @@ int interaction_type(cluster*& A, cluster*& B){
     // This ensures whether cluster |A|  |B| in the ith dimension image
     double dp = nd_points::euclidean_distance(a, b) / L;
     dp *= dp;
-    //std::cout << "Frac : "<< dp <<std::endl;
     if (double(NDIM)+1 > dp) 
         type_sharing -= std::round(dp);
     else
@@ -164,7 +144,7 @@ int interaction_type(cluster*& A, cluster*& B){
 
 // TODO : Find the bounding box
 // TODO : Adaptive clustering at different levels
-// TODO : Sort the points inside the cluster
+// TODO : Sort the points inside the cluster (such that we get a optimal rank)
 #endif
 
 /* Test case - Print points, binary clustering tested

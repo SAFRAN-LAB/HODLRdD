@@ -1,5 +1,5 @@
 all:
-	g++-12 -std=c++17 -I/usr/local/include/eigen3 -fopenmp -O4 -DUSE_DOUBLE -Wall test_hodlrdd.cpp -o exe
+	g++ -std=c++17 -I/path/to/eigen/ -I./path/to/library/include/folder -fopenmp -O4 -Wall test_hodlrnd.cpp -o hd4dim
 
 clean:
-	rm exe
+	rm hd4dim

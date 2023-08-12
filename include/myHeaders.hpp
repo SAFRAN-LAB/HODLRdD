@@ -1,6 +1,31 @@
 #ifndef myHeaders_HPP
 #define myHeaders_HPP
 
+// Interaction type $d'$
+// 2D
+// d' = 0 -> Vertex, HODLR2D
+// d' = 1 -> HODLR in 2D
+// 3D
+// d' = 0 -> Vertex, HODLR3D
+// d' = 1 -> edge
+// d' = 2 -> face
+// 4D
+// so on  ..
+
+/////////////////////////////////////////////////////////////
+// HODLRdD matrix parameters
+// Change as per the multi-core structure
+const int nThreads = 8; 
+const int NDIM = 4;
+const int Nmax = 1000;
+int numPoints = 10; // Along 1D
+// The admissibility is based on the max norm of the center
+int INTERACTION_TYPE_ALLOWED = 0; // This represents d' and the interaction type < d' interactions will be compressed.
+const double eps_ACA = pow(10, -6); // Tolerance for ACA 
+const int SYS_SIZE = 2 * Nmax;
+size_t N = 1;
+/////////////////////////////////////////////////////////////
+
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -25,33 +50,13 @@
 
 using std::string;
 using namespace Eigen;
+// The below directory holds the necessary data load operations (main purpose is to store the 
+// vectors used in the experiments using the library cereal)
+const std::string data_directory = "/lfs/usrhome/phd/ma19d008/HODLRnD/data/";
 
-// Provide the path of the directory where the rhs is stored in .bin format using CEREAL
-const std::string data_directory = "~/Documents/GitHub/HODLRnD/data/";
 const double PI = 4.0 * atan(1);
 
-const int nThreads = 8;
-/////////////////////////////////////////////////////////////
-// HODLR matrix parameters
-const int NDIM = 4;
-const int Nmax = 100;
-int numPoints = 10;         // Along 1D
-// The admissibility is based on the max norm of the center
-int INTERACTION_TYPE_ALLOWED = 0; // This represents d'
-double init_time = 0.0;
-double meas_time = 0.0;
-// 2D 
-// d' = 0 -> Vertex, HODLR2D 
-// d' = 1 -> HODLR in 2D
-// 3D
-// d' = 0 -> Vertex, HODLR3D
-// d' = 1 -> edge
-// d' = 2 -> face 
-const double eps_ACA = pow(10,-10); // ACA Tolerance 
-const int SYS_SIZE = 1000; // If the block size is greater than SYS_SIZE mem efficient ACA kicks in
-size_t N = 1;
 
-/////////////////////////////////////////////////////////////
 
 int mod(int a, int b){
     return ((a % b + b) % b);
@@ -151,6 +156,7 @@ namespace Vec_ops
 #include <cereal/types/vector.hpp>
 namespace storedata
 {
+    // This function loads a vector stored using the CEREAL library 
     Eigen::VectorXd inline load_vec(std::string fname)
     {
         Eigen::VectorXd X;
@@ -162,6 +168,7 @@ namespace storedata
         return X;
     }
 
+    // This function saves the vector using the CEREAL library
     void inline save_vec(std::string fname, Eigen::VectorXd X)
     {
         std::vector<dtype_base> K(X.data(), X.data() + X.size());

@@ -6,7 +6,7 @@
 #include "HDD_tree.hpp"
 #include "GMRES.hpp"
 
-// TODO : Rectangular matrix structure ??
+// TODO : Rectangular matrix structure ?? Similar to Rectangular HODLR
 template <class Kernel>
 class HODLRdD_matrix
 {
@@ -26,7 +26,7 @@ public:
         N = gPoints->size();
         // Source cluster needs special treatment i.e., provide a guide list that maps the points
         src = new cluster(x1, x2, this->gridPoints);
-        // Initialise the grid points to cluste
+        // Initialise the grid points to cluster
         // This initialises the grid points, this creates the hierarchical tre
         // Initialize the hierarchical 2^d tree
         HODLRdD_tree = new Tree<Kernel>(src, gPoints, kernel_func);
@@ -71,12 +71,7 @@ public:
         std::cout << "====================================" << std::endl;
     }
 
-    void print_matrix_latex(){
-        HODLRdD_tree->print_matrix_latex();
-    }
-
-    void print_matrix_statistics()
-    {
+    void print_matrix_statistics(){
         double n_FLOP = 0.0;
         size_t MAX_RANK = 0;
         double compression_ratio = 1.0/(double(N)*double(N));
