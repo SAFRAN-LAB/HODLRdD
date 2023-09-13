@@ -95,3 +95,7 @@ Relative Error in matvec   ... 2.38367e-07
 Relative Error in solution ... 2.38401e-07
 ```
 The default eps_ACA and GMRES tolerance is $10^{-6}$. It can be modified in the `myHeaders.hpp` file.
+Documentation of HODLRdD 
+    - [Code](https://github.com/SAFRAN-LAB/HODLRdD)
+    - [Documentation](https://github.com/RiteshKhan/HODLRdD)
+    - [Article](https://arxiv.org/pdf/2209.05819)
