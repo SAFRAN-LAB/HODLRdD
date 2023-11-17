@@ -30,8 +30,7 @@ function [max_val, max_all] = bern_fun(a,b,source,target_end,choice)
     len = b-a;                                            % Length of the source interval
     
     [~,SOURCE_SIZE] = size(source);
-    max_iter = ceil(log2(SOURCE_SIZE));                                        % Number of sub-divissions of the source 
-    %max_iter = 1;
+    max_iter = ceil(log2(SOURCE_SIZE));                                         % Number of sub-divisions of the source 
     MAX_VAL = zeros(max_iter,1);                                                % To store the max value in complex plane           
     max_val_all = zeros(max_iter,1);
     for iter = 1:max_iter
@@ -59,8 +58,6 @@ function [max_val, max_all] = bern_fun(a,b,source,target_end,choice)
         abs(fun(z1));
         vec = [z1 z2 z3 z4];
         [MAX_VAL(iter,1),ind] = max([abs(fun(z1)),abs(fun(z2)),abs(fun(z3)),abs(fun(z4))]);
-%         fprintf("The index position is %d\n\n",ind);
-%         fprintf("The abs err %d\n\n",norm(e(id)-vec(ind)));
         len = len/2;
     end
     grid on
