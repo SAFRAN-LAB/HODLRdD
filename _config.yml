@@ -1,0 +1,49 @@
+# Configuration for GitHub Pages when serving from root directory
+title: HODLRdD
+description: Hierarchically Off-Diagonal Low-Rank matrices in d dimensions - A black-box fast algorithm for particle simulations
+author: SAFRAN-LAB
+
+# Theme
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# GitHub configuration  
+repository: SAFRAN-LAB/HODLRdD
+url: https://safran-lab.github.io
+baseurl: /HODLRdD
+
+# Markdown processing
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+
+# Files to include in site
+include:
+  - DEVELOPER_DOCUMENTATION.md
+
+# Navigation
+header_pages:
+  - README.md
+  - DEVELOPER_DOCUMENTATION.md
+
+# Exclude from processing
+exclude:
+  - examples/
+  - lib/
+  - include/
+  - MATLAB_files/
+  - Makefile
+  - "*.cpp"
+  - "*.hpp"
+  - "*.m"
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock

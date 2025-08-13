@@ -1,0 +1,58 @@
+title: HODLRdD Developer Documentation
+description: Comprehensive developer guide for the HODLRdD library - Hierarchically Off-Diagonal Low-Rank matrices in d dimensions
+author: SAFRAN-LAB
+email: your-email@domain.com
+
+# Theme configuration
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# GitHub configuration
+repository: SAFRAN-LAB/HODLRdD
+url: https://safran-lab.github.io
+baseurl: /HODLRdD
+
+# Markdown configuration
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+
+# Navigation
+header_pages:
+  - index.md
+
+# Social media and links
+github_username: SAFRAN-LAB
+linkedin_username: your-linkedin
+
+# SEO settings
+lang: en_US
+logo: /assets/logo.png
+
+# Analytics (optional)
+google_analytics: UA-XXXXXXX-X
+
+# Exclude from processing
+exclude:
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
