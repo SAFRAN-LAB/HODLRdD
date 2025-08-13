@@ -1,0 +1,33 @@
+\doxysection{Transcoder\texorpdfstring{$<$}{<} Source\+Encoding, Target\+Encoding \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_transcoder}{}\label{struct_transcoder}\index{Transcoder$<$ SourceEncoding, TargetEncoding $>$@{Transcoder$<$ SourceEncoding, TargetEncoding $>$}}
+
+
+\doxylink{classrapidjson_1_1_encoding}{Encoding} conversion.  
+
+
+
+
+{\ttfamily \#include $<$encodings.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_transcoder_aee2481e2f20e7dba3ca9373a4c54d8df}\label{struct_transcoder_aee2481e2f20e7dba3ca9373a4c54d8df} 
+{\footnotesize template$<$typename Input\+Stream, typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE bool {\bfseries Transcode} (Input\+Stream \&is, Output\+Stream \&os)
+\begin{DoxyCompactList}\small\item\em Take one Unicode codepoint from source encoding, convert it to target encoding and put it to the output stream. \end{DoxyCompactList}\item 
+\Hypertarget{struct_transcoder_ac85a190d1de2a79d89a1301e8d82f0b1}\label{struct_transcoder_ac85a190d1de2a79d89a1301e8d82f0b1} 
+{\footnotesize template$<$typename Input\+Stream, typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE bool {\bfseries Transcode\+Unsafe} (Input\+Stream \&is, Output\+Stream \&os)
+\item 
+\Hypertarget{struct_transcoder_a9ce6f592f1197c4cb69920713e4acf4d}\label{struct_transcoder_a9ce6f592f1197c4cb69920713e4acf4d} 
+{\footnotesize template$<$typename Input\+Stream, typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE bool {\bfseries Validate} (Input\+Stream \&is, Output\+Stream \&os)
+\begin{DoxyCompactList}\small\item\em Validate one Unicode codepoint from an encoded stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Source\+Encoding, typename Target\+Encoding$>$\newline
+struct Transcoder$<$ Source\+Encoding, Target\+Encoding $>$}
+\doxylink{classrapidjson_1_1_encoding}{Encoding} conversion. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodings.\+h\end{DoxyCompactItemize}

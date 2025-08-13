@@ -1,0 +1,28 @@
+\doxysection{lib/cereal/types/atomic.hpp File Reference}
+\hypertarget{atomic_8hpp}{}\label{atomic_8hpp}\index{lib/cereal/types/atomic.hpp@{lib/cereal/types/atomic.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}atomic\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include $<$cereal/cereal.\+hpp$>$}\newline
+{\ttfamily \#include $<$atomic$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a99bab555e921d35f6f713b7e1cab187a}\label{namespacecereal_a99bab555e921d35f6f713b7e1cab187a} 
+{\footnotesize template$<$class Archive, class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::atomic$<$ T $>$ const \&a)
+\begin{DoxyCompactList}\small\item\em Serializing (save) for std\+::atomic. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_abfc0336db29043e0f692517c77f9e7de}\label{namespacecereal_abfc0336db29043e0f692517c77f9e7de} 
+{\footnotesize template$<$class Archive, class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::atomic$<$ T $>$ \&a)
+\begin{DoxyCompactList}\small\item\em Serializing (load) for std\+::atomic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}atomic\texorpdfstring{$>$}{>} 
+

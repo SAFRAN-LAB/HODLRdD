@@ -1,0 +1,198 @@
+\doxysection{cereal\+::Output\+Archive\texorpdfstring{$<$}{<} Archive\+Type, Flags \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1_output_archive}{}\label{classcereal_1_1_output_archive}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+
+
+The base output archive class.  
+
+
+
+
+{\ttfamily \#include $<$cereal.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Output\+Archive\texorpdfstring{$<$}{<} Archive\+Type, Flags \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{dc/d82/classcereal_1_1_output_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{Output\+Archive}} (Archive\+Type \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_output_archive_ab72da7da9c3b34bbab1faa2c2658a540}\label{classcereal_1_1_output_archive_ab72da7da9c3b34bbab1faa2c2658a540} 
+\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} const \&)=delete
+\item 
+{\footnotesize template$<$class ... Types$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b}{register\+Shared\+Pointer}} (const std\+::shared\+\_\+ptr$<$ const void $>$ \&shared\+Pointer)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer with the archive. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e}{register\+Polymorphic\+Type}} (char const \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic type name with the archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{cereal\+::detail\+::\+Output\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Output\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Boost Transition Layer}
+Functionality that mirrors the syntax for Boost. This is useful if you are transitioning a large project from Boost to cereal. The preferred interface for cereal is using operator(). \begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611}{is\+\_\+loading}} = std\+::false\+\_\+type
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for loading. \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389}{is\+\_\+saving}} = std\+::true\+\_\+type
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for saving. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c}{operator$<$$<$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$\newline
+class cereal\+::\+Output\+Archive$<$ Archive\+Type, Flags $>$}
+The base output archive class. 
+
+This is the base output archive for all output archives. If you create a custom archive class, it should derive from this, passing itself as a template parameter for the Archive\+Type.
+
+The base class provides all of the functionality necessary to properly forward data to the correct serialization functions.
+
+Individual archives should use a combination of prologue and epilogue functions together with specializations of serialize, save, and load to alter the functionality of their serialization.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Archive\+Type} & The archive type that derives from \doxylink{classcereal_1_1_output_archive}{Output\+Archive} \\
+\hline
+{\em \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} & \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags} to control advanced functionality. See the \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags} enum for more information. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-typedef-members}
+\Hypertarget{classcereal_1_1_output_archive_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!is\_loading@{is\_loading}}
+\index{is\_loading@{is\_loading}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{is\_loading}{is\_loading}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+using \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::is\+\_\+loading = std\+::false\+\_\+type}
+
+
+
+Indicates this archive is not intended for loading. 
+
+This ensures compatibility with boost archive types. If you are transitioning from boost, you can check this value within a member or external serialize function (i.\+e., Archive\+::is\+\_\+loading\+::value) to disable behavior specific to loading, until you can transition to split save/load or save\+\_\+minimal/load\+\_\+minimal functions \Hypertarget{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!is\_saving@{is\_saving}}
+\index{is\_saving@{is\_saving}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{is\_saving}{is\_saving}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+using \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::is\+\_\+saving = std\+::true\+\_\+type}
+
+
+
+Indicates this archive is intended for saving. 
+
+This ensures compatibility with boost archive types. If you are transitioning from boost, you can check this value within a member or external serialize function (i.\+e., Archive\+::is\+\_\+saving\+::value) to enable behavior specific to loading, until you can transition to split save/load or save\+\_\+minimal/load\+\_\+minimal functions 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_output_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!OutputArchive@{OutputArchive}}
+\index{OutputArchive@{OutputArchive}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{OutputArchive()}{OutputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+\mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::\+Output\+Archive (\begin{DoxyParamCaption}\item[{Archive\+Type \texorpdfstring{$\ast$}{*}const}]{derived}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct the output archive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em derived} & A pointer to the derived Archive\+Type (pass this from the derived archive) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_output_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!operator\&@{operator\&}}
+\index{operator\&@{operator\&}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator\&()}{operator\&()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class T$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator\& (\begin{DoxyParamCaption}\item[{T \&\&}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes passed in data. 
+
+This is a boost compatability layer and is not the preferred way of using cereal. If you are transitioning from boost, use this until you can transition to the operator() overload \Hypertarget{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class ... Types$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator() (\begin{DoxyParamCaption}\item[{Types \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes all passed in data. 
+
+This is the primary interface for serializing data with an archive \Hypertarget{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$()}{operator<<()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class T$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator$<$$<$ (\begin{DoxyParamCaption}\item[{T \&\&}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes passed in data. 
+
+This is a boost compatability layer and is not the preferred way of using cereal. If you are transitioning from boost, use this until you can transition to the operator() overload \Hypertarget{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!registerPolymorphicType@{registerPolymorphicType}}
+\index{registerPolymorphicType@{registerPolymorphicType}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{registerPolymorphicType()}{registerPolymorphicType()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::register\+Polymorphic\+Type (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registers a polymorphic type name with the archive. 
+
+This function is used to track polymorphic types to prevent unnecessary saves of identifying strings used by the polymorphic support functionality. \Hypertarget{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!registerSharedPointer@{registerSharedPointer}}
+\index{registerSharedPointer@{registerSharedPointer}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{registerSharedPointer()}{registerSharedPointer()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::register\+Shared\+Pointer (\begin{DoxyParamCaption}\item[{const std\+::shared\+\_\+ptr$<$ const void $>$ \&}]{shared\+Pointer}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registers a shared pointer with the archive. 
+
+This function is used to track shared pointer targets to prevent unnecessary saves from taking place if multiple shared pointers point to the same data. \Hypertarget{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64}\index{cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}!serializeDeferments@{serializeDeferments}}
+\index{serializeDeferments@{serializeDeferments}!cereal::OutputArchive$<$ ArchiveType, Flags $>$@{cereal::OutputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{serializeDeferments()}{serializeDeferments()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+void \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::serialize\+Deferments (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes any data marked for deferment using defer. 
+
+This will cause any data wrapped in \doxylink{classcereal_1_1_deferred_data}{Deferred\+Data} to be immediately serialized 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

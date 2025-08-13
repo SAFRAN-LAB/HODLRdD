@@ -1,0 +1,670 @@
+\doxysection{polymorphic\+\_\+impl.\+hpp}
+\hypertarget{polymorphic__impl_8hpp_source}{}\label{polymorphic__impl_8hpp_source}\index{lib/cereal/details/polymorphic\_impl.hpp@{lib/cereal/details/polymorphic\_impl.hpp}}
+\mbox{\hyperlink{polymorphic__impl_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{comment}{/*\ This\ code\ is\ heavily\ inspired\ by\ the\ boost\ serialization\ implementation\ by\ the\ following\ authors}}
+\DoxyCodeLine{00032\ \textcolor{comment}{}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ \ (C)\ Copyright\ 2002\ Robert\ Ramey\ -\/\ http://www.rrsd.com\ .}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ \ Use,\ modification\ and\ distribution\ is\ subject\ to\ the\ Boost\ Software}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ \ License,\ Version\ 1.0.\ (See\ http://www.boost.org/LICENSE\_1\_0.txt)}}
+\DoxyCodeLine{00036\ \textcolor{comment}{}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ \ \ See\ http://www.boost.org\ for\ updates,\ documentation,\ and\ revision\ history.}}
+\DoxyCodeLine{00038\ \textcolor{comment}{}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ \ (C)\ Copyright\ 2006\ David\ Abrahams\ -\/\ http://www.boost.org.}}
+\DoxyCodeLine{00040\ \textcolor{comment}{}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ \ See\ /boost/serialization/export.hpp,\ /boost/archive/detail/register\_archive.hpp,}}
+\DoxyCodeLine{00042\ \textcolor{comment}{\ \ \ and\ /boost/serialization/void\_cast.hpp\ for\ their\ implementation.\ Additional\ details}}
+\DoxyCodeLine{00043\ \textcolor{comment}{\ \ \ found\ in\ other\ files\ split\ across\ serialization\ and\ archive.}}
+\DoxyCodeLine{00044\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_DETAILS\_POLYMORPHIC\_IMPL\_HPP\_}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ CEREAL\_DETAILS\_POLYMORPHIC\_IMPL\_HPP\_}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{polymorphic__impl__fwd_8hpp}{cereal/details/polymorphic\_impl\_fwd.hpp}}"{}}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{static__object_8hpp}{cereal/details/static\_object.hpp}}"{}}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{memory_8hpp}{cereal/types/memory.hpp}}"{}}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{string_8hpp}{cereal/types/string.hpp}}"{}}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#if\ defined(\_\_GNUC\_\_)}}
+\DoxyCodeLine{00061\ \ \ \textcolor{comment}{//\ GCC\ /\ clang\ don't\ want\ the\ function}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\ \ \#define\ CEREAL\_BIND\_TO\_ARCHIVES\_UNUSED\_FUNCTION}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\ \ \#define\ CEREAL\_BIND\_TO\_ARCHIVES\_UNUSED\_FUNCTION\ static\ void\ unused()\ \{\ (void)b;\ \}}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#ifdef\ CEREAL\_HAS\_CPP17}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ CEREAL\_BIND\_TO\_ARCHIVES(...)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ \ \ namespace\ cereal\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\ \ \ \ template<>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\ \ \ \ struct\ init\_binding<\_\_VA\_ARGS\_\_>\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ inline\ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ const\ \&\ b=\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ ::cereal::detail::StaticObject<\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ >::getInstance().bind();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ CEREAL\_BIND\_TO\_ARCHIVES\_UNUSED\_FUNCTION\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\ \ \ \ \}\}\ }\textcolor{comment}{/*\ end\ namespaces\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#define\ CEREAL\_BIND\_TO\_ARCHIVES(...)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00087\ \textcolor{preprocessor}{\ \ \ \ namespace\ cereal\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ template<>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ struct\ init\_binding<\_\_VA\_ARGS\_\_>\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ const\&\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ CEREAL\_BIND\_TO\_ARCHIVES\_UNUSED\_FUNCTION\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\ \ \ \ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ const\ \&\ init\_binding<\_\_VA\_ARGS\_\_>::b\ =\ \(\backslash\)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ ::cereal::detail::StaticObject<\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00097\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ >::getInstance().bind();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00098\ \textcolor{preprocessor}{\ \ \ \ \}\}\ }\textcolor{comment}{/*\ end\ namespaces\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00102\ \{}
+\DoxyCodeLine{00103\ \ \ \textcolor{comment}{/*\ Polymorphic\ casting\ support\ */}}
+\DoxyCodeLine{00104\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00105\ \ \ \{}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keyword}{struct\ }PolymorphicCaster}
+\DoxyCodeLine{00120\ \ \ \ \ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ PolymorphicCaster()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ PolymorphicCaster(\ \textcolor{keyword}{const}\ PolymorphicCaster\ \&\ )\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ PolymorphicCaster\ \&\ operator=(\ \textcolor{keyword}{const}\ PolymorphicCaster\ \&\ )\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ PolymorphicCaster(\ PolymorphicCaster\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ PolymorphicCaster\ \&\ operator=(\ PolymorphicCaster\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~PolymorphicCaster()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_ace4914fb5be63a42823787217a0efa13}{downcast}}(\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ \textcolor{keyword}{const}\ ptr\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_a771ea4d4bdc3e5e8992f3cb4ffeb5022}{upcast}}(\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ ptr\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ std::shared\_ptr<void>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_a0343cafc5560566a81cf7216d1adf96f}{upcast}}(\ std::shared\_ptr<void>\ \textcolor{keyword}{const}\ \&\ ptr\ )\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00134\ \ \ \ \ \};}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00137\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters}{PolymorphicCasters}}}
+\DoxyCodeLine{00140\ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a34ac3516aa89fde224190d9a5d0c43c6}{DerivedCasterMap}}\ =\ std::unordered\_map<std::type\_index,\ std::vector<PolymorphicCaster\ const\ *>>;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ std::unordered\_map<std::type\_index,\ DerivedCasterMap>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ab73d51a06e51c40527b5356befe2d6cf}{map}};}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ std::multimap<std::type\_index,\ std::type\_index>\ reverseMap;}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION(LoadSave)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ throw\ cereal::Exception("{}Trying\ to\ "{}\ \#LoadSave\ "{}\ a\ registered\ polymorphic\ type\ with\ an\ unregistered\ polymorphic\ cast.\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}Could\ not\ find\ a\ path\ to\ a\ base\ class\ ("{}\ +\ util::demangle(baseInfo.name())\ +\ "{})\ for\ type:\ "{}\ +\ ::cereal::util::demangledName<Derived>()\ +\ "{}\(\backslash\)n"{}\ \(\backslash\)}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}Make\ sure\ you\ either\ serialize\ the\ base\ class\ at\ some\ point\ via\ cereal::base\_class\ or\ cereal::virtual\_base\_class.\(\backslash\)n"{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}Alternatively,\ manually\ register\ the\ association\ with\ CEREAL\_REGISTER\_POLYMORPHIC\_RELATION."{});}}
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::pair<bool,\ std::vector<PolymorphicCaster\ const\ *>\ \textcolor{keyword}{const}\ \&>}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a3120704ea7c0a54d8fc5c2a9a032b32d}{lookup\_if\_exists}}(\ std::type\_index\ \textcolor{keyword}{const}\ \&\ baseIndex,\ std::type\_index\ \textcolor{keyword}{const}\ \&\ derivedIndex\ )}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ First\ phase\ of\ lookup\ -\/\ match\ base\ type\ index}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ baseMap\ =\ StaticObject<PolymorphicCasters>::getInstance().map;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ baseIter\ =\ baseMap.find(\ baseIndex\ );}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (baseIter\ ==\ baseMap.end())}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{false},\ \{\}\};}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Second\ phase\ -\/\ find\ a\ match\ from\ base\ to\ derived}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ derivedMap\ =\ baseIter-\/>second;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ derivedIter\ =\ derivedMap.find(\ derivedIndex\ );}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (derivedIter\ ==\ derivedMap.end())}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{false},\ \{\}\};}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{true},\ derivedIter-\/>second\};}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ F>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::vector<PolymorphicCaster\ const\ *>\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}{lookup}}(\ std::type\_index\ \textcolor{keyword}{const}\ \&\ baseIndex,\ std::type\_index\ \textcolor{keyword}{const}\ \&\ derivedIndex,\ F\ \&\&\ exceptionFunc\ )}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ First\ phase\ of\ lookup\ -\/\ match\ base\ type\ index}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ baseMap\ =\ StaticObject<PolymorphicCasters>::getInstance().map;}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ baseIter\ =\ baseMap.find(\ baseIndex\ );}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ baseIter\ ==\ baseMap.end()\ )}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ exceptionFunc();}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Second\ phase\ -\/\ find\ a\ match\ from\ base\ to\ derived}}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ derivedMap\ =\ baseIter-\/>second;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ derivedIter\ =\ derivedMap.find(\ derivedIndex\ );}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ derivedIter\ ==\ derivedMap.end()\ )}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ exceptionFunc();}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ derivedIter-\/>second;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Derived>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ Derived\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_aa0e37eb2bb9f2f2b9a4e2d0f68dd6a24}{downcast}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo\ )}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ mapping\ =\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}{lookup}}(\ baseInfo,\ \textcolor{keyword}{typeid}(Derived),\ [\&]()\{\ \mbox{\hyperlink{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df}{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}(save)\ \}\ );}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ *\ dmap\ :\ mapping\ )}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ dptr\ =\ dmap-\/>downcast(\ dptr\ );}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{static\_cast<}Derived\ \textcolor{keyword}{const\ }*\textcolor{keyword}{>}(\ dptr\ );}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Derived>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_aab705357ea4e0494c91a09d14c33efba}{upcast}}(\ Derived\ *\ \textcolor{keyword}{const}\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo\ )}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ mapping\ =\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}{lookup}}(\ baseInfo,\ \textcolor{keyword}{typeid}(Derived),\ [\&]()\{\ \mbox{\hyperlink{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df}{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}(load)\ \}\ );}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *\ uptr\ =\ dptr;}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ mIter\ =\ mapping.rbegin(),\ mEnd\ =\ mapping.rend();\ mIter\ !=\ mEnd;\ ++mIter\ )}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ uptr\ =\ (*mIter)-\/>upcast(\ uptr\ );}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ uptr;}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Derived>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::shared\_ptr<void>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_abc39a0e05acd42d553215303f1101007}{upcast}}(\ std::shared\_ptr<Derived>\ \textcolor{keyword}{const}\ \&\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo\ )}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ mapping\ =\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}{lookup}}(\ baseInfo,\ \textcolor{keyword}{typeid}(Derived),\ [\&]()\{\ \mbox{\hyperlink{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df}{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}(load)\ \}\ );}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ std::shared\_ptr<void>\ uptr\ =\ dptr;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ mIter\ =\ mapping.rbegin(),\ mEnd\ =\ mapping.rend();\ mIter\ !=\ mEnd;\ ++mIter\ )}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ uptr\ =\ (*mIter)-\/>upcast(\ uptr\ );}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ uptr;}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{preprocessor}{\ \ \ \ \ \ \#undef\ UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}
+\DoxyCodeLine{00241\ \ \ \ \ \};}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00244\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_EMPLACE\_MAP(map,\ key,\ value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00245\ \textcolor{preprocessor}{\ \ \ \ \ \ map.insert(\ std::make\_pair(std::move(key),\ std::move(value))\ );}}
+\DoxyCodeLine{00246\ \textcolor{preprocessor}{\ \ \ \ \#else\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00247\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_EMPLACE\_MAP(map,\ key,\ value)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00248\ \textcolor{preprocessor}{\ \ \ \ \ \ map.emplace(\ key,\ value\ );}}
+\DoxyCodeLine{00249\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\_CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Base,\ \textcolor{keyword}{class}\ Derived>}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a8bef2d14f5bb2d295263d41659c4f1f0}{PolymorphicVirtualCaster}}\ :\ PolymorphicCaster}
+\DoxyCodeLine{00254\ \ \ \ \ \{}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a8bef2d14f5bb2d295263d41659c4f1f0}{PolymorphicVirtualCaster}}()}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ baseKey\ =\ std::type\_index(\textcolor{keyword}{typeid}(Base));}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ derivedKey\ =\ std::type\_index(\textcolor{keyword}{typeid}(Derived));}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ First\ insert\ the\ relation\ Base-\/>Derived}}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ lock\ =\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}{StaticObject<PolymorphicCasters>::lock}}();}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ baseMap\ =\ StaticObject<PolymorphicCasters>::getInstance().map;}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ derivedMap\ =\ baseMap.insert(\ \{baseKey,\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a34ac3516aa89fde224190d9a5d0c43c6}{PolymorphicCasters::DerivedCasterMap}}\{\}\}\ ).first-\/>second;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ derivedVec\ =\ derivedMap.insert(\ \{derivedKey,\ \{\}\}\ ).first-\/>second;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ derivedVec.push\_back(\ \textcolor{keyword}{this}\ );}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00273\ }
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Insert\ reverse\ relation\ Derived-\/>Base}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ reverseMap\ =\ StaticObject<PolymorphicCasters>::getInstance().reverseMap;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ CEREAL\_EMPLACE\_MAP(reverseMap,\ derivedKey,\ baseKey);}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ all\ chainable\ unregistered\ relations}}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ The\ strategy\ here\ is\ to\ process\ only\ the\ nodes\ in\ the\ class\ hierarchy\ graph\ that\ have\ been}}
+\DoxyCodeLine{00280\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ affected\ by\ the\ new\ insertion.\ The\ aglorithm\ iteratively\ processes\ a\ node\ an\ ensures\ that\ it}}
+\DoxyCodeLine{00281\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ is\ updated\ with\ all\ new\ shortest\ length\ paths.\ It\ then\ rocesses\ the\ parents\ of\ the\ active\ node,}}
+\DoxyCodeLine{00282\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ with\ the\ knowledge\ that\ all\ children\ have\ already\ been\ processed.}}
+\DoxyCodeLine{00283\ \textcolor{comment}{}}
+\DoxyCodeLine{00284\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ Note\ that\ for\ the\ following,\ we'll\ use\ the\ nomenclature\ of\ parent\ and\ child\ to\ not\ confuse\ with}}
+\DoxyCodeLine{00285\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ the\ inserted\ base\ derived\ relationship\ */}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Checks\ whether\ there\ is\ a\ path\ from\ parent-\/>child\ and\ returns\ a\ <dist,\ path>\ pair}}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ dist\ is\ set\ to\ MAX\ if\ the\ path\ does\ not\ exist}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ checkRelation\ =\ [](std::type\_index\ \textcolor{keyword}{const}\ \&\ parentInfo,\ std::type\_index\ \textcolor{keyword}{const}\ \&\ childInfo)\ -\/>}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ std::pair<\textcolor{keywordtype}{size\_t},\ std::vector<PolymorphicCaster\ const\ *>\ \textcolor{keyword}{const}\ \&>}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ result\ =\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a3120704ea7c0a54d8fc5c2a9a032b32d}{PolymorphicCasters::lookup\_if\_exists}}(\ parentInfo,\ childInfo\ );}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ result.first\ )}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ path\ =\ result.second;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{path.size(),\ path\};}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{(std::numeric\_limits<size\_t>::max)(),\ \{\}\};}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ std::stack<std::type\_index>\ \ \ \ \ \ \ \ \ parentStack;\ \ \ \ \ \ \textcolor{comment}{//\ Holds\ the\ parent\ nodes\ to\ be\ processed}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ std::vector<std::type\_index>\ dirtySet;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Marks\ child\ nodes\ that\ have\ been\ changed}}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ std::unordered\_set<std::type\_index>\ processedParents;\ \textcolor{comment}{//\ Marks\ parent\ nodes\ that\ have\ been\ processed}}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Checks\ if\ a\ child\ has\ been\ marked\ dirty}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ isDirty\ =\ [\&](std::type\_index\ \textcolor{keyword}{const}\ \&\ c)}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ dirtySetSize\ =\ dirtySet.size();}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ dirtySetSize;\ ++i\ )}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ dirtySet[i]\ ==\ c\ )}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Begin\ processing\ the\ base\ key\ and\ mark\ derived\ as\ dirty}}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ parentStack.push(\ baseKey\ );}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ dirtySet.emplace\_back(\ derivedKey\ );}
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\ !parentStack.empty()\ )}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Relations\ =\ std::unordered\_multimap<std::type\_index,\ std::pair<std::type\_index,\ std::vector<PolymorphicCaster\ const\ *>>>;}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ Relations\ unregisteredRelations;\ \textcolor{comment}{//\ Defer\ insertions\ until\ after\ main\ loop\ to\ prevent\ iterator\ invalidation}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ parent\ =\ parentStack.top();}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ parentStack.pop();}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ paths\ to\ all\ children\ marked\ dirty}}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ childPair\ :\ baseMap[parent]\ )}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ child\ =\ childPair.first;}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ isDirty(\ child\ )\ \&\&\ baseMap.count(\ child\ )\ )}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parentChildPath\ =\ checkRelation(\ parent,\ child\ );}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Search\ all\ paths\ from\ the\ child\ to\ its\ own\ children\ (finalChild),}}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ looking\ for\ a\ shorter\ parth\ from\ parent\ to\ finalChild}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ finalChildPair\ :\ baseMap[child]\ )}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ finalChild\ =\ finalChildPair.first;}
+\DoxyCodeLine{00342\ }
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parentFinalChildPath\ =\ checkRelation(\ parent,\ finalChild\ );}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ childFinalChildPath\ \ =\ checkRelation(\ child,\ finalChild\ );}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ newLength\ =\ 1u\ +\ parentChildPath.first;}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ newLength\ <\ parentFinalChildPath.first\ )}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<PolymorphicCaster\ const\ *>\ path\ =\ parentChildPath.second;}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ path.insert(\ path.end(),\ childFinalChildPath.second.begin(),\ childFinalChildPath.second.end()\ );}
+\DoxyCodeLine{00352\ }
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ to\ see\ if\ we\ have\ a\ previous\ uncommitted\ path\ in\ unregisteredRelations}}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ that\ is\ shorter.\ If\ so,\ ignore\ this\ path}}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ hintRange\ =\ unregisteredRelations.equal\_range(\ parent\ );}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ hint\ =\ hintRange.first;}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ ;\ hint\ !=\ hintRange.second;\ ++hint\ )}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ hint-\/>second.first\ ==\ finalChild\ )}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ uncommittedExists\ =\ hint\ !=\ unregisteredRelations.end();}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ uncommittedExists\ \&\&\ (hint-\/>second.second.size()\ <=\ newLength)\ )}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ newPath\ =\ std::pair<std::type\_index,\ std::vector<PolymorphicCaster\ const\ *>>\{finalChild,\ std::move(path)\};}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Insert\ the\ new\ path\ if\ it\ doesn't\ exist,\ otherwise\ this\ will\ just\ lookup\ where\ to\ do\ the}}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ replacement}}
+\DoxyCodeLine{00369\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ old\ =\ unregisteredRelations.insert(\ hint,\ std::make\_pair(parent,\ newPath)\ );}
+\DoxyCodeLine{00371\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#else\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ old\ =\ unregisteredRelations.emplace\_hint(\ hint,\ parent,\ newPath\ );}
+\DoxyCodeLine{00373\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ there\ was\ an\ uncommitted\ path,\ we\ need\ to\ perform\ a\ replacement}}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ uncommittedExists\ )}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ old-\/>second\ =\ newPath;}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ loop\ over\ child's\ children}}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ if\ dirty\ and\ child\ has\ children}}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ loop\ over\ children}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Insert\ chained\ relations}}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ \&\ it\ :\ unregisteredRelations\ )}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ derivedMap\ =\ baseMap.find(\ it.first\ )-\/>second;}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ derivedMap[it.second.first]\ =\ it.second.second;}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CEREAL\_EMPLACE\_MAP(reverseMap,\ it.second.first,\ it.first\ );}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00390\ }
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ current\ parent\ as\ modified}}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ dirtySet.emplace\_back(\ parent\ );}
+\DoxyCodeLine{00393\ }
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Insert\ all\ parents\ of\ the\ current\ parent\ node\ that\ haven't\ yet\ been\ processed}}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parentRange\ =\ reverseMap.equal\_range(\ parent\ );}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ pIter\ =\ parentRange.first;\ pIter\ !=\ parentRange.second;\ ++pIter\ )}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ pParent\ =\ pIter-\/>second;}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !processedParents.count(\ pParent\ )\ )}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ parentStack.push(\ pParent\ );}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ processedParents.insert(\ pParent\ );}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ loop\ over\ parent\ stack}}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ chainable\ relations}}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ end\ PolymorphicVirtualCaster()}}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \textcolor{preprocessor}{\ \ \ \ \ \ \#undef\ CEREAL\_EMPLACE\_MAP}}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a96629db9086bffdc376055629e4041af}{downcast}}(\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ \textcolor{keyword}{const}\ ptr\ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00413\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}Derived\ const*\textcolor{keyword}{>}(\ \textcolor{keyword}{static\_cast<}Base\ const*\textcolor{keyword}{>}(\ ptr\ )\ );}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_acaf2413d8bd17dfd83d1f7abef0a8cf0}{upcast}}(\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ ptr\ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00419\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}Base*\textcolor{keyword}{>}(\ \textcolor{keyword}{static\_cast<}Derived*\textcolor{keyword}{>}(\ ptr\ )\ );}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00424\ \ \ \ \ \ \ std::shared\_ptr<void>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a0ccc43b1887c37ac639b585e42ad319e}{upcast}}(\ std::shared\_ptr<void>\ \textcolor{keyword}{const}\ \&\ ptr\ )\textcolor{keyword}{\ const\ override}}
+\DoxyCodeLine{00425\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::dynamic\_pointer\_cast<Base>(\ std::static\_pointer\_cast<Derived>(\ ptr\ )\ );}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00428\ \ \ \ \ \};}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Base,\ \textcolor{keyword}{class}\ Derived>}
+\DoxyCodeLine{00438\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster}{RegisterPolymorphicCaster}}}
+\DoxyCodeLine{00439\ \ \ \ \ \{}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{PolymorphicCaster}}\ \textcolor{keyword}{const}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{bind}}(\ std::true\_type\ \textcolor{comment}{/*\ is\_polymorphic<Base>\ */})}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{StaticObject<PolymorphicVirtualCaster<Base,\ Derived>}}>::getInstance();}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00444\ }
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{PolymorphicCaster}}\ \textcolor{keyword}{const}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{bind}}(\ std::false\_type\ \textcolor{comment}{/*\ is\_polymorphic<Base>\ */}\ )}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{00447\ }
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{PolymorphicCaster}}\ \textcolor{keyword}{const}\ *\ \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{bind}}()}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{bind}}(\ \textcolor{keyword}{typename}\ std::is\_polymorphic<Base>::type()\ );\ \}}
+\DoxyCodeLine{00452\ \ \ \ \ \};}
+\DoxyCodeLine{00453\ \ \ \}}
+\DoxyCodeLine{00454\ }
+\DoxyCodeLine{00455\ \ \ \textcolor{comment}{/*\ General\ polymorphism\ support\ */}}
+\DoxyCodeLine{00456\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00457\ \ \ \{}
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00460\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1binding__name}{binding\_name}}\ \{\};}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00467\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00468\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map}{OutputBindingMap}}}
+\DoxyCodeLine{00469\ \ \ \ \ \{}
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ std::function<void(\textcolor{keywordtype}{void}*,\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *,\ std::type\_info\ \textcolor{keyword}{const}\ \&)>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916}{Serializer}};}
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers}{Serializers}}}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916}{Serializer}}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers_a8602064aeec6a847f1fe81fe9461ea18}{shared\_ptr}},\ }
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers_ab4c2f8544bdbe179ef4664de9589f825}{unique\_ptr}};\ }
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00484\ }
+\DoxyCodeLine{00486\ \ \ \ \ \ \ std::map<std::type\_index,\ Serializers>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_ab62be8e24369a6350592d3bd12abfecc}{map}};}
+\DoxyCodeLine{00487\ \ \ \ \ \};}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00490\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_empty_deleter}{EmptyDeleter}}\ \{\ \textcolor{keywordtype}{void}\ operator()(T\ *)\textcolor{keyword}{\ const\ }\{\}\ \};}
+\DoxyCodeLine{00491\ }
+\DoxyCodeLine{00493\ }
+\DoxyCodeLine{00497\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00498\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map}{InputBindingMap}}}
+\DoxyCodeLine{00499\ \ \ \ \ \{}
+\DoxyCodeLine{00501\ }
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ std::function<void(\textcolor{keywordtype}{void}*,\ std::shared\_ptr<void>\ \&,\ std::type\_info\ \textcolor{keyword}{const}\ \&)>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a8b3e4f742e4cd9f5210930e0f272383b}{SharedSerializer}};}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ std::function<void(\textcolor{keywordtype}{void}*,\ std::unique\_ptr<\textcolor{keywordtype}{void},\ \mbox{\hyperlink{structcereal_1_1detail_1_1_empty_deleter}{EmptyDeleter<void>}}>\ \&,\ std::type\_info\ \textcolor{keyword}{const}\ \&)>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a429d50a04386c8de48e99723564bfbeb}{UniqueSerializer}};}
+\DoxyCodeLine{00509\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers}{Serializers}}}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a8b3e4f742e4cd9f5210930e0f272383b}{SharedSerializer}}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers_ae4043c36202a1c63655df1734b048210}{shared\_ptr}};\ }
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a429d50a04386c8de48e99723564bfbeb}{UniqueSerializer}}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers_a94620847674f5398454cbdb9660b8532}{unique\_ptr}};\ }
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00518\ \ \ \ \ \ \ std::map<std::string,\ Serializers>\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a92bc21af466e376f1fd9a97e4571dc43}{map}};}
+\DoxyCodeLine{00519\ \ \ \ \ \};}
+\DoxyCodeLine{00520\ }
+\DoxyCodeLine{00521\ \ \ \ \ \textcolor{comment}{//\ forward\ decls\ for\ archives\ from\ cereal.hpp}}
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{InputArchiveBase}};}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{OutputArchiveBase}};}
+\DoxyCodeLine{00524\ }
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00530\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_creator_a0844036ce968019290e32f9ab183e9e1}{InputBindingCreator}}}
+\DoxyCodeLine{00531\ \ \ \ \ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_creator_a0844036ce968019290e32f9ab183e9e1}{InputBindingCreator}}()}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ map\ =\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{StaticObject<InputBindingMap<Archive>}}>::getInstance().map;}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lock\ =\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{StaticObject<InputBindingMap<Archive>}}>::lock();}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ key\ =\ std::string(\mbox{\hyperlink{structcereal_1_1detail_1_1binding__name}{binding\_name<T>::name}}());}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lb\ =\ map.lower\_bound(key);}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lb\ !=\ map.end()\ \&\&\ lb-\/>first\ ==\ key)}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers}{InputBindingMap<Archive>::Serializers}}\ serializers;}
+\DoxyCodeLine{00544\ }
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ serializers.\mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers_ae4043c36202a1c63655df1734b048210}{shared\_ptr}}\ =}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keywordtype}{void}\ *\ arptr,\ std::shared\_ptr<void>\ \&\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo)}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ \ \ \ Archive\ \&\ ar\ =\ *\textcolor{keyword}{static\_cast<}Archive*\textcolor{keyword}{>}(arptr);}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<T>\ ptr;}
+\DoxyCodeLine{00550\ }
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{::cereal::memory\_detail::make\_ptr\_wrapper}}(ptr))\ );}
+\DoxyCodeLine{00552\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ dptr\ =\ PolymorphicCasters::template\ upcast<T>(\ ptr,\ baseInfo\ );}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00555\ }
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ serializers.\mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers_a94620847674f5398454cbdb9660b8532}{unique\_ptr}}\ =}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ [](\textcolor{keywordtype}{void}\ *\ arptr,\ std::unique\_ptr<void,\ EmptyDeleter<void>>\ \&\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo)}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ Archive\ \&\ ar\ =\ *\textcolor{keyword}{static\_cast<}Archive*\textcolor{keyword}{>}(arptr);}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<T>\ ptr;}
+\DoxyCodeLine{00561\ }
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{::cereal::memory\_detail::make\_ptr\_wrapper}}(ptr))\ );}
+\DoxyCodeLine{00563\ }
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ dptr.reset(\ PolymorphicCasters::template\ upcast<T>(\ ptr.release(),\ baseInfo\ ));}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00566\ }
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ map.insert(\ lb,\ \{\ std::move(key),\ std::move(serializers)\ \}\ );}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00569\ \ \ \ \ \};}
+\DoxyCodeLine{00570\ }
+\DoxyCodeLine{00572\ }
+\DoxyCodeLine{00576\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_ae7fd60f4fd68a90e0fa53141141ed467}{OutputBindingCreator}}}
+\DoxyCodeLine{00577\ \ \ \ \ \{}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_aa8421ea2f60481abd46f3fd59ab3680a}{writeMetadata}}(Archive\ \&\ ar)}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Register\ the\ polymorphic\ type\ name\ with\ the\ archive,\ and\ get\ the\ id}}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ name\ =\ \mbox{\hyperlink{structcereal_1_1detail_1_1binding__name}{binding\_name<T>::name}}();}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ std::uint32\_t\ \textcolor{keywordtype}{id}\ =\ ar.registerPolymorphicType(name);}
+\DoxyCodeLine{00584\ }
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Serialize\ the\ id}}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}polymorphic\_id"{}},\ \textcolor{keywordtype}{id})\ );}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ the\ msb\ of\ the\ id\ is\ 1,\ then\ the\ type\ name\ is\ new,\ and\ we\ should\ serialize\ it}}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \textcolor{keywordtype}{id}\ \&\ detail::msb\_32bit\ )}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ std::string\ namestring(name);}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}polymorphic\_name"{}},\ namestring)\ );}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00595\ }
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_a5829b5ea0be50c066261fcf36b4fb6fd}{PolymorphicSharedPointerWrapper}}}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_a5829b5ea0be50c066261fcf36b4fb6fd}{PolymorphicSharedPointerWrapper}}(\ T\ \textcolor{keyword}{const}\ *\ dptr\ )\ :\ refCount(),\ wrappedPtr(\ refCount,\ dptr\ )}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::shared\_ptr<T\ const>\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_af778df4052fdbf2c83f98cf3ff0da44c}{operator()}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ wrappedPtr;\ \}}
+\DoxyCodeLine{00617\ }
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<void>\ refCount;\ \ \ \ \ \ }
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ std::shared\_ptr<T\ const>\ wrappedPtr;\ }
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00622\ }
+\DoxyCodeLine{00624\ }
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555}{savePolymorphicSharedPtr}}(\ Archive\ \&\ ar,\ T\ \textcolor{keyword}{const}\ *\ dptr,\ std::true\_type\ \textcolor{comment}{/*\ has\_shared\_from\_this\ */}\ )}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper}{::cereal::memory\_detail::EnableSharedStateHelper<T>}}\ state(\ \textcolor{keyword}{const\_cast<}T\ *\textcolor{keyword}{>}(dptr)\ );}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}{PolymorphicSharedPointerWrapper}}\ psptr(\ dptr\ );}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ psptr()\ )\ )\ );}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00637\ }
+\DoxyCodeLine{00639\ }
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a9ece659f4e7b869b6a8295e8be3847ab}{savePolymorphicSharedPtr}}(\ Archive\ \&\ ar,\ T\ \textcolor{keyword}{const}\ *\ dptr,\ std::false\_type\ \textcolor{comment}{/*\ has\_shared\_from\_this\ */}\ )}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}{PolymorphicSharedPointerWrapper}}\ psptr(\ dptr\ );}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ psptr()\ )\ )\ );}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_ae7fd60f4fd68a90e0fa53141141ed467}{OutputBindingCreator}}()}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&\ map\ =\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{StaticObject<OutputBindingMap<Archive>}}>::getInstance().map;}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ key\ =\ std::type\_index(\textcolor{keyword}{typeid}(T));}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lb\ =\ map.lower\_bound(key);}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (lb\ !=\ map.end()\ \&\&\ lb-\/>first\ ==\ key)}
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00661\ }
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers}{OutputBindingMap<Archive>::Serializers}}\ serializers;}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ serializers.\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers_a8602064aeec6a847f1fe81fe9461ea18}{shared\_ptr}}\ =}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keywordtype}{void}\ *\ arptr,\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo)}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ \ \ Archive\ \&\ ar\ =\ *\textcolor{keyword}{static\_cast<}Archive*\textcolor{keyword}{>}(arptr);}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_aa8421ea2f60481abd46f3fd59ab3680a}{writeMetadata}}(ar);}
+\DoxyCodeLine{00669\ }
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ ptr\ =\ PolymorphicCasters::template\ downcast<T>(\ dptr,\ baseInfo\ );}
+\DoxyCodeLine{00671\ }
+\DoxyCodeLine{00672\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#if\ defined(\_MSC\_VER)\ \&\&\ \_MSC\_VER\ <\ 1916\ \&\&\ !defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555}{savePolymorphicSharedPtr}}(\ ar,\ ptr,\ \mbox{\hyperlink{structcereal_1_1traits_1_1has__shared__from__this}{::cereal::traits::has\_shared\_from\_this<T>::type}}()\ );\ \textcolor{comment}{//\ MSVC\ doesn't\ like\ typename\ here}}
+\DoxyCodeLine{00674\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#else\ }\textcolor{comment}{//\ not\ \_MSC\_VER}}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555}{savePolymorphicSharedPtr}}(\ ar,\ ptr,\ typename\ ::cereal::traits::has\_shared\_from\_this<T>::type()\ );}
+\DoxyCodeLine{00676\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ \_MSC\_VER}}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00678\ }
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ serializers.\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers_ab4c2f8544bdbe179ef4664de9589f825}{unique\_ptr}}\ =}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ [\&](\textcolor{keywordtype}{void}\ *\ arptr,\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ dptr,\ std::type\_info\ \textcolor{keyword}{const}\ \&\ baseInfo)}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ Archive\ \&\ ar\ =\ *\textcolor{keyword}{static\_cast<}Archive*\textcolor{keyword}{>}(arptr);}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_aa8421ea2f60481abd46f3fd59ab3680a}{writeMetadata}}(ar);}
+\DoxyCodeLine{00684\ }
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_ptr<T\ const,\ EmptyDeleter<T\ const>>\ \textcolor{keyword}{const}\ ptr(\ PolymorphicCasters::template\ downcast<T>(\ dptr,\ baseInfo\ )\ );}
+\DoxyCodeLine{00686\ }
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(ptr))\ );}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00689\ }
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ map.insert(\ \{\ std::move(key),\ std::move(serializers)\ \}\ );}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00692\ \ \ \ \ \};}
+\DoxyCodeLine{00693\ }
+\DoxyCodeLine{00696\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\_tag}}\ \{\};}
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00709\ \textcolor{preprocessor}{\#ifdef\ CEREAL\_HAS\_CPP17}}
+\DoxyCodeLine{00710\ \ \ \ \ \textcolor{keyword}{struct\ }polymorphic\_binding\_tag\ \{\};}
+\DoxyCodeLine{00711\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00712\ \ \ \ \ \textcolor{keyword}{namespace\ }\{\ \textcolor{keyword}{struct\ }polymorphic\_binding\_tag\ \{\};\ \}}
+\DoxyCodeLine{00713\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00714\ }
+\DoxyCodeLine{00715\ }
+\DoxyCodeLine{00717\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00718\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1create__bindings}{create\_bindings}}}
+\DoxyCodeLine{00719\ \ \ \ \ \{}
+\DoxyCodeLine{00720\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_creator}{InputBindingCreator<Archive,\ T>}}\ \&}
+\DoxyCodeLine{00721\ \ \ \ \ \ \ load(std::true\_type)}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{cereal::detail::StaticObject<InputBindingCreator<Archive,\ T>}}>::getInstance();}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00725\ }
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator}{OutputBindingCreator<Archive,\ T>}}\ \&}
+\DoxyCodeLine{00727\ \ \ \ \ \ \ save(std::true\_type)}
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{cereal::detail::StaticObject<OutputBindingCreator<Archive,\ T>}}>::getInstance();}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00731\ }
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load(std::false\_type)\ \{\}}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ save(std::false\_type)\ \{\}}
+\DoxyCodeLine{00734\ \ \ \ \ \};}
+\DoxyCodeLine{00735\ }
+\DoxyCodeLine{00737\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{void}(*)()>}
+\DoxyCodeLine{00738\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1instantiate__function}{instantiate\_function}}\ \{\};}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00745\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00746\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support}{polymorphic\_serialization\_support}}}
+\DoxyCodeLine{00747\ \ \ \ \ \{}
+\DoxyCodeLine{00748\ \textcolor{preprocessor}{\ \ \ \ \ \ \#if\ defined(\_MSC\_VER)\ \&\&\ !defined(\_\_INTEL\_COMPILER)}}
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\_DLL\_EXPORT}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d}{instantiate}}()\ CEREAL\_USED;}
+\DoxyCodeLine{00752\ \textcolor{preprocessor}{\ \ \ \ \ \ \#else\ }\textcolor{comment}{//\ NOT\ \_MSC\_VER}}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ static\ CEREAL\_DLL\_EXPORT\ void\ instantiate()\ CEREAL\_USED;}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{structcereal_1_1detail_1_1instantiate__function}{instantiate\_function<instantiate>}}\ \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support_af32ebd1e93fee3dbed819bf1cfbfd073}{unused}};}
+\DoxyCodeLine{00758\ \textcolor{preprocessor}{\ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ \_MSC\_VER}}
+\DoxyCodeLine{00759\ \ \ \ \ \};}
+\DoxyCodeLine{00760\ }
+\DoxyCodeLine{00761\ \ \ \ \ \textcolor{comment}{//\ instantiate\ implementation}}
+\DoxyCodeLine{00762\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00763\ \ \ \ \ \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\_DLL\_EXPORT}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d}{polymorphic\_serialization\_support<Archive,T>::instantiate}}()}
+\DoxyCodeLine{00764\ \ \ \ \ \{}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ create\_bindings<Archive,T>::save(\ std::integral\_constant<\textcolor{keywordtype}{bool},}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_base\_of<detail::OutputArchiveBase,\ Archive>::value\ \&\&}
+\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits::is\_output\_serializable<T,\ Archive>::value}}>\{\}\ );}
+\DoxyCodeLine{00768\ }
+\DoxyCodeLine{00769\ \ \ \ \ \ \ create\_bindings<Archive,T>::load(\ std::integral\_constant<\textcolor{keywordtype}{bool},}
+\DoxyCodeLine{00770\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_base\_of<detail::InputArchiveBase,\ Archive>::value\ \&\&}
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits::is\_input\_serializable<T,\ Archive>::value}}>\{\}\ );}
+\DoxyCodeLine{00772\ \ \ \ \ \}}
+\DoxyCodeLine{00773\ }
+\DoxyCodeLine{00775\ }
+\DoxyCodeLine{00779\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Tag\ =\ polymorphic\_binding\_tag>}
+\DoxyCodeLine{00780\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{bind\_to\_archives}}}
+\DoxyCodeLine{00781\ \ \ \ \ \{}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives_a691a82f3c9926493923725dd468779c1}{bind}}(std::false\_type)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00784\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{polymorphic__impl_8hpp_a9c34d32da6bee20cb6609e78efc69174}{instantiate\_polymorphic\_binding}}(\textcolor{keyword}{static\_cast<}T*\textcolor{keyword}{>}(\textcolor{keyword}{nullptr}),\ 0,\ Tag\{\},\ \mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\_tag}}\{\});}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00787\ }
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives_a6c61fc1dddb581a47b331eda2b366083}{bind}}(std::true\_type)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00790\ \textcolor{keyword}{\ \ \ \ \ \ }\{\ \}}
+\DoxyCodeLine{00791\ }
+\DoxyCodeLine{00793\ }
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{bind\_to\_archives}}\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives_a1dcd0adc16df7ab299b83862d8ab2755}{bind}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00796\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00797\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ std::is\_polymorphic<T>::value,}
+\DoxyCodeLine{00798\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Attempting\ to\ register\ non\ polymorphic\ type"{}}\ );}
+\DoxyCodeLine{00799\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives_a1dcd0adc16df7ab299b83862d8ab2755}{bind}}(\ std::is\_abstract<T>()\ );}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00802\ \ \ \ \ \};}
+\DoxyCodeLine{00803\ }
+\DoxyCodeLine{00805\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Tag\ =\ polymorphic\_binding\_tag>}
+\DoxyCodeLine{00806\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1init__binding}{init\_binding}};}
+\DoxyCodeLine{00807\ }
+\DoxyCodeLine{00809\ }
+\DoxyCodeLine{00820\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{typename}\ BindingTag>}
+\DoxyCodeLine{00821\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{polymorphic__impl_8hpp_a9c34d32da6bee20cb6609e78efc69174}{instantiate\_polymorphic\_binding}}(\ T*,\ \textcolor{keywordtype}{int},\ BindingTag,\ \mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\_tag}}\ )\ \{\}}
+\DoxyCodeLine{00822\ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00823\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00824\ }
+\DoxyCodeLine{00825\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_DETAILS\_POLYMORPHIC\_IMPL\_HPP\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,71 @@
+\doxysection{integral4d.\+hpp}
+\hypertarget{integral4d_8hpp_source}{}\label{integral4d_8hpp_source}\index{include/integral4d.hpp@{include/integral4d.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ Integral2D\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ Integral2D\_HPP}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Gauss\_Legendre\_Nodes\_and\_Weights.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keywordtype}{int}\ n\_gauss\_nodes\ =\ 32;}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keywordtype}{double}\ Integrand(\textcolor{keywordtype}{double}\ x,\textcolor{keywordtype}{double}\ y,\ \textcolor{keywordtype}{double}\ z,\ \textcolor{keywordtype}{double}\ w)}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{double}\ c\ =\ -\/1.0\ /\ (4\ *\ PI\ *\ PI);}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{comment}{//return\ c\ *\ exp(-\/sqrt(x*x\ +\ y*y\ +\ z*z\ +\ w*w));}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordflow}{return}\ c\ /\ (x\ *\ x\ +\ y\ *\ y\ +\ z\ *\ z\ +\ w\ *\ w);}
+\DoxyCodeLine{00017\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ a\ =\ [x\_low,y\_low]\ and\ b\ =\ [x\_upper,y\_upper]}}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{double}\ quadruple\_integral(\textcolor{keywordtype}{double}*\&\ a,\ \textcolor{keywordtype}{double}*\&\ b)\{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ result\ =\ 0.0;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{double}\ tx,\ ty,\ tz,\ tw,\ cx,\ cy,\ cz,\ cw,\ Lx,\ Ly,\ Lz,\ Lw;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{double}\ *nodes\_x,*weights\_x;}
+\DoxyCodeLine{00024\ \ \ \ \ Gauss\_Legendre\_Nodes\_and\_Weights(n\_gauss\_nodes,\ nodes\_x,\ weights\_x);}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{double}\ *nodes\_y,*weights\_y;}
+\DoxyCodeLine{00026\ \ \ \ \ Gauss\_Legendre\_Nodes\_and\_Weights(n\_gauss\_nodes,\ nodes\_y,\ weights\_y);}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{double}\ *nodes\_z,*weights\_z;}
+\DoxyCodeLine{00028\ \ \ \ \ Gauss\_Legendre\_Nodes\_and\_Weights(n\_gauss\_nodes,\ nodes\_z,\ weights\_z);}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{double}\ *nodes\_w,*weights\_w;}
+\DoxyCodeLine{00030\ \ \ \ \ Gauss\_Legendre\_Nodes\_and\_Weights(n\_gauss\_nodes,\ nodes\_w,\ weights\_w);}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{comment}{//\ Shift\ the\ nodes\ from\ [-\/1,1]\ to\ that\ interval}}
+\DoxyCodeLine{00032\ \ \ \ \ cx\ =\ 0.5\ *\ (b[0]\ -\/\ a[0]);}
+\DoxyCodeLine{00033\ \ \ \ \ cy\ =\ 0.5\ *\ (b[1]\ -\/\ a[1]);}
+\DoxyCodeLine{00034\ \ \ \ \ cz\ =\ 0.5\ *\ (b[2]\ -\/\ a[2]);}
+\DoxyCodeLine{00035\ \ \ \ \ cw\ =\ 0.5\ *\ (b[3]\ -\/\ a[3]);}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ Lx\ =\ 0.5\ *\ (b[0]\ +\ a[0]);\ \ \ \textcolor{comment}{//\ half\ length}}
+\DoxyCodeLine{00038\ \ \ \ \ Ly\ =\ 0.5\ *\ (b[1]\ +\ a[1]);}
+\DoxyCodeLine{00039\ \ \ \ \ Lz\ =\ 0.5\ *\ (b[2]\ +\ a[2]);}
+\DoxyCodeLine{00040\ \ \ \ \ Lw\ =\ 0.5\ *\ (b[3]\ +\ a[3]);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{comment}{//\ Gauss-\/Legendre\ Quadrature\ formula}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;\ i<n\_gauss\_nodes;\ i++)}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ tx\ =\ cx*nodes\_x[i]\ +\ Lx;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ j=0;\ j<n\_gauss\_nodes;\ j++)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ ty\ =\ cy*nodes\_y[j]\ +\ Ly;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ k=0;\ k<n\_gauss\_nodes;\ k++)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tz\ =\ cz*nodes\_z[k]\ +\ Lz;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ l=0;\ l<n\_gauss\_nodes;\ l++)}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tw\ =\ cw*nodes\_w[l]\ +\ Lw;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ weights\_x[i]\ *\ weights\_y[j]*\ weights\_z[k]\ *\ weights\_w[l]\ *\ Integrand(tx,ty,tz,tw);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Final\ result\ due\ to\ change\ of\ variables}}
+\DoxyCodeLine{00061\ \ \ \ \ result\ *=\ (cx*cy*cz*cw);}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}The\ quadruple\ integral\ is\ "{}\ <<\ result\ <<\ std::endl;}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00064\ \}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

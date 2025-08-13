@@ -1,0 +1,43 @@
+\doxysection{Handler Class Reference}
+\hypertarget{classrapidjson_1_1_handler}{}\label{classrapidjson_1_1_handler}\index{Handler@{Handler}}
+
+
+Concept for receiving events from \doxylink{class_generic_reader}{Generic\+Reader} upon parsing. The functions return true if no error occurs. If they return false, the event publisher should terminate the process.  
+
+
+
+
+{\ttfamily \#include $<$reader.\+h$>$}
+
+
+
+\doxysubsection{Detailed Description}
+Concept for receiving events from \doxylink{class_generic_reader}{Generic\+Reader} upon parsing. The functions return true if no error occurs. If they return false, the event publisher should terminate the process. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }Handler\ \{}
+\DoxyCodeLine{\ \ \ \ typename\ Ch;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ bool\ Null();}
+\DoxyCodeLine{\ \ \ \ bool\ Bool(bool\ b);}
+\DoxyCodeLine{\ \ \ \ bool\ Int(int\ i);}
+\DoxyCodeLine{\ \ \ \ bool\ Uint(unsigned\ i);}
+\DoxyCodeLine{\ \ \ \ bool\ Int64(int64\_t\ i);}
+\DoxyCodeLine{\ \ \ \ bool\ Uint64(uint64\_t\ i);}
+\DoxyCodeLine{\ \ \ \ bool\ Double(double\ d);}
+\DoxyCodeLine{\ \ \ \ bool\ RawNumber(const\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ bool\ copy);}
+\DoxyCodeLine{\ \ \ \ bool\ String(const\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ bool\ copy);}
+\DoxyCodeLine{\ \ \ \ bool\ StartObject();}
+\DoxyCodeLine{\ \ \ \ bool\ Key(const\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ bool\ copy);}
+\DoxyCodeLine{\ \ \ \ bool\ EndObject(\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ memberCount);}
+\DoxyCodeLine{\ \ \ \ bool\ StartArray();}
+\DoxyCodeLine{\ \ \ \ bool\ EndArray(\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ elementCount);}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/\mbox{\hyperlink{reader_8h}{reader.\+h}}\end{DoxyCompactItemize}

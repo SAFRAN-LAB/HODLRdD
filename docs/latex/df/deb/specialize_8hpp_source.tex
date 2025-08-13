@@ -1,0 +1,68 @@
+\doxysection{specialize.\+hpp}
+\hypertarget{specialize_8hpp_source}{}\label{specialize_8hpp_source}\index{lib/cereal/specialize.hpp@{lib/cereal/specialize.hpp}}
+\mbox{\hyperlink{specialize_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_SPECIALIZE\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_SPECIALIZE\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00034\ \{}
+\DoxyCodeLine{00035\ \ \ \textcolor{comment}{//\ Forward\ declaration\ of\ access\ class\ that\ users\ can\ become\ friends\ with}}
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1access}{access}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}{specialization}}}
+\DoxyCodeLine{00044\ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ member\_serialize,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ member\_load\_save,\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00047\ \ \ \ \ member\_load\_save\_minimal,\ \ \ \ }
+\DoxyCodeLine{00048\ \ \ \ \ non\_member\_serialize,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ non\_member\_load\_save,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ non\_member\_load\_save\_minimal\ }
+\DoxyCodeLine{00051\ \ \ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ specialization\ S>}
+\DoxyCodeLine{00108\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1specialize}{specialize}}\ :\ \textcolor{keyword}{public}\ std::false\_type\ \{\};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \#define\ CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES(\ Type,\ Specialization\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ namespace\ cereal\ \{\ template\ <class\ Archive>\ struct\ specialize<Archive,\ Type,\ Specialization>\ \{\};\ \}}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\ \ \#define\ CEREAL\_SPECIALIZE\_FOR\_ARCHIVE(\ Archive,\ Type,\ Specialization\ )\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\ \ namespace\ cereal\ \{\ template\ <>\ struct\ specialize<Archive,\ Type,\ Specialization>\ \{\};\ \}}}
+\DoxyCodeLine{00137\ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

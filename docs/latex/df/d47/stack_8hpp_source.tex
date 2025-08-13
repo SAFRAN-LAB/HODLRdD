@@ -1,0 +1,77 @@
+\doxysection{stack.\+hpp}
+\hypertarget{stack_8hpp_source}{}\label{stack_8hpp_source}\index{lib/cereal/types/stack.hpp@{lib/cereal/types/stack.hpp}}
+\mbox{\hyperlink{stack_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_STACK\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_STACK\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ The\ default\ container\ for\ stack\ is\ deque,\ so\ let's\ include\ that\ too}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{deque_8hpp}{cereal/types/deque.hpp}}"{}}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00040\ \{}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{namespace\ }stack\_detail}
+\DoxyCodeLine{00042\ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00045\ \ \ \ \ C\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{stack_8hpp_a1e94be391ac23f96a2e0ee3d834af97f}{container}}(\ std::stack<T,\ C>\ \textcolor{keyword}{const}\ \&\ stack\ )}
+\DoxyCodeLine{00046\ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }H\ :\ \textcolor{keyword}{public}\ std::stack<T,\ C>}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ C\ \textcolor{keyword}{const}\ \&\ get(\ std::stack<T,\ C>\ \textcolor{keyword}{const}\ \&\ s\ )}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ s.*(\&H::c);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ H::get(\ stack\ );}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::stack<T,\ C>\ \textcolor{keyword}{const}\ \&\ stack\ )}
+\DoxyCodeLine{00062\ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ \mbox{\hyperlink{stack_8hpp_a1e94be391ac23f96a2e0ee3d834af97f}{stack\_detail::container}}(\ stack\ ))\ );}
+\DoxyCodeLine{00064\ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::stack<T,\ C>\ \&\ stack\ )}
+\DoxyCodeLine{00069\ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ C\ container;}
+\DoxyCodeLine{00071\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ container)\ );}
+\DoxyCodeLine{00072\ \ \ \ \ stack\ =\ std::stack<T,\ C>(\ std::move(\ container\ )\ );}
+\DoxyCodeLine{00073\ \ \ \}}
+\DoxyCodeLine{00074\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_STACK\_HPP\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,91 @@
+\doxysection{Auto\+UTFInput\+Stream\texorpdfstring{$<$}{<} Char\+Type, Input\+Byte\+Stream \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_auto_u_t_f_input_stream}{}\label{class_auto_u_t_f_input_stream}\index{AutoUTFInputStream$<$ CharType, InputByteStream $>$@{AutoUTFInputStream$<$ CharType, InputByteStream $>$}}
+
+
+Input stream wrapper with dynamically bound encoding and automatic encoding detection.  
+
+
+
+
+{\ttfamily \#include $<$encodedstream.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a3bb3eb46f2c20404a7ac21963cfe348f}\label{class_auto_u_t_f_input_stream_a3bb3eb46f2c20404a7ac21963cfe348f} 
+typedef Char\+Type {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_auto_u_t_f_input_stream_a83837fced0971ba26dd9a8ec1575abb0}{Auto\+UTFInput\+Stream}} (Input\+Byte\+Stream \&is, UTFType type=k\+UTF8)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\Hypertarget{class_auto_u_t_f_input_stream_ad8e8b71e852db11a841fbba40431c5d1}\label{class_auto_u_t_f_input_stream_ad8e8b71e852db11a841fbba40431c5d1} 
+UTFType {\bfseries Get\+Type} () const
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a8831def623c28a3ec1d59b75abe5b20e}\label{class_auto_u_t_f_input_stream_a8831def623c28a3ec1d59b75abe5b20e} 
+bool {\bfseries Has\+BOM} () const
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a616fbe24878a2026fbc7743acb50438c}\label{class_auto_u_t_f_input_stream_a616fbe24878a2026fbc7743acb50438c} 
+Ch {\bfseries Peek} () const
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a652cd1ae8bd848a5ecce4efa1ebd0f38}\label{class_auto_u_t_f_input_stream_a652cd1ae8bd848a5ecce4efa1ebd0f38} 
+Ch {\bfseries Take} ()
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a6b847c75309e4ed36957f232b9ce88d1}\label{class_auto_u_t_f_input_stream_a6b847c75309e4ed36957f232b9ce88d1} 
+size\+\_\+t {\bfseries Tell} () const
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a5ea730d1ab715f58ce4f9e3dcd77810a}\label{class_auto_u_t_f_input_stream_a5ea730d1ab715f58ce4f9e3dcd77810a} 
+void {\bfseries Put} (Ch)
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_aecc08f52794d761fc1b729907a83dcf8}\label{class_auto_u_t_f_input_stream_aecc08f52794d761fc1b729907a83dcf8} 
+void {\bfseries Flush} ()
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a5ed99e5f59547e83575b7f65cb4ea643}\label{class_auto_u_t_f_input_stream_a5ed99e5f59547e83575b7f65cb4ea643} 
+Ch \texorpdfstring{$\ast$}{*} {\bfseries Put\+Begin} ()
+\item 
+\Hypertarget{class_auto_u_t_f_input_stream_a41bd66602f82d344383792feac34f9f7}\label{class_auto_u_t_f_input_stream_a41bd66602f82d344383792feac34f9f7} 
+size\+\_\+t {\bfseries Put\+End} (Ch \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Char\+Type, typename Input\+Byte\+Stream$>$\newline
+class Auto\+UTFInput\+Stream$<$ Char\+Type, Input\+Byte\+Stream $>$}
+Input stream wrapper with dynamically bound encoding and automatic encoding detection. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Char\+Type} & \doxylink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} of character for reading. \\
+\hline
+{\em Input\+Byte\+Stream} & type of input byte stream to be wrapped. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-constructors}
+\Hypertarget{class_auto_u_t_f_input_stream_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_auto_u_t_f_input_stream_a83837fced0971ba26dd9a8ec1575abb0}\index{AutoUTFInputStream$<$ CharType, InputByteStream $>$@{AutoUTFInputStream$<$ CharType, InputByteStream $>$}!AutoUTFInputStream@{AutoUTFInputStream}}
+\index{AutoUTFInputStream@{AutoUTFInputStream}!AutoUTFInputStream$<$ CharType, InputByteStream $>$@{AutoUTFInputStream$<$ CharType, InputByteStream $>$}}
+\doxysubsubsection{\texorpdfstring{AutoUTFInputStream()}{AutoUTFInputStream()}}
+{\footnotesize\ttfamily \label{class_auto_u_t_f_input_stream_a83837fced0971ba26dd9a8ec1575abb0} 
+template$<$typename Char\+Type, typename Input\+Byte\+Stream$>$ \\
+\mbox{\hyperlink{class_auto_u_t_f_input_stream}{Auto\+UTFInput\+Stream}}$<$ Char\+Type, Input\+Byte\+Stream $>$\mbox{\hyperlink{class_auto_u_t_f_input_stream}{\+::\+Auto\+UTFInput\+Stream}} (\begin{DoxyParamCaption}\item[{Input\+Byte\+Stream \&}]{is}{, }\item[{UTFType}]{type}{ = {\ttfamily kUTF8}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is} & input stream to be wrapped. \\
+\hline
+{\em type} & UTF encoding type if it is not detected from the stream. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodedstream.\+h\end{DoxyCompactItemize}

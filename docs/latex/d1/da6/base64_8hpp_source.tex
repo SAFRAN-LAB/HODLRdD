@@ -1,0 +1,140 @@
+\doxysection{base64.\+hpp}
+\hypertarget{base64_8hpp_source}{}\label{base64_8hpp_source}\index{lib/cereal/external/base64.hpp@{lib/cereal/external/base64.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ \ \ Copyright\ (C)\ 2004-\/2008\ René\ Nyffenegger}}
+\DoxyCodeLine{00003\ \textcolor{comment}{}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ \ This\ source\ code\ is\ provided\ 'as-\/is',\ without\ any\ express\ or\ implied}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ \ warranty.\ In\ no\ event\ will\ the\ author\ be\ held\ liable\ for\ any\ damages}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ \ arising\ from\ the\ use\ of\ this\ software.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ \ Permission\ is\ granted\ to\ anyone\ to\ use\ this\ software\ for\ any\ purpose,}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ including\ commercial\ applications,\ and\ to\ alter\ it\ and\ redistribute\ it}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ freely,\ subject\ to\ the\ following\ restrictions:}}
+\DoxyCodeLine{00011\ \textcolor{comment}{}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ 1.\ The\ origin\ of\ this\ source\ code\ must\ not\ be\ misrepresented;\ you\ must\ not}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ claim\ that\ you\ wrote\ the\ original\ source\ code.\ If\ you\ use\ this\ source\ code}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ in\ a\ product,\ an\ acknowledgment\ in\ the\ product\ documentation\ would\ be}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ appreciated\ but\ is\ not\ required.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ 2.\ Altered\ source\ versions\ must\ be\ plainly\ marked\ as\ such,\ and\ must\ not\ be}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ \ \ \ \ misrepresented\ as\ being\ the\ original\ source\ code.}}
+\DoxyCodeLine{00019\ \textcolor{comment}{}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ \ 3.\ This\ notice\ may\ not\ be\ removed\ or\ altered\ from\ any\ source\ distribution.}}
+\DoxyCodeLine{00021\ \textcolor{comment}{}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ \ René\ Nyffenegger\ rene.nyffenegger@adp-\/gmbh.ch}}
+\DoxyCodeLine{00023\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_EXTERNAL\_BASE64\_HPP\_}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ CEREAL\_EXTERNAL\_BASE64\_HPP\_}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#ifdef\ \_\_GNUC\_\_}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ push}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ ignored\ "{}-\/Wconversion"{}}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{keyword}{namespace\ }base64}
+\DoxyCodeLine{00038\ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::string\ chars\ =}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}ABCDEFGHIJKLMNOPQRSTUVWXYZ"{}}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}abcdefghijklmnopqrstuvwxyz"{}}}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \textcolor{stringliteral}{"{}0123456789+/"{}};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ is\_base64(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c)\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (isalnum(c)\ ||\ (c\ ==\ \textcolor{charliteral}{'+'})\ ||\ (c\ ==\ \textcolor{charliteral}{'/'}));}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ encode(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}*\ bytes\_to\_encode,\ \textcolor{keywordtype}{size\_t}\ in\_len)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ std::string\ ret;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ j\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ char\_array\_3[3];}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ char\_array\_4[4];}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (in\_len-\/-\/)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ char\_array\_3[i++]\ =\ *(bytes\_to\_encode++);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ 3)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[0]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}((char\_array\_3[0]\ \&\ 0xfc)\ >>\ 2);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[1]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(\ (\ (\ char\_array\_3[0]\ \&\ 0x03\ )\ <<\ 4\ )\ +\ (\ (\ char\_array\_3[1]\ \&\ 0xf0\ )\ >>\ 4\ )\ );}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[2]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(\ (\ (\ char\_array\_3[1]\ \&\ 0x0f\ )\ <<\ 2\ )\ +\ (\ (\ char\_array\_3[2]\ \&\ 0xc0\ )\ >>\ 6\ )\ );}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[3]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(\ char\_array\_3[2]\ \&\ 0x3f\ );}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;\ (i\ <4)\ ;\ i++)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ ret\ +=\ chars[char\_array\_4[i]];}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j\ =\ i;\ j\ <\ 3;\ j++)}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ char\_array\_3[j]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ char\_array\_4[0]\ =\ (char\_array\_3[0]\ \&\ 0xfc)\ >>\ 2;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ char\_array\_4[1]\ =\ ((char\_array\_3[0]\ \&\ 0x03)\ <<\ 4)\ +\ ((char\_array\_3[1]\ \&\ 0xf0)\ >>\ 4);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ char\_array\_4[2]\ =\ ((char\_array\_3[1]\ \&\ 0x0f)\ <<\ 2)\ +\ ((char\_array\_3[2]\ \&\ 0xc0)\ >>\ 6);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ char\_array\_4[3]\ =\ char\_array\_3[2]\ \&\ 0x3f;}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ (j\ <\ i\ +\ 1);\ j++)}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ ret\ +=\ chars[char\_array\_4[j]];}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}((i++\ <\ 3))}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ ret\ +=\ \textcolor{charliteral}{'='};}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00087\ \ \ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ decode(std::string\ \textcolor{keyword}{const}\&\ encoded\_string)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ in\_len\ =\ encoded\_string.size();}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ i\ =\ 0;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ j\ =\ 0;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ in\_\ =\ 0;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ char\_array\_4[4],\ char\_array\_3[3];}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ std::string\ ret;}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (in\_len-\/-\/\ \&\&\ (\ encoded\_string[in\_]\ !=\ \textcolor{charliteral}{'='})\ \&\&\ is\_base64(encoded\_string[in\_]))\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ char\_array\_4[i++]\ =\ encoded\_string[in\_];\ in\_++;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==4)\ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <4;\ i++)}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ char\_array\_4[i]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(chars.find(\ char\_array\_4[i]\ ));}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ char\_array\_3[0]\ =\ (char\_array\_4[0]\ <<\ 2)\ +\ ((char\_array\_4[1]\ \&\ 0x30)\ >>\ 4);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ char\_array\_3[1]\ =\ ((char\_array\_4[1]\ \&\ 0xf)\ <<\ 4)\ +\ ((char\_array\_4[2]\ \&\ 0x3c)\ >>\ 2);}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ char\_array\_3[2]\ =\ ((char\_array\_4[2]\ \&\ 0x3)\ <<\ 6)\ +\ char\_array\_4[3];}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ (i\ <\ 3);\ i++)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ ret\ +=\ char\_array\_3[i];}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ i;\ j\ <4;\ j++)}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[j]\ =\ 0;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <4;\ j++)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ char\_array\_4[j]\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(chars.find(\ char\_array\_4[j]\ ));}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ char\_array\_3[0]\ =\ (char\_array\_4[0]\ <<\ 2)\ +\ ((char\_array\_4[1]\ \&\ 0x30)\ >>\ 4);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ char\_array\_3[1]\ =\ ((char\_array\_4[1]\ \&\ 0xf)\ <<\ 4)\ +\ ((char\_array\_4[2]\ \&\ 0x3c)\ >>\ 2);}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ char\_array\_3[2]\ =\ ((char\_array\_4[2]\ \&\ 0x3)\ <<\ 6)\ +\ char\_array\_4[3];}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ (j\ <\ i\ -\/\ 1);\ j++)\ ret\ +=\ char\_array\_3[j];}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00128\ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \}\ \textcolor{comment}{//\ namespace\ base64}}
+\DoxyCodeLine{00130\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#ifdef\ \_\_GNUC\_\_}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#pragma\ GCC\ diagnostic\ pop}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_EXTERNAL\_BASE64\_HPP\_}}
+
+\end{DoxyCode}

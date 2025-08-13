@@ -1,0 +1,132 @@
+\doxysection{lib/cereal/archives/xml.hpp File Reference}
+\hypertarget{xml_8hpp}{}\label{xml_8hpp}\index{lib/cereal/archives/xml.hpp@{lib/cereal/archives/xml.hpp}}
+
+
+XML input and output archives.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/util.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/external/rapidxml/rapidxml.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/external/rapidxml/rapidxml\+\_\+print.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/external/base64.\+hpp"{}}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{cereal\+::\+XMLOutput\+Archive}}
+\begin{DoxyCompactList}\small\item\em An output archive designed to save data to XML. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{cereal\+::\+XMLOutput\+Archive\+::\+Options}}
+\begin{DoxyCompactList}\small\item\em A class containing various advanced options for the XML archive. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info}{cereal\+::\+XMLOutput\+Archive\+::\+Node\+Info}}
+\begin{DoxyCompactList}\small\item\em A struct that contains metadata about a node. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{cereal\+::\+XMLInput\+Archive}}
+\begin{DoxyCompactList}\small\item\em An output archive designed to load data from XML. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info}{cereal\+::\+XMLInput\+Archive\+::\+Node\+Info}}
+\begin{DoxyCompactList}\small\item\em A struct that contains metadata about a node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{xml_8hpp_a44505fe952f8c1f6fef02efc4d7cfefa}{CEREAL\+\_\+\+XML\+\_\+\+STRING\+\_\+\+VALUE}}~"{}cereal"{}
+\begin{DoxyCompactList}\small\item\em The default name for the root node in a cereal xml archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{xml_8hpp_a6931d2bbffc4579c110dead25437e297}\label{xml_8hpp_a6931d2bbffc4579c110dead25437e297} 
+bool {\bfseries cereal\+::xml\+\_\+detail\+::is\+Whitespace} (char c)
+\begin{DoxyCompactList}\small\item\em Returns true if the character is whitespace. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a2582cc8477f9482910fc5733e13f75f7}{cereal\+::prologue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for NVPs for XML output archives. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a06224101dfaf6979418326a7664e13e2}\label{namespacecereal_a06224101dfaf6979418326a7664e13e2} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::prologue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for NVPs for XML input archives. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a906ef65c3ab455598f768431bcd5f37d}{cereal\+::epilogue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for NVPs for XML output archives. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a5d1af5fa5a466ad0cd89513aab823b80}\label{namespacecereal_a5d1af5fa5a466ad0cd89513aab823b80} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::epilogue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for NVPs for XML input archives. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a6124c7acd34d3740cbedd39559da73c3}{cereal\+::prologue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for deferred data for XML archives. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_adf285317856bf80daaa225e171d8d951}\label{namespacecereal_adf285317856bf80daaa225e171d8d951} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::prologue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for deferred data for XML archives. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_acb1f17a3cae999a9be34889fd2c509a0}{cereal\+::epilogue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for deferred for XML archives. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a70bbce1604367ea45c07dc677186ed64}{cereal\+::epilogue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for deferred for XML archives. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_adbb541e9594201d78a04cb11ad806ba0}{cereal\+::prologue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for Size\+Tags for XML output archives. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aa25e6485f450649b931e07e0f6384a76}\label{namespacecereal_aa25e6485f450649b931e07e0f6384a76} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::prologue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ const \&)
+\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{namespacecereal_ac3700f36066026da589faa60fed7ca53}{cereal\+::epilogue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for Size\+Tags for XML output archives. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ada513bbfcf8c1996e6f7a439f129a208}\label{namespacecereal_ada513bbfcf8c1996e6f7a439f129a208} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::epilogue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ const \&)
+\item 
+{\footnotesize template$<$class T, traits\+::\+Disable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{traits\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization}}$<$ T, \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{traits\+::has\+\_\+minimal\+\_\+output\+\_\+serialization}}, \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{traits\+::has\+\_\+minimal\+\_\+output\+\_\+serialization}}$<$ T, \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} $>$\+::value $>$ = traits\+::sfinae$>$ }\\void \mbox{\hyperlink{namespacecereal_af751c02a4443b571fee21416a4b899c1}{cereal\+::prologue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, T const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for all other types for XML output archives (except minimal types) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a7ea2b824c9d003b9e2b36473db1d22c0}\label{namespacecereal_a7ea2b824c9d003b9e2b36473db1d22c0} 
+{\footnotesize template$<$class T, traits\+::\+Disable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{traits\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization}}$<$ T, \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{traits\+::has\+\_\+minimal\+\_\+input\+\_\+serialization}}, \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{traits\+::has\+\_\+minimal\+\_\+input\+\_\+serialization}}$<$ T, \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::prologue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, T const \&)
+\begin{DoxyCompactList}\small\item\em Prologue for all other types for XML input archives (except minimal types) \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T, traits\+::\+Disable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{traits\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization}}$<$ T, \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{traits\+::has\+\_\+minimal\+\_\+output\+\_\+serialization}}, \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{traits\+::has\+\_\+minimal\+\_\+output\+\_\+serialization}}$<$ T, \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} $>$\+::value $>$ = traits\+::sfinae$>$ }\\void \mbox{\hyperlink{namespacecereal_a16ca55f7d5556527de1584198ea3c414}{cereal\+::epilogue}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, T const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for all other types other for XML output archives (except minimal types) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ae06e3f89a66231db109db984a87e0cfd}\label{namespacecereal_ae06e3f89a66231db109db984a87e0cfd} 
+{\footnotesize template$<$class T, traits\+::\+Disable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{traits\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization}}$<$ T, \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{traits\+::has\+\_\+minimal\+\_\+input\+\_\+serialization}}, \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{traits\+::has\+\_\+minimal\+\_\+input\+\_\+serialization}}$<$ T, \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::epilogue} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, T const \&)
+\begin{DoxyCompactList}\small\item\em Epilogue for all other types other for XML output archives (except minimal types) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a9a252f7731760e1186c3c552f640fc7b}\label{namespacecereal_a9a252f7731760e1186c3c552f640fc7b} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ const \&t)
+\begin{DoxyCompactList}\small\item\em Saving NVP types to XML. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a0a08767af52642e109545f05a4694380}\label{namespacecereal_a0a08767af52642e109545f05a4694380} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ \&t)
+\begin{DoxyCompactList}\small\item\em Loading NVP types from XML. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a1703ea149fc65a4d7851fa85823287b2}\label{namespacecereal_a1703ea149fc65a4d7851fa85823287b2} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ const \&)
+\begin{DoxyCompactList}\small\item\em Saving Size\+Tags to XML. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a88090838a4dbf54f907dee8969c0d5cf}\label{namespacecereal_a88090838a4dbf54f907dee8969c0d5cf} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ \&st)
+\begin{DoxyCompactList}\small\item\em Loading Size\+Tags from XML. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ac6311a745c3a12848550eff8fba71f31}\label{namespacecereal_ac6311a745c3a12848550eff8fba71f31} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, T const \&t)
+\begin{DoxyCompactList}\small\item\em Saving for POD types to xml. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aea476a67114d4998f2113da658c25468}\label{namespacecereal_aea476a67114d4998f2113da658c25468} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, T \&t)
+\begin{DoxyCompactList}\small\item\em Loading for POD types from xml. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a63696aa0de3dc95bc27f97bf455d15e8}\label{namespacecereal_a63696aa0de3dc95bc27f97bf455d15e8} 
+{\footnotesize template$<$class CharT, class Traits, class Alloc$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \&ar, std\+::basic\+\_\+string$<$ CharT, Traits, Alloc $>$ const \&str)
+\begin{DoxyCompactList}\small\item\em saving string to xml \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a3f5b214a91e6d61bcdae422e1cf27b37}\label{namespacecereal_a3f5b214a91e6d61bcdae422e1cf27b37} 
+{\footnotesize template$<$class CharT, class Traits, class Alloc$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \&ar, std\+::basic\+\_\+string$<$ CharT, Traits, Alloc $>$ \&str)
+\begin{DoxyCompactList}\small\item\em loading string from xml \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+XML input and output archives. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{xml_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{xml_8hpp_a44505fe952f8c1f6fef02efc4d7cfefa}\index{xml.hpp@{xml.hpp}!CEREAL\_XML\_STRING\_VALUE@{CEREAL\_XML\_STRING\_VALUE}}
+\index{CEREAL\_XML\_STRING\_VALUE@{CEREAL\_XML\_STRING\_VALUE}!xml.hpp@{xml.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_XML\_STRING\_VALUE}{CEREAL\_XML\_STRING\_VALUE}}
+{\footnotesize\ttfamily \label{xml_8hpp_a44505fe952f8c1f6fef02efc4d7cfefa} 
+\#define CEREAL\+\_\+\+XML\+\_\+\+STRING\+\_\+\+VALUE~"{}cereal"{}}
+
+
+
+The default name for the root node in a cereal xml archive. 
+
+You can define CEREAL\+\_\+\+XML\+\_\+\+STRING\+\_\+\+VALUE to be different assuming you do so before this file is included. 

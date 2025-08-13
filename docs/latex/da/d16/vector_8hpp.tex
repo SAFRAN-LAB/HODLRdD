@@ -1,0 +1,40 @@
+\doxysection{lib/cereal/types/vector.hpp File Reference}
+\hypertarget{vector_8hpp}{}\label{vector_8hpp}\index{lib/cereal/types/vector.hpp@{lib/cereal/types/vector.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}vector\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_adb789479aa9deae7b63d249f6dccccaf}\label{namespacecereal_adb789479aa9deae7b63d249f6dccccaf} 
+{\footnotesize template$<$class Archive, class T, class A$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value \&\&std\+::is\+\_\+arithmetic$<$ T $>$\+::value \&\&!std\+::is\+\_\+same$<$ T, bool $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ T, A $>$ const \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for std\+::vectors of arithmetic (but not bool) using binary serialization, if supported. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a3a8c0283f25c71df86060789614c4cfe}\label{namespacecereal_a3a8c0283f25c71df86060789614c4cfe} 
+{\footnotesize template$<$class Archive, class T, class A$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits\+::is\+\_\+input\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value \&\&std\+::is\+\_\+arithmetic$<$ T $>$\+::value \&\&!std\+::is\+\_\+same$<$ T, bool $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ T, A $>$ \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for std\+::vectors of arithmetic (but not bool) using binary serialization, if supported. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a4ae26efa958e82169d5f813bda0ad1c5}\label{namespacecereal_a4ae26efa958e82169d5f813bda0ad1c5} 
+{\footnotesize template$<$class Archive, class T, class A$>$ }\\std\+::enable\+\_\+if$<$(!\mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}!std\+::is\+\_\+arithmetic$<$ T $>$\+::value)\&\&!std\+::is\+\_\+same$<$ T, bool $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ T, A $>$ const \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for non-\/arithmetic vector types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a0aa0955bf32e5651828e110004b6dc5d}\label{namespacecereal_a0aa0955bf32e5651828e110004b6dc5d} 
+{\footnotesize template$<$class Archive, class T, class A$>$ }\\std\+::enable\+\_\+if$<$(!\mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits\+::is\+\_\+input\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}!std\+::is\+\_\+arithmetic$<$ T $>$\+::value)\&\&!std\+::is\+\_\+same$<$ T, bool $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ T, A $>$ \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for non-\/arithmetic vector types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a76b613c5fc7ae5ec8f8216a6337955a7}\label{namespacecereal_a76b613c5fc7ae5ec8f8216a6337955a7} 
+{\footnotesize template$<$class Archive, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ bool, A $>$ const \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for bool vector types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a09c7d1d922569ba782c8ec6d8f79b3e8}\label{namespacecereal_a09c7d1d922569ba782c8ec6d8f79b3e8} 
+{\footnotesize template$<$class Archive, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::vector$<$ bool, A $>$ \&vector)
+\begin{DoxyCompactList}\small\item\em Serialization for bool vector types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}vector\texorpdfstring{$>$}{>} 
+

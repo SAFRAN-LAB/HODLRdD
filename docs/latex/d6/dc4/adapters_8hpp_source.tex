@@ -1,0 +1,81 @@
+\doxysection{adapters.\+hpp}
+\hypertarget{adapters_8hpp_source}{}\label{adapters_8hpp_source}\index{lib/cereal/archives/adapters.hpp@{lib/cereal/archives/adapters.hpp}}
+\mbox{\hyperlink{adapters_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_ARCHIVES\_ADAPTERS\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_ARCHIVES\_ADAPTERS\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{helpers_8hpp}{cereal/details/helpers.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \#ifdef\ CEREAL\_FUTURE\_EXPERIMENTAL}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \textcolor{comment}{//\ Forward\ declaration\ for\ friend\ access}}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ U,\ \textcolor{keyword}{class}\ A>\ U\ \&\ get\_user\_data(\ A\ \&\ );}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00108\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ UserData,\ \textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00109\ \ \ \textcolor{keyword}{class\ }UserDataAdapter\ :\ \textcolor{keyword}{public}\ Archive}
+\DoxyCodeLine{00110\ \ \ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }...\ Args>}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ UserDataAdapter(\ UserData\ \&\ ud,\ Args\ \&\&\ ...\ args\ )\ :}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ Archive(\ std::forward<Args>(\ args\ )...\ ),}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ userdata(\ ud\ )}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ rtti()\ \{\}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \textcolor{keyword}{friend}\ UserData\ \&\ get\_user\_data<UserData>(\ Archive\ \&\ ar\ );}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ UserData\ \&\ userdata;\ }
+\DoxyCodeLine{00130\ \ \ \};}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00148\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ UserData,\ \textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00149\ \ \ UserData\ \&\ get\_user\_data(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{00150\ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00152\ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{dynamic\_cast<}UserDataAdapter<UserData,\ Archive>\ \&\textcolor{keyword}{>}(\ ar\ ).userdata;}
+\DoxyCodeLine{00154\ \ \ \ \ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::bad\_cast\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00156\ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ throw\ ::cereal::Exception(\textcolor{stringliteral}{"{}Attempting\ to\ get\ user\ data\ from\ archive\ not\ wrapped\ in\ UserDataAdapter"{}});}
+\DoxyCodeLine{00158\ \ \ \ \ \}}
+\DoxyCodeLine{00159\ \ \ \}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\ \ \#endif\ }\textcolor{comment}{//\ CEREAL\_FUTURE\_EXPERIMENTAL}}
+\DoxyCodeLine{00161\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_ARCHIVES\_ADAPTERS\_HPP\_}}
+
+\end{DoxyCode}

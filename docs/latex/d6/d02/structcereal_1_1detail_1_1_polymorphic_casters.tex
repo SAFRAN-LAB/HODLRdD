@@ -1,0 +1,90 @@
+\doxysection{cereal\+::detail\+::Polymorphic\+Casters Struct Reference}
+\hypertarget{structcereal_1_1detail_1_1_polymorphic_casters}{}\label{structcereal_1_1detail_1_1_polymorphic_casters}\index{cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}}
+
+
+Holds registered mappings between base and derived types for casting.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_a34ac3516aa89fde224190d9a5d0c43c6}\label{structcereal_1_1detail_1_1_polymorphic_casters_a34ac3516aa89fde224190d9a5d0c43c6} 
+using {\bfseries Derived\+Caster\+Map} = std\+::unordered\+\_\+map$<$std\+::type\+\_\+index, std\+::vector$<$\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*}$>$$>$
+\begin{DoxyCompactList}\small\item\em Maps from a derived type index to a set of chainable casters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::pair$<$ bool, std\+::vector$<$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} $>$ const \& $>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a3120704ea7c0a54d8fc5c2a9a032b32d}{lookup\+\_\+if\+\_\+exists}} (std\+::type\+\_\+index const \&base\+Index, std\+::type\+\_\+index const \&derived\+Index)
+\begin{DoxyCompactList}\small\item\em Checks if the mapping object that can perform the upcast or downcast exists, and returns it if so. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class F$>$ }\\static std\+::vector$<$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} $>$ const \& \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}{lookup}} (std\+::type\+\_\+index const \&base\+Index, std\+::type\+\_\+index const \&derived\+Index, F \&\&exception\+Func)
+\begin{DoxyCompactList}\small\item\em Gets the mapping object that can perform the upcast or downcast. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_aa0e37eb2bb9f2f2b9a4e2d0f68dd6a24}\label{structcereal_1_1detail_1_1_polymorphic_casters_aa0e37eb2bb9f2f2b9a4e2d0f68dd6a24} 
+{\footnotesize template$<$class Derived$>$ }\\static const Derived \texorpdfstring{$\ast$}{*} {\bfseries downcast} (const void \texorpdfstring{$\ast$}{*}dptr, std\+::type\+\_\+info const \&base\+Info)
+\begin{DoxyCompactList}\small\item\em Performs a downcast to the derived type using a registered mapping. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Derived$>$ }\\static void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_aab705357ea4e0494c91a09d14c33efba}{upcast}} (Derived \texorpdfstring{$\ast$}{*}const dptr, std\+::type\+\_\+info const \&base\+Info)
+\begin{DoxyCompactList}\small\item\em Performs an upcast to the registered base type using the given a derived type. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_abc39a0e05acd42d553215303f1101007}\label{structcereal_1_1detail_1_1_polymorphic_casters_abc39a0e05acd42d553215303f1101007} 
+{\footnotesize template$<$class Derived$>$ }\\static std\+::shared\+\_\+ptr$<$ void $>$ {\bfseries upcast} (std\+::shared\+\_\+ptr$<$ Derived $>$ const \&dptr, std\+::type\+\_\+info const \&base\+Info)
+\begin{DoxyCompactList}\small\item\em Upcasts for shared pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_ab73d51a06e51c40527b5356befe2d6cf}\label{structcereal_1_1detail_1_1_polymorphic_casters_ab73d51a06e51c40527b5356befe2d6cf} 
+std\+::unordered\+\_\+map$<$ std\+::type\+\_\+index, \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters_a34ac3516aa89fde224190d9a5d0c43c6}{Derived\+Caster\+Map}} $>$ {\bfseries map}
+\begin{DoxyCompactList}\small\item\em Maps from base type index to a map from derived type index to caster. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_a2882f71eeb29db503e81b8796b6418b6}\label{structcereal_1_1detail_1_1_polymorphic_casters_a2882f71eeb29db503e81b8796b6418b6} 
+std\+::multimap$<$ std\+::type\+\_\+index, std\+::type\+\_\+index $>$ {\bfseries reverse\+Map}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Holds registered mappings between base and derived types for casting. 
+
+This will be allocated as a \doxylink{classcereal_1_1detail_1_1_static_object}{Static\+Object} and holds a map containing all registered mappings between base and derived types. 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6}\index{cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}!lookup@{lookup}}
+\index{lookup@{lookup}!cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}}
+\doxysubsubsection{\texorpdfstring{lookup()}{lookup()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_casters_ae489c2a9516f0056479c1c0e33c0bfd6} 
+template$<$class F$>$ \\
+std\+::vector$<$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} $>$ const  \& cereal\+::detail\+::\+Polymorphic\+Casters\+::lookup (\begin{DoxyParamCaption}\item[{std\+::type\+\_\+index const \&}]{base\+Index}{, }\item[{std\+::type\+\_\+index const \&}]{derived\+Index}{, }\item[{F \&\&}]{exception\+Func}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Gets the mapping object that can perform the upcast or downcast. 
+
+Uses the type index from the base and derived class to find the matching registered caster. If no matching caster exists, calls the exception function.
+
+The returned \doxylink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster} is capable of upcasting or downcasting between the two types. \Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_a3120704ea7c0a54d8fc5c2a9a032b32d}\index{cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}!lookup\_if\_exists@{lookup\_if\_exists}}
+\index{lookup\_if\_exists@{lookup\_if\_exists}!cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}}
+\doxysubsubsection{\texorpdfstring{lookup\_if\_exists()}{lookup\_if\_exists()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_casters_a3120704ea7c0a54d8fc5c2a9a032b32d} 
+std\+::pair$<$ bool, std\+::vector$<$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} $>$ const \& $>$ cereal\+::detail\+::\+Polymorphic\+Casters\+::lookup\+\_\+if\+\_\+exists (\begin{DoxyParamCaption}\item[{std\+::type\+\_\+index const \&}]{base\+Index}{, }\item[{std\+::type\+\_\+index const \&}]{derived\+Index}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Checks if the mapping object that can perform the upcast or downcast exists, and returns it if so. 
+
+Uses the type index from the base and derived class to find the matching registered caster. If no matching caster exists, the bool in the pair will be false and the vector reference should not be used. \Hypertarget{structcereal_1_1detail_1_1_polymorphic_casters_aab705357ea4e0494c91a09d14c33efba}\index{cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}!upcast@{upcast}}
+\index{upcast@{upcast}!cereal::detail::PolymorphicCasters@{cereal::detail::PolymorphicCasters}}
+\doxysubsubsection{\texorpdfstring{upcast()}{upcast()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_casters_aab705357ea4e0494c91a09d14c33efba} 
+template$<$class Derived$>$ \\
+void \texorpdfstring{$\ast$}{*} cereal\+::detail\+::\+Polymorphic\+Casters\+::upcast (\begin{DoxyParamCaption}\item[{Derived \texorpdfstring{$\ast$}{*}const}]{dptr}{, }\item[{std\+::type\+\_\+info const \&}]{base\+Info}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Performs an upcast to the registered base type using the given a derived type. 
+
+The return is untyped because the final casting to the base type must happen in the polymorphic serialization function, where the type is known at compile time 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

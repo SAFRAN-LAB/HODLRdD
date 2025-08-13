@@ -1,0 +1,29 @@
+\doxysection{cereal\+::detail\+::Input\+Binding\+Creator\texorpdfstring{$<$}{<} Archive, T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_input_binding_creator}{}\label{structcereal_1_1detail_1_1_input_binding_creator}\index{cereal::detail::InputBindingCreator$<$ Archive, T $>$@{cereal::detail::InputBindingCreator$<$ Archive, T $>$}}
+
+
+Creates a binding (map entry) between an input archive type and a polymorphic type.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_input_binding_creator_a0844036ce968019290e32f9ab183e9e1}\label{structcereal_1_1detail_1_1_input_binding_creator_a0844036ce968019290e32f9ab183e9e1} 
+{\bfseries Input\+Binding\+Creator} ()
+\begin{DoxyCompactList}\small\item\em Initialize the binding. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T$>$\newline
+struct cereal\+::detail\+::\+Input\+Binding\+Creator$<$ Archive, T $>$}
+Creates a binding (map entry) between an input archive type and a polymorphic type. 
+
+Bindings are made when types are registered, assuming that at least one archive has already been registered. When this struct is created, it will insert (at run time) an entry into a map that properly handles casting for serializing polymorphic objects 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

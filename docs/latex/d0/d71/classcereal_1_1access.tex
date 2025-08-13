@@ -1,0 +1,101 @@
+\doxysection{cereal\+::access Class Reference}
+\hypertarget{classcereal_1_1access}{}\label{classcereal_1_1access}\index{cereal::access@{cereal::access}}
+
+
+A class that can be made a friend to give cereal access to non public functions.  
+
+
+
+
+{\ttfamily \#include $<$access.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1access_ad05831ccc458a58431b0c26a080d6ec6}\label{classcereal_1_1access_ad05831ccc458a58431b0c26a080d6ec6} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+serialize} (Archive \&ar, T \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_a9ac38aa11b94a4178ec335aa5dc49fbb}\label{classcereal_1_1access_a9ac38aa11b94a4178ec335aa5dc49fbb} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save} (Archive \&ar, T const \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_a9aee7c190fe592ab85e2ecef35645adf}\label{classcereal_1_1access_a9aee7c190fe592ab85e2ecef35645adf} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+non\+\_\+const} (Archive \&ar, T \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_a647fdf040a9befbf461baa4a06c2d490}\label{classcereal_1_1access_a647fdf040a9befbf461baa4a06c2d490} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+load} (Archive \&ar, T \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_aed7f0b5ff17ecf3090e43da940534bfb}\label{classcereal_1_1access_aed7f0b5ff17ecf3090e43da940534bfb} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+minimal} (Archive const \&ar, T const \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_a90b1fcd3d987d395e4fc309a75ae007e}\label{classcereal_1_1access_a90b1fcd3d987d395e4fc309a75ae007e} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+minimal\+\_\+non\+\_\+const} (Archive const \&ar, T \&t) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar))
+\item 
+\Hypertarget{classcereal_1_1access_a7e4479612424135647241983ad094547}\label{classcereal_1_1access_a7e4479612424135647241983ad094547} 
+{\footnotesize template$<$class Archive, class T, class U$>$ }\\static auto {\bfseries member\+\_\+load\+\_\+minimal} (Archive const \&ar, T \&t, U \&\&u) -\/$>$ decltype(t.\+CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar, std\+::forward$<$ U $>$(u)))
+\item 
+\Hypertarget{classcereal_1_1access_a169bc2eeef4214962fb3bef55aff8bf5}\label{classcereal_1_1access_a169bc2eeef4214962fb3bef55aff8bf5} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+serialize} (Archive \&ar, T \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a2fef6e1344a3e94ea37746577f1d10b5}\label{classcereal_1_1access_a2fef6e1344a3e94ea37746577f1d10b5} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save} (Archive \&ar, T const \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a51fcab9aab1b5d9349b9f6d9d52260b7}\label{classcereal_1_1access_a51fcab9aab1b5d9349b9f6d9d52260b7} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+non\+\_\+const} (Archive \&ar, T \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a033697b8fa854bba4b05a3547614c339}\label{classcereal_1_1access_a033697b8fa854bba4b05a3547614c339} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+load} (Archive \&ar, T \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a12207c5a8a7fde360a4210a7a90a6bd9}\label{classcereal_1_1access_a12207c5a8a7fde360a4210a7a90a6bd9} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+minimal} (Archive const \&ar, T const \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a594aedc4a1d99965acf78afd26eea1b4}\label{classcereal_1_1access_a594aedc4a1d99965acf78afd26eea1b4} 
+{\footnotesize template$<$class Archive, class T$>$ }\\static auto {\bfseries member\+\_\+save\+\_\+minimal\+\_\+non\+\_\+const} (Archive const \&ar, T \&t, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar, version))
+\item 
+\Hypertarget{classcereal_1_1access_a93be8085cce16064c52d419f06e1c6bd}\label{classcereal_1_1access_a93be8085cce16064c52d419f06e1c6bd} 
+{\footnotesize template$<$class Archive, class T, class U$>$ }\\static auto {\bfseries member\+\_\+load\+\_\+minimal} (Archive const \&ar, T \&t, U \&\&u, const std\+::uint32\+\_\+t version) -\/$>$ decltype(t.\+CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME(ar, std\+::forward$<$ U $>$(u), version))
+\item 
+\Hypertarget{classcereal_1_1access_a4313d611119408a0469ff1e8ac72ec20}\label{classcereal_1_1access_a4313d611119408a0469ff1e8ac72ec20} 
+{\footnotesize template$<$class T$>$ }\\static auto {\bfseries shared\+\_\+from\+\_\+this} (T \&t) -\/$>$ decltype(t.\+shared\+\_\+from\+\_\+this())
+\item 
+\Hypertarget{classcereal_1_1access_a0583d34ca52b22b4d752a3e562b1a12a}\label{classcereal_1_1access_a0583d34ca52b22b4d752a3e562b1a12a} 
+{\footnotesize template$<$class T, class ... Args$>$ }\\static void {\bfseries construct} (T \texorpdfstring{$\ast$}{*}\&ptr, Args \&\&... args)
+\item 
+\Hypertarget{classcereal_1_1access_a2f790880f623cc8c72a633e04aee2354}\label{classcereal_1_1access_a2f790880f623cc8c72a633e04aee2354} 
+{\footnotesize template$<$class T$>$ }\\static T \texorpdfstring{$\ast$}{*} {\bfseries construct} ()
+\item 
+\Hypertarget{classcereal_1_1access_a1c1f5168eb1ddb09d2949182e8bd4241}\label{classcereal_1_1access_a1c1f5168eb1ddb09d2949182e8bd4241} 
+{\footnotesize template$<$class T$>$ }\\static std\+::false\+\_\+type {\bfseries load\+\_\+and\+\_\+construct} (...)
+\item 
+\Hypertarget{classcereal_1_1access_a0f6cd0e87aea3da91512705c7343a571}\label{classcereal_1_1access_a0f6cd0e87aea3da91512705c7343a571} 
+{\footnotesize template$<$class T, class Archive$>$ }\\static auto {\bfseries load\+\_\+and\+\_\+construct} (Archive \&ar, \mbox{\hyperlink{classcereal_1_1construct}{\+::cereal\+::construct}}$<$ T $>$ \&\mbox{\hyperlink{classcereal_1_1construct}{construct}}) -\/$>$ decltype(T\+::load\+\_\+and\+\_\+construct(ar, \mbox{\hyperlink{classcereal_1_1construct}{construct}}))
+\item 
+\Hypertarget{classcereal_1_1access_a5951ce0bbf8be265596d42825e1c8e55}\label{classcereal_1_1access_a5951ce0bbf8be265596d42825e1c8e55} 
+{\footnotesize template$<$class T, class Archive$>$ }\\static auto {\bfseries load\+\_\+and\+\_\+construct} (Archive \&ar, \mbox{\hyperlink{classcereal_1_1construct}{\+::cereal\+::construct}}$<$ T $>$ \&\mbox{\hyperlink{classcereal_1_1construct}{construct}}, const std\+::uint32\+\_\+t version) -\/$>$ decltype(T\+::load\+\_\+and\+\_\+construct(ar, \mbox{\hyperlink{classcereal_1_1construct}{construct}}, version))
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class that can be made a friend to give cereal access to non public functions. 
+
+If you desire non-\/public serialization functions within a class, cereal can only access these if you declare \doxylink{classcereal_1_1access}{cereal\+::access} a friend.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MyClass}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }cereal::access;\ \textcolor{comment}{//\ gives\ access\ to\ the\ private\ serialize}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{comment}{//\ some\ code}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/\mbox{\hyperlink{access_8hpp}{access.\+hpp}}\end{DoxyCompactItemize}

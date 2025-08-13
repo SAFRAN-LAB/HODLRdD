@@ -1,0 +1,90 @@
+\doxysection{cereal\+::XMLOutput\+Archive\+::Options Class Reference}
+\hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options}{}\label{classcereal_1_1_x_m_l_output_archive_1_1_options}\index{cereal::XMLOutputArchive::Options@{cereal::XMLOutputArchive::Options}}
+
+
+A class containing various advanced options for the XML archive.  
+
+
+
+
+{\ttfamily \#include $<$xml.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}} (int precision\+\_\+=std\+::numeric\+\_\+limits$<$ double $>$\+::max\+\_\+digits10, bool indent\+\_\+=true, bool output\+Type\+\_\+=false, bool size\+Attributes\+\_\+=true)
+\begin{DoxyCompactList}\small\item\em Specify specific options for the \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Option Modifiers}\par
+{\em An interface for setting option settings analogous to named parameters.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cereal::XMLOutputArchive\ ar(\ myStream,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cereal::XMLOutputArchive::Options()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_add6270ed2b7d9761feb53d0b36d7f789}{indent}}(\textcolor{keyword}{true})}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_a45ffd33216da9a809739d005039fb7c2}{sizeAttributes}}(\textcolor{keyword}{false})\ );}
+
+\end{DoxyCode}
+ }\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_a0cdcb4f7954108b0fdef7b689753eee4}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_a0cdcb4f7954108b0fdef7b689753eee4} 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} \& {\bfseries precision} (int value)
+\begin{DoxyCompactList}\small\item\em Sets the precision used for floaing point numbers. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_add6270ed2b7d9761feb53d0b36d7f789}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_add6270ed2b7d9761feb53d0b36d7f789} 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} \& {\bfseries indent} (bool enable)
+\begin{DoxyCompactList}\small\item\em Whether to indent each line of XML. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_a8a2518b687af2c0e8c62d75fab0e3f48}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_a8a2518b687af2c0e8c62d75fab0e3f48} 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} \& {\bfseries output\+Type} (bool enable)
+\begin{DoxyCompactList}\small\item\em Whether to output the type of each serialized object as an attribute. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_a45ffd33216da9a809739d005039fb7c2}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_a45ffd33216da9a809739d005039fb7c2} 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} \& {\bfseries size\+Attributes} (bool enable)
+\begin{DoxyCompactList}\small\item\em Whether dynamically sized containers (e.\+g. vector) output the size=dynamic attribute. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87} 
+static \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} {\bfseries Default} ()
+\begin{DoxyCompactList}\small\item\em Default options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_a7fe2c3c8bfbca5f779dd329d1d80ddac}\label{classcereal_1_1_x_m_l_output_archive_1_1_options_a7fe2c3c8bfbca5f779dd329d1d80ddac} 
+class {\bfseries XMLOutput\+Archive}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class containing various advanced options for the XML archive. 
+
+\doxylink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options} can either be directly passed to the constructor, or chained using the modifier functions for an interface analogous to named parameters 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}\index{cereal::XMLOutputArchive::Options@{cereal::XMLOutputArchive::Options}!Options@{Options}}
+\index{Options@{Options}!cereal::XMLOutputArchive::Options@{cereal::XMLOutputArchive::Options}}
+\doxysubsubsection{\texorpdfstring{Options()}{Options()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894} 
+cereal\+::\+XMLOutput\+Archive\+::\+Options\+::\+Options (\begin{DoxyParamCaption}\item[{int}]{precision\+\_\+}{ = {\ttfamily std\+:\+:numeric\+\_\+limits$<$double$>$\+:\+:max\+\_\+digits10}, }\item[{bool}]{indent\+\_\+}{ = {\ttfamily true}, }\item[{bool}]{output\+Type\+\_\+}{ = {\ttfamily false}, }\item[{bool}]{size\+Attributes\+\_\+}{ = {\ttfamily true}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Specify specific options for the \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em precision\+\_\+} & The precision used for floating point numbers \\
+\hline
+{\em indent\+\_\+} & Whether to indent each line of XML \\
+\hline
+{\em output\+Type\+\_\+} & Whether to output the type of each serialized object as an attribute \\
+\hline
+{\em size\+Attributes\+\_\+} & Whether dynamically sized containers output the size=dynamic attribute \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{xml_8hpp}{xml.\+hpp}}\end{DoxyCompactItemize}

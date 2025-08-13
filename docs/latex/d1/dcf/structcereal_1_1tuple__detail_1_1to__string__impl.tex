@@ -1,0 +1,38 @@
+\doxysection{cereal\+::tuple\+\_\+detail\+::to\+\_\+string\+\_\+impl\texorpdfstring{$<$}{<} Q, R, C \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1tuple__detail_1_1to__string__impl}{}\label{structcereal_1_1tuple__detail_1_1to__string__impl}\index{cereal::tuple\_detail::to\_string\_impl$<$ Q, R, C $>$@{cereal::tuple\_detail::to\_string\_impl$<$ Q, R, C $>$}}
+
+
+Converts a number into a sequence of characters.  
+
+
+
+
+{\ttfamily \#include $<$tuple.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1tuple__detail_1_1to__string__impl_a527f3cf6ea7cae379f079c5423ed5e51}\label{structcereal_1_1tuple__detail_1_1to__string__impl_a527f3cf6ea7cae379f079c5423ed5e51} 
+using {\bfseries type} = typename \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\+\_\+string\+\_\+impl}}$<$Q/10, Q\%10, static\+\_\+cast$<$char$>$(R+std\+::size\+\_\+t\{\textquotesingle{}0\textquotesingle{}\}), C...$>$\+::type
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$size\+\_\+t Q, size\+\_\+t R, char ... C$>$\newline
+struct cereal\+::tuple\+\_\+detail\+::to\+\_\+string\+\_\+impl$<$ Q, R, C $>$}
+Converts a number into a sequence of characters. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Q} & The quotient of dividing the original number by 10 \\
+\hline
+{\em R} & The remainder of dividing the original number by 10 \\
+\hline
+{\em C} & The sequence built so far \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{tuple_8hpp}{tuple.\+hpp}}\end{DoxyCompactItemize}

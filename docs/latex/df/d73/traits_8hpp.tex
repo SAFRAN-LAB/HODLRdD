@@ -1,0 +1,950 @@
+\doxysection{lib/cereal/details/traits.hpp File Reference}
+\hypertarget{traits_8hpp}{}\label{traits_8hpp}\index{lib/cereal/details/traits.hpp@{lib/cereal/details/traits.hpp}}
+
+
+Internal type trait support.  
+
+
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$typeindex$>$}\newline
+{\ttfamily \#include "{}cereal/macros.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/access.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1delay__static__assert}{cereal\+::traits\+::detail\+::delay\+\_\+static\+\_\+assert$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Used to delay a static\+\_\+assert until template instantiation. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__and}{cereal\+::traits\+::detail\+::meta\+\_\+bool\+\_\+and$<$ H, T $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__and_3_01_b_01_4}{cereal\+::traits\+::detail\+::meta\+\_\+bool\+\_\+and$<$ B $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__or}{cereal\+::traits\+::detail\+::meta\+\_\+bool\+\_\+or$<$ H, T $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__or_3_01_b_01_4}{cereal\+::traits\+::detail\+::meta\+\_\+bool\+\_\+or$<$ B $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_enable_if_helper}{cereal\+::traits\+::detail\+::\+Enable\+If\+Helper$<$ Conditions $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_disable_if_helper}{cereal\+::traits\+::detail\+::\+Disable\+If\+Helper$<$ Conditions $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__output__from__input}{cereal\+::traits\+::detail\+::get\+\_\+output\+\_\+from\+\_\+input$<$ Input\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__input__from__output}{cereal\+::traits\+::detail\+::get\+\_\+input\+\_\+from\+\_\+output$<$ Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__save}{cereal\+::traits\+::has\+\_\+member\+\_\+save$<$ T, A $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__save}{cereal\+::traits\+::has\+\_\+member\+\_\+versioned\+\_\+save$<$ T, A $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1is__string}{cereal\+::traits\+::detail\+::is\+\_\+string$<$ class $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1is__string_3_01std_1_1basic__string_3_01_char_t_00_01_traits_00_01_alloc_01_4_01_4}{cereal\+::traits\+::detail\+::is\+\_\+string$<$ std\+::basic\+\_\+string$<$ Char\+T, Traits, Alloc $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__minimal__type}{cereal\+::traits\+::is\+\_\+minimal\+\_\+type$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_base}{cereal\+::traits\+::detail\+::\+No\+Convert\+Base}}
+\begin{DoxyCompactList}\small\item\em Used to help strip away conversion wrappers. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_const_ref}{cereal\+::traits\+::detail\+::\+No\+Convert\+Const\+Ref$<$ Source $>$}}
+\begin{DoxyCompactList}\small\item\em A struct that prevents implicit conversion. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref}{cereal\+::traits\+::detail\+::\+No\+Convert\+Ref$<$ Source $>$}}
+\begin{DoxyCompactList}\small\item\em A struct that prevents implicit conversion. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_any_convert}{cereal\+::traits\+::detail\+::\+Any\+Convert}}
+\begin{DoxyCompactList}\small\item\em A type that can implicitly convert to anything else. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__load__and__construct__impl}{cereal\+::traits\+::detail\+::has\+\_\+member\+\_\+load\+\_\+and\+\_\+construct\+\_\+impl$<$ T, A $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__versioned__load__and__construct__impl}{cereal\+::traits\+::detail\+::has\+\_\+member\+\_\+versioned\+\_\+load\+\_\+and\+\_\+construct\+\_\+impl$<$ T, A $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__load__and__construct}{cereal\+::traits\+::has\+\_\+member\+\_\+load\+\_\+and\+\_\+construct$<$ T, A $>$}}
+\begin{DoxyCompactList}\small\item\em Member load and construct check. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__load__and__construct}{cereal\+::traits\+::has\+\_\+member\+\_\+versioned\+\_\+load\+\_\+and\+\_\+construct$<$ T, A $>$}}
+\begin{DoxyCompactList}\small\item\em Member load and construct check (versioned) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{cereal\+::traits\+::has\+\_\+load\+\_\+and\+\_\+construct$<$ T, A $>$}}
+\begin{DoxyCompactList}\small\item\em Non member load and construct check. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__split}{cereal\+::traits\+::has\+\_\+member\+\_\+split$<$ T, Input\+Archive, Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__non__member__split}{cereal\+::traits\+::has\+\_\+non\+\_\+member\+\_\+split$<$ T, Input\+Archive, Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__invalid__output__versioning}{cereal\+::traits\+::has\+\_\+invalid\+\_\+output\+\_\+versioning$<$ T, Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__invalid__input__versioning}{cereal\+::traits\+::has\+\_\+invalid\+\_\+input\+\_\+versioning$<$ T, Input\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__specializations}{cereal\+::traits\+::detail\+::count\+\_\+specializations$<$ T, A $>$}}
+\begin{DoxyCompactList}\small\item\em Number of specializations detected. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__specialized}{cereal\+::traits\+::is\+\_\+specialized$<$ T, A $>$}}
+\begin{DoxyCompactList}\small\item\em Check if any specialization exists for a type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{cereal\+::traits\+::has\+\_\+minimal\+\_\+output\+\_\+serialization$<$ T, Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{cereal\+::traits\+::has\+\_\+minimal\+\_\+input\+\_\+serialization$<$ T, Input\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__output__serializers}{cereal\+::traits\+::detail\+::count\+\_\+output\+\_\+serializers$<$ T, Output\+Archive $>$}}
+\begin{DoxyCompactList}\small\item\em The number of output serialization functions available. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{cereal\+::traits\+::is\+\_\+output\+\_\+serializable$<$ T, Output\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__input__serializers}{cereal\+::traits\+::detail\+::count\+\_\+input\+\_\+serializers$<$ T, Input\+Archive $>$}}
+\begin{DoxyCompactList}\small\item\em The number of input serialization functions available. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{cereal\+::traits\+::is\+\_\+input\+\_\+serializable$<$ T, Input\+Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1base__class__id}{cereal\+::traits\+::detail\+::base\+\_\+class\+\_\+id}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1base__class__id__hash}{cereal\+::traits\+::detail\+::base\+\_\+class\+\_\+id\+\_\+hash}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_base_cast_base}{cereal\+::traits\+::detail\+::\+Base\+Cast\+Base}}
+\begin{DoxyCompactList}\small\item\em Common base type for base class casting. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__base__class_3_01_cast_3_01_base_01_4_01_4}{cereal\+::traits\+::detail\+::get\+\_\+base\+\_\+class$<$ Cast$<$ Base $>$ $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__minimal__base__class__serialization__impl}{cereal\+::traits\+::detail\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization\+\_\+impl$<$ Cast, Test, Archive, Is\+Base\+Cast $>$}}
+\begin{DoxyCompactList}\small\item\em Base class cast, behave as the test. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__minimal__base__class__serialization__impl_3_01_cast_00_770f151cf1f8dcf8b74cd811c88827e1}{cereal\+::traits\+::detail\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization\+\_\+impl$<$ Cast, Test, Archive, false $>$}}
+\begin{DoxyCompactList}\small\item\em Not a base class cast. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{cereal\+::traits\+::has\+\_\+minimal\+\_\+base\+\_\+class\+\_\+serialization$<$ Cast, Test, Archive $>$}}
+\begin{DoxyCompactList}\small\item\em Checks to see if the base class used in a cast has a minimal serialization. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper}{cereal\+::traits\+::detail\+::shared\+\_\+from\+\_\+this\+\_\+wrapper}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1has__shared__from__this}{cereal\+::traits\+::has\+\_\+shared\+\_\+from\+\_\+this$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Determine if T or any base class of T has inherited from std\+::enable\+\_\+shared\+\_\+from\+\_\+this. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1get__shared__from__this__base}{cereal\+::traits\+::get\+\_\+shared\+\_\+from\+\_\+this\+\_\+base$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Get the type of the base class of T which inherited from std\+::enable\+\_\+shared\+\_\+from\+\_\+this. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1strip__minimal}{cereal\+::traits\+::strip\+\_\+minimal$<$ T, Is\+Cereal\+Minimal\+Trait $>$}}
+\begin{DoxyCompactList}\small\item\em Extracts the true type from something possibly wrapped in a cereal No\+Convert. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1strip__minimal_3_01_t_00_01true_01_4}{cereal\+::traits\+::strip\+\_\+minimal$<$ T, true $>$}}
+\begin{DoxyCompactList}\small\item\em Specialization for types wrapped in a No\+Convert. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{cereal\+::traits\+::is\+\_\+default\+\_\+constructible$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Determines whether the class T can be default constructed by \doxylink{classcereal_1_1access}{cereal\+::access}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__same__archive}{cereal\+::traits\+::is\+\_\+same\+\_\+archive$<$ Archive\+T, Cereal\+Archive\+T $>$}}
+\begin{DoxyCompactList}\small\item\em Checks if the provided archive type is equal to some cereal archive type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1_text_archive}{cereal\+::traits\+::\+Text\+Archive}}
+\begin{DoxyCompactList}\small\item\em \doxylink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} traits only struct used to mark an archive as human readable (text based) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1traits_1_1is__text__archive}{cereal\+::traits\+::is\+\_\+text\+\_\+archive$<$ A $>$}}
+\begin{DoxyCompactList}\small\item\em Checks if an archive is a text archive (human readable) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{cereal\+::detail\+::\+Construct$<$ T, A, Member, Member\+Versioned, Non\+Member, Non\+Member\+Versioned $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct_3_01_t_00_01_a_00_01false_00_01false_00_01false_00_01false_01_4}{cereal\+::detail\+::\+Construct$<$ T, A, false, false, false, false $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct_3_01_t_00_01_a_00_01true_00_01false_00_01false_00_01false_01_4}{cereal\+::detail\+::\+Construct$<$ T, A, true, false, false, false $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct_3_01_t_00_01_a_00_01false_00_01true_00_01false_00_01false_01_4}{cereal\+::detail\+::\+Construct$<$ T, A, false, true, false, false $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct_3_01_t_00_01_a_00_01false_00_01false_00_01true_00_01false_01_4}{cereal\+::detail\+::\+Construct$<$ T, A, false, false, true, false $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_construct_3_01_t_00_01_a_00_01false_00_01false_00_01false_00_01true_01_4}{cereal\+::detail\+::\+Construct$<$ T, A, false, false, false, true $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666}{CEREAL\+\_\+\+SETUP\+\_\+\+ARCHIVE\+\_\+\+TRAITS}}(Input\+Archive,  Output\+Archive)
+\begin{DoxyCompactList}\small\item\em Sets up traits that relate an input archive to an output archive. \end{DoxyCompactList}\item 
+\Hypertarget{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}\label{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928} 
+\#define {\bfseries CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST}~,0
+\begin{DoxyCompactList}\small\item\em Used to convert a MAKE\+\_\+\+HAS\+\_\+\+XXX macro into a versioned variant. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST}}(name,  test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non const member function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_af31f4783772a7f6a3048a793090715cf}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST}}(test\+\_\+name,  func,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non const non-\/member function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a669b39fde8f86acef9e5b1470ceb0364}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+IMPL}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a member save function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a5be76cc82813adfc110f793e37636fb1}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+TEST}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non-\/member save function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a3d9d56e1b4254790186b1565796fdd35}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+IMPL}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates implementation details for whether a member save\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_aab60653db33c8898506326963f8a7211}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+HELPERS\+\_\+\+IMPL}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates helpers for minimal save functions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a33f583ea76bb88656995fa4d5d5e9ade}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+TEST}}(test\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a member save\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_ae7eb2173790b30144a419f33afcd2710}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+TEST}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non-\/member save\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a41354a9a797549bb6802c0f16435f675}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+IMPL}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a member load\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a4d829a1189314b4adb3b1f6f72d94151}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+HELPERS\+\_\+\+IMPL}}(load\+\_\+test\+\_\+name,  save\+\_\+test\+\_\+name,  save\+\_\+test\+\_\+prefix,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates helpers for minimal load functions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a4497ffc80b9053f731b781d740b98af2}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+TEST}}(load\+\_\+test\+\_\+name,  load\+\_\+test\+\_\+prefix)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a member load\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a99298ef5f4678723f35d175291eb5770}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+TEST}}(test\+\_\+name,  save\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non-\/member load\+\_\+minimal function exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a65a75d150c050c8a44ab1d9d2b85bba6}{CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+AND\+\_\+\+CONSTRUCT\+\_\+\+TEST}}(test\+\_\+name,  versioned)
+\begin{DoxyCompactList}\small\item\em Creates a test for whether a non-\/member load\+\_\+and\+\_\+construct specialization exists. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL}}(name)
+\begin{DoxyCompactList}\small\item\em Create a test for a cereal\+::specialization entry. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a7e6519141d71272bbe5db25d01d175ad}{CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+ASSERT}}(name,  versioned\+\_\+name,  print\+\_\+name,  spec\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Create the static assertion for some specialization. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED}}(name,  versioned\+\_\+name,  spec\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Generates a test for specialization for versioned and unversioned functions. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\+\_\+\+ARCHIVE\+\_\+\+RESTRICT}}(INTYPE,  OUTTYPE)
+\begin{DoxyCompactList}\small\item\em A macro to use to restrict which types of archives your function will work for. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{traits_8hpp_a02a58c0db23057d11c50cba579fb0c9a}\label{traits_8hpp_a02a58c0db23057d11c50cba579fb0c9a} 
+using {\bfseries cereal\+::traits\+::yes} = std\+::true\+\_\+type
+\item 
+\Hypertarget{traits_8hpp_a9a06e05eed21e2b28c9b605a37dd25ef}\label{traits_8hpp_a9a06e05eed21e2b28c9b605a37dd25ef} 
+using {\bfseries cereal\+::traits\+::no} = std\+::false\+\_\+type
+\item 
+{\footnotesize template$<$bool ... Conditions$>$ }\\using \mbox{\hyperlink{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}{Enable\+If}} = typename detail\+::\+Enable\+If\+Helper$<$Conditions...$>$\+::type
+\begin{DoxyCompactList}\small\item\em Provides a way to enable a function if conditions are met. \end{DoxyCompactList}\item 
+{\footnotesize template$<$bool ... Conditions$>$ }\\using \mbox{\hyperlink{traits_8hpp_a07719740a7cec6692b44244201a92603}{Disable\+If}} = typename detail\+::\+Disable\+If\+Helper$<$Conditions...$>$\+::type
+\begin{DoxyCompactList}\small\item\em Provides a way to disable a function if conditions are met. \end{DoxyCompactList}\item 
+\Hypertarget{traits_8hpp_a62a02bbfa227a78cbc43d689fe57083d}\label{traits_8hpp_a62a02bbfa227a78cbc43d689fe57083d} 
+{\footnotesize template$<$class A$>$ }\\using {\bfseries cereal\+::traits\+::detail\+::decay\+\_\+archive} = typename std\+::decay$<$typename \mbox{\hyperlink{structcereal_1_1traits_1_1strip__minimal}{strip\+\_\+minimal}}$<$A$>$\+::type$>$\+::type
+\begin{DoxyCompactList}\small\item\em Removes all qualifiers and minimal wrappers from an archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{traits_8hpp_aafd74e5beca7e112de8b2e20ef41d973}\label{traits_8hpp_aafd74e5beca7e112de8b2e20ef41d973} 
+enum class \mbox{\hyperlink{traits_8hpp_aafd74e5beca7e112de8b2e20ef41d973}{cereal\+::traits\+::detail\+::sfinae}} 
+\begin{DoxyCompactList}\small\item\em Return type for SFINAE Enablers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{traits_8hpp_a272f835b66fc9503a8c832007612a7f1}\label{traits_8hpp_a272f835b66fc9503a8c832007612a7f1} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST} (\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}, \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}},)
+\item 
+\Hypertarget{traits_8hpp_aba4330c797a0db80059c74ce0d298cf7}\label{traits_8hpp_aba4330c797a0db80059c74ce0d298cf7} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST} (\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}, versioned\+\_\+serialize, \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST}})
+\item 
+\Hypertarget{traits_8hpp_a84537b1c09daf1cfb31c687d3844336c}\label{traits_8hpp_a84537b1c09daf1cfb31c687d3844336c} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST} (\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}, \mbox{\hyperlink{namespacecereal_a64ec0a04e5dc57a58de5e78b5a87b8d3}{CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}},)
+\item 
+\Hypertarget{traits_8hpp_a1e4703a037e82b58fa568ea1a869932b}\label{traits_8hpp_a1e4703a037e82b58fa568ea1a869932b} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST} (versioned\+\_\+serialize, \mbox{\hyperlink{namespacecereal_a64ec0a04e5dc57a58de5e78b5a87b8d3}{CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}}, \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST}})
+\item 
+\Hypertarget{traits_8hpp_a91965ae6af453b52a6479d4e9a8e32f9}\label{traits_8hpp_a91965ae6af453b52a6479d4e9a8e32f9} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST} (load, load,)
+\item 
+\Hypertarget{traits_8hpp_a5be14e72c1af859d2f57da9c6bee521c}\label{traits_8hpp_a5be14e72c1af859d2f57da9c6bee521c} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST} (load, versioned\+\_\+load, \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST}})
+\item 
+\Hypertarget{traits_8hpp_aba309d0c0b8990cc41264a735f6fe8a0}\label{traits_8hpp_aba309d0c0b8990cc41264a735f6fe8a0} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST} (load, \mbox{\hyperlink{namespacecereal_a960b7971cfb99b3c826258369bfc01e9}{CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME}},)
+\item 
+\Hypertarget{traits_8hpp_a83ef3b068e4c18caaf90c2d3adb3b2c0}\label{traits_8hpp_a83ef3b068e4c18caaf90c2d3adb3b2c0} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST} (versioned\+\_\+load, \mbox{\hyperlink{namespacecereal_a960b7971cfb99b3c826258369bfc01e9}{CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME}}, \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST}})
+\item 
+\Hypertarget{traits_8hpp_a57b1b50cefc0d028cae13d4bb85b0d45}\label{traits_8hpp_a57b1b50cefc0d028cae13d4bb85b0d45} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (member\+\_\+serialize)
+\item 
+\Hypertarget{traits_8hpp_aa3d52f02ddb07b4750b1d342db245610}\label{traits_8hpp_aa3d52f02ddb07b4750b1d342db245610} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_aa8074cb2fe6eb50846f5adf3edfcbcd2}\label{traits_8hpp_aa8074cb2fe6eb50846f5adf3edfcbcd2} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (member\+\_\+load\+\_\+save\+\_\+minimal)
+\item 
+\Hypertarget{traits_8hpp_a8e103445b8259599a8c5a2d784dc0ca0}\label{traits_8hpp_a8e103445b8259599a8c5a2d784dc0ca0} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (non\+\_\+member\+\_\+serialize)
+\item 
+\Hypertarget{traits_8hpp_a64c27264ebd40cb17fbdbb65fefef319}\label{traits_8hpp_a64c27264ebd40cb17fbdbb65fefef319} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (non\+\_\+member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_a57714ba26e46777c7acddca859a047ba}\label{traits_8hpp_a57714ba26e46777c7acddca859a047ba} 
+{\bfseries cereal\+::traits\+::detail\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL} (non\+\_\+member\+\_\+load\+\_\+save\+\_\+minimal)
+\item 
+\Hypertarget{traits_8hpp_a37e44b59c6260570584a890efa520a8b}\label{traits_8hpp_a37e44b59c6260570584a890efa520a8b} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (member\+\_\+serialize, member\+\_\+versioned\+\_\+serialize, member\+\_\+serialize)
+\item 
+\Hypertarget{traits_8hpp_a6b352be989824571c05f6dc304d4df71}\label{traits_8hpp_a6b352be989824571c05f6dc304d4df71} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (non\+\_\+member\+\_\+serialize, non\+\_\+member\+\_\+versioned\+\_\+serialize, non\+\_\+member\+\_\+serialize)
+\item 
+\Hypertarget{traits_8hpp_adcb4eb583516b360022a255f9703b96d}\label{traits_8hpp_adcb4eb583516b360022a255f9703b96d} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (member\+\_\+save, member\+\_\+versioned\+\_\+save, member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_a6d2f0c0f9cdf1701d6be30bfa69107d3}\label{traits_8hpp_a6d2f0c0f9cdf1701d6be30bfa69107d3} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (non\+\_\+member\+\_\+save, non\+\_\+member\+\_\+versioned\+\_\+save, non\+\_\+member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_afbe788b8d27ce8494df42e108624d387}\label{traits_8hpp_afbe788b8d27ce8494df42e108624d387} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (member\+\_\+load, member\+\_\+versioned\+\_\+load, member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_ac6314b143f33f837572c766b8822b5d2}\label{traits_8hpp_ac6314b143f33f837572c766b8822b5d2} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (non\+\_\+member\+\_\+load, non\+\_\+member\+\_\+versioned\+\_\+load, non\+\_\+member\+\_\+load\+\_\+save)
+\item 
+\Hypertarget{traits_8hpp_a04d88853aa20506f95abd46b95e40bac}\label{traits_8hpp_a04d88853aa20506f95abd46b95e40bac} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (member\+\_\+save\+\_\+minimal, member\+\_\+versioned\+\_\+save\+\_\+minimal, member\+\_\+load\+\_\+save\+\_\+minimal)
+\item 
+\Hypertarget{traits_8hpp_aa492e93c41a9b6fb524b68f925f489a4}\label{traits_8hpp_aa492e93c41a9b6fb524b68f925f489a4} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (non\+\_\+member\+\_\+save\+\_\+minimal, non\+\_\+member\+\_\+versioned\+\_\+save\+\_\+minimal, non\+\_\+member\+\_\+load\+\_\+save\+\_\+minimal)
+\item 
+\Hypertarget{traits_8hpp_a6a5b663e3c4b1bc658070b443829e669}\label{traits_8hpp_a6a5b663e3c4b1bc658070b443829e669} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (member\+\_\+load\+\_\+minimal, member\+\_\+versioned\+\_\+load\+\_\+minimal, member\+\_\+load\+\_\+save\+\_\+minimal)
+\item 
+\Hypertarget{traits_8hpp_a32e21033492e984bb43e0ac0ee72fabe}\label{traits_8hpp_a32e21033492e984bb43e0ac0ee72fabe} 
+{\bfseries cereal\+::traits\+::\+CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED} (non\+\_\+member\+\_\+load\+\_\+minimal, non\+\_\+member\+\_\+versioned\+\_\+load\+\_\+minimal, non\+\_\+member\+\_\+load\+\_\+save\+\_\+minimal)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal type trait support. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{traits_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{traits_8hpp_a29490687675183194498a843f7beeb8b}\index{traits.hpp@{traits.hpp}!CEREAL\_ARCHIVE\_RESTRICT@{CEREAL\_ARCHIVE\_RESTRICT}}
+\index{CEREAL\_ARCHIVE\_RESTRICT@{CEREAL\_ARCHIVE\_RESTRICT}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_ARCHIVE\_RESTRICT}{CEREAL\_ARCHIVE\_RESTRICT}}
+{\footnotesize\ttfamily \label{traits_8hpp_a29490687675183194498a843f7beeb8b} 
+\#define CEREAL\+\_\+\+ARCHIVE\+\_\+\+RESTRICT(\begin{DoxyParamCaption}\item[{}]{INTYPE}{, }\item[{}]{OUTTYPE}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{typename}\ std::enable\_if<cereal::traits::is\_same\_archive<Archive,\ INTYPE>::value\ ||\ \mbox{\hyperlink{structcereal_1_1traits_1_1is__same__archive}{cereal::traits::is\_same\_archive<Archive,\ OUTTYPE>::value}},\ \textcolor{keywordtype}{void}>::type}
+
+\end{DoxyCode}
+
+
+A macro to use to restrict which types of archives your function will work for. 
+
+This requires you to have a template class parameter named Archive and replaces the void return type for your function.
+
+INTYPE refers to the input archive type you wish to restrict on. OUTTYPE refers to the output archive type you wish to restrict on.
+
+For example, if we want to limit a serialize to only work with binary serialization\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\_ARCHIVE\_RESTRICT}}(BinaryInputArchive,\ BinaryOutputArchive)}
+\DoxyCodeLine{\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar,\ MyCoolType\ \&\ m\ )}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ ar\ \&\ m;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+If you need to do more restrictions in your enable\+\_\+if, you will need to do this by hand. \Hypertarget{traits_8hpp_a4d829a1189314b4adb3b1f6f72d94151}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_a4d829a1189314b4adb3b1f6f72d94151} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+HELPERS\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{load\+\_\+test\+\_\+name}{, }\item[{}]{save\+\_\+test\+\_\+name}{, }\item[{}]{save\+\_\+test\+\_\+prefix}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A,\ \textcolor{keywordtype}{bool}\ Val\textcolor{keywordtype}{id}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#load\_test\_name\#\#\_wrapper\ :\ std::false\_type\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#load\_test\_name\#\#\_wrapper<T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }AOut\ =\ \textcolor{keyword}{typename}\ detail::get\_output\_from\_input<A>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ static\_assert(\ has\_member\_\#\#save\_test\_prefix\#\#\_minimal<T,\ AOut>::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ member\ "{}}\ \#load\_test\_name\ \textcolor{stringliteral}{"{}\ but\ no\ valid\ member\ "{}}\ \#save\_test\_name\ \textcolor{stringliteral}{"{}.\ \(\backslash\)n\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cannot\ evaluate\ correctness\ of\ "{}}\ \#load\_test\_name\ \textcolor{stringliteral}{"{}\ without\ valid\ "{}}\ \#save\_test\_name\ \textcolor{stringliteral}{"{}."{}}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }SaveType\ =\ \textcolor{keyword}{typename}\ detail::get\_member\_\#\#save\_test\_prefix\#\#\_minimal\_type<T,\ AOut,\ true>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ value\ =\ has\_member\_\#\#load\_test\_name\#\#\_impl<T,\ A>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{bool}\ valid\ =\ has\_member\_\#\#load\_test\_name\#\#\_type\_impl<T,\ A,\ SaveType>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ static\_assert(\ valid\ ||\ !value,\ \textcolor{stringliteral}{"{}cereal\ detected\ different\ or\ invalid\ types\ in\ corresponding\ member\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \#load\_test\_name\ \textcolor{stringliteral}{"{}\ and\ "{}}\ \#save\_test\_name\ \textcolor{stringliteral}{"{}\ functions.\ \(\backslash\)n\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}the\ paramater\ to\ "{}}\ \#load\_test\_name\ \textcolor{stringliteral}{"{}\ must\ be\ a\ constant\ reference\ to\ the\ type\ that\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \#save\_test\_name\ \textcolor{stringliteral}{"{}\ returns."{}}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}}
+
+\end{DoxyCode}
+
+
+Creates helpers for minimal load functions. 
+
+The has\+\_\+member\+\_\+\texorpdfstring{$\ast$}{*}\+\_\+wrapper structs ensure that the load and save types for the requested function type match appropriately.
+
+
+\begin{DoxyParams}{Parameters}
+{\em load\+\_\+test\+\_\+name} & The name to give the test (e.\+g. load\+\_\+minimal or versioned\+\_\+load\+\_\+minimal) \\
+\hline
+{\em save\+\_\+test\+\_\+name} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal, should match the load name. \\
+\hline
+{\em save\+\_\+test\+\_\+prefix} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal, should match the load name, without the trailing "{}\+\_\+minimal"{} (e.\+g. save or versioned\+\_\+save). Needed because the preprocessor is an abomination. \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a41354a9a797549bb6802c0f16435f675}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_a41354a9a797549bb6802c0f16435f675} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_load\_minimal(\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ \&>(),\ AnyConvert()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A,\ \textcolor{keyword}{class}\ U>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\#\#\_type\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA,\ \textcolor{keyword}{class}\ UU>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_load\_minimal(\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ \&>(),\ NoConvertConstRef<UU>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A,\ U>(0)),\ yes>::value;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a member load\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+Our strategy here is to first check if a function matching the signature more or less exists (allow anything like load\+\_\+minimal(xxx) using Any\+Convert, and then secondly enforce that it has the correct signature using No\+Convert\+Const\+Ref
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. load\+\_\+minimal or versioned\+\_\+load\+\_\+minimal) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a4497ffc80b9053f731b781d740b98af2}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_a4497ffc80b9053f731b781d740b98af2} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{load\+\_\+test\+\_\+name}{, }\item[{}]{load\+\_\+test\+\_\+prefix}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#load\_test\_prefix\#\#\_minimal\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ detail::has\_member\_\#\#load\_test\_name\#\#\_wrapper<T,\ A,\ detail::has\_member\_\#\#load\_test\_name\#\#\_impl<T,\ A>::value>::value>\ \{\};}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a member load\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em load\+\_\+test\+\_\+name} & The name to give the test (e.\+g. load\+\_\+minimal or versioned\+\_\+load\+\_\+minimal) \\
+\hline
+{\em load\+\_\+test\+\_\+prefix} & The above parameter minus the trailing "{}\+\_\+minimal"{} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a669b39fde8f86acef9e5b1470ceb0364}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_a669b39fde8f86acef9e5b1470ceb0364} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_save(\ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test2(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_save\_non\_const(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<\textcolor{keyword}{typename}\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a member save function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save or versioned\+\_\+save) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_aab60653db33c8898506326963f8a7211}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_aab60653db33c8898506326963f8a7211} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+HELPERS\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A,\ \textcolor{keywordtype}{bool}\ Val\textcolor{keywordtype}{id}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }get\_member\_\#\#test\_name\#\#\_type\ \{\ \textcolor{keyword}{using\ }type\ =\ void;\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }get\_member\_\#\#test\_name\#\#\_type<T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \textcolor{keyword}{decltype}(\ cereal::access::member\_save\_minimal(\ std::declval<A\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<T\ const\ \&>()\ versioned\ )\ );\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}}
+
+\end{DoxyCode}
+
+
+Creates helpers for minimal save functions. 
+
+The get\+\_\+member\+\_\+\texorpdfstring{$\ast$}{*}\+\_\+type structs allow access to the return type of a save\+\_\+minimal, assuming that the function actually exists. If the function does not exist, the type will be void.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a3d9d56e1b4254790186b1565796fdd35}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_a3d9d56e1b4254790186b1565796fdd35} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_save\_minimal(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test2(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_save\_minimal\_non\_const(\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<\textcolor{keyword}{typename}\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ valid\ =\ value\ ||\ !not\_const\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}}
+
+\end{DoxyCode}
+
+
+Creates implementation details for whether a member save\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a33f583ea76bb88656995fa4d5d5e9ade}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_a33f583ea76bb88656995fa4d5d5e9ade} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{using\ }check\ =\ \textcolor{keyword}{typename}\ detail::has\_member\_\#\#test\_name\#\#\_impl<T,\ A>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ static\_assert(\ check::valid,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ a\ non-\/const\ member\ "{}}\ \#test\_name\ \textcolor{stringliteral}{"{}.\ \(\backslash\)n\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \#test\_name\ \textcolor{stringliteral}{"{}\ member\ functions\ must\ always\ be\ const"{}}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \textcolor{keyword}{typename}\ detail::get\_member\_\#\#test\_name\#\#\_type<T,\ A,\ check::value>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ static\_assert(\ (check::value\ \&\&\ is\_minimal\_type<type>::value)\ ||\ !check::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ a\ member\ "{}}\ \#test\_name\ \textcolor{stringliteral}{"{}\ with\ an\ invalid\ return\ type.\ \(\backslash\)n\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}return\ type\ must\ be\ arithmetic\ or\ string"{}}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \};}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a member save\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_MEMBER\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_MEMBER\_TEST@{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+MEMBER\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#name\#\#\_\#\#versioned\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::member\_\#\#name(\ std::declval<AA\&>(),\ std::declval<TT\&>()\ versioned\ ),\ yes());\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_member\_\#\#name\#\#\_\#\#versioned\#\#\_impl<T,\ A>::value>\ \{\}}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a non const member function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & The name of the function to test for (e.\+g. serialize, load, save) \\
+\hline
+{\em test\+\_\+name} & The name to give the test for the function being tested for (e.\+g. serialize, versioned\+\_\+serialize) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a65a75d150c050c8a44ab1d9d2b85bba6}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_a65a75d150c050c8a44ab1d9d2b85bba6} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+AND\+\_\+\+CONSTRUCT\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ LoadAndConstruct<TT>::load\_and\_construct(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\&>(),\ std::declval<\ \mbox{\hyperlink{classcereal_1_1construct}{::cereal::construct<TT>}}\&>()\ versioned\ ),\ yes());\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ no\ test(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(\ test<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<typename\ std::remove\_const<T>::type,\ A>::value>\ \{\};}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a non-\/member load\+\_\+and\+\_\+construct specialization exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper non-\/member function for the given archive. \Hypertarget{traits_8hpp_a99298ef5f4678723f35d175291eb5770}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_a99298ef5f4678723f35d175291eb5770} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{save\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+
+
+Creates a test for whether a non-\/member load\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+See notes from member load\+\_\+minimal implementation.
+
+Note that there should be an additional const check on load\+\_\+minimal after the valid check, but this currently interferes with many valid uses of minimal serialization. It has been removed (see \#565 on github) and previously was\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{static\_assert}(\ check::const\_valid\ ||\ !check::exists,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ an\ invalid\ serialization\ type\ parameter\ in\ non-\/member\ "{}}\ \#test\_name\ \textcolor{stringliteral}{"{}.\ \ "{}}}
+\DoxyCodeLine{\textcolor{preprocessor}{\ \ \ \ \#test\_name\ "{}\ non-\/member\ functions\ must\ accept\ their\ serialization\ type\ by\ non-\/const\ reference"{}\ );}}
+
+\end{DoxyCode}
+
+
+See \#132, \#436, \#263, and \#565 on \href{https://github.com/USCiLab/cereal}{\texttt{https\+://github.\+com/\+USCi\+Lab/cereal}} for more details.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. load\+\_\+minimal or versioned\+\_\+load\+\_\+minimal) \\
+\hline
+{\em save\+\_\+name} & The corresponding name the save test would have (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_ae7eb2173790b30144a419f33afcd2710}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_ae7eb2173790b30144a419f33afcd2710} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+
+
+Creates a test for whether a non-\/member save\+\_\+minimal function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save\+\_\+minimal or versioned\+\_\+save\+\_\+minimal) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_a5be76cc82813adfc110f793e37636fb1}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_a5be76cc82813adfc110f793e37636fb1} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+SAVE\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test2(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<\textcolor{keyword}{typename}\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{static}\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{using\ }check\ =\ \textcolor{keyword}{typename}\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ static\_assert(\ check::value\ ||\ !check::not\_const\_type,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ a\ non-\/const\ type\ parameter\ in\ non-\/member\ "{}}\ \#test\_name\ \textcolor{stringliteral}{"{}.\ \(\backslash\)n\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \#test\_name\ \textcolor{stringliteral}{"{}\ non-\/member\ functions\ must\ always\ pass\ their\ types\ as\ const"{}}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \};}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a non-\/member save function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper non-\/member function for the given archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em test\+\_\+name} & The name to give the test (e.\+g. save or versioned\+\_\+save) \\
+\hline
+{\em versioned} & Either blank or the macro CEREAL\+\_\+\+MAKE\+\_\+\+VERSIONED\+\_\+\+TEST \\
+\hline
+\end{DoxyParams}
+\Hypertarget{traits_8hpp_af31f4783772a7f6a3048a793090715cf}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}
+\index{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST@{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}
+{\footnotesize\ttfamily \label{traits_8hpp_af31f4783772a7f6a3048a793090715cf} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+HAS\+\_\+\+NON\+\_\+\+MEMBER\+\_\+\+TEST(\begin{DoxyParamCaption}\item[{}]{test\+\_\+name}{, }\item[{}]{func}{, }\item[{}]{versioned}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ func(\ std::declval<AA\&>(),\ std::declval<TT\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ no\ test(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(\ test<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ \textcolor{comment}{/*\ end\ namespace\ detail\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \{\}}
+
+\end{DoxyCode}
+
+
+Creates a test for whether a non const non-\/member function exists. 
+
+This creates a class derived from std\+::integral\+\_\+constant that will be true if the type has the proper non-\/member function for the given archive. \Hypertarget{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_IS\_SPECIALIZED@{CEREAL\_MAKE\_IS\_SPECIALIZED}}
+\index{CEREAL\_MAKE\_IS\_SPECIALIZED@{CEREAL\_MAKE\_IS\_SPECIALIZED}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_IS\_SPECIALIZED}{CEREAL\_MAKE\_IS\_SPECIALIZED}}
+{\footnotesize\ttfamily \label{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{versioned\+\_\+name}{, }\item[{}]{spec\+\_\+name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }is\_specialized\_\#\#name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value>\ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \mbox{\hyperlink{traits_8hpp_a7e6519141d71272bbe5db25d01d175ad}{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}}(name,\ versioned\_name,\ name,\ spec\_name);\ \};\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }is\_specialized\_\#\#versioned\_name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value>\ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \mbox{\hyperlink{traits_8hpp_a7e6519141d71272bbe5db25d01d175ad}{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}}(name,\ versioned\_name,\ versioned\_name,\ spec\_name);\ \}}
+
+\end{DoxyCode}
+
+
+Generates a test for specialization for versioned and unversioned functions. 
+
+This creates checks that can be queried to see if a given type of serialization function has been specialized for this type \Hypertarget{traits_8hpp_a7e6519141d71272bbe5db25d01d175ad}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT@{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}}
+\index{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT@{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}{CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}}
+{\footnotesize\ttfamily \label{traits_8hpp_a7e6519141d71272bbe5db25d01d175ad} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+ASSERT(\begin{DoxyParamCaption}\item[{}]{name}{, }\item[{}]{versioned\+\_\+name}{, }\item[{}]{print\+\_\+name}{, }\item[{}]{spec\+\_\+name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static\_assert}(\ (is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value\ \&\&\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (has\_\#\#name<T,\ A>::value\ ||\ has\_\#\#versioned\_name<T,\ A>::value))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ !(is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value),\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ "{}}\ \#print\_name\ \textcolor{stringliteral}{"{}\ specialization\ but\ no\ "{}}\ \#print\_name\ \textcolor{stringliteral}{"{}\ serialize\ function"{}}\ )}
+
+\end{DoxyCode}
+
+
+Create the static assertion for some specialization. 
+
+This assertion will fail if the type is indeed specialized and does not have the appropriate type of serialization functions \Hypertarget{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}\index{traits.hpp@{traits.hpp}!CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL@{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}
+\index{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL@{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}
+{\footnotesize\ttfamily \label{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258} 
+\#define CEREAL\+\_\+\+MAKE\+\_\+\+IS\+\_\+\+SPECIALIZED\+\_\+\+IMPL(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{struct\ }is\_specialized\_\#\#name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ !std::is\_base\_of<std::false\_type,\ specialize<A,\ T,\ specialization::name>>::value>\ \{\}}
+
+\end{DoxyCode}
+
+
+Create a test for a cereal\+::specialization entry. 
+
+\Hypertarget{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666}\index{traits.hpp@{traits.hpp}!CEREAL\_SETUP\_ARCHIVE\_TRAITS@{CEREAL\_SETUP\_ARCHIVE\_TRAITS}}
+\index{CEREAL\_SETUP\_ARCHIVE\_TRAITS@{CEREAL\_SETUP\_ARCHIVE\_TRAITS}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SETUP\_ARCHIVE\_TRAITS}{CEREAL\_SETUP\_ARCHIVE\_TRAITS}}
+{\footnotesize\ttfamily \label{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666} 
+\#define CEREAL\+\_\+\+SETUP\+\_\+\+ARCHIVE\+\_\+\+TRAITS(\begin{DoxyParamCaption}\item[{}]{Input\+Archive}{, }\item[{}]{Output\+Archive}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \textcolor{keyword}{namespace\ }traits\ \{\ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }get\_output\_from\_input<InputArchive>\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \textcolor{keyword}{using\ }type\ =\ OutputArchive;\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }get\_input\_from\_output<OutputArchive>\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \textcolor{keyword}{using\ }type\ =\ InputArchive;\ \};\ \}\ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}}
+
+\end{DoxyCode}
+
+
+Sets up traits that relate an input archive to an output archive. 
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{traits_8hpp_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{traits_8hpp_a07719740a7cec6692b44244201a92603}\index{traits.hpp@{traits.hpp}!DisableIf@{DisableIf}}
+\index{DisableIf@{DisableIf}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{DisableIf}{DisableIf}}
+{\footnotesize\ttfamily \label{traits_8hpp_a07719740a7cec6692b44244201a92603} 
+template$<$bool ... Conditions$>$ \\
+using \mbox{\hyperlink{traits_8hpp_a07719740a7cec6692b44244201a92603}{Disable\+If}} = typename detail\+::\+Disable\+If\+Helper$<$Conditions...$>$\+::type}
+
+
+
+Provides a way to disable a function if conditions are met. 
+
+This is intended to be used in a near identical fashion to std\+::enable\+\_\+if while being significantly easier to read at the cost of not allowing for as complicated of a condition.
+
+This will compile (allow the function) if every condition evaluates to false. This should be used with SFINAE to ensure that at least one other candidate function works when one fails due to a \doxylink{traits_8hpp_a07719740a7cec6692b44244201a92603}{Disable\+If}.
+
+This should be used as the las template parameter to a function as an unnamed parameter with a default value of cereal\+::traits\+::sfinae\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ using\ by\ making\ the\ last\ template\ argument\ variadic}}
+\DoxyCodeLine{template\ <class\ T,\ DisableIf<std::is\_same<T,\ bool>::value>\ =\ sfinae>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ func(T\ t\ );}
+
+\end{DoxyCode}
+
+
+This is often used in conjunction with \doxylink{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}{Enable\+If} to form an enable/disable pair of overloads.
+
+Note that this performs a logical AND of all conditions, so you will need to construct more complicated requirements with this fact in mind. If all conditions hold, the function will be disabled.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Conditions} & The conditions which will be logically ANDed to disable the function. \\
+\hline
+\end{DoxyTemplParams}
+\Hypertarget{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}\index{traits.hpp@{traits.hpp}!EnableIf@{EnableIf}}
+\index{EnableIf@{EnableIf}!traits.hpp@{traits.hpp}}
+\doxysubsubsection{\texorpdfstring{EnableIf}{EnableIf}}
+{\footnotesize\ttfamily \label{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd} 
+template$<$bool ... Conditions$>$ \\
+using \mbox{\hyperlink{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}{Enable\+If}} = typename detail\+::\+Enable\+If\+Helper$<$Conditions...$>$\+::type}
+
+
+
+Provides a way to enable a function if conditions are met. 
+
+This is intended to be used in a near identical fashion to std\+::enable\+\_\+if while being significantly easier to read at the cost of not allowing for as complicated of a condition.
+
+This will compile (allow the function) if every condition evaluates to true. at compile time. This should be used with SFINAE to ensure that at least one other candidate function works when one fails due to an \doxylink{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}{Enable\+If}.
+
+This should be used as the las template parameter to a function as an unnamed parameter with a default value of cereal\+::traits\+::sfinae\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ using\ by\ making\ the\ last\ template\ argument\ variadic}}
+\DoxyCodeLine{template\ <class\ T,\ EnableIf<std::is\_same<T,\ bool>::value>\ =\ sfinae>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ func(T\ t\ );}
+
+\end{DoxyCode}
+
+
+Note that this performs a logical AND of all conditions, so you will need to construct more complicated requirements with this fact in mind.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Conditions} & The conditions which will be logically ANDed to enable the function. \\
+\hline
+\end{DoxyTemplParams}

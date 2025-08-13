@@ -1,0 +1,63 @@
+\doxysection{lib/cereal/types/tuple.hpp File Reference}
+\hypertarget{tuple_8hpp}{}\label{tuple_8hpp}\index{lib/cereal/types/tuple.hpp@{lib/cereal/types/tuple.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}tuple\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$tuple$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1char__seq__to__c__str}{cereal\+::tuple\+\_\+detail\+::char\+\_\+seq\+\_\+to\+\_\+c\+\_\+str$<$ Cs $>$}}
+\begin{DoxyCompactList}\small\item\em Creates a c string from a sequence of characters. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{cereal\+::tuple\+\_\+detail\+::to\+\_\+string\+\_\+impl$<$ Q, R, C $>$}}
+\begin{DoxyCompactList}\small\item\em Converts a number into a sequence of characters. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl_3_010_00_01_r_00_01_c_8_8_8_01_4}{cereal\+::tuple\+\_\+detail\+::to\+\_\+string\+\_\+impl$<$ 0, R, C... $>$}}
+\begin{DoxyCompactList}\small\item\em Base case with no quotient. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1tuple__element__name}{cereal\+::tuple\+\_\+detail\+::tuple\+\_\+element\+\_\+name$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Generates a c string for a given index of a tuple. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize}{cereal\+::tuple\+\_\+detail\+::serialize$<$ Height $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize_3_010_01_4}{cereal\+::tuple\+\_\+detail\+::serialize$<$ 0 $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a660edef0c6b018675e109062d459dc82}\label{namespacecereal_a660edef0c6b018675e109062d459dc82} 
+{\footnotesize template$<$class Archive, class ... Types$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::tuple$<$ Types... $>$ \&tuple)
+\begin{DoxyCompactList}\small\item\em Serializing for std\+::tuple. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$char... Cs$>$ }\\const char \mbox{\hyperlink{tuple_8hpp_a9b28150b784a575265cbe61c567d7403}{cereal\+::tuple\+\_\+detail\+::char\+\_\+seq\+\_\+to\+\_\+c\+\_\+str$<$ Cs... $>$\+::str}} \mbox{[}sizeof...(Cs)+size\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}tuple\texorpdfstring{$>$}{>} 
+
+
+
+\label{doc-var-members}
+\Hypertarget{tuple_8hpp_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{tuple_8hpp_a9b28150b784a575265cbe61c567d7403}\index{tuple.hpp@{tuple.hpp}!char\_seq\_to\_c\_str$<$ Cs... $>$::str@{char\_seq\_to\_c\_str$<$ Cs... $>$::str}}
+\index{char\_seq\_to\_c\_str$<$ Cs... $>$::str@{char\_seq\_to\_c\_str$<$ Cs... $>$::str}!tuple.hpp@{tuple.hpp}}
+\doxysubsubsection{\texorpdfstring{char\_seq\_to\_c\_str$<$ Cs... $>$::str}{char\_seq\_to\_c\_str< Cs... >::str}}
+{\footnotesize\ttfamily \label{tuple_8hpp_a9b28150b784a575265cbe61c567d7403} 
+template$<$char... Cs$>$ \\
+const char \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1char__seq__to__c__str}{cereal\+::tuple\+\_\+detail\+::char\+\_\+seq\+\_\+to\+\_\+c\+\_\+str}}$<$ Cs... $>$\+::str\mbox{[}sizeof...(Cs)+size\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \ \ \{\textcolor{charliteral}{'t'},\textcolor{charliteral}{'u'},\textcolor{charliteral}{'p'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'\_'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'m'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'t'},\ Cs...,\ \textcolor{charliteral}{'\(\backslash\)0'}\}}
+
+\end{DoxyCode}

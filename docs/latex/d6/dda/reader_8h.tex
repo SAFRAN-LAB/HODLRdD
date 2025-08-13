@@ -1,0 +1,149 @@
+\doxysection{lib/cereal/external/rapidjson/reader.h File Reference}
+\hypertarget{reader_8h}{}\label{reader_8h}\index{lib/cereal/external/rapidjson/reader.h@{lib/cereal/external/rapidjson/reader.h}}
+{\ttfamily \#include "{}allocators.\+h"{}}\newline
+{\ttfamily \#include "{}stream.\+h"{}}\newline
+{\ttfamily \#include "{}encodedstream.\+h"{}}\newline
+{\ttfamily \#include "{}internal/meta.\+h"{}}\newline
+{\ttfamily \#include "{}internal/stack.\+h"{}}\newline
+{\ttfamily \#include "{}internal/strtod.\+h"{}}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include "{}error/error.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_base_reader_handler}{Base\+Reader\+Handler$<$ Encoding, Derived $>$}}
+\begin{DoxyCompactList}\small\item\em Default implementation of \doxylink{classrapidjson_1_1_handler}{Handler}. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classinternal_1_1_stream_local_copy_3_01_stream_00_011_01_4}{internal\+::\+Stream\+Local\+Copy$<$ Stream, 1 $>$}}
+\begin{DoxyCompactList}\small\item\em Do copy optimization. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classinternal_1_1_stream_local_copy_3_01_stream_00_010_01_4}{internal\+::\+Stream\+Local\+Copy$<$ Stream, 0 $>$}}
+\begin{DoxyCompactList}\small\item\em Keep reference. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_generic_reader}{Generic\+Reader$<$ Source\+Encoding, Target\+Encoding, Stack\+Allocator $>$}}
+\begin{DoxyCompactList}\small\item\em SAX-\/style JSON parser. Use \doxylink{reader_8h_a84f3b66a66647f4ac4267078359188ba}{Reader} for \doxylink{struct_u_t_f8}{UTF8} encoding and default allocator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_ga2626dc226385d5859c3b1fab54e1b503}{CEREAL\+\_\+\+RAPIDJSON\+\_\+\+PARSE\+\_\+\+ERROR\+\_\+\+NORETURN}}(parse\+Error\+Code,  offset)
+\begin{DoxyCompactList}\small\item\em Macro to indicate a parse error. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gaef53189e5b906355453ac69a73618c70}{CEREAL\+\_\+\+RAPIDJSON\+\_\+\+PARSE\+\_\+\+ERROR}}(parse\+Error\+Code,  offset)
+\begin{DoxyCompactList}\small\item\em (Internal) macro to indicate and handle a parse error. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{reader_8h_a84f3b66a66647f4ac4267078359188ba}\label{reader_8h_a84f3b66a66647f4ac4267078359188ba} 
+typedef \mbox{\hyperlink{class_generic_reader}{Generic\+Reader}}$<$ \mbox{\hyperlink{struct_u_t_f8}{UTF8}}$<$$>$, \mbox{\hyperlink{struct_u_t_f8}{UTF8}}$<$$>$ $>$ {\bfseries Reader}
+\begin{DoxyCompactList}\small\item\em \doxylink{reader_8h_a84f3b66a66647f4ac4267078359188ba}{Reader} with \doxylink{struct_u_t_f8}{UTF8} encoding and default allocator. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450}{Parse\+Flag}} \{ \newline
+\mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a1af603dc5f65bb815316589e782bc71a}{k\+Parse\+No\+Flags}} = 0
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a13188bd483b4df0b6582bebe2aeb5b01}{k\+Parse\+Insitu\+Flag}} = 1
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a9b3baa16346575d2dc072b23a88e1928}{k\+Parse\+Validate\+Encoding\+Flag}} = 2
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450aadb14f5a3b6b33e28055e913a2eae5e9}{k\+Parse\+Iterative\+Flag}} = 4
+, \newline
+\mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450af77d115d3bbed0a448b6b335f3b93b36}{k\+Parse\+Stop\+When\+Done\+Flag}} = 8
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a057fbeacafb16bb7d24c9998262cae46}{k\+Parse\+Full\+Precision\+Flag}} = 16
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a245d1b6af730f47f0e7bd27078f5e8c1}{k\+Parse\+Comments\+Flag}} = 32
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450aa951ab03a51b32b60164436bc280cf01}{k\+Parse\+Numbers\+As\+Strings\+Flag}} = 64
+, \newline
+\mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a953d6381de950e25c8c97ad54f52370a}{k\+Parse\+Trailing\+Commas\+Flag}} = 128
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a9849d65c1d3edd796bd75897c6a37eb6}{k\+Parse\+Nan\+And\+Inf\+Flag}} = 256
+, \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450a9104b0946d648e9467cb7a967401ec80}{k\+Parse\+Default\+Flags}} = CEREAL\+\_\+\+RAPIDJSON\+\_\+\+PARSE\+\_\+\+DEFAULT\+\_\+\+FLAGS
+ \}
+\begin{DoxyCompactList}\small\item\em Combination of parse\+Flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename Input\+Stream$>$ }\\void \mbox{\hyperlink{reader_8h_a60338858b2582eca23f3e509a2d82e0e}{Skip\+Whitespace}} (Input\+Stream \&is)
+\begin{DoxyCompactList}\small\item\em Skip the JSON white spaces in a stream. \end{DoxyCompactList}\item 
+\Hypertarget{reader_8h_aeddf0374b22926be76140ec6708dc203}\label{reader_8h_aeddf0374b22926be76140ec6708dc203} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries Skip\+Whitespace} (const char \texorpdfstring{$\ast$}{*}p, const char \texorpdfstring{$\ast$}{*}end)
+\end{DoxyCompactItemize}
+
+
+\label{doc-enum-members}
+\Hypertarget{reader_8h_doc-enum-members}
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450}\index{reader.h@{reader.h}!ParseFlag@{ParseFlag}}
+\index{ParseFlag@{ParseFlag}!reader.h@{reader.h}}
+\doxysubsubsection{\texorpdfstring{ParseFlag}{ParseFlag}}
+{\footnotesize\ttfamily \label{reader_8h_ab7be7dabe6ffcba60fad441505583450} 
+enum \mbox{\hyperlink{reader_8h_ab7be7dabe6ffcba60fad441505583450}{Parse\+Flag}}}
+
+
+
+Combination of parse\+Flags. 
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{class_generic_reader_a0c450620d14ff1824e58bb7bd9b42099}{Reader\+::\+Parse}, \doxylink{class_generic_document_a901db1678f99a1b550003eed75bc380a}{Document\+::\+Parse}, \doxylink{class_generic_document_a13f68b1896a24eea4cdbc03a3916225f}{Document\+::\+Parse\+Insitu}, \doxylink{class_generic_document_a7bc1827a7ab04de4789fe46237f0e921}{Document\+::\+Parse\+Stream} 
+\end{DoxySeeAlso}
+\begin{DoxyEnumFields}[2]{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseNoFlags@{kParseNoFlags}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseNoFlags@{kParseNoFlags}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a1af603dc5f65bb815316589e782bc71a}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a1af603dc5f65bb815316589e782bc71a} 
+k\+Parse\+No\+Flags&No flags are set. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseInsituFlag@{kParseInsituFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseInsituFlag@{kParseInsituFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a13188bd483b4df0b6582bebe2aeb5b01}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a13188bd483b4df0b6582bebe2aeb5b01} 
+k\+Parse\+Insitu\+Flag&In-\/situ(destructive) parsing. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseValidateEncodingFlag@{kParseValidateEncodingFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseValidateEncodingFlag@{kParseValidateEncodingFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a9b3baa16346575d2dc072b23a88e1928}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a9b3baa16346575d2dc072b23a88e1928} 
+k\+Parse\+Validate\+Encoding\+Flag&Validate encoding of JSON strings. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseIterativeFlag@{kParseIterativeFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseIterativeFlag@{kParseIterativeFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450aadb14f5a3b6b33e28055e913a2eae5e9}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450aadb14f5a3b6b33e28055e913a2eae5e9} 
+k\+Parse\+Iterative\+Flag&Iterative(constant complexity in terms of function call stack size) parsing. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseStopWhenDoneFlag@{kParseStopWhenDoneFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseStopWhenDoneFlag@{kParseStopWhenDoneFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450af77d115d3bbed0a448b6b335f3b93b36}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450af77d115d3bbed0a448b6b335f3b93b36} 
+k\+Parse\+Stop\+When\+Done\+Flag&After parsing a complete JSON root from stream, stop further processing the rest of stream. When this flag is used, parser will not generate k\+Parse\+Error\+Document\+Root\+Not\+Singular error. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseFullPrecisionFlag@{kParseFullPrecisionFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseFullPrecisionFlag@{kParseFullPrecisionFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a057fbeacafb16bb7d24c9998262cae46}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a057fbeacafb16bb7d24c9998262cae46} 
+k\+Parse\+Full\+Precision\+Flag&Parse number in full precision (but slower). \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseCommentsFlag@{kParseCommentsFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseCommentsFlag@{kParseCommentsFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a245d1b6af730f47f0e7bd27078f5e8c1}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a245d1b6af730f47f0e7bd27078f5e8c1} 
+k\+Parse\+Comments\+Flag&Allow one-\/line (//) and multi-\/line (/\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}/) comments. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseNumbersAsStringsFlag@{kParseNumbersAsStringsFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseNumbersAsStringsFlag@{kParseNumbersAsStringsFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450aa951ab03a51b32b60164436bc280cf01}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450aa951ab03a51b32b60164436bc280cf01} 
+k\+Parse\+Numbers\+As\+Strings\+Flag&Parse all numbers (ints/doubles) as strings. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseTrailingCommasFlag@{kParseTrailingCommasFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseTrailingCommasFlag@{kParseTrailingCommasFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a953d6381de950e25c8c97ad54f52370a}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a953d6381de950e25c8c97ad54f52370a} 
+k\+Parse\+Trailing\+Commas\+Flag&Allow trailing commas at the end of objects and arrays. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseNanAndInfFlag@{kParseNanAndInfFlag}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseNanAndInfFlag@{kParseNanAndInfFlag}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a9849d65c1d3edd796bd75897c6a37eb6}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a9849d65c1d3edd796bd75897c6a37eb6} 
+k\+Parse\+Nan\+And\+Inf\+Flag&Allow parsing NaN, Inf, Infinity, -\/Inf and -\/Infinity as doubles. \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kParseDefaultFlags@{kParseDefaultFlags}!reader.h@{reader.h}}\index{reader.h@{reader.h}!kParseDefaultFlags@{kParseDefaultFlags}}}\Hypertarget{reader_8h_ab7be7dabe6ffcba60fad441505583450a9104b0946d648e9467cb7a967401ec80}\label{reader_8h_ab7be7dabe6ffcba60fad441505583450a9104b0946d648e9467cb7a967401ec80} 
+k\+Parse\+Default\+Flags&Default parse flags. Can be customized by defining CEREAL\+\_\+\+RAPIDJSON\+\_\+\+PARSE\+\_\+\+DEFAULT\+\_\+\+FLAGS. \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\label{doc-func-members}
+\Hypertarget{reader_8h_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{reader_8h_a60338858b2582eca23f3e509a2d82e0e}\index{reader.h@{reader.h}!SkipWhitespace@{SkipWhitespace}}
+\index{SkipWhitespace@{SkipWhitespace}!reader.h@{reader.h}}
+\doxysubsubsection{\texorpdfstring{SkipWhitespace()}{SkipWhitespace()}}
+{\footnotesize\ttfamily \label{reader_8h_a60338858b2582eca23f3e509a2d82e0e} 
+template$<$typename Input\+Stream$>$ \\
+void Skip\+Whitespace (\begin{DoxyParamCaption}\item[{Input\+Stream \&}]{is}{}\end{DoxyParamCaption})}
+
+
+
+Skip the JSON white spaces in a stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em is} & A input stream for skipping white spaces. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This function has SSE2/\+SSE4.\+2 specialization. 
+\end{DoxyNote}

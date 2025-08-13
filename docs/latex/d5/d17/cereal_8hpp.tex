@@ -1,0 +1,213 @@
+\doxysection{lib/cereal/cereal.hpp File Reference}
+\hypertarget{cereal_8hpp}{}\label{cereal_8hpp}\index{lib/cereal/cereal.hpp@{lib/cereal/cereal.hpp}}
+
+
+Main cereal functionality.  
+
+
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include "{}cereal/macros.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/traits.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/helpers.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/base\+\_\+class.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/common.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive$<$ Archive\+Type, Flags $>$}}
+\begin{DoxyCompactList}\small\item\em The base output archive class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive$<$ Archive\+Type, Flags $>$}}
+\begin{DoxyCompactList}\small\item\em The base input archive class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\+\_\+\+NVP}}(T)
+\begin{DoxyCompactList}\small\item\em Creates a name value pair for the variable T with the same name as the variable. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\+\_\+\+REGISTER\+\_\+\+ARCHIVE}}(Archive)
+\begin{DoxyCompactList}\small\item\em Registers a specific Archive type with cereal. \end{DoxyCompactList}\item 
+\Hypertarget{cereal_8hpp_ad9c7fcbb092e1279c2babf3c1257e4b6}\label{cereal_8hpp_ad9c7fcbb092e1279c2babf3c1257e4b6} 
+\#define {\bfseries CEREAL\+\_\+\+UNUSED\+\_\+\+FUNCTION}~static void unused() \{ (void)version; \}
+\begin{DoxyCompactList}\small\item\em Helper macro to omit unused warning. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{cereal_8hpp_abea833652252591a51f75cb9ce31f44a}{CEREAL\+\_\+\+CLASS\+\_\+\+VERSION}}(TYPE,  VERSION\+\_\+\+NUMBER)
+\begin{DoxyCompactList}\small\item\em Defines a class version for some type. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d}{PROCESS\+\_\+\+IF}}(name)
+\begin{DoxyCompactList}\small\item\em Helper macro that expands the requirements for activating an overload. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d}{PROCESS\+\_\+\+IF}}(name)
+\begin{DoxyCompactList}\small\item\em Helper macro that expands the requirements for activating an overload. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{cereal\+::\+Flags}} \{ {\bfseries Allow\+Empty\+Class\+Elision} = 1
+ \}
+\begin{DoxyCompactList}\small\item\em Special flags for archives. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a8093b5f7cfd618fae6350ef7b2c09453}{cereal\+::prologue}} (Archive \&, T const \&)
+\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a1153b7ce7ffbb86e2c81e076a252938e}{cereal\+::epilogue}} (Archive \&, T const \&)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main cereal functionality. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{cereal_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{cereal_8hpp_abea833652252591a51f75cb9ce31f44a}\index{cereal.hpp@{cereal.hpp}!CEREAL\_CLASS\_VERSION@{CEREAL\_CLASS\_VERSION}}
+\index{CEREAL\_CLASS\_VERSION@{CEREAL\_CLASS\_VERSION}!cereal.hpp@{cereal.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_CLASS\_VERSION}{CEREAL\_CLASS\_VERSION}}
+{\footnotesize\ttfamily \label{cereal_8hpp_abea833652252591a51f75cb9ce31f44a} 
+\#define CEREAL\+\_\+\+CLASS\+\_\+\+VERSION(\begin{DoxyParamCaption}\item[{}]{TYPE}{, }\item[{}]{VERSION\+\_\+\+NUMBER}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }Version<TYPE>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::uint32\_t\ version;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{static}\ std::uint32\_t\ registerVersion()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ::cereal::detail::StaticObject<Versions>::getInstance().mapping.emplace(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ std::type\_index(\textcolor{keyword}{typeid}(TYPE)).hash\_code(),\ VERSION\_NUMBER\ );\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ VERSION\_NUMBER;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_ad9c7fcbb092e1279c2babf3c1257e4b6}{CEREAL\_UNUSED\_FUNCTION}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \};\ \textcolor{comment}{/*\ end\ Version\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{const}\ std::uint32\_t\ Version<TYPE>::version\ =\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ Version<TYPE>::registerVersion();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}}
+
+\end{DoxyCode}
+
+
+Defines a class version for some type. 
+
+Versioning information is optional and adds some small amount of overhead to serialization. This overhead will occur both in terms of space in the archive (the version information for each class will be stored exactly once) as well as runtime (versioned serialization functions must check to see if they need to load or store version information).
+
+Versioning is useful if you plan on fundamentally changing the way some type is serialized in the future. Versioned serialization functions cannot be used to load non-\/versioned data.
+
+By default, all types have an assumed version value of zero. By using this macro, you may change the version number associated with some type. cereal will then use this value as a second parameter to your serialization functions.
+
+The interface for the serialization functions is nearly identical to non-\/versioned serialization with the addition of a second parameter, const std\+::uint32\+\_\+t version, which will be supplied with the correct version number. Serializing the version number on a save happens automatically.
+
+Versioning cannot be mixed with non-\/versioned serialization functions. Having both types will result result in a compile time error. Data serialized without versioning cannot be loaded by a serialization function with added versioning support.
+
+Example interface for versioning on a non-\/member serialize function\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{cereal_8hpp_abea833652252591a51f75cb9ce31f44a}{CEREAL\_CLASS\_VERSION}}(\ Mytype,\ 77\ );\ \textcolor{comment}{//\ register\ class\ version}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar,\ Mytype\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ )}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ When\ performing\ a\ load,\ the\ version\ associated\ with\ the\ class}}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ is\ whatever\ it\ was\ when\ that\ data\ was\ originally\ serialized}}
+\DoxyCodeLine{\ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ When\ we\ save,\ we'll\ use\ the\ version\ that\ is\ defined\ in\ the\ macro}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}(\ version\ >=\ some\_number\ )}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ do\ this}}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ do\ that}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Interfaces for other forms of serialization functions is similar. This macro should be placed at global scope.
+
+On C++17, define the Static\+Object as inline to merge the definitions across TUs This prevents multiple definition errors when this macro appears in a header file included in multiple TUs. \Hypertarget{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}\index{cereal.hpp@{cereal.hpp}!CEREAL\_NVP@{CEREAL\_NVP}}
+\index{CEREAL\_NVP@{CEREAL\_NVP}!cereal.hpp@{cereal.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_NVP}{CEREAL\_NVP}}
+{\footnotesize\ttfamily \label{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439} 
+\#define CEREAL\+\_\+\+NVP(\begin{DoxyParamCaption}\item[{}]{T}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{::cereal::make\_nvp}}(\#T,\ T)}
+
+\end{DoxyCode}
+
+
+Creates a name value pair for the variable T with the same name as the variable. 
+
+\Hypertarget{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}\index{cereal.hpp@{cereal.hpp}!CEREAL\_REGISTER\_ARCHIVE@{CEREAL\_REGISTER\_ARCHIVE}}
+\index{CEREAL\_REGISTER\_ARCHIVE@{CEREAL\_REGISTER\_ARCHIVE}!cereal.hpp@{cereal.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_REGISTER\_ARCHIVE}{CEREAL\_REGISTER\_ARCHIVE}}
+{\footnotesize\ttfamily \label{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1} 
+\#define CEREAL\+\_\+\+REGISTER\+\_\+\+ARCHIVE(\begin{DoxyParamCaption}\item[{}]{Archive}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ BindingTag>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{typename}\ polymorphic\_serialization\_support<Archive,\ T>::type\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ instantiate\_polymorphic\_binding(\ T*,\ Archive*,\ BindingTag,\ adl\_tag\ );\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}}
+
+\end{DoxyCode}
+
+
+Registers a specific Archive type with cereal. 
+
+This registration should be done once per archive. A good place to put this is immediately following the definition of your archive. Archive registration is only strictly necessary if you wish to support pointers to polymorphic data types. All archives that come with cereal are already registered. \Hypertarget{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d}\index{cereal.hpp@{cereal.hpp}!PROCESS\_IF@{PROCESS\_IF}}
+\index{PROCESS\_IF@{PROCESS\_IF}!cereal.hpp@{cereal.hpp}}
+\doxysubsubsection{\texorpdfstring{PROCESS\_IF}{PROCESS\_IF}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d} 
+\#define PROCESS\+\_\+\+IF(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ traits::EnableIf<traits::has\_\#\#name<T,\ ArchiveType>::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !traits::has\_invalid\_output\_versioning<T,\ ArchiveType>::value,\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (traits::is\_output\_serializable<T,\ ArchiveType>::value\ \&\&\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (traits::is\_specialized\_\#\#name<T,\ ArchiveType>::value\ ||\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !traits::is\_specialized<T,\ ArchiveType>::value))>\ =\ traits::sfinae}
+
+\end{DoxyCode}
+
+
+Helper macro that expands the requirements for activating an overload. 
+
+Requirements\+: Has the requested serialization function Does not have version and unversioned at the same time Is output serializable AND is specialized for this type of function OR has no specialization at all
+
+Requirements\+: Has the requested serialization function Does not have version and unversioned at the same time Is input serializable AND is specialized for this type of function OR has no specialization at all \Hypertarget{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d}\index{cereal.hpp@{cereal.hpp}!PROCESS\_IF@{PROCESS\_IF}}
+\index{PROCESS\_IF@{PROCESS\_IF}!cereal.hpp@{cereal.hpp}}
+\doxysubsubsection{\texorpdfstring{PROCESS\_IF}{PROCESS\_IF}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{cereal_8hpp_abf30af3781b2cd7bd163e408dc6cc04d} 
+\#define PROCESS\+\_\+\+IF(\begin{DoxyParamCaption}\item[{}]{name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ traits::EnableIf<traits::has\_\#\#name<T,\ ArchiveType>::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !traits::has\_invalid\_input\_versioning<T,\ ArchiveType>::value,\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (traits::is\_input\_serializable<T,\ ArchiveType>::value\ \&\&\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (traits::is\_specialized\_\#\#name<T,\ ArchiveType>::value\ ||\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !traits::is\_specialized<T,\ ArchiveType>::value))>\ =\ traits::sfinae}
+
+\end{DoxyCode}
+
+
+Helper macro that expands the requirements for activating an overload. 
+
+Requirements\+: Has the requested serialization function Does not have version and unversioned at the same time Is output serializable AND is specialized for this type of function OR has no specialization at all
+
+Requirements\+: Has the requested serialization function Does not have version and unversioned at the same time Is input serializable AND is specialized for this type of function OR has no specialization at all 

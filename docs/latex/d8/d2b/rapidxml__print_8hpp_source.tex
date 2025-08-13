@@ -1,0 +1,413 @@
+\doxysection{rapidxml\+\_\+print.\+hpp}
+\hypertarget{rapidxml__print_8hpp_source}{}\label{rapidxml__print_8hpp_source}\index{lib/cereal/external/rapidxml/rapidxml\_print.hpp@{lib/cereal/external/rapidxml/rapidxml\_print.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDXML\_PRINT\_HPP\_INCLUDED}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDXML\_PRINT\_HPP\_INCLUDED}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ 2006,\ 2009\ Marcin\ Kalicinski}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Version\ 1.13}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Revision\ \$DateTime:\ 2009/05/13\ 01:46:17\ \$}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}rapidxml.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Only\ include\ streams\ if\ not\ disabled}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDXML\_NO\_STREAMS}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\ \ \ \ \#include\ <ostream>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\ \ \ \ \#include\ <iterator>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{}
+\DoxyCodeLine{00017\ \textcolor{keyword}{namespace\ }rapidxml}
+\DoxyCodeLine{00018\ \{}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Printing\ flags}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ print\_no\_indenting\ =\ 0x1;\ \ \ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//\ Internal}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{namespace\ }internal}
+\DoxyCodeLine{00030\ \ \ \ \ \{}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Internal\ character\ operations}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ characters\ from\ given\ range\ to\ given\ output\ iterator}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ copy\_chars(\textcolor{keyword}{const}\ Ch\ *begin,\ \textcolor{keyword}{const}\ Ch\ *end,\ OutIt\ out)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (begin\ !=\ end)}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ *begin++;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copy\ characters\ from\ given\ range\ to\ given\ output\ iterator\ and\ expand}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ characters\ into\ references\ (\&lt;\ \&gt;\ \&apos;\ \&quot;\ \&amp;)}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ copy\_and\_expand\_chars(\textcolor{keyword}{const}\ Ch\ *begin,\ \textcolor{keyword}{const}\ Ch\ *end,\ Ch\ noexpand,\ OutIt\ out)}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (begin\ !=\ end)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*begin\ ==\ noexpand)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ *begin;\ \ \ \ \textcolor{comment}{//\ No\ expansion,\ copy\ character}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (*begin)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Ch(\textcolor{charliteral}{'<'}):}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ Ch(\textcolor{stringliteral}{'\&'});\ *out++\ =\ Ch(\textcolor{charliteral}{'l'});\ *out++\ =\ Ch(\textcolor{charliteral}{'t'});\ *out++\ =\ Ch(\textcolor{charliteral}{';'});}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Ch(\textcolor{charliteral}{'>'}):}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ Ch(\textcolor{stringliteral}{'\&'});\ *out++\ =\ Ch(\textcolor{charliteral}{'g'});\ *out++\ =\ Ch(\textcolor{charliteral}{'t'});\ *out++\ =\ Ch(\textcolor{charliteral}{';'});}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Ch(\textcolor{charliteral}{'\(\backslash\)''}):}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ Ch(\textcolor{stringliteral}{'\&'});\ *out++\ =\ Ch(\textcolor{charliteral}{'a'});\ *out++\ =\ Ch(\textcolor{charliteral}{'p'});\ *out++\ =\ Ch(\textcolor{charliteral}{'o'});\ *out++\ =\ Ch(\textcolor{charliteral}{'s'});\ *out++\ =\ Ch(\textcolor{charliteral}{';'});}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Ch(\textcolor{charliteral}{'"{}'}):}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ Ch(\textcolor{stringliteral}{'\&'});\ *out++\ =\ Ch(\textcolor{charliteral}{'q'});\ *out++\ =\ Ch(\textcolor{charliteral}{'u'});\ *out++\ =\ Ch(\textcolor{charliteral}{'o'});\ *out++\ =\ Ch(\textcolor{charliteral}{'t'});\ *out++\ =\ Ch(\textcolor{charliteral}{';'});}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ Ch(\textcolor{charliteral}{'\&'}):}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ Ch(\textcolor{stringliteral}{'\&'});\ *out++\ =\ Ch(\textcolor{charliteral}{'a'});\ *out++\ =\ Ch(\textcolor{charliteral}{'m'});\ *out++\ =\ Ch(\textcolor{charliteral}{'p'});\ *out++\ =\ Ch(\textcolor{charliteral}{';'});}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ *begin;\ \ \ \ \textcolor{comment}{//\ No\ expansion,\ copy\ character}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++begin;\ \ \ \ \textcolor{comment}{//\ Step\ to\ next\ character}}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fill\ given\ output\ iterator\ with\ repetitions\ of\ the\ same\ character}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ fill\_chars(OutIt\ out,\ \textcolor{keywordtype}{int}\ n,\ Ch\ ch)}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n;\ ++i)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out++\ =\ ch;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Find\ character}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch,\ Ch\ ch>}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ find\_char(\textcolor{keyword}{const}\ Ch\ *begin,\ \textcolor{keyword}{const}\ Ch\ *end)}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (begin\ !=\ end)}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*begin++\ ==\ ch)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Internal\ printing\ operations}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ node}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent);}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ children\ of\ the\ node}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_children(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (xml\_node<Ch>\ *child\ =\ node-\/>first\_node();\ child;\ child\ =\ child-\/>next\_sibling())}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_node(out,\ child,\ flags,\ indent);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ attributes\ of\ the\ node}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_attributes(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ \textcolor{comment}{/*flags*/})}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (xml\_attribute<Ch>\ *attribute\ =\ node-\/>first\_attribute();\ attribute;\ attribute\ =\ attribute-\/>next\_attribute())}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (attribute-\/>name()\ \&\&\ attribute-\/>value())}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ attribute\ name}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\ '}),\ ++out;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(attribute-\/>name(),\ attribute-\/>name()\ +\ attribute-\/>name\_size(),\ out);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'='}),\ ++out;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ attribute\ value\ using\ appropriate\ quote\ type}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (find\_char<Ch,\ Ch(\textcolor{charliteral}{'"{}'})>(attribute-\/>value(),\ attribute-\/>value()\ +\ attribute-\/>value\_size()))}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\(\backslash\)''}),\ ++out;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_and\_expand\_chars(attribute-\/>value(),\ attribute-\/>value()\ +\ attribute-\/>value\_size(),\ Ch(\textcolor{charliteral}{'"{}'}),\ out);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\(\backslash\)''}),\ ++out;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'"{}'}),\ ++out;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_and\_expand\_chars(attribute-\/>value(),\ attribute-\/>value()\ +\ attribute-\/>value\_size(),\ Ch(\textcolor{charliteral}{'\(\backslash\)''}),\ out);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'"{}'}),\ ++out;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ data\ node}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_data\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_data);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_and\_expand\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ Ch(0),\ out);}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ data\ node}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_cdata\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_cdata);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'});\ ++out;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'!'});\ ++out;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'['});\ ++out;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'C'});\ ++out;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'D'});\ ++out;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'A'});\ ++out;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'T'});\ ++out;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'A'});\ ++out;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'['});\ ++out;}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ out);}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{']'});\ ++out;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{']'});\ ++out;}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'});\ ++out;}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ element\ node}}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_element\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_element);}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ element\ name\ and\ attributes,\ if\ any}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>name(),\ node-\/>name()\ +\ node-\/>name\_size(),\ out);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_attributes(out,\ node,\ flags);}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ node\ is\ childless}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (node-\/>value\_size()\ ==\ 0\ \&\&\ !node-\/>first\_node())}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ childless\ node\ tag\ ending}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'/'}),\ ++out;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ normal\ node\ tag\ ending}}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Test\ if\ node\ contains\ a\ single\ data\ node\ only\ (and\ no\ other\ nodes)}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ xml\_node<Ch>\ *child\ =\ node-\/>first\_node();}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!child)}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ node\ has\ no\ children,\ only\ print\ its\ value\ without\ indenting}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_and\_expand\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ Ch(0),\ out);}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (child-\/>next\_sibling()\ ==\ 0\ \&\&\ child-\/>type()\ ==\ node\_data)}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ node\ has\ a\ sole\ data\ child,\ only\ print\ its\ value\ without\ indenting}}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_and\_expand\_chars(child-\/>value(),\ child-\/>value()\ +\ child-\/>value\_size(),\ Ch(0),\ out);}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ all\ children\ with\ full\ indenting}}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\(\backslash\)n'}),\ ++out;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_children(out,\ node,\ flags,\ indent\ +\ 1);}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ node\ end}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'/'}),\ ++out;}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>name(),\ node-\/>name()\ +\ node-\/>name\_size(),\ out);}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ declaration\ node}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_declaration\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ declaration\ start}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'?'}),\ ++out;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'x'}),\ ++out;}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'m'}),\ ++out;}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'l'}),\ ++out;}
+\DoxyCodeLine{00250\ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ attributes}}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_attributes(out,\ node,\ flags);}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ declaration\ end}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'?'}),\ ++out;}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ comment\ node}}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_comment\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_comment);}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'!'}),\ ++out;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'-\/'}),\ ++out;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'-\/'}),\ ++out;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ out);}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'-\/'}),\ ++out;}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'-\/'}),\ ++out;}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ doctype\ node}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_doctype\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_doctype);}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'!'}),\ ++out;}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'D'}),\ ++out;}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'O'}),\ ++out;}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'C'}),\ ++out;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'T'}),\ ++out;}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'Y'}),\ ++out;}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'P'}),\ ++out;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'E'}),\ ++out;}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\ '}),\ ++out;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ out);}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ pi\ node}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_pi\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ assert(node-\/>type()\ ==\ node\_pi);}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ fill\_chars(out,\ indent,\ Ch(\textcolor{charliteral}{'\(\backslash\)t'}));}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'<'}),\ ++out;}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'?'}),\ ++out;}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>name(),\ node-\/>name()\ +\ node-\/>name\_size(),\ out);}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\ '}),\ ++out;}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ copy\_chars(node-\/>value(),\ node-\/>value()\ +\ node-\/>value\_size(),\ out);}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'?'}),\ ++out;}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'>'}),\ ++out;}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00317\ }
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ node}}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print\_node(OutIt\ out,\ \textcolor{keyword}{const}\ xml\_node<Ch>\ *node,\ \textcolor{keywordtype}{int}\ flags,\ \textcolor{keywordtype}{int}\ indent)}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Print\ proper\ node\ type}}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (node-\/>type())}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Document}}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_document:}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_children(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Element}}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_element:}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_element\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Data}}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_data:}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_data\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CDATA}}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_cdata:}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_cdata\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Declaration}}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_declaration:}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_declaration\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Comment}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_comment:}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_comment\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Doctype}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_doctype:}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_doctype\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00360\ }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Pi}}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ node\_pi:}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\ =\ print\_pi\_node(out,\ node,\ flags,\ indent);}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \textcolor{preprocessor}{\#ifndef\ \_\_GNUC\_\_}}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Unknown}}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ assert(0);}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00371\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00373\ }
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ indenting\ not\ disabled,\ add\ line\ break\ after\ node}}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(flags\ \&\ print\_no\_indenting))}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *out\ =\ Ch(\textcolor{charliteral}{'\(\backslash\)n'}),\ ++out;}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Return\ modified\ iterator}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ \ \ \ \ \}}
+\DoxyCodeLine{00384\ }
+\DoxyCodeLine{00386\ \ \ \ \ \textcolor{comment}{//\ Printing}}
+\DoxyCodeLine{00387\ }
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ OutIt,\ \textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keyword}{inline}\ OutIt\ print(OutIt\ out,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\_node<Ch>}}\ \&node,\ \textcolor{keywordtype}{int}\ flags\ =\ 0)}
+\DoxyCodeLine{00395\ \ \ \ \ \{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ internal::print\_node(out,\ \&node,\ flags,\ 0);}
+\DoxyCodeLine{00397\ \ \ \ \ \}}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00399\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDXML\_NO\_STREAMS}}
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00406\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keyword}{inline}\ std::basic\_ostream<Ch>\ \&print(std::basic\_ostream<Ch>\ \&out,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\_node<Ch>}}\ \&node,\ \textcolor{keywordtype}{int}\ flags\ =\ 0)}
+\DoxyCodeLine{00408\ \ \ \ \ \{}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ print(std::ostream\_iterator<Ch>(out),\ node,\ flags);}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ out;}
+\DoxyCodeLine{00411\ \ \ \ \ \}}
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00417\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00418\ \ \ \ \ \textcolor{keyword}{inline}\ std::basic\_ostream<Ch>\ \&operator\ <<(std::basic\_ostream<Ch>\ \&out,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\_node<Ch>}}\ \&node)}
+\DoxyCodeLine{00419\ \ \ \ \ \{}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ print(out,\ node);}
+\DoxyCodeLine{00421\ \ \ \ \ \}}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00425\ \}}
+\DoxyCodeLine{00426\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00427\ }
+\DoxyCodeLine{00428\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

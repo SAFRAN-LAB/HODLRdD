@@ -1,0 +1,232 @@
+\doxysection{cereal\+::XMLInput\+Archive Class Reference}
+\hypertarget{classcereal_1_1_x_m_l_input_archive}{}\label{classcereal_1_1_x_m_l_input_archive}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+
+
+An output archive designed to load data from XML.  
+
+
+
+
+{\ttfamily \#include $<$xml.\+hpp$>$}
+
+Inheritance diagram for cereal\+::XMLInput\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{de/dc4/classcereal_1_1_x_m_l_input_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info}{Node\+Info}}
+\begin{DoxyCompactList}\small\item\em A struct that contains metadata about a node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{Indent}\textbf{ Common Functionality}\par
+{\em Common use cases for directly interacting with an \doxylink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive} }\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184}{XMLInput\+Archive}} (std\+::istream \&stream)
+\begin{DoxyCompactList}\small\item\em Construct, reading in from the provided stream. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a974ecacf6a6411fb98e89182011b4b55}{load\+Binary\+Value}} (void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, const char \texorpdfstring{$\ast$}{*}name=nullptr)
+\begin{DoxyCompactList}\small\item\em Loads some binary data, encoded as a base64 string, optionally specified by some name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive$<$ XMLInput\+Archive $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{Input\+Archive}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}{get\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves a shared pointer given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}{register\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id, std\+::shared\+\_\+ptr$<$ void $>$ ptr)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer to its unique identifier. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}{get\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves the string for a polymorphic type given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}{register\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id, std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic name string to its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}{operator$>$$>$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{cereal\+::detail\+::\+Input\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Input\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Internal Functionality}
+Functionality designed for use by those requiring control over the inner mechanisms of the \doxylink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive} \begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, !std\+::is\+\_\+same$<$ T, char $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned char $>$\+::value, sizeof(T)$<$ sizeof(long long)$>$=traits\+::sfinae $>$ inline void \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{load\+Value}}(T \&value) \{ value=static\+\_\+cast$<$ T $>$(std\+::stoul(its\+Nodes.\+top().node-\/$>$value()));\} template$<$ class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, sizeof(T) $>$=sizeof(long long)$>$ = traits\+::sfinae$>$ }\\\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}
+\begin{DoxyCompactList}\small\item\em Loads a type best represented as an unsigned long from the current top node. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0}{start\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Prepares to start reading the next node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a06f0c412f74f3b538efac94886005b44}\label{classcereal_1_1_x_m_l_input_archive_a06f0c412f74f3b538efac94886005b44} 
+void {\bfseries finish\+Node} ()
+\begin{DoxyCompactList}\small\item\em Finishes reading the current node. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acba55850d08642d1c5532c91eb360325}{get\+Node\+Name}} () const
+\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a3303435877555d5d5366ee654eb24f60}\label{classcereal_1_1_x_m_l_input_archive_a3303435877555d5d5366ee654eb24f60} 
+void {\bfseries set\+Next\+Name} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Sets the name for the next node created with start\+Node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}\label{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+unsigned$<$ T $>$\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{\+::value}}, std\+::is\+\_\+same$<$ T, bool $>$\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{\+::value}} $>$ = traits\+::sfinae$>$ }\\void {\bfseries load\+Value} (T \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Loads a bool from the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}\label{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+integral$<$ T $>$\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{\+::value}}, !std\+::is\+\_\+same$<$ T, bool $>$\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{\+::value}}, sizeof(T)==sizeof(char)$>$ = traits\+::sfinae$>$ }\\void {\bfseries load\+Value} (T \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Loads a char (signed or unsigned) from the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a2fdbedad1accc2982d3e8261e7510d6c}\label{classcereal_1_1_x_m_l_input_archive_a2fdbedad1accc2982d3e8261e7510d6c} 
+void {\bfseries load\+Value} (int8\+\_\+t \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Load an int8\+\_\+t from the current top node (ensures we parse entire number) \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_af0d2453dc4bf78cd48b227f7bdbf1448}\label{classcereal_1_1_x_m_l_input_archive_af0d2453dc4bf78cd48b227f7bdbf1448} 
+void {\bfseries load\+Value} (uint8\+\_\+t \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Load a uint8\+\_\+t from the current top node (ensures we parse entire number) \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a509e86ad2b916f548f0efc47c83f7976}\label{classcereal_1_1_x_m_l_input_archive_a509e86ad2b916f548f0efc47c83f7976} 
+{\bfseries if} (std\+::fpclassify(\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}) !=FP\+\_\+\+SUBNORMAL) throw
+\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a55244b5ef0902217f14491eb3c03151c}\label{classcereal_1_1_x_m_l_input_archive_a55244b5ef0902217f14491eb3c03151c} 
+void {\bfseries load\+Value} (double \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Loads a type best represented as a double from the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a703207c2e0bc195ebd8ba8e81170ad7d}\label{classcereal_1_1_x_m_l_input_archive_a703207c2e0bc195ebd8ba8e81170ad7d} 
+void {\bfseries load\+Value} (long double \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Loads a type best represented as a long double from the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a5874ffacb2c44546e71819cc23f7040e}\label{classcereal_1_1_x_m_l_input_archive_a5874ffacb2c44546e71819cc23f7040e} 
+{\footnotesize template$<$class CharT, class Traits, class Alloc$>$ }\\void {\bfseries load\+Value} (std\+::basic\+\_\+string$<$ CharT, Traits, Alloc $>$ \&str)
+\begin{DoxyCompactList}\small\item\em Loads a string from the current node from the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_ad9ed2b9bd88b279e999b4df1f3f129f8}\label{classcereal_1_1_x_m_l_input_archive_ad9ed2b9bd88b279e999b4df1f3f129f8} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries load\+Size} (T \&\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}})
+\begin{DoxyCompactList}\small\item\em Loads the size of the current top node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d}\label{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d} 
+static size\+\_\+t {\bfseries get\+Num\+Children} (\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}}$<$$>$ \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em Gets the number of children (usually interpreted as size) for the specified node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An output archive designed to load data from XML. 
+
+This archive uses Rapid\+XML to build an in memory XML tree of the data in the stream it is given before loading any types serialized.
+
+As with the output XML archive, the preferred way to use this archive is in an RAII fashion, ensuring its destruction after all data has been read.
+
+Input XML should have been produced by the \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}. Data can only be added to dynamically sized containers -\/ the input archive will determine their size by looking at the number of child nodes. Data that did not originate from an \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive} is not officially supported, but may be possible to use if properly formatted.
+
+The \doxylink{classcereal_1_1_x_m_l_input_archive}{XMLInput\+Archive} does not require that nodes are loaded in the same order they were saved by \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}. Using name value pairs (NVPs), it is possible to load in an out of order fashion or otherwise skip/select specific nodes to load.
+
+The default behavior of the input archive is to read sequentially starting with the first node and exploring its children. When a given NVP does not match the read in name for a node, the archive will search for that node at the current level and load it if it exists. After loading an out of order node, the archive will then proceed back to loading sequentially from its new position.
+
+Consider this simple example where loading of some data is skipped\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ imagine\ the\ input\ file\ has\ someData(1-\/9)\ saved\ in\ order\ at\ the\ top\ level\ node}}
+\DoxyCodeLine{ar(\ someData1,\ someData2,\ someData3\ );\ \ \ \ \ \ \ \ \textcolor{comment}{//\ XML\ loads\ in\ the\ order\ it\ sees\ in\ the\ file}}
+\DoxyCodeLine{ar(\ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{cereal::make\_nvp}}(\ \textcolor{stringliteral}{"{}hello"{}},\ someData6\ )\ );\ \textcolor{comment}{//\ NVP\ given\ does\ not}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ match\ expected\ NVP\ name,\ so\ we\ search}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ the\ given\ NVP\ and\ load\ that\ value}}
+\DoxyCodeLine{ar(\ someData7,\ someData8,\ someData9\ );\ \ \ \ \ \ \ \ \textcolor{comment}{//\ with\ no\ NVP\ given,\ loading\ resumes\ at\ its}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ current\ location,\ proceeding\ sequentially}}
+
+\end{DoxyCode}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}!XMLInputArchive@{XMLInputArchive}}
+\index{XMLInputArchive@{XMLInputArchive}!cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+\doxysubsubsection{\texorpdfstring{XMLInputArchive()}{XMLInputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184} 
+cereal\+::\+XMLInput\+Archive\+::\+XMLInput\+Archive (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, reading in from the provided stream. 
+
+Reads in an entire XML document from some stream and parses it as soon as serialization starts
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to read from. Can be a stringstream or a file. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_acba55850d08642d1c5532c91eb360325}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}!getNodeName@{getNodeName}}
+\index{getNodeName@{getNodeName}!cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+\doxysubsubsection{\texorpdfstring{getNodeName()}{getNodeName()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_input_archive_acba55850d08642d1c5532c91eb360325} 
+const char \texorpdfstring{$\ast$}{*} cereal\+::\+XMLInput\+Archive\+::get\+Node\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Retrieves the current node name will return {\ttfamily nullptr} if the node does not have a name \Hypertarget{classcereal_1_1_x_m_l_input_archive_a974ecacf6a6411fb98e89182011b4b55}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}!loadBinaryValue@{loadBinaryValue}}
+\index{loadBinaryValue@{loadBinaryValue}!cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+\doxysubsubsection{\texorpdfstring{loadBinaryValue()}{loadBinaryValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_input_archive_a974ecacf6a6411fb98e89182011b4b55} 
+void cereal\+::\+XMLInput\+Archive\+::load\+Binary\+Value (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Loads some binary data, encoded as a base64 string, optionally specified by some name. 
+
+This will automatically start and finish a node to load the data, and can be called directly by users.
+
+Note that this follows the same ordering rules specified in the class description in regards to loading in/out of order \Hypertarget{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}!startNode@{startNode}}
+\index{startNode@{startNode}!cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+\doxysubsubsection{\texorpdfstring{startNode()}{startNode()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0} 
+void cereal\+::\+XMLInput\+Archive\+::start\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Prepares to start reading the next node. 
+
+This places the next node to be parsed onto the nodes stack.
+
+By default our strategy is to start with the document root node and then recursively iterate through all children in the order they show up in the document. We don\textquotesingle{}t need to know NVPs do to this; we\textquotesingle{}ll just blindly load in the order things appear in.
+
+We check to see if the specified NVP matches what the next automatically loaded node is. If they match, we just continue as normal, going in order. If they don\textquotesingle{}t match, we attempt to find a node named after the NVP that is being loaded. If that NVP does not exist, we throw an exception. 
+
+\label{doc-variable-members}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}\index{cereal::XMLInputArchive@{cereal::XMLInputArchive}!value@{value}}
+\index{value@{value}!cereal::XMLInputArchive@{cereal::XMLInputArchive}}
+\doxysubsubsection{\texorpdfstring{value}{value}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14} 
+template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, !std\+::is\+\_\+same$<$ T, char $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned char $>$\+::value, sizeof(T)$<$ sizeof(long long)$>$=traits\+::sfinae $>$ inline void \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{load\+Value}}(T \&value) \{ value=static\+\_\+cast$<$ T $>$(std\+::stoul(its\+Nodes.\+top().node-\/$>$value()));\} template$<$ class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, sizeof(T) $>$=sizeof(long long)$>$ = traits\+::sfinae$>$ \\
+cereal\+::\+XMLInput\+Archive\+::value}
+
+
+
+Loads a type best represented as an unsigned long from the current top node. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em traits\+::\+Enable\+If$<$} & std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, !std\+::is\+\_\+same$<$ T, char $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned char $>$\+::value, sizeof(\+T)\texorpdfstring{$<$}{<} sizeof(long long)\texorpdfstring{$>$}{>}=traits\+::sfinae \texorpdfstring{$>$}{>} inline void \doxylink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{load\+Value(\+T \&value)} \{ value=static\+\_\+cast$<$ T $>$(std\+::stoul(its\+Nodes.\+top().node-\/\texorpdfstring{$>$}{>}\doxylink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value()}));\} template\texorpdfstring{$<$}{<} class T, traits\+::\+Enable\+If\texorpdfstring{$<$}{<} std\+::is\+\_\+unsigned$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, bool $>$\+::value, sizeof(\+T) \texorpdfstring{$>$}{>}=sizeof(long long)\texorpdfstring{$>$}{>} Loads a type best represented as an unsigned long long from the current top node \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{xml_8hpp}{xml.\+hpp}}\end{DoxyCompactItemize}

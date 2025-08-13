@@ -1,0 +1,285 @@
+\doxysection{lib/cereal/types/polymorphic.hpp File Reference}
+\hypertarget{polymorphic_8hpp}{}\label{polymorphic_8hpp}\index{lib/cereal/types/polymorphic.hpp@{lib/cereal/types/polymorphic.hpp}}
+
+
+Support for pointers to polymorphic base classes.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/memory.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/util.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/helpers.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/traits.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/polymorphic\+\_\+impl.\+hpp"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{polymorphic_8hpp_a94967009fc480f164511d6bd369f5329}\label{polymorphic_8hpp_a94967009fc480f164511d6bd369f5329} 
+\#define {\bfseries CEREAL\+\_\+\+STATIC\+\_\+\+CONSTEXPR}~static constexpr
+\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_aad63585dab771e2dea41bb102c4d7a4c}{CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE}}(...)
+\begin{DoxyCompactList}\small\item\em Registers a derived polymorphic type with cereal. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_a84efbe4f256827ca26fe3d86d8bd528c}{CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE\+\_\+\+WITH\+\_\+\+NAME}}(T,  Name)
+\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_a5d730928a52a379ad0d6f2dcdee07953}{CEREAL\+\_\+\+REGISTER\+\_\+\+POLYMORPHIC\+\_\+\+RELATION}}(Base,  Derived)
+\begin{DoxyCompactList}\small\item\em Registers the base-\/derived relationship for a polymorphic type. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_a01ebe0f840ac20c307f64622384e4dae}{CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT}}(Lib\+Name)
+\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_a8e0d5df9830c0ed7c60451cf2f873ff5}{CEREAL\+\_\+\+FORCE\+\_\+\+DYNAMIC\+\_\+\+INIT}}(Lib\+Name)
+\item 
+\#define \mbox{\hyperlink{polymorphic_8hpp_a6a90af3fca239017978477a753225101}{UNREGISTERED\+\_\+\+POLYMORPHIC\+\_\+\+EXCEPTION}}(Load\+Save,  Name)
+\begin{DoxyCompactList}\small\item\em Error message used for unregistered polymorphic types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{polymorphic_8hpp_a78e7f83c5bd8746da7563d1bdb145cdf}\label{polymorphic_8hpp_a78e7f83c5bd8746da7563d1bdb145cdf} 
+{\footnotesize template$<$class Archive$>$ }\\typename\+::cereal\+::detail\+::\+Input\+Binding\+Map$<$ Archive $>$\+::\+Serializers {\bfseries cereal\+::polymorphic\+\_\+detail\+::get\+Input\+Binding} (Archive \&ar, std\+::uint32\+\_\+t const nameid)
+\begin{DoxyCompactList}\small\item\em Get an input binding from the given archive by deserializing the type meta data. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$(\mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{traits\+::is\+\_\+default\+\_\+constructible}}$<$ T $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value)\&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type \mbox{\hyperlink{polymorphic_8hpp_a6fa1b152a43117a484c4a11f382cc07a}{cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper}} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ \&ptr, std\+::uint32\+\_\+t const nameid)
+\begin{DoxyCompactList}\small\item\em Serialize a shared\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$(\mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{traits\+::is\+\_\+default\+\_\+constructible}}$<$ T $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value)\&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type \mbox{\hyperlink{polymorphic_8hpp_a7af7795b2bcb38d405583464d6089deb}{cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper}} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ \&ptr, std\+::uint32\+\_\+t const nameid)
+\begin{DoxyCompactList}\small\item\em Serialize a unique\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$(!\mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{traits\+::is\+\_\+default\+\_\+constructible}}$<$ T $>$\+::value \&\&!\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type \mbox{\hyperlink{polymorphic_8hpp_a23063c31a89bfb2305ae5b0e9a416ce1}{cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper}} (Archive \&, std\+::shared\+\_\+ptr$<$ T $>$ \&, std\+::uint32\+\_\+t const nameid)
+\begin{DoxyCompactList}\small\item\em Serialize a shared\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$(!\mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{traits\+::is\+\_\+default\+\_\+constructible}}$<$ T $>$\+::value \&\&!\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type \mbox{\hyperlink{polymorphic_8hpp_a482cf9bb75c7d20d21e8ea9e887e2f67}{cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper}} (Archive \&, std\+::unique\+\_\+ptr$<$ T, D $>$ \&, std\+::uint32\+\_\+t const nameid)
+\begin{DoxyCompactList}\small\item\em Serialize a unique\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad178feaa536101818dbed91f516d7a3d}\label{namespacecereal_ad178feaa536101818dbed91f516d7a3d} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value \&\&std\+::is\+\_\+abstract$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::shared\+\_\+ptr for polymorphic types, abstract. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad6d7ca1d179cff040e96656467c821c8}\label{namespacecereal_ad6d7ca1d179cff040e96656467c821c8} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value \&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::shared\+\_\+ptr for polymorphic types, not abstract. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a2e4daf2a3346e5b8f0b63685084ac017}\label{namespacecereal_a2e4daf2a3346e5b8f0b63685084ac017} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::shared\+\_\+ptr for polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a6abec1a5b79a96fac6e8a9452d6d5efc}\label{namespacecereal_a6abec1a5b79a96fac6e8a9452d6d5efc} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::weak\+\_\+ptr$<$ T $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::weak\+\_\+ptr for polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_adc67713d049bdcac7a754c1f481641cf}\label{namespacecereal_adc67713d049bdcac7a754c1f481641cf} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::weak\+\_\+ptr$<$ T $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::weak\+\_\+ptr for polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a65bf933f694e73578a268e7566c01443}\label{namespacecereal_a65bf933f694e73578a268e7566c01443} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value \&\&std\+::is\+\_\+abstract$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::unique\+\_\+ptr for polymorphic types that are abstract. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a9e704d8ad2170ff91ad710ed776d0727}\label{namespacecereal_a9e704d8ad2170ff91ad710ed776d0727} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value \&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::unique\+\_\+ptr for polymorphic types, not abstract. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a0ec1b39135bb383c96bf8a072bfea397}\label{namespacecereal_a0ec1b39135bb383c96bf8a072bfea397} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::unique\+\_\+ptr, case when user provides load\+\_\+and\+\_\+construct for polymorphic types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for pointers to polymorphic base classes. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{polymorphic_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{polymorphic_8hpp_a8e0d5df9830c0ed7c60451cf2f873ff5}\index{polymorphic.hpp@{polymorphic.hpp}!CEREAL\_FORCE\_DYNAMIC\_INIT@{CEREAL\_FORCE\_DYNAMIC\_INIT}}
+\index{CEREAL\_FORCE\_DYNAMIC\_INIT@{CEREAL\_FORCE\_DYNAMIC\_INIT}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_FORCE\_DYNAMIC\_INIT}{CEREAL\_FORCE\_DYNAMIC\_INIT}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a8e0d5df9830c0ed7c60451cf2f873ff5} 
+\#define CEREAL\+\_\+\+FORCE\+\_\+\+DYNAMIC\+\_\+\+INIT(\begin{DoxyParamCaption}\item[{}]{Lib\+Name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\_DLL\_EXPORT}}\ dynamic\_init\_dummy\_\#\#LibName();\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \textcolor{comment}{/*\ end\ detail\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \textcolor{comment}{/*\ end\ cereal\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }dynamic\_init\_\#\#LibName\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ dynamic\_init\_\#\#LibName()\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ ::cereal::detail::dynamic\_init\_dummy\_\#\#LibName();\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\ dynamic\_init\_instance\_\#\#LibName;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \textcolor{comment}{/*\ end\ anonymous\ namespace\ */}}
+
+\end{DoxyCode}
+Forces dynamic initialization of polymorphic support in a previously registered source file
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{polymorphic_8hpp_a01ebe0f840ac20c307f64622384e4dae}{CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT}
+\end{DoxySeeAlso}
+See CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT for detailed explanation of how this macro should be used. The name used should match that for CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT. \Hypertarget{polymorphic_8hpp_a01ebe0f840ac20c307f64622384e4dae}\index{polymorphic.hpp@{polymorphic.hpp}!CEREAL\_REGISTER\_DYNAMIC\_INIT@{CEREAL\_REGISTER\_DYNAMIC\_INIT}}
+\index{CEREAL\_REGISTER\_DYNAMIC\_INIT@{CEREAL\_REGISTER\_DYNAMIC\_INIT}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_REGISTER\_DYNAMIC\_INIT}{CEREAL\_REGISTER\_DYNAMIC\_INIT}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a01ebe0f840ac20c307f64622384e4dae} 
+\#define CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT(\begin{DoxyParamCaption}\item[{}]{Lib\+Name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\_DLL\_EXPORT}}\ dynamic\_init\_dummy\_\#\#LibName()\ \{\}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}}
+
+\end{DoxyCode}
+Adds a way to force initialization of a translation unit containing calls to CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE
+
+In C++, dynamic initialization of non-\/local variables of a translation unit may be deferred until "{}the first odr-\/use of any function or variable defined in the same translation unit as the variable to be initialized."{}
+
+Informally, odr-\/use means that your program takes the address of or binds a reference directly to an object, which must have a definition.
+
+Since polymorphic type support in cereal relies on the dynamic initialization of certain global objects happening before serialization is performed, it is important to ensure that something from files that call CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE is odr-\/used before serialization occurs, otherwise the registration will never take place. This may often be the case when serialization is built as a shared library external from your main program.
+
+This macro, with any name of your choosing, should be placed into the source file that contains calls to CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE.
+
+Its counterpart, CEREAL\+\_\+\+FORCE\+\_\+\+DYNAMIC\+\_\+\+INIT, should be placed in its associated header file such that it is included in the translation units (source files) in which you want the registration to appear. \Hypertarget{polymorphic_8hpp_a5d730928a52a379ad0d6f2dcdee07953}\index{polymorphic.hpp@{polymorphic.hpp}!CEREAL\_REGISTER\_POLYMORPHIC\_RELATION@{CEREAL\_REGISTER\_POLYMORPHIC\_RELATION}}
+\index{CEREAL\_REGISTER\_POLYMORPHIC\_RELATION@{CEREAL\_REGISTER\_POLYMORPHIC\_RELATION}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_REGISTER\_POLYMORPHIC\_RELATION}{CEREAL\_REGISTER\_POLYMORPHIC\_RELATION}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a5d730928a52a379ad0d6f2dcdee07953} 
+\#define CEREAL\+\_\+\+REGISTER\+\_\+\+POLYMORPHIC\+\_\+\+RELATION(\begin{DoxyParamCaption}\item[{}]{Base}{, }\item[{}]{Derived}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }PolymorphicRelation<Base,\ Derived>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \{\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ bind()\ \{\ RegisterPolymorphicCaster<Base,\ Derived>::bind();\ \}\ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}}
+
+\end{DoxyCode}
+
+
+Registers the base-\/derived relationship for a polymorphic type. 
+
+When polymorphic serialization occurs, cereal needs to know how to properly cast between derived and base types for the polymorphic type. Normally this happens automatically whenever \doxylink{structcereal_1_1base__class}{cereal\+::base\+\_\+class} or \doxylink{structcereal_1_1virtual__base__class}{cereal\+::virtual\+\_\+base\+\_\+class} are used to serialize a base class. In cases where neither of these is ever called but a base class still exists, this explicit registration is required.
+
+The Derived class should be the most derived type that will be serialized, and the Base type any possible base that has not been covered under a base class serialization that will be used to store a Derived pointer.
+
+Placement of this is the same as for CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE. \Hypertarget{polymorphic_8hpp_aad63585dab771e2dea41bb102c4d7a4c}\index{polymorphic.hpp@{polymorphic.hpp}!CEREAL\_REGISTER\_TYPE@{CEREAL\_REGISTER\_TYPE}}
+\index{CEREAL\_REGISTER\_TYPE@{CEREAL\_REGISTER\_TYPE}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_REGISTER\_TYPE}{CEREAL\_REGISTER\_TYPE}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_aad63585dab771e2dea41bb102c4d7a4c} 
+\#define CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }binding\_name<\_\_VA\_ARGS\_\_>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ CEREAL\_STATIC\_CONSTEXPR\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ name()\ \{\ \textcolor{keywordflow}{return}\ \#\_\_VA\_ARGS\_\_;\ \}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ CEREAL\_BIND\_TO\_ARCHIVES(\_\_VA\_ARGS\_\_)}
+
+\end{DoxyCode}
+
+
+Registers a derived polymorphic type with cereal. 
+
+Polymorphic types must be registered before smart pointers to them can be serialized. Note that base classes do not need to be registered.
+
+Registering a type lets cereal know how to properly serialize it when a smart pointer to a base object is used in conjunction with a derived class.
+
+This assumes that all relevant archives have also previously been registered. Registration for archives is usually done in the header file in which they are defined. This means that type registration needs to happen after specific archives to be used are included.
+
+It is recommended that type registration be done in the header file in which the type is declared.
+
+Registration can also be placed in a source file, but this may require the use of the CEREAL\+\_\+\+REGISTER\+\_\+\+DYNAMIC\+\_\+\+INIT macro (see below).
+
+Registration may be called repeatedly for the same type in different translation units to add support for additional archives if they are not initially available (included and registered).
+
+When building serialization support as a DLL on Windows, registration must happen in the header file. On Linux and Mac things should still work properly if placed in a source file, but see the above comments on registering in source files.
+
+Polymorphic support in cereal requires RTTI to be enabled \Hypertarget{polymorphic_8hpp_a84efbe4f256827ca26fe3d86d8bd528c}\index{polymorphic.hpp@{polymorphic.hpp}!CEREAL\_REGISTER\_TYPE\_WITH\_NAME@{CEREAL\_REGISTER\_TYPE\_WITH\_NAME}}
+\index{CEREAL\_REGISTER\_TYPE\_WITH\_NAME@{CEREAL\_REGISTER\_TYPE\_WITH\_NAME}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_REGISTER\_TYPE\_WITH\_NAME}{CEREAL\_REGISTER\_TYPE\_WITH\_NAME}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a84efbe4f256827ca26fe3d86d8bd528c} 
+\#define CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE\+\_\+\+WITH\+\_\+\+NAME(\begin{DoxyParamCaption}\item[{}]{T}{, }\item[{}]{Name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }binding\_name<T>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \{\ CEREAL\_STATIC\_CONSTEXPR\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ name()\ \{\ \textcolor{keywordflow}{return}\ Name;\ \}\ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \}\ \textcolor{comment}{/*\ end\ namespaces\ */}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ CEREAL\_BIND\_TO\_ARCHIVES(T)}
+
+\end{DoxyCode}
+Registers a polymorphic type with cereal, giving it a user defined name
+
+In some cases the default name used with CEREAL\+\_\+\+REGISTER\+\_\+\+TYPE (the name of the type) may not be suitable. This macro allows any name to be associated with the type. The name should be unique \Hypertarget{polymorphic_8hpp_a6a90af3fca239017978477a753225101}\index{polymorphic.hpp@{polymorphic.hpp}!UNREGISTERED\_POLYMORPHIC\_EXCEPTION@{UNREGISTERED\_POLYMORPHIC\_EXCEPTION}}
+\index{UNREGISTERED\_POLYMORPHIC\_EXCEPTION@{UNREGISTERED\_POLYMORPHIC\_EXCEPTION}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{UNREGISTERED\_POLYMORPHIC\_EXCEPTION}{UNREGISTERED\_POLYMORPHIC\_EXCEPTION}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a6a90af3fca239017978477a753225101} 
+\#define UNREGISTERED\+\_\+\+POLYMORPHIC\+\_\+\+EXCEPTION(\begin{DoxyParamCaption}\item[{}]{Load\+Save}{, }\item[{}]{Name}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{cereal::Exception}}(\textcolor{stringliteral}{"{}Trying\ to\ "{}}\ \#LoadSave\ \textcolor{stringliteral}{"{}\ an\ unregistered\ polymorphic\ type\ ("{}}\ +\ Name\ +\ \textcolor{stringliteral}{"{}).\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Make\ sure\ your\ type\ is\ registered\ with\ CEREAL\_REGISTER\_TYPE\ and\ that\ the\ archive\ "{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}you\ are\ using\ was\ included\ (and\ registered\ with\ CEREAL\_REGISTER\_ARCHIVE)\ prior\ to\ calling\ CEREAL\_REGISTER\_TYPE.\(\backslash\)n"{}}\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}If\ your\ type\ is\ already\ registered\ and\ you\ still\ see\ this\ error,\ you\ may\ need\ to\ use\ CEREAL\_REGISTER\_DYNAMIC\_INIT."{}});}
+
+\end{DoxyCode}
+
+
+Error message used for unregistered polymorphic types. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{polymorphic_8hpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{polymorphic_8hpp_a23063c31a89bfb2305ae5b0e9a416ce1}\index{polymorphic.hpp@{polymorphic.hpp}!serialize\_wrapper@{serialize\_wrapper}}
+\index{serialize\_wrapper@{serialize\_wrapper}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{serialize\_wrapper()}{serialize\_wrapper()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a23063c31a89bfb2305ae5b0e9a416ce1} 
+template$<$class Archive, class T$>$ \\
+std\+::enable\+\_\+if$<$(!traits\+::is\+\_\+default\+\_\+constructible$<$ T $>$\+::value \&\&!traits\+::has\+\_\+load\+\_\+and\+\_\+construct$<$ T, Archive $>$\+::value)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper (\begin{DoxyParamCaption}\item[{Archive \&}]{}{, }\item[{std\+::shared\+\_\+ptr$<$ T $>$ \&}]{}{, }\item[{std\+::uint32\+\_\+t const}]{nameid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serialize a shared\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. 
+
+This case is for when we can\textquotesingle{}t actually construct the shared pointer. Normally this would be caught as the pointer itself is serialized, but since this is a polymorphic pointer, if we tried to serialize the pointer we\textquotesingle{}d end up back here recursively. So we have to catch the error here as well, if this was a polymorphic type serialized by its proper pointer type \Hypertarget{polymorphic_8hpp_a482cf9bb75c7d20d21e8ea9e887e2f67}\index{polymorphic.hpp@{polymorphic.hpp}!serialize\_wrapper@{serialize\_wrapper}}
+\index{serialize\_wrapper@{serialize\_wrapper}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{serialize\_wrapper()}{serialize\_wrapper()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a482cf9bb75c7d20d21e8ea9e887e2f67} 
+template$<$class Archive, class T, class D$>$ \\
+std\+::enable\+\_\+if$<$(!traits\+::is\+\_\+default\+\_\+constructible$<$ T $>$\+::value \&\&!traits\+::has\+\_\+load\+\_\+and\+\_\+construct$<$ T, Archive $>$\+::value)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper (\begin{DoxyParamCaption}\item[{Archive \&}]{}{, }\item[{std\+::unique\+\_\+ptr$<$ T, D $>$ \&}]{}{, }\item[{std\+::uint32\+\_\+t const}]{nameid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serialize a unique\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. 
+
+This case is for when we can\textquotesingle{}t actually construct the unique pointer. Normally this would be caught as the pointer itself is serialized, but since this is a polymorphic pointer, if we tried to serialize the pointer we\textquotesingle{}d end up back here recursively. So we have to catch the error here as well, if this was a polymorphic type serialized by its proper pointer type \Hypertarget{polymorphic_8hpp_a6fa1b152a43117a484c4a11f382cc07a}\index{polymorphic.hpp@{polymorphic.hpp}!serialize\_wrapper@{serialize\_wrapper}}
+\index{serialize\_wrapper@{serialize\_wrapper}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{serialize\_wrapper()}{serialize\_wrapper()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a6fa1b152a43117a484c4a11f382cc07a} 
+template$<$class Archive, class T$>$ \\
+std\+::enable\+\_\+if$<$(traits\+::is\+\_\+default\+\_\+constructible$<$ T $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}traits\+::has\+\_\+load\+\_\+and\+\_\+construct$<$ T, Archive $>$\+::value)\&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{std\+::shared\+\_\+ptr$<$ T $>$ \&}]{ptr}{, }\item[{std\+::uint32\+\_\+t const}]{nameid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serialize a shared\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. 
+
+This check lets us try and skip doing polymorphic machinery if we can get away with using the derived class serialize function
+
+Note that on MSVC 2013 preview, is\+\_\+default\+\_\+constructible$<$\+T$>$ returns true for abstract classes with default constructors, but on clang/gcc this will return false. So we also need to check for that here. \Hypertarget{polymorphic_8hpp_a7af7795b2bcb38d405583464d6089deb}\index{polymorphic.hpp@{polymorphic.hpp}!serialize\_wrapper@{serialize\_wrapper}}
+\index{serialize\_wrapper@{serialize\_wrapper}!polymorphic.hpp@{polymorphic.hpp}}
+\doxysubsubsection{\texorpdfstring{serialize\_wrapper()}{serialize\_wrapper()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{polymorphic_8hpp_a7af7795b2bcb38d405583464d6089deb} 
+template$<$class Archive, class T, class D$>$ \\
+std\+::enable\+\_\+if$<$(traits\+::is\+\_\+default\+\_\+constructible$<$ T $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}traits\+::has\+\_\+load\+\_\+and\+\_\+construct$<$ T, Archive $>$\+::value)\&\&!std\+::is\+\_\+abstract$<$ T $>$\+::value, bool $>$\+::type cereal\+::polymorphic\+\_\+detail\+::serialize\+\_\+wrapper (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{std\+::unique\+\_\+ptr$<$ T, D $>$ \&}]{ptr}{, }\item[{std\+::uint32\+\_\+t const}]{nameid}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serialize a unique\+\_\+ptr if the 2nd msb in the nameid is set, and if we can actually construct the pointee. 
+
+This check lets us try and skip doing polymorphic machinery if we can get away with using the derived class serialize function 

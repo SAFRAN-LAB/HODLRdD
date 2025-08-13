@@ -1,0 +1,27 @@
+\doxysection{lib/cereal/types/concepts/pair\+\_\+associative\+\_\+container.hpp File Reference}
+\hypertarget{pair__associative__container_8hpp}{}\label{pair__associative__container_8hpp}\index{lib/cereal/types/concepts/pair\_associative\_container.hpp@{lib/cereal/types/concepts/pair\_associative\_container.hpp}}
+
+
+Support for the Pair\+Associative\+Container refinement of the Associative\+Container concept.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a0c5992e59041b20f902dd4fa0b2c62f1}\label{namespacecereal_a0c5992e59041b20f902dd4fa0b2c62f1} 
+{\footnotesize template$<$class Archive, template$<$ typename... $>$ class Map, typename... Args, typename = typename Map$<$\+Args...$>$\+::mapped\+\_\+type$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, Map$<$ Args... $>$ const \&map)
+\begin{DoxyCompactList}\small\item\em Saving for std-\/like pair associative containers. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a679144f687ff95c7111ff96bccc573b3}\label{namespacecereal_a679144f687ff95c7111ff96bccc573b3} 
+{\footnotesize template$<$class Archive, template$<$ typename... $>$ class Map, typename... Args, typename = typename Map$<$\+Args...$>$\+::mapped\+\_\+type$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, Map$<$ Args... $>$ \&map)
+\begin{DoxyCompactList}\small\item\em Loading for std-\/like pair associative containers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for the Pair\+Associative\+Container refinement of the Associative\+Container concept. 
+

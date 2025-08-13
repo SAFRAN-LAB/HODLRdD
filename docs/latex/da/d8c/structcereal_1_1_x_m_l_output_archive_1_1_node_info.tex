@@ -1,0 +1,54 @@
+\doxysection{cereal\+::XMLOutput\+Archive\+::Node\+Info Struct Reference}
+\hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info}{}\label{structcereal_1_1_x_m_l_output_archive_1_1_node_info}\index{cereal::XMLOutputArchive::NodeInfo@{cereal::XMLOutputArchive::NodeInfo}}
+
+
+A struct that contains metadata about a node.  
+
+
+
+
+{\ttfamily \#include $<$xml.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ad0f749c9d48ff29176e740499783b8bb}\label{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ad0f749c9d48ff29176e740499783b8bb} 
+{\bfseries Node\+Info} (\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}}$<$$>$ \texorpdfstring{$\ast$}{*}n=nullptr, const char \texorpdfstring{$\ast$}{*}nm=nullptr)
+\item 
+std\+::string \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a7ba5c914f9b830e92259794062e51257}{get\+Value\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Gets the name for the next child node created from this node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a240a9b7d14c064a1c43925a4fd43a6c6}\label{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a240a9b7d14c064a1c43925a4fd43a6c6} 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}} \texorpdfstring{$\ast$}{*} {\bfseries node}
+\begin{DoxyCompactList}\small\item\em A pointer to this node. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ac7786637d9acb060450d67fcbab4cd04}\label{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ac7786637d9acb060450d67fcbab4cd04} 
+size\+\_\+t {\bfseries counter}
+\begin{DoxyCompactList}\small\item\em The counter for naming child nodes. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}\label{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries name}
+\begin{DoxyCompactList}\small\item\em The name for the next child node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A struct that contains metadata about a node. 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a7ba5c914f9b830e92259794062e51257}\index{cereal::XMLOutputArchive::NodeInfo@{cereal::XMLOutputArchive::NodeInfo}!getValueName@{getValueName}}
+\index{getValueName@{getValueName}!cereal::XMLOutputArchive::NodeInfo@{cereal::XMLOutputArchive::NodeInfo}}
+\doxysubsubsection{\texorpdfstring{getValueName()}{getValueName()}}
+{\footnotesize\ttfamily \label{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a7ba5c914f9b830e92259794062e51257} 
+std\+::string cereal\+::\+XMLOutput\+Archive\+::\+Node\+Info\+::get\+Value\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Gets the name for the next child node created from this node. 
+
+The name will be automatically generated using the counter if a name has not been previously set. If a name has been previously set, that name will be returned only once 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{xml_8hpp}{xml.\+hpp}}\end{DoxyCompactItemize}

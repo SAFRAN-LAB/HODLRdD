@@ -1,0 +1,48 @@
+\doxysection{lib/cereal/version.hpp File Reference}
+\hypertarget{version_8hpp}{}\label{version_8hpp}\index{lib/cereal/version.hpp@{lib/cereal/version.hpp}}
+
+
+Macros to detect cereal version.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{version_8hpp_acd26ddeafaf9585136f16314872b8f3c}\label{version_8hpp_acd26ddeafaf9585136f16314872b8f3c} 
+\#define {\bfseries CEREAL\+\_\+\+VERSION\+\_\+\+MAJOR}~1
+\begin{DoxyCompactList}\small\item\em The major version. \end{DoxyCompactList}\item 
+\Hypertarget{version_8hpp_a9b9948b6af1523f4c23e9a5444ed896a}\label{version_8hpp_a9b9948b6af1523f4c23e9a5444ed896a} 
+\#define {\bfseries CEREAL\+\_\+\+VERSION\+\_\+\+MINOR}~3
+\begin{DoxyCompactList}\small\item\em The minor version. \end{DoxyCompactList}\item 
+\Hypertarget{version_8hpp_a7dfd99f03dc990ea04c1542d2a755464}\label{version_8hpp_a7dfd99f03dc990ea04c1542d2a755464} 
+\#define {\bfseries CEREAL\+\_\+\+VERSION\+\_\+\+PATCH}~0
+\begin{DoxyCompactList}\small\item\em The patch version. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{version_8hpp_a0e0304b1e14992006ebf53d7bb1a23e3}{CEREAL\+\_\+\+VERSION}}
+\begin{DoxyCompactList}\small\item\em The full version as a single number. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Macros to detect cereal version. 
+
+These macros can assist in determining the version of cereal. Be warned that cereal is not guaranteed to be compatible across different versions. For more information on releases of cereal, see \href{https://github.com/USCiLab/cereal/releases}{\texttt{https\+://github.\+com/\+USCi\+Lab/cereal/releases}}. 
+
+\label{doc-define-members}
+\Hypertarget{version_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{version_8hpp_a0e0304b1e14992006ebf53d7bb1a23e3}\index{version.hpp@{version.hpp}!CEREAL\_VERSION@{CEREAL\_VERSION}}
+\index{CEREAL\_VERSION@{CEREAL\_VERSION}!version.hpp@{version.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_VERSION}{CEREAL\_VERSION}}
+{\footnotesize\ttfamily \label{version_8hpp_a0e0304b1e14992006ebf53d7bb1a23e3} 
+\#define CEREAL\+\_\+\+VERSION}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{version_8hpp_acd26ddeafaf9585136f16314872b8f3c}{CEREAL\_VERSION\_MAJOR}}\ *\ 10000\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \mbox{\hyperlink{version_8hpp_a9b9948b6af1523f4c23e9a5444ed896a}{CEREAL\_VERSION\_MINOR}}\ *\ 100\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ +\ \mbox{\hyperlink{version_8hpp_a7dfd99f03dc990ea04c1542d2a755464}{CEREAL\_VERSION\_PATCH}})}
+
+\end{DoxyCode}
+
+
+The full version as a single number. 
+

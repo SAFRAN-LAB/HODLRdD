@@ -1,0 +1,57 @@
+\doxysection{cereal\+::Size\+Tag\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1_size_tag}{}\label{classcereal_1_1_size_tag}\index{cereal::SizeTag$<$ T $>$@{cereal::SizeTag$<$ T $>$}}
+
+
+A wrapper around size metadata.  
+
+
+
+
+{\ttfamily \#include $<$helpers.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_size_tag_a528af244793e4fba5f6c5531bb166090}\label{classcereal_1_1_size_tag_a528af244793e4fba5f6c5531bb166090} 
+{\bfseries Size\+Tag} (T \&\&sz)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_size_tag_a43b37296fcc0e611e2d2486503c65d6f}\label{classcereal_1_1_size_tag_a43b37296fcc0e611e2d2486503c65d6f} 
+Type {\bfseries size}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Related Symbols}
+(Note that these are not member symbols.) \begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\+\_\+size\+\_\+tag}} (T \&\&sz)
+\begin{DoxyCompactList}\small\item\em Creates a size tag from some variable. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::\+Size\+Tag$<$ T $>$}
+A wrapper around size metadata. 
+
+This class provides a way for archives to have more flexibility over how they choose to serialize size metadata for containers. For some archive types, the size may be implicitly encoded in the output (e.\+g. JSON) and not need an explicit entry. Specializing serialize or load/save for your archive and Size\+Tags allows you to choose what happens. 
+
+\label{doc-related-members}
+\Hypertarget{classcereal_1_1_size_tag_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}\index{cereal::SizeTag$<$ T $>$@{cereal::SizeTag$<$ T $>$}!make\_size\_tag@{make\_size\_tag}}
+\index{make\_size\_tag@{make\_size\_tag}!cereal::SizeTag$<$ T $>$@{cereal::SizeTag$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{make\_size\_tag()}{make\_size\_tag()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ make\+\_\+size\+\_\+tag (\begin{DoxyParamCaption}\item[{T \&\&}]{sz}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [related]}}
+
+
+
+Creates a size tag from some variable. 
+
+Will normally be used to serialize size (e.\+g. size()) information for variable size containers. If you have a variable sized container, the very first thing it serializes should be its size, wrapped in a \doxylink{classcereal_1_1_size_tag}{Size\+Tag}. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

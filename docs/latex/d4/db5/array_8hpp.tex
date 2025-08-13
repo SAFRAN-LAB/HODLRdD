@@ -1,0 +1,32 @@
+\doxysection{lib/cereal/types/array.hpp File Reference}
+\hypertarget{array_8hpp}{}\label{array_8hpp}\index{lib/cereal/types/array.hpp@{lib/cereal/types/array.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}array\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$array$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class Archive, class T, size\+\_\+t N$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value \&\&std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type \mbox{\hyperlink{namespacecereal_a54c9c74df6d91319b01128690322690a}{cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME}} (Archive \&ar, std\+::array$<$ T, N $>$ const \&array)
+\item 
+{\footnotesize template$<$class Archive, class T, size\+\_\+t N$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits\+::is\+\_\+input\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value \&\&std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type \mbox{\hyperlink{namespacecereal_a5c962df81c2ad99813597b6238e3e17d}{cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME}} (Archive \&ar, std\+::array$<$ T, N $>$ \&array)
+\item 
+\Hypertarget{namespacecereal_a668c4c41f5ca325091d5a357f89040c3}\label{namespacecereal_a668c4c41f5ca325091d5a357f89040c3} 
+{\footnotesize template$<$class Archive, class T, size\+\_\+t N$>$ }\\std\+::enable\+\_\+if$<$!\mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}!std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::array$<$ T, N $>$ const \&array)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::array all other types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad1956f9852b727abcb5ee439dd8abf39}\label{namespacecereal_ad1956f9852b727abcb5ee439dd8abf39} 
+{\footnotesize template$<$class Archive, class T, size\+\_\+t N$>$ }\\std\+::enable\+\_\+if$<$!\mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits\+::is\+\_\+input\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$, Archive $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}!std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::array$<$ T, N $>$ \&array)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::array all other types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}array\texorpdfstring{$>$}{>} 
+

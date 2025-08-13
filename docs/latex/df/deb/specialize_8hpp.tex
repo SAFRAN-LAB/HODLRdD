@@ -1,0 +1,81 @@
+\doxysection{lib/cereal/specialize.hpp File Reference}
+\hypertarget{specialize_8hpp}{}\label{specialize_8hpp}\index{lib/cereal/specialize.hpp@{lib/cereal/specialize.hpp}}
+
+
+Serialization disambiguation.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1specialize}{cereal\+::specialize$<$ Archive, T, S $>$}}
+\begin{DoxyCompactList}\small\item\em A class used to disambiguate cases where cereal cannot detect a unique way of serializing a class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{specialize_8hpp_ad97c8384438352ed3dd58762259d902d}{CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ALL\+\_\+\+ARCHIVES}}(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}},  Specialization)
+\begin{DoxyCompactList}\small\item\em Convenient macro for performing specialization for all archive types. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{specialize_8hpp_a9052730c61ed943f726b4dfca1f6f627}{CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ARCHIVE}}(Archive,  \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}},  Specialization)
+\begin{DoxyCompactList}\small\item\em Convenient macro for performing specialization for a single archive type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Serialization disambiguation. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{specialize_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{specialize_8hpp_ad97c8384438352ed3dd58762259d902d}\index{specialize.hpp@{specialize.hpp}!CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES@{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES}}
+\index{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES@{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES}!specialize.hpp@{specialize.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES}{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES}}
+{\footnotesize\ttfamily \label{specialize_8hpp_ad97c8384438352ed3dd58762259d902d} 
+\#define CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ALL\+\_\+\+ARCHIVES(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}}{, }\item[{}]{Specialization}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>\ \textcolor{keyword}{struct\ }specialize<Archive,\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}},\ Specialization>\ \{\};\ \}}
+
+\end{DoxyCode}
+
+
+Convenient macro for performing specialization for all archive types. 
+
+This performs specialization for the specific type for all types of archives. This macro should be placed at the global namespace.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyType\ \{\};}
+\DoxyCodeLine{\mbox{\hyperlink{specialize_8hpp_ad97c8384438352ed3dd58762259d902d}{CEREAL\_SPECIALIZE\_FOR\_ALL\_ARCHIVES}}(\ MyType,\ cereal::specialization::member\_load\_save\ );}
+
+\end{DoxyCode}
+ \Hypertarget{specialize_8hpp_a9052730c61ed943f726b4dfca1f6f627}\index{specialize.hpp@{specialize.hpp}!CEREAL\_SPECIALIZE\_FOR\_ARCHIVE@{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE}}
+\index{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE@{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE}!specialize.hpp@{specialize.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE}{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE}}
+{\footnotesize\ttfamily \label{specialize_8hpp_a9052730c61ed943f726b4dfca1f6f627} 
+\#define CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ARCHIVE(\begin{DoxyParamCaption}\item[{}]{Archive}{, }\item[{}]{\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}}{, }\item[{}]{Specialization}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }specialize<Archive,\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}},\ Specialization>\ \{\};\ \}}
+
+\end{DoxyCode}
+
+
+Convenient macro for performing specialization for a single archive type. 
+
+This performs specialization for the specific type for a single type of archive. This macro should be placed at the global namespace.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyType\ \{\};}
+\DoxyCodeLine{\mbox{\hyperlink{specialize_8hpp_a9052730c61ed943f726b4dfca1f6f627}{CEREAL\_SPECIALIZE\_FOR\_ARCHIVE}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{cereal::XMLInputArchive}},\ MyType,\ cereal::specialization::member\_load\_save\ );}
+
+\end{DoxyCode}
+ 

@@ -1,0 +1,139 @@
+\doxysection{lib/cereal/macros.hpp File Reference}
+\hypertarget{macros_8hpp}{}\label{macros_8hpp}\index{lib/cereal/macros.hpp@{lib/cereal/macros.hpp}}
+
+
+Preprocessor macros that can customise the cereal library.  
+
+
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{macros_8hpp_a89aa4dfbafa0236d0da6aa7bec573f35}{CEREAL\+\_\+\+THREAD\+\_\+\+SAFE}}~0
+\begin{DoxyCompactList}\small\item\em Whether cereal should be compiled for a threaded environment. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a2ad098b163a5f4829eb00fd7fb0b408d}{CEREAL\+\_\+\+SIZE\+\_\+\+TYPE}}~uint64\+\_\+t
+\begin{DoxyCompactList}\small\item\em Determines the data type used for size\+\_\+type. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}}~serialize
+\begin{DoxyCompactList}\small\item\em The serialization/deserialization function name to search for. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME}}~load
+\begin{DoxyCompactList}\small\item\em The deserialization (load) function name to search for. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME}}~save
+\begin{DoxyCompactList}\small\item\em The serialization (save) function name to search for. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a6d46fc40eb865ec42dd40929ed5db73f}{CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME}}~load\+\_\+minimal
+\begin{DoxyCompactList}\small\item\em The deserialization (load\+\_\+minimal) function name to search for. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_ac018dce5e1c47d8948842e8eaa08815e}{CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME}}~save\+\_\+minimal
+\begin{DoxyCompactList}\small\item\em The serialization (save\+\_\+minimal) function name to search for. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Defines the CEREAL\+\_\+\+NOEXCEPT macro to use instead of noexcept. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d}{CEREAL\+\_\+\+ALIGNOF}}~alignof
+\begin{DoxyCompactList}\small\item\em Checks if C++14 is available. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Preprocessor macros that can customise the cereal library. 
+
+By default, cereal looks for serialization functions with very specific names, that is\+: serialize, load, save, load\+\_\+minimal, or save\+\_\+minimal.
+
+This file allows an advanced user to change these names to conform to some other style or preference. This is implemented using preprocessor macros.
+
+As a result of this, in internal cereal code you will see macros used for these function names. In user code, you should name the functions like you normally would and not use the macros to improve readability. 
+
+\label{doc-define-members}
+\Hypertarget{macros_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d}\index{macros.hpp@{macros.hpp}!CEREAL\_ALIGNOF@{CEREAL\_ALIGNOF}}
+\index{CEREAL\_ALIGNOF@{CEREAL\_ALIGNOF}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_ALIGNOF}{CEREAL\_ALIGNOF}}
+{\footnotesize\ttfamily \label{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d} 
+\#define CEREAL\+\_\+\+ALIGNOF~alignof}
+
+
+
+Checks if C++14 is available. 
+
+Checks if C++17 is available NOTE\+: clang v5 has a bug with inline variables, so disable C++17 on that compiler Defines the CEREAL\+\_\+\+ALIGNOF macro to use instead of alignof \Hypertarget{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}\index{macros.hpp@{macros.hpp}!CEREAL\_LOAD\_FUNCTION\_NAME@{CEREAL\_LOAD\_FUNCTION\_NAME}}
+\index{CEREAL\_LOAD\_FUNCTION\_NAME@{CEREAL\_LOAD\_FUNCTION\_NAME}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_LOAD\_FUNCTION\_NAME}{CEREAL\_LOAD\_FUNCTION\_NAME}}
+{\footnotesize\ttfamily \label{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8} 
+\#define CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME~load}
+
+
+
+The deserialization (load) function name to search for. 
+
+You can define {\ttfamily CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} to be different assuming you do so before this file is included. \Hypertarget{macros_8hpp_a6d46fc40eb865ec42dd40929ed5db73f}\index{macros.hpp@{macros.hpp}!CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME@{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}}
+\index{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME@{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}}
+{\footnotesize\ttfamily \label{macros_8hpp_a6d46fc40eb865ec42dd40929ed5db73f} 
+\#define CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME~load\+\_\+minimal}
+
+
+
+The deserialization (load\+\_\+minimal) function name to search for. 
+
+You can define {\ttfamily CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME} to be different assuming you do so before this file is included. \Hypertarget{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}\index{macros.hpp@{macros.hpp}!CEREAL\_NOEXCEPT@{CEREAL\_NOEXCEPT}}
+\index{CEREAL\_NOEXCEPT@{CEREAL\_NOEXCEPT}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_NOEXCEPT}{CEREAL\_NOEXCEPT}}
+{\footnotesize\ttfamily \label{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b} 
+\#define CEREAL\+\_\+\+NOEXCEPT}
+
+
+
+Defines the CEREAL\+\_\+\+NOEXCEPT macro to use instead of noexcept. 
+
+If a compiler we support does not support noexcept, this macro will detect this and define CEREAL\+\_\+\+NOEXCEPT as a no-\/op \Hypertarget{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}\index{macros.hpp@{macros.hpp}!CEREAL\_SAVE\_FUNCTION\_NAME@{CEREAL\_SAVE\_FUNCTION\_NAME}}
+\index{CEREAL\_SAVE\_FUNCTION\_NAME@{CEREAL\_SAVE\_FUNCTION\_NAME}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SAVE\_FUNCTION\_NAME}{CEREAL\_SAVE\_FUNCTION\_NAME}}
+{\footnotesize\ttfamily \label{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71} 
+\#define CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME~save}
+
+
+
+The serialization (save) function name to search for. 
+
+You can define {\ttfamily CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} to be different assuming you do so before this file is included. \Hypertarget{macros_8hpp_ac018dce5e1c47d8948842e8eaa08815e}\index{macros.hpp@{macros.hpp}!CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME@{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}}
+\index{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME@{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}}
+{\footnotesize\ttfamily \label{macros_8hpp_ac018dce5e1c47d8948842e8eaa08815e} 
+\#define CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME~save\+\_\+minimal}
+
+
+
+The serialization (save\+\_\+minimal) function name to search for. 
+
+You can define {\ttfamily CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME} to be different assuming you do so before this file is included. \Hypertarget{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}\index{macros.hpp@{macros.hpp}!CEREAL\_SERIALIZE\_FUNCTION\_NAME@{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}
+\index{CEREAL\_SERIALIZE\_FUNCTION\_NAME@{CEREAL\_SERIALIZE\_FUNCTION\_NAME}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SERIALIZE\_FUNCTION\_NAME}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}
+{\footnotesize\ttfamily \label{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a} 
+\#define CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME~serialize}
+
+
+
+The serialization/deserialization function name to search for. 
+
+You can define {\ttfamily CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} to be different assuming you do so before this file is included. \Hypertarget{macros_8hpp_a2ad098b163a5f4829eb00fd7fb0b408d}\index{macros.hpp@{macros.hpp}!CEREAL\_SIZE\_TYPE@{CEREAL\_SIZE\_TYPE}}
+\index{CEREAL\_SIZE\_TYPE@{CEREAL\_SIZE\_TYPE}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_SIZE\_TYPE}{CEREAL\_SIZE\_TYPE}}
+{\footnotesize\ttfamily \label{macros_8hpp_a2ad098b163a5f4829eb00fd7fb0b408d} 
+\#define CEREAL\+\_\+\+SIZE\+\_\+\+TYPE~uint64\+\_\+t}
+
+
+
+Determines the data type used for size\+\_\+type. 
+
+cereal uses size\+\_\+type to ensure that the serialized size of dynamic containers is compatible across different architectures (e.\+g. 32 vs 64 bit), which may use different underlying types for std\+::size\+\_\+t.
+
+More information can be found in \doxylink{helpers_8hpp}{cereal/details/helpers.\+hpp}.
+
+If you choose to modify this type, ensure that you use a fixed size type (e.\+g. uint32\+\_\+t). \Hypertarget{macros_8hpp_a89aa4dfbafa0236d0da6aa7bec573f35}\index{macros.hpp@{macros.hpp}!CEREAL\_THREAD\_SAFE@{CEREAL\_THREAD\_SAFE}}
+\index{CEREAL\_THREAD\_SAFE@{CEREAL\_THREAD\_SAFE}!macros.hpp@{macros.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_THREAD\_SAFE}{CEREAL\_THREAD\_SAFE}}
+{\footnotesize\ttfamily \label{macros_8hpp_a89aa4dfbafa0236d0da6aa7bec573f35} 
+\#define CEREAL\+\_\+\+THREAD\+\_\+\+SAFE~0}
+
+
+
+Whether cereal should be compiled for a threaded environment. 
+
+This macro causes cereal to use mutexes to control access to global internal state in a thread safe manner.
+
+Note that even with this enabled you must still ensure that archives are accessed by only one thread at a time; it is safe to use multiple archives in parallel, but not to access one archive from many places simultaneously. 

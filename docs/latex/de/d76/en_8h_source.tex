@@ -1,0 +1,73 @@
+\doxysection{en.\+h}
+\hypertarget{en_8h_source}{}\label{en_8h_source}\index{lib/cereal/external/rapidjson/error/en.h@{lib/cereal/external/rapidjson/error/en.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Tencent\ is\ pleased\ to\ support\ the\ open\ source\ community\ by\ making\ RapidJSON\ available.}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Copyright\ (C)\ 2015\ THL\ A29\ Limited,\ a\ Tencent\ company,\ and\ Milo\ Yip.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Licensed\ under\ the\ MIT\ License\ (the\ "{}License"{});\ you\ may\ not\ use\ this\ file\ except}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ in\ compliance\ with\ the\ License.\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ http://opensource.org/licenses/MIT}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software\ distributed\ }}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,\ WITHOUT\ WARRANTIES\ OR\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.\ See\ the\ License\ for\ the\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ specific\ language\ governing\ permissions\ and\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_ERROR\_EN\_H\_}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_ERROR\_EN\_H\_}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{error_8h}{error.h}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{00021\ CEREAL\_RAPIDJSON\_DIAG\_PUSH}
+\DoxyCodeLine{00022\ CEREAL\_RAPIDJSON\_DIAG\_OFF(\textcolor{keywordflow}{switch}-\/\textcolor{keyword}{enum})}
+\DoxyCodeLine{00023\ CEREAL\_RAPIDJSON\_DIAG\_OFF(covered-\/switch-\/default)}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga69bf61966c74b09b5d90b386847f39be}{CEREAL\_RAPIDJSON\_NAMESPACE\_BEGIN}}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_ga5ac207503645d701265f2f3eb113f62d}{CEREAL\_RAPIDJSON\_ERROR\_CHARTYPE}}*\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_ga0a32ff59b1edd6cdfe219c23e996974e}{GetParseError\_En}}(\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_ga8d4b32dfc45840bca189ade2bbcb6ba7}{ParseErrorCode}}\ parseErrorCode)\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordflow}{switch}\ (parseErrorCode)\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7ac0856bac4945cbd1d09e9502fd8f852f}{kParseErrorNone}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}No\ error."{}});}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a04b368d184e84b50580be2faa55f738a}{kParseErrorDocumentEmpty}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}The\ document\ is\ empty."{}});}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a2293b39033220f4c2a568482c497dab5}{kParseErrorDocumentRootNotSingular}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}The\ document\ root\ must\ not\ be\ followed\ by\ other\ values."{}});}
+\DoxyCodeLine{00042\ \ \ \ \ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a20a50e257aab726699ab02192db72ba9}{kParseErrorValueInvalid}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Invalid\ value."{}});}
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7ae3142fbadf2c4cdfd0c7200d7b6b8ed3}{kParseErrorObjectMissName}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Missing\ a\ name\ for\ object\ member."{}});}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a55cda7eb30436986ab42a61e06caf017}{kParseErrorObjectMissColon}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Missing\ a\ colon\ after\ a\ name\ of\ object\ member."{}});}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a34f70d7ed2fa121954f5fc5b5113d05f}{kParseErrorObjectMissCommaOrCurlyBracket}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Missing\ a\ comma\ or\ '\}'\ after\ an\ object\ member."{}});}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7abfdd2bd90134fec4fe6a22762d16a5f5}{kParseErrorArrayMissCommaOrSquareBracket}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Missing\ a\ comma\ or\ ']'\ after\ an\ array\ element."{}});}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7afc65ea941a0a26812f0f258d2429e5d2}{kParseErrorStringUnicodeEscapeInvalidHex}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Incorrect\ hex\ digit\ after\ \(\backslash\)\(\backslash\)u\ escape\ in\ string."{}});}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7ad9fced6763a06435ca448626c74e5c72}{kParseErrorStringUnicodeSurrogateInvalid}}:\ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}The\ surrogate\ pair\ in\ string\ is\ invalid."{}});}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a98bb3f3b1e12fdb7f278b9fa4029306f}{kParseErrorStringEscapeInvalid}}:\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Invalid\ escape\ character\ in\ string."{}});}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a6369e5b4e4922720cbc45c5941efc4af}{kParseErrorStringMissQuotationMark}}:\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Missing\ a\ closing\ quotation\ mark\ in\ string."{}});}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a17ecb2ed1524b513d64a93f4a7a8b456}{kParseErrorStringInvalidEncoding}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Invalid\ encoding\ in\ string."{}});}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7ae52aaa70fde46e4cc422420309700b82}{kParseErrorNumberTooBig}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Number\ too\ big\ to\ be\ stored\ in\ double."{}});}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a08a2cc2b4cacfba1673ed536eee229ce}{kParseErrorNumberMissFraction}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Miss\ fraction\ part\ in\ number."{}});}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a82cdbd740e22b819a70d05e585c2a442}{kParseErrorNumberMissExponent}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Miss\ exponent\ in\ number."{}});}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a6fed2d9a15f88540a1ba785f0de2cbe6}{kParseErrorTermination}}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Terminate\ parsing\ due\ to\ Handler\ error."{}});}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gga8d4b32dfc45840bca189ade2bbcb6ba7a2bec6b26bddd3e093a37fc0d6399e0be}{kParseErrorUnspecificSyntaxError}}:\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Unspecific\ syntax\ error."{}});}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___e_r_r_o_r_s_gabc2739d9159e8820e36a207d131dbda0}{CEREAL\_RAPIDJSON\_ERROR\_STRING}}(\textcolor{stringliteral}{"{}Unknown\ error."{}});}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaddb083c1a6a5beaafbecc3f99973a3ff}{CEREAL\_RAPIDJSON\_NAMESPACE\_END}}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{00071\ CEREAL\_RAPIDJSON\_DIAG\_POP}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_RAPIDJSON\_ERROR\_EN\_H\_}}
+
+\end{DoxyCode}

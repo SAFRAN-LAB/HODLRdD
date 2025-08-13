@@ -1,0 +1,99 @@
+\doxysection{cereal\+::specialize\texorpdfstring{$<$}{<} Archive, T, S \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1specialize}{}\label{structcereal_1_1specialize}\index{cereal::specialize$<$ Archive, T, S $>$@{cereal::specialize$<$ Archive, T, S $>$}}
+
+
+A class used to disambiguate cases where cereal cannot detect a unique way of serializing a class.  
+
+
+
+
+{\ttfamily \#include $<$specialize.\+hpp$>$}
+
+Inheritance diagram for cereal\+::specialize\texorpdfstring{$<$}{<} Archive, T, S \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d7/d96/structcereal_1_1specialize}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Related Symbols}
+(Note that these are not member symbols.) \begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}{specialization}} 
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T, \mbox{\hyperlink{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}{specialization}} S$>$\newline
+struct cereal\+::specialize$<$ Archive, T, S $>$}
+A class used to disambiguate cases where cereal cannot detect a unique way of serializing a class. 
+
+cereal attempts to figure out which method of serialization (member vs. non-\/member serialize or load/save pair) at compile time. If for some reason cereal cannot find a non-\/ambiguous way of serializing a type, it will produce a static assertion complaining about this.
+
+This can happen because you have both a serialize and load/save pair, or even because a base class has a serialize (public or private with friend access) and a derived class does not overwrite this due to choosing some other serialization type.
+
+Specializing this class will tell cereal to explicitly use the serialization type you specify and it will not complain about ambiguity in its compile time selection. However, if cereal detects an ambiguity in specializations, it will continue to issue a static assertion.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MyParent}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }cereal::access;}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )\ \{\}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Although\ serialize\ is\ private\ in\ MyParent,\ to\ cereal::access\ it\ will\ look\ public,}}
+\DoxyCodeLine{\textcolor{comment}{//\ even\ through\ MyDerived}}
+\DoxyCodeLine{\textcolor{keyword}{class\ }MyDerived\ :\ \textcolor{keyword}{public}\ MyParent}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ load(\ Archive\ \&\ ar\ )\ \{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ save(\ Archive\ \&\ ar\ )\ \{\}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ The\ load/save\ pair\ in\ MyDerived\ is\ ambiguous\ because\ serialize\ in\ MyParent\ can}}
+\DoxyCodeLine{\textcolor{comment}{//\ be\ accessed\ from\ cereal::access.\ \ This\ looks\ the\ same\ as\ making\ serialize\ public}}
+\DoxyCodeLine{\textcolor{comment}{//\ in\ MyParent,\ making\ it\ seem\ as\ though\ MyDerived\ has\ both\ a\ serialize\ and\ a\ load/save\ pair.}}
+\DoxyCodeLine{\textcolor{comment}{//\ cereal\ will\ complain\ about\ this\ at\ compile\ time\ unless\ we\ disambiguate:}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{namespace\ }cereal}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ This\ struct\ specialization\ will\ tell\ cereal\ which\ is\ the\ right\ way\ to\ serialize\ the\ ambiguity}}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1specialize}{specialize}}<Archive,\ MyDerived,\ cereal::specialization::member\_load\_save>\ \{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ If\ we\ only\ had\ a\ disambiguation\ for\ a\ specific\ archive\ type,\ it\ would\ look\ something\ like\ this}}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1specialize}{specialize}}<cereal::\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{BinaryOutputArchive}},\ MyDerived,\ cereal::specialization::member\_load\_save>\ \{\};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+You can also choose to use the macros CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ALL\+\_\+\+ARCHIVES or CEREAL\+\_\+\+SPECIALIZE\+\_\+\+FOR\+\_\+\+ARCHIVE if you want to type a little bit less.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The type to specialize the serialization for \\
+\hline
+{\em S} & The specialization type to use for T \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-related-members}
+\Hypertarget{structcereal_1_1specialize_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}\index{cereal::specialize$<$ Archive, T, S $>$@{cereal::specialize$<$ Archive, T, S $>$}!specialization@{specialization}}
+\index{specialization@{specialization}!cereal::specialize$<$ Archive, T, S $>$@{cereal::specialize$<$ Archive, T, S $>$}}
+\doxysubsubsection{\texorpdfstring{specialization}{specialization}}
+{\footnotesize\ttfamily \label{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108} 
+template$<$class Archive, class T, \mbox{\hyperlink{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}{specialization}} S$>$ \\
+enum class \mbox{\hyperlink{structcereal_1_1specialize_ac28bb730353e53b3066cc679e63bb108}{specialization}}\hspace{0.3cm}{\ttfamily [related]}}
+
+A specifier used in conjunction with \doxylink{structcereal_1_1specialize}{cereal\+::specialize} to disambiguate serialization in special cases 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/\mbox{\hyperlink{specialize_8hpp}{specialize.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,143 @@
+\doxysection{cereal\+::Name\+Value\+Pair\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1_name_value_pair}{}\label{classcereal_1_1_name_value_pair}\index{cereal::NameValuePair$<$ T $>$@{cereal::NameValuePair$<$ T $>$}}
+
+
+For holding name value pairs.  
+
+
+
+
+{\ttfamily \#include $<$helpers.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Name\+Value\+Pair\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d5/d90/classcereal_1_1_name_value_pair}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}{Name\+Value\+Pair}} (char const \texorpdfstring{$\ast$}{*}n, T \&\&v)
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_name_value_pair_a4be7d36ddc389a2d30546c6c651efb4f}\label{classcereal_1_1_name_value_pair_a4be7d36ddc389a2d30546c6c651efb4f} 
+char const  \texorpdfstring{$\ast$}{*} {\bfseries name}
+\item 
+\Hypertarget{classcereal_1_1_name_value_pair_acea4778862f82043fa15c177f848a675}\label{classcereal_1_1_name_value_pair_acea4778862f82043fa15c177f848a675} 
+Type {\bfseries value}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Related Symbols}
+(Note that these are not member symbols.) \begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}\label{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49} 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ {\bfseries make\+\_\+nvp} (std\+::string const \&name, T \&\&value)
+\begin{DoxyCompactList}\small\item\em Creates a name value pair. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_name_value_pair_a4ae230f9f8c3d979df8daa95ef6cbcdc}\label{classcereal_1_1_name_value_pair_a4ae230f9f8c3d979df8daa95ef6cbcdc} 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ {\bfseries make\+\_\+nvp} (const char \texorpdfstring{$\ast$}{*}name, T \&\&value)
+\begin{DoxyCompactList}\small\item\em Creates a name value pair. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_name_value_pair_a7b7b9b5e674a363fb8fd9baca2ca73ce}\label{classcereal_1_1_name_value_pair_a7b7b9b5e674a363fb8fd9baca2ca73ce} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+same$<$ Archive,\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{\+::cereal\+::\+Binary\+Input\+Archive}} $>$\+::value\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}std\+::is\+\_\+same$<$ Archive,\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{\+::cereal\+::\+Binary\+Output\+Archive}} $>$\+::value, T \&\& $>$\+::type {\bfseries make\+\_\+nvp} (const char \texorpdfstring{$\ast$}{*}, T \&\&value)
+\begin{DoxyCompactList}\small\item\em A specialization of make\+\_\+nvp$<$$>$ that simply forwards the value for binary archives. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_name_value_pair_a4f76432ed952dbfdc7e7973fb0d16ac1}\label{classcereal_1_1_name_value_pair_a4f76432ed952dbfdc7e7973fb0d16ac1} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+same$<$ Archive,\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{\+::cereal\+::\+Binary\+Input\+Archive}} $>$\+::value \&\&!std\+::is\+\_\+same$<$ Archive,\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{\+::cereal\+::\+Binary\+Output\+Archive}} $>$\+::value, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ $>$\+::type {\bfseries make\+\_\+nvp} (const char \texorpdfstring{$\ast$}{*}name, T \&\&value)
+\begin{DoxyCompactList}\small\item\em A specialization of make\+\_\+nvp$<$$>$ that actually creates an nvp for non-\/binary archives. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::\+Name\+Value\+Pair$<$ T $>$}
+For holding name value pairs. 
+
+This pairs a name (some string) with some value such that an archive can potentially take advantage of the pairing.
+
+In serialization functions, Name\+Value\+Pairs are usually created like so\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyStruct}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ a,\ b,\ c,\ d,\ e;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(Archive\ \&\ archive)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ archive(\ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(a),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(b),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(c),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(d),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(e)\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+Alternatively, you can give you data members custom names like so\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyStruct}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ a,\ b,\ my\_embarrassing\_variable\_name,\ d,\ e;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(Archive\ \&\ archive)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ archive(\ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(a),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(b),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{cereal::make\_nvp}}(\textcolor{stringliteral}{"{}var"{}},\ my\_embarrassing\_variable\_name)\ );}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(d),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(e)\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+There is a slight amount of overhead to creating Name\+Value\+Pairs, so there is a third method which will elide the names when they are not used by the Archive\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyStruct}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ a,\ b;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(Archive\ \&\ archive)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ archive(\ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{cereal::make\_nvp<Archive>}}(a),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{cereal::make\_nvp<Archive>}}(b)\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+This third method is generally only used when providing generic type support. Users writing their own serialize functions will normally explicitly control whether they want to use NVPs or not. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_name_value_pair_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}\index{cereal::NameValuePair$<$ T $>$@{cereal::NameValuePair$<$ T $>$}!NameValuePair@{NameValuePair}}
+\index{NameValuePair@{NameValuePair}!cereal::NameValuePair$<$ T $>$@{cereal::NameValuePair$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{NameValuePair()}{NameValuePair()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{classcereal_1_1_name_value_pair}{cereal\+::\+Name\+Value\+Pair}}$<$ T $>$\+::\+Name\+Value\+Pair (\begin{DoxyParamCaption}\item[{char const \texorpdfstring{$\ast$}{*}}]{n}{, }\item[{T \&\&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a new \doxylink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & The name of the pair \\
+\hline
+{\em v} & The value to pair. Ideally this should be an l-\/value reference so that the value can be both loaded and saved to. If you pass an r-\/value reference, the \doxylink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair} will store a copy of it instead of a reference. Thus you should only pass r-\/values in cases where this makes sense, such as the result of some size() call. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

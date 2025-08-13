@@ -1,0 +1,41 @@
+\doxysection{cereal\+::memory\+\_\+detail\+::Ptr\+Wrapper\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1memory__detail_1_1_ptr_wrapper}{}\label{structcereal_1_1memory__detail_1_1_ptr_wrapper}\index{cereal::memory\_detail::PtrWrapper$<$ T $>$@{cereal::memory\_detail::PtrWrapper$<$ T $>$}}
+
+
+A wrapper class to notify cereal that it is ok to serialize the contained pointer.  
+
+
+
+
+{\ttfamily \#include $<$memory.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_ptr_wrapper_ac3aca80bb4c9bddcea74b5292d86ad52}\label{structcereal_1_1memory__detail_1_1_ptr_wrapper_ac3aca80bb4c9bddcea74b5292d86ad52} 
+{\bfseries Ptr\+Wrapper} (T \&\&p)
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_ptr_wrapper_a4655c6b5a96f02a6befec868938ec5b3}\label{structcereal_1_1memory__detail_1_1_ptr_wrapper_a4655c6b5a96f02a6befec868938ec5b3} 
+{\bfseries Ptr\+Wrapper} (\mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{Ptr\+Wrapper}} const \&)=default
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_ptr_wrapper_a576f0fd1c100acd613682f4f86529f9c}\label{structcereal_1_1memory__detail_1_1_ptr_wrapper_a576f0fd1c100acd613682f4f86529f9c} 
+\mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{Ptr\+Wrapper}} \& {\bfseries operator=} (\mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{Ptr\+Wrapper}} const \&)=delete
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_ptr_wrapper_af888deeffc045beedfbd287457abba1d}\label{structcereal_1_1memory__detail_1_1_ptr_wrapper_af888deeffc045beedfbd287457abba1d} 
+T \& {\bfseries ptr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+struct cereal\+::memory\+\_\+detail\+::\+Ptr\+Wrapper$<$ T $>$}
+A wrapper class to notify cereal that it is ok to serialize the contained pointer. 
+
+This mechanism allows us to intercept and properly handle polymorphic pointers 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{memory_8hpp}{memory.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,398 @@
+\doxysection{kernel\+\_\+function.\+hpp}
+\hypertarget{kernel__function_8hpp_source}{}\label{kernel__function_8hpp_source}\index{include/kernel\_function.hpp@{include/kernel\_function.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_kernel\_function\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_kernel\_function\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}points\_dt.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }kernel\_function}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ Operator\ *kernel;}
+\DoxyCodeLine{00012\ public\ :}
+\DoxyCodeLine{00013\ \ \ \ \ kernel\_function(Operator*\&\ A)\{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ this-\/>kernel\ =\ A;}
+\DoxyCodeLine{00015\ \ \ \ \ \}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Returns\ individual\ entries\ of\ the\ matrix:}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ this\ function\ can\ be\ complemented\ through\ a\ user\ kernel\ class}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{comment}{//\ try\ to\ use\ the\ same\ function,\ expected\ the\ kernel\ evaluation\ at\ ith\ and\ jth\ gridPoints}}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{comment}{//\ Essentially\ it\ queries\ into\ K\_\{ij\}}}
+\DoxyCodeLine{00020\ \ \ \ \ Vec\ getRow(\textcolor{keywordtype}{int}\ j,\ std::vector<size\_t>\ \&targets)}
+\DoxyCodeLine{00021\ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\_cols\ =\ targets.size();}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ Vec\ row(n\_cols);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n\_cols;\ k++)\{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ row(k)\ =\ kernel-\/>getMatrixEntry(j,\ targets[k]);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ row;}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ Vec\ getCol(\textcolor{keywordtype}{int}\ k,\ std::vector<size\_t>\ \&sources)}
+\DoxyCodeLine{00033\ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ n\_rows\ =\ sources.size();}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ Vec\ col(n\_rows);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ n\_rows;\ ++j)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ col(j)\ =\ kernel-\/>getMatrixEntry(sources[j],\ k);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{return}\ col;}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{comment}{//\ const\ int\ n\_row\_start,\ const\ int\ n\_col\_start,\ const\ int\ n\_rows,\ const\ int\ n\_cols}}
+\DoxyCodeLine{00043\ Mat\ getMatrix(std::vector<size\_t>\ \&sources,\ std::vector<size\_t>\ \&targets)\{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_rows\ =\ sources.size();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_cols\ =\ targets.size();}
+\DoxyCodeLine{00046\ \ \ \ \ Mat\ mat(n\_rows,\ n\_cols);}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//\ \#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ n\_rows;\ ++j)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \#pragma\ omp\ parallel\ for}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n\_cols;\ ++k)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ mat(j,\ k)\ =\ kernel-\/>getMatrixEntry(sources[j],\ targets[k]);}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordflow}{return}\ mat;}
+\DoxyCodeLine{00053\ \}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keywordtype}{void}\ maxAbsVector(\textcolor{keyword}{const}\ Vec\ \&v,\ \textcolor{keyword}{const}\ std::set<size\_t>\ \&allowed\_indices,\ dtype\ \&max,\ \textcolor{keywordtype}{size\_t}\ \&index)\{}
+\DoxyCodeLine{00056\ \ \ \ \ std::set<size\_t>::iterator\ it;}
+\DoxyCodeLine{00057\ \ \ \ \ index\ =\ *allowed\_indices.begin();}
+\DoxyCodeLine{00058\ \ \ \ \ max\ =\ v(index);}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordflow}{for}\ (it\ =\ allowed\_indices.begin();\ it\ !=\ allowed\_indices.end();\ it++)}
+\DoxyCodeLine{00061\ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(v(*it))\ >\ fabs(max))}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ index\ =\ *it;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ max\ =\ v(index);}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keywordtype}{void}\ ACA\_FAST(Mat\ \&L,\ Mat\ \&R,\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tolerance\_or\_rank,\ std::vector<size\_t>\&\ sources,\ std::vector<size\_t>\&\ targets)}
+\DoxyCodeLine{00072\ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_rows\ =\ sources.size();}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_cols\ =\ targets.size();}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{comment}{//\ Indices\ which\ have\ been\ used:}}
+\DoxyCodeLine{00077\ \ \ \ \ std::vector<size\_t>\ row\_ind;}
+\DoxyCodeLine{00078\ \ \ \ \ std::vector<size\_t>\ col\_ind;}
+\DoxyCodeLine{00079\ }
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{comment}{//\ Indices\ that\ are\ remaining:}}
+\DoxyCodeLine{00081\ \ \ \ \ std::set<size\_t>\ remaining\_row\_ind;}
+\DoxyCodeLine{00082\ \ \ \ \ std::set<size\_t>\ remaining\_col\_ind;}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{comment}{//\ Bases:}}
+\DoxyCodeLine{00085\ \ \ \ \ std::vector<Vec>\ u;}
+\DoxyCodeLine{00086\ \ \ \ \ std::vector<Vec>\ v;}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n\_rows;\ k++)}
+\DoxyCodeLine{00089\ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ remaining\_row\_ind.insert(k);}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n\_cols;\ k++)}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ remaining\_col\_ind.insert(k);}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \ \ dtype\ max,\ gamma;}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ matrix\ norm\ and\ the\ the\ first\ row\ index}}
+\DoxyCodeLine{00101\ \ \ \ \ dtype\_base\ matrix\_norm\ =\ 0;}
+\DoxyCodeLine{00102\ \ \ \ \ row\_ind.push\_back(0);}
+\DoxyCodeLine{00103\ \ \ \ \ remaining\_row\_ind.erase(0);}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{comment}{//\ Stores\ the\ pivot\ entry\ of\ the\ considered\ row\ /\ col:}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ pivot;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{int}\ target\_rank\ =\ 0;}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{comment}{//\ This\ would\ get\ updated:}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordtype}{int}\ computed\_rank\ =\ 0;}
+\DoxyCodeLine{00111\ \ \ \ \ Vec\ row,\ col;}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordtype}{double}\ tolerance\ =\ 0;}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ These\ quantities\ in\ finding\ the\ stopping\ criteria:}}
+\DoxyCodeLine{00115\ \ \ \ \ dtype\_base\ row\_squared\_norm,\ row\_norm,\ col\_squared\_norm,\ col\_norm;}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordflow}{if}\ (tolerance\_or\_rank\ <\ 1)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ tolerance\ =\ tolerance\_or\_rank;}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ target\_rank\ =\ tolerance\_or\_rank;}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ So\ these\ would\ be\ particularly\ useful\ for\ poorly\ conditioned\ matrices:}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordtype}{int}\ max\_tries\ =\ 10;}
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{int}\ count;}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{comment}{//\ Repeat\ till\ the\ desired\ tolerance\ /\ rank\ is\ obtained}}
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordflow}{do}}
+\DoxyCodeLine{00128\ \ \ \ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generation\ of\ the\ row}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Row\ of\ the\ residuum\ and\ the\ pivot\ column}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ By\ calling\ row\_ind.back(),\ we\ are\ getting\ the\ last\ pushed\ number}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ row\ =\ this-\/>getRow(sources[row\_ind.back()],\ targets);}
+\DoxyCodeLine{00133\ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ computed\_rank;\ i++)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ row\ =\ row\ -\/\ u[i](row\_ind.back())\ *\ v[i];}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ this-\/>maxAbsVector(row,\ remaining\_col\_ind,\ max,\ pivot);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Alternating\ upon\ each\ call:}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ eval\_at\_end\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Toggling\ randomness}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ use\_randomization\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ while\ loop\ is\ needed\ if\ in\ the\ middle\ of\ the\ algorithm\ the}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ row\ happens\ to\ be\ exactly\ the\ linear\ combination\ of\ the\ previous\ rows}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ upto\ some\ tolerance.\ i.e.\ prevents\ from\ ACA\ throwing\ false\ positives}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fabs(max)\ <\ tolerance\ \&\&}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ <\ max\_tries\ \&\&}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_col\_ind.size()\ >\ 0\ \&\&}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_row\_ind.size()\ >\ 0)}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ row\_ind.pop\_back();}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ new\_row\_ind;}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ When\ rank\ <\ 3,\ we\ will\ just\ choose\ entries\ from\ the\ ends\ of\ the\ matrix:}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (computed\_rank\ <\ 3)}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (eval\_at\_end\ ==\ \textcolor{keyword}{true})}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_row\_ind\ =\ *-\/-\/remaining\_row\_ind.end();}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_row\_ind\ =\ *remaining\_row\_ind.begin();}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eval\_at\_end\ =\ !(eval\_at\_end);}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ However,\ when\ we\ have\ rank\ >=3,\ we\ will\ choose\ the\ entries\ such\ that}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ the\ newly\ picked\ entry\ is\ at\ the\ mid-\/point\ of\ the\ already\ chosen\ ones:}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_randomization\ ==\ \textcolor{keyword}{true})}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::set<size\_t>::const\_iterator\ it(remaining\_row\_ind.begin());}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::advance(it,\ rand()\ \%\ remaining\_row\_ind.size());}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_row\_ind\ =\ *it;}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ row\_ind\_sort(row\_ind);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(row\_ind\_sort.begin(),\ row\_ind\_sort.end());}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ row\_ind\_diff(row\_ind\_sort.size()\ -\/\ 1);}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\ =\ 0;}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 0;}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ row\_ind\_sort.size()\ -\/\ 1;\ i++)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ row\_ind\_diff[i]\ =\ row\_ind\_sort[i\ +\ 1]\ -\/\ row\_ind\_sort[i];}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (row\_ind\_diff[i]\ >\ (\textcolor{keywordtype}{unsigned})\ max)}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ i;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\ =\ row\_ind\_diff[i];}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_row\_ind\ =\ row\_ind\_sort[idx]\ +\ max\ /\ 2;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00206\ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ use\_randomization\ =\ !(use\_randomization);}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ row\_ind.push\_back(new\_row\_ind);}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_row\_ind.erase(new\_row\_ind);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generation\ of\ the\ row}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Row\ of\ the\ residuum\ and\ the\ pivot\ column}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ row\ =\ this-\/>getRow(sources[new\_row\_ind],\ targets);}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ computed\_rank;\ i++)}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ row\ =\ row\ -\/\ u[i](row\_ind.back())\ *\ v[i];}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>maxAbsVector(row,\ remaining\_col\_ind,\ max,\ pivot);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ In\ case\ it\ failed\ to\ resolve\ in\ the\ previous\ step,}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ we\ break\ out\ of\ the\ dowhile\ loop:}}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (count\ ==\ max\_tries\ ||}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_col\_ind.size()\ ==\ 0\ ||}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_row\_ind.size()\ ==\ 0)}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Resetting\ count\ back\ to\ zero\ for\ columns:}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ count\ =\ 0;}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ col\_ind.push\_back(pivot);}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ remaining\_col\_ind.erase(pivot);}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Normalizing\ constant}}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ gamma\ =\ dtype\_base(1.0)\ /\ max;}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generation\ of\ the\ column}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Column\ of\ the\ residuum\ and\ the\ pivot\ row}}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ col\ =\ this-\/>getCol(targets[col\_ind.back()],\ sources);}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ computed\_rank;\ i++)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ col\ =\ col\ -\/\ v[i](col\_ind.back())\ *\ u[i];}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ this-\/>maxAbsVector(col,\ remaining\_row\_ind,\ max,\ pivot);}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Repeating\ the\ same\ randomization\ we\ carried\ out\ for\ the\ rows,\ now\ for\ the\ columns:}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fabs(max)\ <\ tolerance\ \&\&}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count\ <\ max\_tries\ \&\&}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_col\_ind.size()\ >\ 0\ \&\&}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_row\_ind.size()\ >\ 0)}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ col\_ind.pop\_back();}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ new\_col\_ind;}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (col\_ind.size()\ <\ 3)}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (eval\_at\_end)}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_col\_ind\ =\ *remaining\_col\_ind.end();}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_col\_ind\ =\ *remaining\_col\_ind.begin();}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eval\_at\_end\ =\ !eval\_at\_end;}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (use\_randomization\ ==\ \textcolor{keyword}{true})}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::set<size\_t>::const\_iterator\ it(remaining\_col\_ind.begin());}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::advance(it,\ rand()\ \%\ remaining\_col\_ind.size());}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_col\_ind\ =\ *it;}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ col\_ind\_sort(col\_ind);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::sort(col\_ind\_sort.begin(),\ col\_ind\_sort.end());}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ col\_ind\_diff(col\_ind\_sort.size()\ -\/\ 1);}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\ =\ 0;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 0;}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ col\_ind\_sort.size()\ -\/\ 1;\ i++)}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ col\_ind\_diff[i]\ =\ col\_ind\_sort[i\ +\ 1]\ -\/\ col\_ind\_sort[i];}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (col\_ind\_diff[i]\ >\ (\textcolor{keywordtype}{unsigned})\ max)}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ idx\ =\ i;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\ =\ col\_ind\_diff[i];}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ new\_col\_ind\ =\ col\_ind\_sort[idx]\ +\ max\ /\ 2;}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ use\_randomization\ =\ !(use\_randomization);}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ col\_ind.push\_back(new\_col\_ind);}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ remaining\_col\_ind.erase(new\_col\_ind);}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Generation\ of\ the\ column}}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Column\ of\ the\ residuum\ and\ the\ pivot\ row:}}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ col\ =\ this-\/>getCol(targets[new\_col\_ind],\ sources);}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ computed\_rank;\ i++)}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ col\ =\ col\ -\/\ v[i](col\_ind.back())\ *\ u[i];}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>maxAbsVector(col,\ remaining\_row\_ind,\ max,\ pivot);}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ row\_ind.push\_back(pivot);}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ remaining\_row\_ind.erase(pivot);}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ New\ vectors}}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ u.push\_back(gamma\ *\ col);}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ v.push\_back(row);}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ New\ approximation\ of\ matrix\ norm}}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ row\_squared\_norm\ =\ row.squaredNorm();}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ row\_norm\ =\ sqrt(row\_squared\_norm);}
+\DoxyCodeLine{00334\ }
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ col\_squared\_norm\ =\ col.squaredNorm();}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ col\_norm\ =\ sqrt(col\_squared\_norm);}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Updating\ the\ matrix\ norm:}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ matrix\_norm\ +=\ std::abs(gamma\ *\ gamma\ *\ row\_squared\_norm\ *\ col\_squared\_norm);}
+\DoxyCodeLine{00340\ }
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ computed\_rank;\ j++)}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ matrix\_norm\ +=\ 2.0\ *\ std::abs(u[j].dot(u.back()))\ *\ std::abs(v[j].dot(v.back()));}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ computed\_rank++;}
+\DoxyCodeLine{00347\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (((tolerance\_or\_rank\ <\ 1)\ ?\ computed\_rank\ *\ (n\_rows\ +\ n\_cols)\ *\ row\_norm\ *\ col\_norm\ >}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fabs(max)\ *\ tolerance\ *\ matrix\_norm}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ computed\_rank\ <\ target\_rank)\ \&\&}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \ computed\_rank\ <\ fmin(n\_rows,\ n\_cols));}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{comment}{//\ If\ the\ computed\_rank\ is\ >=\ to\ full-\/rank}}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//\ then\ return\ the\ trivial\ full-\/rank\ decomposition}}
+\DoxyCodeLine{00354\ \ \ \ \ \textcolor{keywordflow}{if}\ (computed\_rank\ >=\ fmin(n\_rows,\ n\_cols)\ -\/\ 1)}
+\DoxyCodeLine{00355\ \ \ \ \ \{}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (n\_rows\ <\ n\_cols)}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ Mat::Identity(n\_rows,\ n\_rows);}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ this-\/>getMatrix(sources,targets).transpose();}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ computed\_rank\ =\ n\_rows;}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00362\ }
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ this-\/>getMatrix(sources,\ targets);}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ R\ =\ Mat::Identity(n\_cols,\ n\_cols);}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ computed\_rank\ =\ n\_cols;}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00369\ \ \ \ \ \}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ \ \ \ \ \textcolor{comment}{//\ This\ is\ when\ ACA\ has\ succeeded:}}
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00373\ \ \ \ \ \{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ L\ =\ Mat(n\_rows,\ computed\_rank);}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ R\ =\ Mat(n\_cols,\ computed\_rank);}
+\DoxyCodeLine{00376\ }
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ computed\_rank;\ j++)}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \ \ \ \ L.col(j)\ =\ u[j];}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ R.col(j)\ =\ v[j];}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00382\ \ \ \ \ \}}
+\DoxyCodeLine{00383\ \}}
+\DoxyCodeLine{00384\ \textcolor{comment}{//\ Like\ HODLR\ library\ it\ has\ the\ assemble\ feature\ that\ either\ constructs\ all\ }}
+\DoxyCodeLine{00385\ \textcolor{comment}{//\ the\ matrix\ operators\ or\ just\ an\ memory\ efficient\ way}}
+\DoxyCodeLine{00386\ \string~kernel\_function()}
+\DoxyCodeLine{00387\ \{}
+\DoxyCodeLine{00388\ \ \ \ \ \textcolor{comment}{//\ Destructor}}
+\DoxyCodeLine{00389\ \}}
+\DoxyCodeLine{00390\ \};}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

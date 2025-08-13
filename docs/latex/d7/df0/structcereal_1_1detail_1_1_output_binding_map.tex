@@ -1,0 +1,55 @@
+\doxysection{cereal\+::detail\+::Output\+Binding\+Map\texorpdfstring{$<$}{<} Archive \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_output_binding_map}{}\label{structcereal_1_1detail_1_1_output_binding_map}\index{cereal::detail::OutputBindingMap$<$ Archive $>$@{cereal::detail::OutputBindingMap$<$ Archive $>$}}
+
+
+A structure holding a map from type\+\_\+indices to output serializer functions.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers}{Serializers}}
+\begin{DoxyCompactList}\small\item\em Struct containing the serializer functions for all pointer types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ void(void \texorpdfstring{$\ast$}{*}, void const \texorpdfstring{$\ast$}{*}, std\+::type\+\_\+info const \&)$>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916}{Serializer}}
+\begin{DoxyCompactList}\small\item\em A serializer function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_map_ab62be8e24369a6350592d3bd12abfecc}\label{structcereal_1_1detail_1_1_output_binding_map_ab62be8e24369a6350592d3bd12abfecc} 
+std\+::map$<$ std\+::type\+\_\+index, \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers}{Serializers}} $>$ {\bfseries map}
+\begin{DoxyCompactList}\small\item\em A map of serializers for pointers of all registered types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive$>$\newline
+struct cereal\+::detail\+::\+Output\+Binding\+Map$<$ Archive $>$}
+A structure holding a map from type\+\_\+indices to output serializer functions. 
+
+A static object of this map should be created for each registered archive type, containing entries for every registered type that describe how to properly cast the type to its real type in polymorphic scenarios for shared\+\_\+ptr, weak\+\_\+ptr, and unique\+\_\+ptr. 
+
+\label{doc-typedef-members}
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_map_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916}\index{cereal::detail::OutputBindingMap$<$ Archive $>$@{cereal::detail::OutputBindingMap$<$ Archive $>$}!Serializer@{Serializer}}
+\index{Serializer@{Serializer}!cereal::detail::OutputBindingMap$<$ Archive $>$@{cereal::detail::OutputBindingMap$<$ Archive $>$}}
+\doxysubsubsection{\texorpdfstring{Serializer}{Serializer}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916} 
+template$<$class Archive$>$ \\
+typedef std\+::function$<$void(void\texorpdfstring{$\ast$}{*}, void const \texorpdfstring{$\ast$}{*}, std\+::type\+\_\+info const \&)$>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map}{cereal\+::detail\+::\+Output\+Binding\+Map}}$<$ Archive $>$\+::\+Serializer}
+
+
+
+A serializer function. 
+
+\doxylink{structcereal_1_1detail_1_1_output_binding_map_a8494ac316e305ffcaae1636b092cb916}{Serializer} functions return nothing and take an archive as their first parameter (will be cast properly inside the function, a pointer to actual data (contents of smart\+\_\+ptr\textquotesingle{}s get() function) as their second parameter, and the type info of the owning smart\+\_\+ptr as their final parameter 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

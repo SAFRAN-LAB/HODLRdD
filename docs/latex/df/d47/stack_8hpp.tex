@@ -1,0 +1,32 @@
+\doxysection{lib/cereal/types/stack.hpp File Reference}
+\hypertarget{stack_8hpp}{}\label{stack_8hpp}\index{lib/cereal/types/stack.hpp@{lib/cereal/types/stack.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}stack\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+{\ttfamily \#include "{}cereal/types/deque.\+hpp"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{stack_8hpp_a1e94be391ac23f96a2e0ee3d834af97f}\label{stack_8hpp_a1e94be391ac23f96a2e0ee3d834af97f} 
+{\footnotesize template$<$class T, class C$>$ }\\C const \& {\bfseries cereal\+::stack\+\_\+detail\+::container} (std\+::stack$<$ T, C $>$ const \&stack)
+\begin{DoxyCompactList}\small\item\em Allows access to the protected container in stack. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aca1f0d917ab00dd67f0b0e7d71737628}\label{namespacecereal_aca1f0d917ab00dd67f0b0e7d71737628} 
+{\footnotesize template$<$class Archive, class T, class C$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::stack$<$ T, C $>$ const \&stack)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::stack. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_af7f082383d87633cf69bdf0ab3d450ad}\label{namespacecereal_af7f082383d87633cf69bdf0ab3d450ad} 
+{\footnotesize template$<$class Archive, class T, class C$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::stack$<$ T, C $>$ \&stack)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::stack. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}stack\texorpdfstring{$>$}{>} 
+

@@ -1,0 +1,229 @@
+\doxysection{HDD\+\_\+tree.\+hpp}
+\hypertarget{_h_d_d__tree_8hpp_source}{}\label{_h_d_d__tree_8hpp_source}\index{include/HDD\_tree.hpp@{include/HDD\_tree.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_HDD\_tree\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_HDD\_tree\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}HDD\_node.hpp"{}}\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}HDD\_clusters.hpp"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Hierarchical\ Tree\ structure}}
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }Tree}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ N;}
+\DoxyCodeLine{00015\ \ \ \ \ std::vector<ptsnD>\ *gridPoints;}
+\DoxyCodeLine{00016\ \ \ \ \ std::vector<std::vector<Node<Kernel>\ *>>\ obj\_arr;}
+\DoxyCodeLine{00017\ \ \ \ \ std::vector<Node<Kernel>\ *>\ obj\_lin\_arr;}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{class_node}{Node<Kernel>}}\ *root;}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{double}\ MAT\_VEC\_TIME\ =\ 0.0;}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{double}\ INIT\_TIME\ =\ 0.0;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ level;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\_nodes;}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classcluster}{cluster}}\ *src;}
+\DoxyCodeLine{00024\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ Constructor\ for\ the\ matrix\ data\ structure}}
+\DoxyCodeLine{00026\ \ \ \ \ Tree(\mbox{\hyperlink{classcluster}{cluster}}*\&\ src\_,\ std::vector<ptsnD>*\&\ gPoints,\ \mbox{\hyperlink{classkernel__function}{kernel\_function<Kernel>}}*\&\ usr\_)}
+\DoxyCodeLine{00027\ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ this-\/>gridPoints\ =\ gPoints;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ this-\/>src\ =\ src\_;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ Nlevel\ =\ gridPoints-\/>size();}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ Nlevel\ <<\ std::endl;}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ std::vector<size\_t>\ v(Nlevel);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ Nlevel;\ i++)\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ v[i]\ =\ i;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ level\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ std::iota(std::begin(v),\ std::end(v),\ size\_t(0));\ }}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ src-\/>add\_points(v);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ create\ a\ root\ node}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ root\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_node}{Node<Kernel>}}(src,\ usr\_);}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ obj\_arr.resize(1);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ obj\_arr[level].push\_back(root);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ level++;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Root\ Formed"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Perform\ clustering\ and\ form\ the\ tree}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (Nlevel\ >\ Nmax)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr.resize(level\ +\ 1);}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Form\ the\ next\ level\ through\ Hierarchical\ clustering\ }}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i=0;\ i<obj\_arr[level-\/1].size();\ i++)\{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<cluster\ *>\ *t;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ \textcolor{keyword}{new}\ std::vector<cluster\ *>;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[level-\/1][i]-\/>my\_cluster-\/>level\_clustering(t);}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Cluster\ recieved"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ j=0;\ j<t-\/>size();j++)\{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_node}{Node<Kernel>}}\ *temp;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_node}{Node<Kernel>}}(t-\/>at(j),\ obj\_arr[level-\/1][i],\ usr\_);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[level].push\_back(temp);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[level\ -\/\ 1][i]-\/>Child.push\_back(temp);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout<<\ "{}Node\ ("{}\ <<\ level\ <<\ "{},"{}\ <<\ temp-\/>get\_id()\ <<\ "{})\ Formed"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ t;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Decide\ whether\ leaf\ level\ reached}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ Nlevel\ =\ obj\_arr[level][0]-\/>n\_particles;\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[level].size();\ j++)\ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[level][j]-\/>get\_interaction\_list();}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (obj\_arr[level][j]-\/>n\_particles\ >\ (\textcolor{keywordtype}{unsigned})\ Nlevel)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Nlevel\ =\ obj\_arr[level][j]-\/>n\_particles;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ level++;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Tree\ Formed\ with\ depth\ "{}}\ <<\ level-\/1\ <<\ std::endl;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ level\ as\ leaf}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[level-\/1].size();\ j++)}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[level-\/1][j]-\/>isleaf\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ is\ for\ OpenMP\ }}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_lin\_arr.push\_back(obj\_arr[i][j]);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ n\_nodes\ =\ obj\_lin\_arr.size();}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{comment}{//\ Initialise\ the\ matrix\ operators}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ Initialise\_tree()\{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ start\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (int\ i\ =\ 0;\ i\ <\ level;\ i++)}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ for\ (size\_t\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>Initialize\_node();}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#pragma\ omp\ parallel\ num\_threads(nThreads)\ shared(obj\_lin\_arr,\ n\_nodes)}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#pragma\ omp\ for\ schedule(dynamic,\ 1)}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n\_nodes;\ i++)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_lin\_arr[i]-\/>Initialize\_node();}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ INIT\_TIME\ =\ omp\_get\_wtime()\ -\/\ start;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Matrix\ operators\ formed..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ }
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{comment}{//\ mat-\/vec\ product}}
+\DoxyCodeLine{00100\ \ \ \ \ Vec\ mat\_vec(Vec\&\ x)\{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ Vec\ b\ =\ Vec::Zero(x.size());}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ init\_time\ =\ 0.0;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ meas\_time\ =\ 0.0;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Using\ openMP\ here\ requires\ a\ memeory\ race\ while\ reading}}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>set\_node\_charge(x);}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}x\ set"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ perform\ node\ wise\ matrix\ vector}}
+\DoxyCodeLine{00110\ \textcolor{comment}{//\ \#pragma\ omp\ parallel\ for\ collapse(2)\ schedule(dynamic)}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ start\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (int\ i\ =\ 0;\ i\ <\ level;\ i++)}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ for\ (size\_t\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>get\_node\_potential();}}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n\_nodes;\ i++)}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ obj\_lin\_arr[i]-\/>get\_node\_potential();}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ MAT\_VEC\_TIME\ =\ omp\_get\_wtime()\ -\/\ start;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}b\ compute"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Collect\ the\ output\ vector}}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>collect\_potential(b);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}b\ calculate"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}Mat-\/vec\ performed..."{}\ <<\ std::endl;}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ INIT\_TIME\ =\ init\_time;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ MAT\_VEC\_TIME\ -\/=\ (init\_time\ +\ meas\_time);\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ b;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ get\_stat(\textcolor{keywordtype}{double}\ \&n\_FLOP,\ \textcolor{keywordtype}{size\_t}\ \&MAX\_RANK)}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ n\_FLOP\ +=\ obj\_arr[i][j]-\/>compute\_flop\_count()\ +\ obj\_arr[i][j]-\/>my\_flop\_il;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MAX\_RANK\ =\ std::max(MAX\_RANK,obj\_arr[i][j]-\/>node\_rank);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ print\_tree\_details()}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Tree\ Depth:"{}}\ <<\ level\ <<\ std::endl;}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Level["{}}\ <<\ i\ <<\ \textcolor{stringliteral}{"{}]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>print\_node\_details();}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ print\_matrix\_latex()\{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Constructs\ a\ block\ matrix\ representation\ of\ h-\/matrix\ with\ n\_leaf\ x\ n\_leaf}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Color\ is\ default\ red,\ based\ on\ the\ interaction\ list\ each\ node\ updates\ the\ }}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ color\ to\ cyan\ if\ low-\/rank}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\_leaf\ =\ obj\_arr[level\ -\/\ 1].size();\ \textcolor{comment}{//\ Number\ of\ Leaf}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::vector<int>\ >\ mat\_color;}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ (int)n\_leaf;\ i++)}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<int>\ tmp;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ (int)n\_leaf;\ j++)}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp.push\_back(0);}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat\_color.push\_back(tmp);}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ level;\ i++)}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ obj\_arr[i].size();\ j++)\{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ obj\_arr[i][j]-\/>update\_matrix\_node(mat\_color,\ \textcolor{keywordtype}{int}(level\ -\/\ 1\ -\/i));}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::ofstream\ latex\_file;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file.open(\textcolor{stringliteral}{"{}h\_matrix.tex"{}});}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ to\ tex\ file}}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)documentclass\{article\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)usepackage\{tikz\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)usetikzlibrary\{matrix\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ std::endl;}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)begin\{document\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ std::endl;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)begin\{tikzpicture\}[scale=0.5]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)fill[red!50](0,0)\ rectangle(-\/16,-\/16);"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dist\ =\ -\/16.0/n\_leaf;}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ a,b;}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ (int)n\_leaf;\ i++)}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ (int)n\_leaf;\ j++)}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ a\ =\ dist*i;}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ b\ =\ dist*j;}}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(j==0)}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ mat\_color[i][j];}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{},"{}}\ \ <<\ mat\_color[i][j];}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if(mat\_color[i][j]\ >\ 0)}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ latex\_file\ <<\ "{}\(\backslash\)\(\backslash\)fill[cyan!50]("{}\ <<\ a\ <<\ "{},"{}\ <<\ b\ <<\ "{})\ rectangle("{}\ <<\ a\ +\ dist\ <<\ "{},"{}\ <<\ b\ +\ dist\ <<\ "{});"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{};"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)end\{tikzpicture\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ std::endl;}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)end\{document\}"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ latex\_file.close();}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ get\_mat\_vec\_time()\{}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ MAT\_VEC\_TIME;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ get\_Init\_time()}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ INIT\_TIME;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Destructor}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \string~Tree()}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00222\ \ \ \ \ \};}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

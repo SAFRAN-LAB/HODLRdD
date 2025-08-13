@@ -1,0 +1,225 @@
+\doxysection{cereal\+::JSONOutput\+Archive Class Reference}
+\hypertarget{classcereal_1_1_j_s_o_n_output_archive}{}\label{classcereal_1_1_j_s_o_n_output_archive}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+
+
+An output archive designed to save data to JSON.  
+
+
+
+
+{\ttfamily \#include $<$json.\+hpp$>$}
+
+Inheritance diagram for cereal\+::JSONOutput\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.957747cm]{da/dad/classcereal_1_1_j_s_o_n_output_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options}}
+\begin{DoxyCompactList}\small\item\em A class containing various advanced options for the JSON archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{Indent}\textbf{ Common Functionality}\par
+{\em Common use cases for directly interacting with an \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive} }\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_a87fef1f545417ca857e00f1af5a70701}{JSONOutput\+Archive}} (std\+::ostream \&stream, \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options}} const \&options=\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a82ac8216b731ffc3669c9a16e18efc86}{Options\+::\+Default}}())
+\begin{DoxyCompactList}\small\item\em Construct, outputting to the provided stream. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a7402beb96980d4d540c5bb625bf6ea83}\label{classcereal_1_1_j_s_o_n_output_archive_a7402beb96980d4d540c5bb625bf6ea83} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+JSONOutput\+Archive} () \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Destructor, flushes the JSON. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_a1833e8351413e686130e7794c712639b}{save\+Binary\+Value}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, const char \texorpdfstring{$\ast$}{*}name=nullptr)
+\begin{DoxyCompactList}\small\item\em Saves some binary data, encoded as a base64 string, with an optional name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive$<$ JSONOutput\+Archive $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{Output\+Archive}} (\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b}{register\+Shared\+Pointer}} (const std\+::shared\+\_\+ptr$<$ const void $>$ \&shared\+Pointer)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer with the archive. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e}{register\+Polymorphic\+Type}} (char const \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic type name with the archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c}{operator$<$$<$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{cereal\+::detail\+::\+Output\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Output\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Internal Functionality}
+Functionality designed for use by those requiring control over the inner mechanisms of the \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive} \begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_acae7982ee23cacf07cb6c4326818e6b8}{start\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Starts a new node in the JSON output. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a32e7d7fe0a75d7e3cc990362c41edf81}\label{classcereal_1_1_j_s_o_n_output_archive_a32e7d7fe0a75d7e3cc990362c41edf81} 
+void {\bfseries finish\+Node} ()
+\begin{DoxyCompactList}\small\item\em Designates the most recently added node as finished. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a399c034dd0be17597b4cf9fe2e9bf050}\label{classcereal_1_1_j_s_o_n_output_archive_a399c034dd0be17597b4cf9fe2e9bf050} 
+void {\bfseries set\+Next\+Name} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Sets the name for the next node created with start\+Node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a3279cbcf2b5cd73c4f8299aa4e8702b4}\label{classcereal_1_1_j_s_o_n_output_archive_a3279cbcf2b5cd73c4f8299aa4e8702b4} 
+void {\bfseries save\+Value} (bool b)
+\begin{DoxyCompactList}\small\item\em Saves a bool to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a62917f155424234bc29cfb0b8280be3a}\label{classcereal_1_1_j_s_o_n_output_archive_a62917f155424234bc29cfb0b8280be3a} 
+void {\bfseries save\+Value} (int i)
+\begin{DoxyCompactList}\small\item\em Saves an int to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_aad0636d0a75fdd4187d572479ce14ae1}\label{classcereal_1_1_j_s_o_n_output_archive_aad0636d0a75fdd4187d572479ce14ae1} 
+void {\bfseries save\+Value} (unsigned u)
+\begin{DoxyCompactList}\small\item\em Saves a uint to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a579aa488b2a27e1afd37516962993876}\label{classcereal_1_1_j_s_o_n_output_archive_a579aa488b2a27e1afd37516962993876} 
+void {\bfseries save\+Value} (int64\+\_\+t i64)
+\begin{DoxyCompactList}\small\item\em Saves an int64 to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_afb683b1f868478d1797b1c19bb5d6375}\label{classcereal_1_1_j_s_o_n_output_archive_afb683b1f868478d1797b1c19bb5d6375} 
+void {\bfseries save\+Value} (uint64\+\_\+t u64)
+\begin{DoxyCompactList}\small\item\em Saves a uint64 to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_aac03a57ce63373432a8b8ef9f0c187b7}\label{classcereal_1_1_j_s_o_n_output_archive_aac03a57ce63373432a8b8ef9f0c187b7} 
+void {\bfseries save\+Value} (double d)
+\begin{DoxyCompactList}\small\item\em Saves a double to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_aebe0984ef09998ee687217d74e4d6bcd}\label{classcereal_1_1_j_s_o_n_output_archive_aebe0984ef09998ee687217d74e4d6bcd} 
+void {\bfseries save\+Value} (std\+::string const \&s)
+\begin{DoxyCompactList}\small\item\em Saves a string to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_ad08dc226626239c6e22bf2747a7cf275}\label{classcereal_1_1_j_s_o_n_output_archive_ad08dc226626239c6e22bf2747a7cf275} 
+void {\bfseries save\+Value} (char const \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Saves a const char \texorpdfstring{$\ast$}{*} to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a831d72780e7c42900421a00c372bcf7c}\label{classcereal_1_1_j_s_o_n_output_archive_a831d72780e7c42900421a00c372bcf7c} 
+void {\bfseries save\+Value} (std\+::nullptr\+\_\+t)
+\begin{DoxyCompactList}\small\item\em Saves a nullptr to the current node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a60c9ae47585eb6eb0207ebf3c1f8a345}\label{classcereal_1_1_j_s_o_n_output_archive_a60c9ae47585eb6eb0207ebf3c1f8a345} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+same$<$ T, long $>$\+::value, !std\+::is\+\_\+same$<$ T, int $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::int64\+\_\+t $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries save\+Value} (T t)
+\begin{DoxyCompactList}\small\item\em Serialize a long if it would not be caught otherwise. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a60c9ae47585eb6eb0207ebf3c1f8a345}\label{classcereal_1_1_j_s_o_n_output_archive_a60c9ae47585eb6eb0207ebf3c1f8a345} 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+same$<$ T, unsigned long $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::uint64\+\_\+t $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries save\+Value} (T t)
+\begin{DoxyCompactList}\small\item\em Serialize an unsigned long if it would not be caught otherwise. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, long $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned long $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::int64\+\_\+t $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::uint64\+\_\+t $>$\+::value,(sizeof(T) $>$=sizeof(long double)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}sizeof(T) $>$=sizeof(long long))$>$ = traits\+::sfinae$>$ }\\void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_ac3918206b9255e0b523ace06e16a02ea}{save\+Value}} (T const \&t)
+\begin{DoxyCompactList}\small\item\em Save exotic arithmetic as strings to current node. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_a5014cca0214e98b2d93be821a9e1ce36}{write\+Name}} ()
+\begin{DoxyCompactList}\small\item\em Write the name of the upcoming node and prepare object/array state. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a50fcaa40404675ec6559fd0a191a0627}\label{classcereal_1_1_j_s_o_n_output_archive_a50fcaa40404675ec6559fd0a191a0627} 
+void {\bfseries make\+Array} ()
+\begin{DoxyCompactList}\small\item\em Designates that the current node should be output as an array, not an object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An output archive designed to save data to JSON. 
+
+This archive uses Rapid\+JSON to build serialize data to JSON.
+
+JSON archives provides a human readable output but at decreased performance (both in time and space) compared to binary archives.
+
+JSON archives are only guaranteed to finish flushing their contents upon destruction and should thus be used in an RAII fashion.
+
+JSON benefits greatly from name-\/value pairs, which if present, will name the nodes in the output. If these are not present, each level of the output will be given an automatically generated delimited name.
+
+The precision of the output archive controls the number of decimals output for floating point numbers and should be sufficiently large (i.\+e. at least 20) if there is a desire to have binary equality between the numbers output and those read in. In general you should expect a loss of precision when going from floating point to text and back.
+
+JSON archives do not output the size information for any dynamically sized structure and instead infer it from the number of children for a node. This means that data can be hand edited for dynamic sized structures and will still be readable. This is accomplished through the \doxylink{classcereal_1_1_size_tag}{cereal\+::\+Size\+Tag} object, which will cause the archive to output the data as a JSON array (e.\+g. marked by \mbox{[}\mbox{]} instead of \{\}), which indicates that the container is variable sized and may be edited. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a87fef1f545417ca857e00f1af5a70701}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}!JSONOutputArchive@{JSONOutputArchive}}
+\index{JSONOutputArchive@{JSONOutputArchive}!cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+\doxysubsubsection{\texorpdfstring{JSONOutputArchive()}{JSONOutputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_a87fef1f545417ca857e00f1af5a70701} 
+cereal\+::\+JSONOutput\+Archive\+::\+JSONOutput\+Archive (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream}{, }\item[{\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options}} const \&}]{options}{ = {\ttfamily \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a82ac8216b731ffc3669c9a16e18efc86}{Options\+::\+Default}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, outputting to the provided stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to output to. \\
+\hline
+{\em options} & The JSON specific options to use. See the \doxylink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options} struct for the values of default parameters \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a1833e8351413e686130e7794c712639b}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}!saveBinaryValue@{saveBinaryValue}}
+\index{saveBinaryValue@{saveBinaryValue}!cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+\doxysubsubsection{\texorpdfstring{saveBinaryValue()}{saveBinaryValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_a1833e8351413e686130e7794c712639b} 
+void cereal\+::\+JSONOutput\+Archive\+::save\+Binary\+Value (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Saves some binary data, encoded as a base64 string, with an optional name. 
+
+This will create a new node, optionally named, and insert a value that consists of the data encoded as a base64 string \Hypertarget{classcereal_1_1_j_s_o_n_output_archive_ac3918206b9255e0b523ace06e16a02ea}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}!saveValue@{saveValue}}
+\index{saveValue@{saveValue}!cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+\doxysubsubsection{\texorpdfstring{saveValue()}{saveValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_ac3918206b9255e0b523ace06e16a02ea} 
+template$<$class T, traits\+::\+Enable\+If$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value, !std\+::is\+\_\+same$<$ T, long $>$\+::value, !std\+::is\+\_\+same$<$ T, unsigned long $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::int64\+\_\+t $>$\+::value, !std\+::is\+\_\+same$<$ T, std\+::uint64\+\_\+t $>$\+::value,(sizeof(T) $>$=sizeof(long double)\texorpdfstring{$\vert$}{|}\texorpdfstring{$\vert$}{|}sizeof(T) $>$=sizeof(long long))$>$ = traits\+::sfinae$>$ \\
+void cereal\+::\+JSONOutput\+Archive\+::save\+Value (\begin{DoxyParamCaption}\item[{T const \&}]{t}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Save exotic arithmetic as strings to current node. 
+
+Handles long long (if distinct from other types), unsigned long (if distinct), and long double \Hypertarget{classcereal_1_1_j_s_o_n_output_archive_acae7982ee23cacf07cb6c4326818e6b8}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}!startNode@{startNode}}
+\index{startNode@{startNode}!cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+\doxysubsubsection{\texorpdfstring{startNode()}{startNode()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_acae7982ee23cacf07cb6c4326818e6b8} 
+void cereal\+::\+JSONOutput\+Archive\+::start\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Starts a new node in the JSON output. 
+
+The node can optionally be given a name by calling set\+Next\+Name prior to creating the node
+
+Nodes only need to be started for types that are themselves objects or arrays \Hypertarget{classcereal_1_1_j_s_o_n_output_archive_a5014cca0214e98b2d93be821a9e1ce36}\index{cereal::JSONOutputArchive@{cereal::JSONOutputArchive}!writeName@{writeName}}
+\index{writeName@{writeName}!cereal::JSONOutputArchive@{cereal::JSONOutputArchive}}
+\doxysubsubsection{\texorpdfstring{writeName()}{writeName()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_a5014cca0214e98b2d93be821a9e1ce36} 
+void cereal\+::\+JSONOutput\+Archive\+::write\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Write the name of the upcoming node and prepare object/array state. 
+
+Since write\+Name is called for every value that is output, regardless of whether it has a name or not, it is the place where we will do a deferred check of our node state and decide whether we are in an array or an object.
+
+The general workflow of saving to the JSON archive is\+:
+
+
+\begin{DoxyEnumerate}
+\item (optional) Set the name for the next node to be created, usually done by an NVP
+\item Start the node
+\item (if there is data to save) Write the name of the node (this function)
+\item (if there is data to save) Save the data (with save\+Value)
+\item Finish the node 
+\end{DoxyEnumerate}
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{json_8hpp}{json.\+hpp}}\end{DoxyCompactItemize}

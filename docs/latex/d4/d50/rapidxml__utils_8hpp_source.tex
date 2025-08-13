@@ -1,0 +1,113 @@
+\doxysection{rapidxml\+\_\+utils.\+hpp}
+\hypertarget{rapidxml__utils_8hpp_source}{}\label{rapidxml__utils_8hpp_source}\index{lib/cereal/external/rapidxml/rapidxml\_utils.hpp@{lib/cereal/external/rapidxml/rapidxml\_utils.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDXML\_UTILS\_HPP\_INCLUDED}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDXML\_UTILS\_HPP\_INCLUDED}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Copyright\ (C)\ 2006,\ 2009\ Marcin\ Kalicinski}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Version\ 1.13}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Revision\ \$DateTime:\ 2009/05/13\ 01:46:17\ \$}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}rapidxml.hpp"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{}
+\DoxyCodeLine{00016\ \textcolor{keyword}{namespace\ }rapidxml}
+\DoxyCodeLine{00017\ \{}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch\ =\ \textcolor{keywordtype}{char}>}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_aa31b389f9563d7b21ab13bd0058df178}{file}}}
+\DoxyCodeLine{00022\ \ \ \ \ \{}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_aa31b389f9563d7b21ab13bd0058df178}{file}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *filename)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Open\ stream}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ basic\_ifstream<Ch>\ stream(filename,\ ios::binary);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!stream)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ runtime\_error(\textcolor{keywordtype}{string}(\textcolor{stringliteral}{"{}cannot\ open\ file\ "{}})\ +\ filename);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ stream.unsetf(ios::skipws);}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Determine\ stream\ size}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ stream.seekg(0,\ ios::end);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}}\ =\ stream.tellg();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ stream.seekg(0);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ data\ and\ add\ terminating\ 0}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ m\_data.resize(\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}}\ +\ 1);}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ stream.read(\&m\_data.front(),\ \textcolor{keyword}{static\_cast<}streamsize\textcolor{keyword}{>}(\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}}));}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ m\_data[\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}}]\ =\ 0;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a1d53059d5eb752b49103483566dfde15}{file}}(std::basic\_istream<Ch>\ \&stream)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ data\ and\ add\ terminating\ 0}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ stream.unsetf(ios::skipws);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ m\_data.assign(istreambuf\_iterator<Ch>(stream),\ istreambuf\_iterator<Ch>());}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (stream.fail()\ ||\ stream.bad())}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ runtime\_error(\textcolor{stringliteral}{"{}error\ reading\ stream"{}});}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ m\_data.push\_back(0);}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ Ch\ *\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a35175257994f336bc113af05751185a0}{data}}()}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&m\_data.front();}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Ch\ *\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_ad82097c772501529b8d493f2fc5cc310}{data}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00073\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&m\_data.front();}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ std::size\_t\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00080\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_data.size();}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ std::vector<Ch>\ m\_data;\ \ \ \textcolor{comment}{//\ File\ data}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{inline}\ std::size\_t\ count\_children(xml\_node<Ch>\ *node)}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ xml\_node<Ch>\ *child\ =\ node-\/>first\_node();}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ std::size\_t\ count\ =\ 0;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (child)}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ child\ =\ child-\/>next\_sibling();}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Ch>}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{inline}\ std::size\_t\ count\_attributes(\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\_node<Ch>}}\ *node)}
+\DoxyCodeLine{00109\ \ \ \ \ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__attribute}{xml\_attribute<Ch>}}\ *attr\ =\ node-\/>first\_attribute();}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ std::size\_t\ count\ =\ 0;}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (attr)}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ ++count;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ attr\ =\ attr-\/>next\_attribute();}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{00118\ \ \ \ \ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

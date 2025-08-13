@@ -1,0 +1,150 @@
+\doxysection{binary.\+hpp}
+\hypertarget{binary_8hpp_source}{}\label{binary_8hpp_source}\index{lib/cereal/archives/binary.hpp@{lib/cereal/archives/binary.hpp}}
+\mbox{\hyperlink{binary_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_ARCHIVES\_BINARY\_HPP\_}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ CEREAL\_ARCHIVES\_BINARY\_HPP\_}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00036\ \{}
+\DoxyCodeLine{00037\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16}{BinaryOutputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<BinaryOutputArchive,\ AllowEmptyClassElision>}
+\DoxyCodeLine{00052\ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16}{BinaryOutputArchive}}(std::ostream\ \&\ stream)\ :}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<\mbox{\hyperlink{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16}{BinaryOutputArchive}},\ AllowEmptyClassElision>(this),}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ itsStream(stream)}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_binary_output_archive}{\string~BinaryOutputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ default;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_binary_output_archive_ad80ca965dd00c99a9578d7df763006a7}{saveBinary}}(\ const\ \textcolor{keywordtype}{void}\ *\ data,\ std::streamsize\ size\ )}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ writtenSize\ =\ itsStream.rdbuf()-\/>sputn(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ data\ ),\ size\ );}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(writtenSize\ !=\ size)}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Failed\ to\ write\ "{}}\ +\ std::to\_string(size)\ +\ \textcolor{stringliteral}{"{}\ bytes\ to\ output\ stream!\ Wrote\ "{}}\ +\ std::to\_string(writtenSize));}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ std::ostream\ \&\ itsStream;}
+\DoxyCodeLine{00075\ \ \ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00079\ \ \ \textcolor{comment}{/*\ \ This\ archive\ does\ nothing\ to\ ensure\ that\ the\ endianness\ of\ the\ saved}}
+\DoxyCodeLine{00080\ \textcolor{comment}{\ \ \ \ \ \ and\ loaded\ data\ is\ the\ same.\ \ If\ you\ need\ to\ have\ portability\ over}}
+\DoxyCodeLine{00081\ \textcolor{comment}{\ \ \ \ \ \ architectures\ with\ different\ endianness,\ use\ PortableBinaryOutputArchive.}}
+\DoxyCodeLine{00082\ \textcolor{comment}{}}
+\DoxyCodeLine{00083\ \textcolor{comment}{\ \ \ \ \ \ When\ using\ a\ binary\ archive\ and\ a\ file\ stream,\ you\ must\ use\ the}}
+\DoxyCodeLine{00084\ \textcolor{comment}{\ \ \ \ \ \ std::ios::binary\ format\ flag\ to\ avoid\ having\ your\ data\ altered}}
+\DoxyCodeLine{00085\ \textcolor{comment}{\ \ \ \ \ \ inadvertently.}}
+\DoxyCodeLine{00086\ \textcolor{comment}{}}
+\DoxyCodeLine{00087\ \textcolor{comment}{\ \ \ \ \ \ \(\backslash\)ingroup\ Archives\ */}}
+\DoxyCodeLine{00088\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_binary_input_archive_a23eb5ff0ac7163632a2218361fe57c16}{BinaryInputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<BinaryInputArchive,\ AllowEmptyClassElision>}
+\DoxyCodeLine{00089\ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_binary_input_archive_a23eb5ff0ac7163632a2218361fe57c16}{BinaryInputArchive}}(std::istream\ \&\ stream)\ :}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<\mbox{\hyperlink{classcereal_1_1_binary_input_archive_a23eb5ff0ac7163632a2218361fe57c16}{BinaryInputArchive}},\ AllowEmptyClassElision>(this),}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ itsStream(stream)}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_binary_input_archive}{\string~BinaryInputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ default;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_binary_input_archive_aca99e259f54a79df62b09ad7771b9c92}{loadBinary}}(\ \textcolor{keywordtype}{void}\ *\ const\ data,\ std::streamsize\ size\ )}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ readSize\ =\ itsStream.rdbuf()-\/>sgetn(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ data\ ),\ size\ );}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(readSize\ !=\ size)}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Failed\ to\ read\ "{}}\ +\ std::to\_string(size)\ +\ \textcolor{stringliteral}{"{}\ bytes\ from\ input\ stream!\ Read\ "{}}\ +\ std::to\_string(readSize));}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ std::istream\ \&\ itsStream;}
+\DoxyCodeLine{00110\ \ \ \};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00113\ \ \ \textcolor{comment}{//\ Common\ BinaryArchive\ serialization\ functions}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00117\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<std::is\_arithmetic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00118\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{BinaryOutputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t)}
+\DoxyCodeLine{00119\ \ \ \{}
+\DoxyCodeLine{00120\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_binary_output_archive_ad80ca965dd00c99a9578d7df763006a7}{saveBinary}}(std::addressof(t),\ \textcolor{keyword}{sizeof}(t));}
+\DoxyCodeLine{00121\ \ \ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00124\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00125\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<std::is\_arithmetic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00126\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{BinaryInputArchive}}\ \&\ ar,\ T\ \&\ t)}
+\DoxyCodeLine{00127\ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_binary_input_archive_aca99e259f54a79df62b09ad7771b9c92}{loadBinary}}(std::addressof(t),\ \textcolor{keyword}{sizeof}(t));}
+\DoxyCodeLine{00129\ \ \ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00132\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00133\ \ \ \mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\_ARCHIVE\_RESTRICT}}(BinaryInputArchive,\ BinaryOutputArchive)}
+\DoxyCodeLine{00134\ \ \ \mbox{\hyperlink{namespacecereal_a64ec0a04e5dc57a58de5e78b5a87b8d3}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair}}<T>\ \&\ t\ )}
+\DoxyCodeLine{00135\ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ ar(\ t.value\ );}
+\DoxyCodeLine{00137\ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00140\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00141\ \ \ \mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\_ARCHIVE\_RESTRICT}}(BinaryInputArchive,\ BinaryOutputArchive)}
+\DoxyCodeLine{00142\ \ \ \mbox{\hyperlink{namespacecereal_a64ec0a04e5dc57a58de5e78b5a87b8d3}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag}}<T>\ \&\ t\ )}
+\DoxyCodeLine{00143\ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ ar(\ t.size\ );}
+\DoxyCodeLine{00145\ \ \ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00148\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00149\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{BinaryOutputArchive}}\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1_binary_data}{BinaryData<T>}}\ \textcolor{keyword}{const}\ \&\ bd)}
+\DoxyCodeLine{00150\ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_binary_output_archive_ad80ca965dd00c99a9578d7df763006a7}{saveBinary}}(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}},\ \textcolor{keyword}{static\_cast<}std::streamsize\textcolor{keyword}{>}(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}}\ )\ );}
+\DoxyCodeLine{00152\ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00155\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{BinaryInputArchive}}\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1_binary_data}{BinaryData<T>}}\ \&\ bd)}
+\DoxyCodeLine{00157\ \ \ \{}
+\DoxyCodeLine{00158\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_binary_input_archive_aca99e259f54a79df62b09ad7771b9c92}{loadBinary}}(bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}},\ \textcolor{keyword}{static\_cast<}std::streamsize\textcolor{keyword}{>}(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}}\ )\ );}
+\DoxyCodeLine{00159\ \ \ \}}
+\DoxyCodeLine{00160\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \textcolor{comment}{//\ register\ archives\ for\ polymorphic\ support}}
+\DoxyCodeLine{00163\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{cereal::BinaryOutputArchive}})}
+\DoxyCodeLine{00164\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{cereal::BinaryInputArchive}})}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{comment}{//\ tie\ input\ and\ output\ archives\ together}}
+\DoxyCodeLine{00167\ \mbox{\hyperlink{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666}{CEREAL\_SETUP\_ARCHIVE\_TRAITS}}(\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{cereal::BinaryInputArchive}},\ \mbox{\hyperlink{classcereal_1_1_binary_output_archive}{cereal::BinaryOutputArchive}})}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_ARCHIVES\_BINARY\_HPP\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,46 @@
+\doxysection{Stream Class Reference}
+\hypertarget{classrapidjson_1_1_stream}{}\label{classrapidjson_1_1_stream}\index{Stream@{Stream}}
+
+
+Concept for reading and writing characters.  
+
+
+
+
+{\ttfamily \#include $<$stream.\+h$>$}
+
+
+
+\doxysubsection{Detailed Description}
+Concept for reading and writing characters. 
+
+For read-\/only stream, no need to implement Put\+Begin(), Put(), Flush() and Put\+End().
+
+For write-\/only stream, only need to implement Put() and Flush().
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }Stream\ \{}
+\DoxyCodeLine{\ \ \ \ typename\ Ch;\ \ \ \ }
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ Ch\ Peek()\ const;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ Ch\ Take();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ size\_t\ Tell();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ Ch*\ PutBegin();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ void\ Put(Ch\ c);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ void\ Flush();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ size\_t\ PutEnd(Ch*\ begin);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/stream.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,45 @@
+\doxysection{lib/cereal/types/queue.hpp File Reference}
+\hypertarget{queue_8hpp}{}\label{queue_8hpp}\index{lib/cereal/types/queue.hpp@{lib/cereal/types/queue.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}queue\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/details/helpers.\+hpp"{}}\newline
+{\ttfamily \#include $<$queue$>$}\newline
+{\ttfamily \#include "{}cereal/types/deque.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/functional.\+hpp"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf}\label{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf} 
+{\footnotesize template$<$class T, class C$>$ }\\C const \& {\bfseries cereal\+::queue\+\_\+detail\+::container} (std\+::queue$<$ T, C $>$ const \&queue)
+\begin{DoxyCompactList}\small\item\em Allows access to the protected container in queue. \end{DoxyCompactList}\item 
+\Hypertarget{queue_8hpp_a50b30558c04bd9178e3da5a62fb270fd}\label{queue_8hpp_a50b30558c04bd9178e3da5a62fb270fd} 
+{\footnotesize template$<$class T, class C, class Comp$>$ }\\C const \& {\bfseries cereal\+::queue\+\_\+detail\+::container} (std\+::priority\+\_\+queue$<$ T, C, Comp $>$ const \&priority\+\_\+queue)
+\begin{DoxyCompactList}\small\item\em Allows access to the protected container in priority queue. \end{DoxyCompactList}\item 
+\Hypertarget{queue_8hpp_a26f76c77bfb0f4b0ffa109a9cbebc05e}\label{queue_8hpp_a26f76c77bfb0f4b0ffa109a9cbebc05e} 
+{\footnotesize template$<$class T, class C, class Comp$>$ }\\Comp const \& {\bfseries cereal\+::queue\+\_\+detail\+::comparator} (std\+::priority\+\_\+queue$<$ T, C, Comp $>$ const \&priority\+\_\+queue)
+\begin{DoxyCompactList}\small\item\em Allows access to the protected comparator in priority queue. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a196f5ec0e6eb126730ee5fb7339fb8be}\label{namespacecereal_a196f5ec0e6eb126730ee5fb7339fb8be} 
+{\footnotesize template$<$class Archive, class T, class C$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::queue$<$ T, C $>$ const \&queue)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::queue. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a663f35fc093d002d4e07c0e965178525}\label{namespacecereal_a663f35fc093d002d4e07c0e965178525} 
+{\footnotesize template$<$class Archive, class T, class C$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::queue$<$ T, C $>$ \&queue)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::queue. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad1957ae53b8fc963c0ed3e831deae7ca}\label{namespacecereal_ad1957ae53b8fc963c0ed3e831deae7ca} 
+{\footnotesize template$<$class Archive, class T, class C, class Comp$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::priority\+\_\+queue$<$ T, C, Comp $>$ const \&priority\+\_\+queue)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::priority\+\_\+queue. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a9335c1a68710bfa8f49ae3a217b32623}\label{namespacecereal_a9335c1a68710bfa8f49ae3a217b32623} 
+{\footnotesize template$<$class Archive, class T, class C, class Comp$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::priority\+\_\+queue$<$ T, C, Comp $>$ \&priority\+\_\+queue)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::priority\+\_\+queue. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}queue\texorpdfstring{$>$}{>} 
+

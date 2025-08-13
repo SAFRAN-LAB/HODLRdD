@@ -1,0 +1,184 @@
+\doxysection{cereal\+::XMLOutput\+Archive Class Reference}
+\hypertarget{classcereal_1_1_x_m_l_output_archive}{}\label{classcereal_1_1_x_m_l_output_archive}\index{cereal::XMLOutputArchive@{cereal::XMLOutputArchive}}
+
+
+An output archive designed to save data to XML.  
+
+
+
+
+{\ttfamily \#include $<$xml.\+hpp$>$}
+
+Inheritance diagram for cereal\+::XMLOutput\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{d2/dd3/classcereal_1_1_x_m_l_output_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info}{Node\+Info}}
+\begin{DoxyCompactList}\small\item\em A struct that contains metadata about a node. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}}
+\begin{DoxyCompactList}\small\item\em A class containing various advanced options for the XML archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{Indent}\textbf{ Common Functionality}\par
+{\em Common use cases for directly interacting with an \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive} }\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}{XMLOutput\+Archive}} (std\+::ostream \&stream, \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} const \&options=\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87}{Options\+::\+Default}}())
+\begin{DoxyCompactList}\small\item\em Construct, outputting to the provided stream upon destruction. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a27af07bb73acbc1ad38d3f9a625e0d3c}\label{classcereal_1_1_x_m_l_output_archive_a27af07bb73acbc1ad38d3f9a625e0d3c} 
+{\bfseries \texorpdfstring{$\sim$}{\string~}\+XMLOutput\+Archive} () \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\begin{DoxyCompactList}\small\item\em Destructor, flushes the XML. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a2aa0db0f3e102d463b0cdb20e3caed10}{save\+Binary\+Value}} (const void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, const char \texorpdfstring{$\ast$}{*}name=nullptr)
+\begin{DoxyCompactList}\small\item\em Saves some binary data, encoded as a base64 string, with an optional name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\begin{Indent}\textbf{ Internal Functionality}\par
+{\em Functionality designed for use by those requiring control over the inner mechanisms of the \doxylink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive} }\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5}{start\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Creates a new node that is a child of the node at the top of the stack. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_aa71de505f1aa29fe74065df4bbb39d7e}\label{classcereal_1_1_x_m_l_output_archive_aa71de505f1aa29fe74065df4bbb39d7e} 
+void {\bfseries finish\+Node} ()
+\begin{DoxyCompactList}\small\item\em Designates the most recently added node as finished. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_aa301c06076e60466516f7d69198c2185}\label{classcereal_1_1_x_m_l_output_archive_aa301c06076e60466516f7d69198c2185} 
+void {\bfseries set\+Next\+Name} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Sets the name for the next node created with start\+Node. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\void \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{save\+Value}} (T const \&value)
+\begin{DoxyCompactList}\small\item\em Saves some data, encoded as a string, into the current top level node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a2d85b7350ab575fedeebcc0c31a56777}\label{classcereal_1_1_x_m_l_output_archive_a2d85b7350ab575fedeebcc0c31a56777} 
+void {\bfseries save\+Value} (uint8\+\_\+t const \&value)
+\begin{DoxyCompactList}\small\item\em Overload for uint8\+\_\+t prevents them from being serialized as characters. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a05f3803cec394e287d1088bc78f2381b}\label{classcereal_1_1_x_m_l_output_archive_a05f3803cec394e287d1088bc78f2381b} 
+void {\bfseries save\+Value} (int8\+\_\+t const \&value)
+\begin{DoxyCompactList}\small\item\em Overload for int8\+\_\+t prevents them from being serialized as characters. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a4af064c2dc6a9451ef9a4dd93bdd304e}\label{classcereal_1_1_x_m_l_output_archive_a4af064c2dc6a9451ef9a4dd93bdd304e} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries insert\+Type} ()
+\begin{DoxyCompactList}\small\item\em Causes the type to be appended as an attribute to the most recently made node if output type is set to true. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_afbc756983609a1600576faff3c558c57}\label{classcereal_1_1_x_m_l_output_archive_afbc756983609a1600576faff3c558c57} 
+void {\bfseries append\+Attribute} (const char \texorpdfstring{$\ast$}{*}name, const char \texorpdfstring{$\ast$}{*}value)
+\begin{DoxyCompactList}\small\item\em Appends an attribute to the current top level node. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a5ee4939c2a9023004e83d61457415e63}\label{classcereal_1_1_x_m_l_output_archive_a5ee4939c2a9023004e83d61457415e63} 
+bool {\bfseries has\+Size\+Attributes} () const
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive$<$ XMLOutput\+Archive $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{Output\+Archive}} (\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b}{register\+Shared\+Pointer}} (const std\+::shared\+\_\+ptr$<$ const void $>$ \&shared\+Pointer)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer with the archive. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e}{register\+Polymorphic\+Type}} (char const \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic type name with the archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c}{operator$<$$<$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{cereal\+::detail\+::\+Output\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Output\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An output archive designed to save data to XML. 
+
+This archive uses Rapid\+XML to build an in memory XML tree of the data it serializes before outputting it to its stream upon destruction. This archive should be used in an RAII fashion, letting the automatic destruction of the object cause the flush to its stream.
+
+XML archives provides a human readable output but at decreased performance (both in time and space) compared to binary archives.
+
+XML benefits greatly from name-\/value pairs, which if present, will name the nodes in the output. If these are not present, each level of the output tree will be given an automatically generated delimited name.
+
+The precision of the output archive controls the number of decimals output for floating point numbers and should be sufficiently large (i.\+e. at least 20) if there is a desire to have binary equality between the numbers output and those read in. In general you should expect a loss of precision when going from floating point to text and back.
+
+XML archives can optionally print the type of everything they serialize, which adds an attribute to each node.
+
+XML archives do not output the size information for any dynamically sized structure and instead infer it from the number of children for a node. This means that data can be hand edited for dynamic sized structures and will still be readable. This is accomplished through the \doxylink{classcereal_1_1_size_tag}{cereal\+::\+Size\+Tag} object, which will also add an attribute to its parent field. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}\index{cereal::XMLOutputArchive@{cereal::XMLOutputArchive}!XMLOutputArchive@{XMLOutputArchive}}
+\index{XMLOutputArchive@{XMLOutputArchive}!cereal::XMLOutputArchive@{cereal::XMLOutputArchive}}
+\doxysubsubsection{\texorpdfstring{XMLOutputArchive()}{XMLOutputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac} 
+cereal\+::\+XMLOutput\+Archive\+::\+XMLOutput\+Archive (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream}{, }\item[{\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}} const \&}]{options}{ = {\ttfamily \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87}{Options\+::\+Default}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, outputting to the provided stream upon destruction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to output to. Note that XML is only guaranteed to flush its output to the stream upon destruction. \\
+\hline
+{\em options} & The XML specific options to use. See the \doxylink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options} struct for the values of default parameters \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_x_m_l_output_archive_a2aa0db0f3e102d463b0cdb20e3caed10}\index{cereal::XMLOutputArchive@{cereal::XMLOutputArchive}!saveBinaryValue@{saveBinaryValue}}
+\index{saveBinaryValue@{saveBinaryValue}!cereal::XMLOutputArchive@{cereal::XMLOutputArchive}}
+\doxysubsubsection{\texorpdfstring{saveBinaryValue()}{saveBinaryValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_output_archive_a2aa0db0f3e102d463b0cdb20e3caed10} 
+void cereal\+::\+XMLOutput\+Archive\+::save\+Binary\+Value (\begin{DoxyParamCaption}\item[{const void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Saves some binary data, encoded as a base64 string, with an optional name. 
+
+This can be called directly by users and it will automatically create a child node for the current XML node, populate it with a base64 encoded string, and optionally name it. The node will be finished after it has been populated. \Hypertarget{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}\index{cereal::XMLOutputArchive@{cereal::XMLOutputArchive}!saveValue@{saveValue}}
+\index{saveValue@{saveValue}!cereal::XMLOutputArchive@{cereal::XMLOutputArchive}}
+\doxysubsubsection{\texorpdfstring{saveValue()}{saveValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09} 
+template$<$class T$>$ \\
+void cereal\+::\+XMLOutput\+Archive\+::save\+Value (\begin{DoxyParamCaption}\item[{T const \&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Saves some data, encoded as a string, into the current top level node. 
+
+The data will be be named with the most recent name if one exists, otherwise it will be given some default delimited value that depends upon the parent node \Hypertarget{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5}\index{cereal::XMLOutputArchive@{cereal::XMLOutputArchive}!startNode@{startNode}}
+\index{startNode@{startNode}!cereal::XMLOutputArchive@{cereal::XMLOutputArchive}}
+\doxysubsubsection{\texorpdfstring{startNode()}{startNode()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5} 
+void cereal\+::\+XMLOutput\+Archive\+::start\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Creates a new node that is a child of the node at the top of the stack. 
+
+Nodes will be given a name that has either been pre-\/set by a name value pair, or generated based upon a counter unique to the parent node. If you want to give a node a specific name, use set\+Next\+Name prior to calling start\+Node.
+
+The node will then be pushed onto the node stack. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{xml_8hpp}{xml.\+hpp}}\end{DoxyCompactItemize}

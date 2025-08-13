@@ -1,0 +1,170 @@
+\doxysection{Memory\+Pool\+Allocator\texorpdfstring{$<$}{<} Base\+Allocator \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_memory_pool_allocator}{}\label{class_memory_pool_allocator}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+
+
+Default memory allocator used by the parser and DOM.  
+
+
+
+
+{\ttfamily \#include $<$allocators.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209}{Memory\+Pool\+Allocator}} (size\+\_\+t chunk\+Size=k\+Default\+Chunk\+Capacity, Base\+Allocator \texorpdfstring{$\ast$}{*}base\+Allocator=0)
+\begin{DoxyCompactList}\small\item\em Constructor with chunk\+Size. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_memory_pool_allocator_a1f0d865093fdb955d956b7a445a8ddbf}{Memory\+Pool\+Allocator}} (void \texorpdfstring{$\ast$}{*}buffer, size\+\_\+t size, size\+\_\+t chunk\+Size=k\+Default\+Chunk\+Capacity, Base\+Allocator \texorpdfstring{$\ast$}{*}base\+Allocator=0)
+\begin{DoxyCompactList}\small\item\em Constructor with user-\/supplied buffer. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_memory_pool_allocator_ad4eee0ef3cfe8cda31034fbce98b7a9b}{\texorpdfstring{$\sim$}{\string~}\+Memory\+Pool\+Allocator}} ()
+\begin{DoxyCompactList}\small\item\em Destructor. \end{DoxyCompactList}\item 
+\Hypertarget{class_memory_pool_allocator_a57bbc80e570db6110901b9a7e36dbda0}\label{class_memory_pool_allocator_a57bbc80e570db6110901b9a7e36dbda0} 
+void {\bfseries Clear} ()
+\begin{DoxyCompactList}\small\item\em Deallocates all memory chunks, excluding the user-\/supplied buffer. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_memory_pool_allocator_a5672e0833fda2e71ce987911397489ed}{Capacity}} () const
+\begin{DoxyCompactList}\small\item\em Computes the total capacity of allocated memory chunks. \end{DoxyCompactList}\item 
+size\+\_\+t \mbox{\hyperlink{class_memory_pool_allocator_ae7fcf0341c13e899cf488bc7c8949956}{Size}} () const
+\begin{DoxyCompactList}\small\item\em Computes the memory blocks allocated. \end{DoxyCompactList}\item 
+\Hypertarget{class_memory_pool_allocator_a8d300531c1f556172aef1259ff55cb48}\label{class_memory_pool_allocator_a8d300531c1f556172aef1259ff55cb48} 
+void \texorpdfstring{$\ast$}{*} {\bfseries Malloc} (size\+\_\+t size)
+\begin{DoxyCompactList}\small\item\em Allocates a memory block. (concept \doxylink{classrapidjson_1_1_allocator}{Allocator}) \end{DoxyCompactList}\item 
+\Hypertarget{class_memory_pool_allocator_a7c273279d361b207ff622d4bdfc63074}\label{class_memory_pool_allocator_a7c273279d361b207ff622d4bdfc63074} 
+void \texorpdfstring{$\ast$}{*} {\bfseries Realloc} (void \texorpdfstring{$\ast$}{*}original\+Ptr, size\+\_\+t original\+Size, size\+\_\+t new\+Size)
+\begin{DoxyCompactList}\small\item\em Resizes a memory block (concept \doxylink{classrapidjson_1_1_allocator}{Allocator}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_memory_pool_allocator_a6b180eb150451b4df8b70d827cd1191c}\label{class_memory_pool_allocator_a6b180eb150451b4df8b70d827cd1191c} 
+static void {\bfseries Free} (void \texorpdfstring{$\ast$}{*}ptr)
+\begin{DoxyCompactList}\small\item\em Frees a memory block (concept \doxylink{classrapidjson_1_1_allocator}{Allocator}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_memory_pool_allocator_ab4c7c5c631e451689bc9da392a65194f}\label{class_memory_pool_allocator_ab4c7c5c631e451689bc9da392a65194f} 
+static const bool {\bfseries k\+Need\+Free} = false
+\begin{DoxyCompactList}\small\item\em Tell users that no need to call \doxylink{class_memory_pool_allocator_a6b180eb150451b4df8b70d827cd1191c}{Free()} with this allocator. (concept \doxylink{classrapidjson_1_1_allocator}{Allocator}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Base\+Allocator = Crt\+Allocator$>$\newline
+class Memory\+Pool\+Allocator$<$ Base\+Allocator $>$}
+Default memory allocator used by the parser and DOM. 
+
+This allocator allocate memory blocks from pre-\/allocated memory chunks.
+
+It does not free memory blocks. And \doxylink{class_memory_pool_allocator_a7c273279d361b207ff622d4bdfc63074}{Realloc()} only allocate new memory.
+
+The memory chunks are allocated by Base\+Allocator, which is \doxylink{class_crt_allocator}{Crt\+Allocator} by default.
+
+User may also supply a buffer as the first chunk.
+
+If the user-\/buffer is full then additional chunks are allocated by Base\+Allocator.
+
+The user-\/buffer is not deallocated by this allocator.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Base\+Allocator} & the allocator type for allocating memory chunks. Default is \doxylink{class_crt_allocator}{Crt\+Allocator}. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyNote}{Note}
+implements \doxylink{classrapidjson_1_1_allocator}{Allocator} concept 
+\end{DoxyNote}
+
+
+\label{doc-constructors}
+\Hypertarget{class_memory_pool_allocator_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}!MemoryPoolAllocator@{MemoryPoolAllocator}}
+\index{MemoryPoolAllocator@{MemoryPoolAllocator}!MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{MemoryPoolAllocator()}{MemoryPoolAllocator()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209} 
+template$<$typename Base\+Allocator = Crt\+Allocator$>$ \\
+\mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}}$<$ Base\+Allocator $>$\mbox{\hyperlink{class_memory_pool_allocator}{\+::\+Memory\+Pool\+Allocator}} (\begin{DoxyParamCaption}\item[{size\+\_\+t}]{chunk\+Size}{ = {\ttfamily kDefaultChunkCapacity}, }\item[{Base\+Allocator \texorpdfstring{$\ast$}{*}}]{base\+Allocator}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor with chunk\+Size. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em chunk\+Size} & The size of memory chunk. The default is k\+Default\+Chunk\+Size. \\
+\hline
+{\em base\+Allocator} & The allocator for allocating memory chunks. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_memory_pool_allocator_a1f0d865093fdb955d956b7a445a8ddbf}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}!MemoryPoolAllocator@{MemoryPoolAllocator}}
+\index{MemoryPoolAllocator@{MemoryPoolAllocator}!MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{MemoryPoolAllocator()}{MemoryPoolAllocator()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_memory_pool_allocator_a1f0d865093fdb955d956b7a445a8ddbf} 
+template$<$typename Base\+Allocator = Crt\+Allocator$>$ \\
+\mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}}$<$ Base\+Allocator $>$\mbox{\hyperlink{class_memory_pool_allocator}{\+::\+Memory\+Pool\+Allocator}} (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{size\+\_\+t}]{size}{, }\item[{size\+\_\+t}]{chunk\+Size}{ = {\ttfamily kDefaultChunkCapacity}, }\item[{Base\+Allocator \texorpdfstring{$\ast$}{*}}]{base\+Allocator}{ = {\ttfamily 0}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor with user-\/supplied buffer. 
+
+The user buffer will be used firstly. When it is full, memory pool allocates new chunk with chunk size.
+
+The user buffer will not be deallocated when this allocator is destructed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & User supplied buffer. \\
+\hline
+{\em size} & Size of the buffer in bytes. It must at least larger than sizeof(\+Chunk\+Header). \\
+\hline
+{\em chunk\+Size} & The size of memory chunk. The default is k\+Default\+Chunk\+Size. \\
+\hline
+{\em base\+Allocator} & The allocator for allocating memory chunks. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_memory_pool_allocator_ad4eee0ef3cfe8cda31034fbce98b7a9b}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}!````~MemoryPoolAllocator@{\texorpdfstring{$\sim$}{\string~}MemoryPoolAllocator}}
+\index{````~MemoryPoolAllocator@{\texorpdfstring{$\sim$}{\string~}MemoryPoolAllocator}!MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}MemoryPoolAllocator()}{\string~MemoryPoolAllocator()}}
+{\footnotesize\ttfamily \label{class_memory_pool_allocator_ad4eee0ef3cfe8cda31034fbce98b7a9b} 
+template$<$typename Base\+Allocator = Crt\+Allocator$>$ \\
+\mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}}$<$ Base\+Allocator $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}} (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Destructor. 
+
+This deallocates all memory chunks, excluding the user-\/supplied buffer. 
+
+\label{doc-func-members}
+\Hypertarget{class_memory_pool_allocator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_memory_pool_allocator_a5672e0833fda2e71ce987911397489ed}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}!Capacity@{Capacity}}
+\index{Capacity@{Capacity}!MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Capacity()}{Capacity()}}
+{\footnotesize\ttfamily \label{class_memory_pool_allocator_a5672e0833fda2e71ce987911397489ed} 
+template$<$typename Base\+Allocator = Crt\+Allocator$>$ \\
+size\+\_\+t \mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}}$<$ Base\+Allocator $>$\+::\+Capacity (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the total capacity of allocated memory chunks. 
+
+\begin{DoxyReturn}{Returns}
+total capacity in bytes. 
+\end{DoxyReturn}
+\Hypertarget{class_memory_pool_allocator_ae7fcf0341c13e899cf488bc7c8949956}\index{MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}!Size@{Size}}
+\index{Size@{Size}!MemoryPoolAllocator$<$ BaseAllocator $>$@{MemoryPoolAllocator$<$ BaseAllocator $>$}}
+\doxysubsubsection{\texorpdfstring{Size()}{Size()}}
+{\footnotesize\ttfamily \label{class_memory_pool_allocator_ae7fcf0341c13e899cf488bc7c8949956} 
+template$<$typename Base\+Allocator = Crt\+Allocator$>$ \\
+size\+\_\+t \mbox{\hyperlink{class_memory_pool_allocator}{Memory\+Pool\+Allocator}}$<$ Base\+Allocator $>$\+::\+Size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Computes the memory blocks allocated. 
+
+\begin{DoxyReturn}{Returns}
+total used bytes. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/allocators.\+h\end{DoxyCompactItemize}

@@ -1,0 +1,55 @@
+\doxysection{lib/cereal/details/static\+\_\+object.hpp File Reference}
+\hypertarget{static__object_8hpp}{}\label{static__object_8hpp}\index{lib/cereal/details/static\_object.hpp@{lib/cereal/details/static\_object.hpp}}
+
+
+Internal polymorphism static object support.  
+
+
+{\ttfamily \#include "{}cereal/macros.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{cereal\+::detail\+::\+Static\+Object$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em A static, pre-\/execution object. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{cereal\+::detail\+::\+Static\+Object$<$ T $>$\+::\+Lock\+Guard}}
+\begin{DoxyCompactList}\small\item\em A class that acts like std\+::lock\+\_\+guard. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\+\_\+\+DLL\+\_\+\+EXPORT}}~\+\_\+\+\_\+attribute\+\_\+\+\_\+ ((visibility("{}default"{})))
+\begin{DoxyCompactList}\small\item\em Prevent link optimization from removing non-\/referenced static objects. \end{DoxyCompactList}\item 
+\Hypertarget{static__object_8hpp_a8d77747d06a0ce156758251b8eb6e82d}\label{static__object_8hpp_a8d77747d06a0ce156758251b8eb6e82d} 
+\#define {\bfseries CEREAL\+\_\+\+USED}~\+\_\+\+\_\+attribute\+\_\+\+\_\+ ((\+\_\+\+\_\+used\+\_\+\+\_\+))
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{static__object_8hpp_a12075955d272f797610905a844edddd1}\label{static__object_8hpp_a12075955d272f797610905a844edddd1} 
+{\footnotesize template$<$class T$>$ }\\T \& {\bfseries cereal\+::detail\+::\+Static\+Object$<$ T $>$\+::instance} = \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{Static\+Object}}$<$T$>$\+::create()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal polymorphism static object support. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{static__object_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}\index{static\_object.hpp@{static\_object.hpp}!CEREAL\_DLL\_EXPORT@{CEREAL\_DLL\_EXPORT}}
+\index{CEREAL\_DLL\_EXPORT@{CEREAL\_DLL\_EXPORT}!static\_object.hpp@{static\_object.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_DLL\_EXPORT}{CEREAL\_DLL\_EXPORT}}
+{\footnotesize\ttfamily \label{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb} 
+\#define CEREAL\+\_\+\+DLL\+\_\+\+EXPORT~\+\_\+\+\_\+attribute\+\_\+\+\_\+ ((visibility("{}default"{})))}
+
+
+
+Prevent link optimization from removing non-\/referenced static objects. 
+
+Especially for polymorphic support, we create static objects which may not ever be explicitly referenced. Most linkers will detect this and remove the code causing various unpleasant runtime errors. These macros, adopted from Boost (see force\+\_\+include.\+hpp) prevent this (C) Copyright 2002 Robert Ramey -\/ \href{http://www.rrsd.com}{\texttt{http\+://www.\+rrsd.\+com}} . Use, modification and distribution is subject to the Boost Software License, Version 1.\+0. (See accompanying file LICENSE\+\_\+1\+\_\+0.\+txt or copy at \href{http://www.boost.org/LICENSE_1_0.txt}{\texttt{http\+://www.\+boost.\+org/\+LICENSE\+\_\+1\+\_\+0.\+txt}}) 

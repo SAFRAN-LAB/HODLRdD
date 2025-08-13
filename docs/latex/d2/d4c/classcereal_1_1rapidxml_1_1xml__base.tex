@@ -1,0 +1,193 @@
+\doxysection{cereal\+::rapidxml\+::xml\+\_\+base\texorpdfstring{$<$}{<} Ch \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1rapidxml_1_1xml__base}{}\label{classcereal_1_1rapidxml_1_1xml__base}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+
+
+{\ttfamily \#include $<$rapidxml.\+hpp$>$}
+
+Inheritance diagram for cereal\+::rapidxml\+::xml\+\_\+base\texorpdfstring{$<$}{<} Ch \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.781032cm]{d2/d4c/classcereal_1_1rapidxml_1_1xml__base}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_ac55a43cd5f5b51933b1deaea565be5e0}{name}} () const
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_a132e11c664387926f7f67524b6247b14}{name\+\_\+size}} () const
+\item 
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_aa9892a91e66ec0411396cf9685006b12}{value}} () const
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_a230c437a1d0cc8113bdd84a952adbd07}{value\+\_\+size}} () const
+\item 
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_a8b3c52271a8289bf0abfd27f3a340b20}{name}} (const Ch \texorpdfstring{$\ast$}{*}name\+\_\+, std\+::size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_acbc8865aac0eca18633a4f71f2233952}{name}} (const Ch \texorpdfstring{$\ast$}{*}name\+\_\+)
+\item 
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_ab6444a2cbf076952bb1b378b8d06e628}{value}} (const Ch \texorpdfstring{$\ast$}{*}value\+\_\+, std\+::size\+\_\+t size)
+\item 
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_a60ba6244d0c1a98062377fdc5055c5b2}{value}} (const Ch \texorpdfstring{$\ast$}{*}value\+\_\+)
+\item 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base_a5c32ab7ec22a4acd178afd5e795e4546}{parent}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_af99517f6a6846c584570582a4065b249}\label{classcereal_1_1rapidxml_1_1xml__base_af99517f6a6846c584570582a4065b249} 
+static Ch \texorpdfstring{$\ast$}{*} {\bfseries nullstr} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a7219903aefc143ed3e757442ad731c36}\label{classcereal_1_1rapidxml_1_1xml__base_a7219903aefc143ed3e757442ad731c36} 
+Ch \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+name}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a33b6ebbee6d348e74185f8271e2e7cb6}\label{classcereal_1_1rapidxml_1_1xml__base_a33b6ebbee6d348e74185f8271e2e7cb6} 
+Ch \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+value}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a7b973020c87fff316da7e608705213d0}\label{classcereal_1_1rapidxml_1_1xml__base_a7b973020c87fff316da7e608705213d0} 
+std\+::size\+\_\+t {\bfseries m\+\_\+name\+\_\+size}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a32490628a94ca598683cea9985e80422}\label{classcereal_1_1rapidxml_1_1xml__base_a32490628a94ca598683cea9985e80422} 
+std\+::size\+\_\+t {\bfseries m\+\_\+value\+\_\+size}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_ac117c43577e66529adae412ab1279404}\label{classcereal_1_1rapidxml_1_1xml__base_ac117c43577e66529adae412ab1279404} 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+parent}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Ch = char$>$\newline
+class cereal\+::rapidxml\+::xml\+\_\+base$<$ Ch $>$}
+Base class for \doxylink{classcereal_1_1rapidxml_1_1xml__node}{xml\+\_\+node} and \doxylink{classcereal_1_1rapidxml_1_1xml__attribute}{xml\+\_\+attribute} implementing common functions\+: \doxylink{classcereal_1_1rapidxml_1_1xml__base_ac55a43cd5f5b51933b1deaea565be5e0}{name()}, \doxylink{classcereal_1_1rapidxml_1_1xml__base_a132e11c664387926f7f67524b6247b14}{name\+\_\+size()}, \doxylink{classcereal_1_1rapidxml_1_1xml__base_aa9892a91e66ec0411396cf9685006b12}{value()}, \doxylink{classcereal_1_1rapidxml_1_1xml__base_a230c437a1d0cc8113bdd84a952adbd07}{value\+\_\+size()} and \doxylink{classcereal_1_1rapidxml_1_1xml__base_a5c32ab7ec22a4acd178afd5e795e4546}{parent()}. 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Ch} & Character type to use \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_ac55a43cd5f5b51933b1deaea565be5e0}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!name@{name}}
+\index{name@{name}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_ac55a43cd5f5b51933b1deaea565be5e0} 
+template$<$class Ch = char$>$ \\
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets name of the node. Interpretation of name depends on type of node. Note that name will not be zero-\/terminated if rapidxml\+::parse\+\_\+no\+\_\+string\+\_\+terminators option was selected during parse. ~\newline
+~\newline
+ Use \doxylink{classcereal_1_1rapidxml_1_1xml__base_a132e11c664387926f7f67524b6247b14}{name\+\_\+size()} function to determine length of the name. \begin{DoxyReturn}{Returns}
+Name of node, or empty string if node has no name. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_acbc8865aac0eca18633a4f71f2233952}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!name@{name}}
+\index{name@{name}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_acbc8865aac0eca18633a4f71f2233952} 
+template$<$class Ch = char$>$ \\
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::name (\begin{DoxyParamCaption}\item[{const Ch \texorpdfstring{$\ast$}{*}}]{name\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets name of node to a zero-\/terminated string. See also ownership\+\_\+of\+\_\+strings and xml\+\_\+node\+::name(const Ch \texorpdfstring{$\ast$}{*}, std\+::size\+\_\+t). 
+\begin{DoxyParams}{Parameters}
+{\em name\+\_\+} & Name of node to set. Must be zero terminated. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a8b3c52271a8289bf0abfd27f3a340b20}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!name@{name}}
+\index{name@{name}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_a8b3c52271a8289bf0abfd27f3a340b20} 
+template$<$class Ch = char$>$ \\
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::name (\begin{DoxyParamCaption}\item[{const Ch \texorpdfstring{$\ast$}{*}}]{name\+\_\+}{, }\item[{std\+::size\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets name of node to a non zero-\/terminated string. See ownership\+\_\+of\+\_\+strings. ~\newline
+~\newline
+ Note that node does not own its name or value, it only stores a pointer to it. It will not delete or otherwise free the pointer on destruction. It is reponsibility of the user to properly manage lifetime of the string. The easiest way to achieve it is to use \doxylink{classcereal_1_1rapidxml_1_1memory__pool}{memory\+\_\+pool} of the document to allocate the string -\/ on destruction of the document the string will be automatically freed. ~\newline
+~\newline
+ Size of name must be specified separately, because name does not have to be zero terminated. Use \doxylink{classcereal_1_1rapidxml_1_1xml__base_acbc8865aac0eca18633a4f71f2233952}{name(const Ch \texorpdfstring{$\ast$}{*})} function to have the length automatically calculated (string must be zero terminated). 
+\begin{DoxyParams}{Parameters}
+{\em name\+\_\+} & Name of node to set. Does not have to be zero terminated. \\
+\hline
+{\em size} & Size of name, in characters. This does not include zero terminator, if one is present. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a132e11c664387926f7f67524b6247b14}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!name\_size@{name\_size}}
+\index{name\_size@{name\_size}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{name\_size()}{name\_size()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_a132e11c664387926f7f67524b6247b14} 
+template$<$class Ch = char$>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::name\+\_\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets size of node name, not including terminator character. This function works correctly irrespective of whether name is or is not zero terminated. \begin{DoxyReturn}{Returns}
+Size of node name, in characters. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a5c32ab7ec22a4acd178afd5e795e4546}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!parent@{parent}}
+\index{parent@{parent}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{parent()}{parent()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_a5c32ab7ec22a4acd178afd5e795e4546} 
+template$<$class Ch = char$>$ \\
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{xml\+\_\+node}}$<$ Ch $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::parent (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets node parent. \begin{DoxyReturn}{Returns}
+Pointer to parent node, or 0 if there is no parent. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_aa9892a91e66ec0411396cf9685006b12}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!value@{value}}
+\index{value@{value}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{value()}{value()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_aa9892a91e66ec0411396cf9685006b12} 
+template$<$class Ch = char$>$ \\
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::value (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets value of node. Interpretation of value depends on type of node. Note that value will not be zero-\/terminated if rapidxml\+::parse\+\_\+no\+\_\+string\+\_\+terminators option was selected during parse. ~\newline
+~\newline
+ Use \doxylink{classcereal_1_1rapidxml_1_1xml__base_a230c437a1d0cc8113bdd84a952adbd07}{value\+\_\+size()} function to determine length of the value. \begin{DoxyReturn}{Returns}
+\doxylink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value} of node, or empty string if node has no value. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a60ba6244d0c1a98062377fdc5055c5b2}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!value@{value}}
+\index{value@{value}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{value()}{value()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_a60ba6244d0c1a98062377fdc5055c5b2} 
+template$<$class Ch = char$>$ \\
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::value (\begin{DoxyParamCaption}\item[{const Ch \texorpdfstring{$\ast$}{*}}]{value\+\_\+}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets value of node to a zero-\/terminated string. See also ownership\+\_\+of\+\_\+strings and xml\+\_\+node\+::value(const Ch \texorpdfstring{$\ast$}{*}, std\+::size\+\_\+t). 
+\begin{DoxyParams}{Parameters}
+{\em value\+\_\+} & Vame of node to set. Must be zero terminated. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_ab6444a2cbf076952bb1b378b8d06e628}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!value@{value}}
+\index{value@{value}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{value()}{value()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_ab6444a2cbf076952bb1b378b8d06e628} 
+template$<$class Ch = char$>$ \\
+void \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::value (\begin{DoxyParamCaption}\item[{const Ch \texorpdfstring{$\ast$}{*}}]{value\+\_\+}{, }\item[{std\+::size\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Sets value of node to a non zero-\/terminated string. See ownership\+\_\+of\+\_\+strings. ~\newline
+~\newline
+ Note that node does not own its name or value, it only stores a pointer to it. It will not delete or otherwise free the pointer on destruction. It is reponsibility of the user to properly manage lifetime of the string. The easiest way to achieve it is to use \doxylink{classcereal_1_1rapidxml_1_1memory__pool}{memory\+\_\+pool} of the document to allocate the string -\/ on destruction of the document the string will be automatically freed. ~\newline
+~\newline
+ Size of value must be specified separately, because it does not have to be zero terminated. Use \doxylink{classcereal_1_1rapidxml_1_1xml__base_a60ba6244d0c1a98062377fdc5055c5b2}{value(const Ch \texorpdfstring{$\ast$}{*})} function to have the length automatically calculated (string must be zero terminated). ~\newline
+~\newline
+ If an element has a child node of type node\+\_\+data, it will take precedence over element value when printing. If you want to manipulate data of elements using values, use parser flag rapidxml\+::parse\+\_\+no\+\_\+data\+\_\+nodes to prevent creation of data nodes by the parser. 
+\begin{DoxyParams}{Parameters}
+{\em value\+\_\+} & value of node to set. Does not have to be zero terminated. \\
+\hline
+{\em size} & Size of value, in characters. This does not include zero terminator, if one is present. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcereal_1_1rapidxml_1_1xml__base_a230c437a1d0cc8113bdd84a952adbd07}\index{cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}!value\_size@{value\_size}}
+\index{value\_size@{value\_size}!cereal::rapidxml::xml\_base$<$ Ch $>$@{cereal::rapidxml::xml\_base$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{value\_size()}{value\_size()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1xml__base_a230c437a1d0cc8113bdd84a952adbd07} 
+template$<$class Ch = char$>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__base}{cereal\+::rapidxml\+::xml\+\_\+base}}$<$ Ch $>$\+::value\+\_\+size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets size of node value, not including terminator character. This function works correctly irrespective of whether value is or is not zero terminated. \begin{DoxyReturn}{Returns}
+Size of node value, in characters. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidxml/rapidxml.\+hpp\end{DoxyCompactItemize}

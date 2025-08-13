@@ -1,0 +1,115 @@
+\doxysection{lib/cereal/types/memory.hpp File Reference}
+\hypertarget{memory_8hpp}{}\label{memory_8hpp}\index{lib/cereal/types/memory.hpp@{lib/cereal/types/memory.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}memory\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include "{}cereal/types/polymorphic.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{cereal\+::memory\+\_\+detail\+::\+Ptr\+Wrapper$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em A wrapper class to notify cereal that it is ok to serialize the contained pointer. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}{cereal\+::memory\+\_\+detail\+::\+Load\+And\+Construct\+Load\+Wrapper$<$ Archive, T $>$}}
+\begin{DoxyCompactList}\small\item\em A struct that acts as a wrapper around calling load\+\_\+andor\+\_\+construct. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper}{cereal\+::memory\+\_\+detail\+::\+Enable\+Shared\+State\+Helper$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{memory_8hpp_a89420022991908207a506e30a8f44b6f}\label{memory_8hpp_a89420022991908207a506e30a8f44b6f} 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{Ptr\+Wrapper}}$<$ T $>$ {\bfseries cereal\+::memory\+\_\+detail\+::make\+\_\+ptr\+\_\+wrapper} (T \&\&t)
+\begin{DoxyCompactList}\small\item\em Make a \doxylink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{Ptr\+Wrapper}. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\void \mbox{\hyperlink{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf}{cereal\+::memory\+\_\+detail\+::load\+And\+Construct\+Shared\+Ptr}} (Archive \&ar, T \texorpdfstring{$\ast$}{*}ptr, std\+::true\+\_\+type)
+\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\void \mbox{\hyperlink{memory_8hpp_ababa11f183f902ff171f6c240bb70725}{cereal\+::memory\+\_\+detail\+::load\+And\+Construct\+Shared\+Ptr}} (Archive \&ar, T \texorpdfstring{$\ast$}{*}ptr, std\+::false\+\_\+type)
+\item 
+\Hypertarget{namespacecereal_a8f598f6d4fbee3b354eb83e597cb0ebe}\label{namespacecereal_a8f598f6d4fbee3b354eb83e597cb0ebe} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::shared\+\_\+ptr for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ada32ad49436ba6eadf59fe88c9ffc6d8}\label{namespacecereal_ada32ad49436ba6eadf59fe88c9ffc6d8} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::shared\+\_\+ptr$<$ T $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::shared\+\_\+ptr, case when no user load and construct for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a6ac5820fd45ce7b235c753be49a2913c}\label{namespacecereal_a6ac5820fd45ce7b235c753be49a2913c} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::weak\+\_\+ptr$<$ T $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::weak\+\_\+ptr for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad4a9fc2e4a59628aca00743710cf238f}\label{namespacecereal_ad4a9fc2e4a59628aca00743710cf238f} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::weak\+\_\+ptr$<$ T $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::weak\+\_\+ptr for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ac84435d57b8944c536bb585c6516df09}\label{namespacecereal_ac84435d57b8944c536bb585c6516df09} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ const \&ptr)
+\begin{DoxyCompactList}\small\item\em Saving std\+::unique\+\_\+ptr for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a97838af98c4fb9f5d42d928a1a4d64b5}\label{namespacecereal_a97838af98c4fb9f5d42d928a1a4d64b5} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$!std\+::is\+\_\+polymorphic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unique\+\_\+ptr$<$ T, D $>$ \&ptr)
+\begin{DoxyCompactList}\small\item\em Loading std\+::unique\+\_\+ptr, case when user provides load\+\_\+and\+\_\+construct for non polymorphic types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ac2dd1ac3ad73ad7203acdc21d7ea995a}\label{namespacecereal_ac2dd1ac3ad73ad7203acdc21d7ea995a} 
+{\footnotesize template$<$class Archive, class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::shared\+\_\+ptr$<$ T $>$ const \& $>$ const \&wrapper)
+\begin{DoxyCompactList}\small\item\em Saving std\+::shared\+\_\+ptr (wrapper implementation) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a2b046d36c3921f4bf7230ace29d26cd1}\label{namespacecereal_a2b046d36c3921f4bf7230ace29d26cd1} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::shared\+\_\+ptr$<$ T $>$ \& $>$ \&wrapper)
+\begin{DoxyCompactList}\small\item\em Loading std\+::shared\+\_\+ptr, case when user load and construct (wrapper implementation) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aca6796fd8ee95e0bd42b4cafe09c46c7}\label{namespacecereal_aca6796fd8ee95e0bd42b4cafe09c46c7} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$!\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::shared\+\_\+ptr$<$ T $>$ \& $>$ \&wrapper)
+\begin{DoxyCompactList}\small\item\em Loading std\+::shared\+\_\+ptr, case when no user load and construct (wrapper implementation) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a7a5576cf5fa2dc553adca652003d232d}\label{namespacecereal_a7a5576cf5fa2dc553adca652003d232d} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::unique\+\_\+ptr$<$ T, D $>$ const \& $>$ const \&wrapper)
+\begin{DoxyCompactList}\small\item\em Saving std\+::unique\+\_\+ptr (wrapper implementation) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ae566380527639f7e35ec9144dff7350e}\label{namespacecereal_ae566380527639f7e35ec9144dff7350e} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::unique\+\_\+ptr$<$ T, D $>$ \& $>$ \&wrapper)
+\begin{DoxyCompactList}\small\item\em Loading std\+::unique\+\_\+ptr, case when user provides load\+\_\+and\+\_\+construct (wrapper implementation) \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a9e6b7247746d82f9ae810047390e8e61}\label{namespacecereal_a9e6b7247746d82f9ae810047390e8e61} 
+{\footnotesize template$<$class Archive, class T, class D$>$ }\\std\+::enable\+\_\+if$<$!\mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{traits\+::has\+\_\+load\+\_\+and\+\_\+construct}}$<$ T, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\+\_\+detail\+::\+Ptr\+Wrapper}}$<$ std\+::unique\+\_\+ptr$<$ T, D $>$ \& $>$ \&wrapper)
+\begin{DoxyCompactList}\small\item\em Loading std\+::unique\+\_\+ptr, case when no load\+\_\+and\+\_\+construct (wrapper implementation) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}memory\texorpdfstring{$>$}{>} 
+
+
+
+\label{doc-func-members}
+\Hypertarget{memory_8hpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{memory_8hpp_ababa11f183f902ff171f6c240bb70725}\index{memory.hpp@{memory.hpp}!loadAndConstructSharedPtr@{loadAndConstructSharedPtr}}
+\index{loadAndConstructSharedPtr@{loadAndConstructSharedPtr}!memory.hpp@{memory.hpp}}
+\doxysubsubsection{\texorpdfstring{loadAndConstructSharedPtr()}{loadAndConstructSharedPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{memory_8hpp_ababa11f183f902ff171f6c240bb70725} 
+template$<$class Archive, class T$>$ \\
+void cereal\+::memory\+\_\+detail\+::load\+And\+Construct\+Shared\+Ptr (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{std\+::false\+\_\+type}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Performs loading and construction for a shared pointer that is NOT derived from std\+::enable\+\_\+shared\+\_\+from\+\_\+this
+
+This is the typical case, where we simply pass the load wrapper to the archive.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ar} & The archive \\
+\hline
+{\em ptr} & Raw pointer held by the shared\+\_\+ptr \\
+\hline
+\end{DoxyParams}
+\Hypertarget{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf}\index{memory.hpp@{memory.hpp}!loadAndConstructSharedPtr@{loadAndConstructSharedPtr}}
+\index{loadAndConstructSharedPtr@{loadAndConstructSharedPtr}!memory.hpp@{memory.hpp}}
+\doxysubsubsection{\texorpdfstring{loadAndConstructSharedPtr()}{loadAndConstructSharedPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf} 
+template$<$class Archive, class T$>$ \\
+void cereal\+::memory\+\_\+detail\+::load\+And\+Construct\+Shared\+Ptr (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{T \texorpdfstring{$\ast$}{*}}]{ptr}{, }\item[{std\+::true\+\_\+type}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Performs loading and construction for a shared pointer that is derived from std\+::enable\+\_\+shared\+\_\+from\+\_\+this
+
+
+\begin{DoxyParams}{Parameters}
+{\em ar} & The archive \\
+\hline
+{\em ptr} & Raw pointer held by the shared\+\_\+ptr \\
+\hline
+\end{DoxyParams}

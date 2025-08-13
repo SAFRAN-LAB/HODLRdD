@@ -1,0 +1,292 @@
+\doxysection{helpers.\+hpp}
+\hypertarget{helpers_8hpp_source}{}\label{helpers_8hpp_source}\index{lib/cereal/details/helpers.hpp@{lib/cereal/details/helpers.hpp}}
+\mbox{\hyperlink{helpers_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_DETAILS\_HELPERS\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_DETAILS\_HELPERS\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ <unordered\_map>}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <stdexcept>}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{macros_8hpp}{cereal/macros.hpp}}"{}}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{static__object_8hpp}{cereal/details/static\_object.hpp}}"{}}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00044\ \{}
+\DoxyCodeLine{00045\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{struct\ }Exception\ :\ \textcolor{keyword}{public}\ std::runtime\_error}
+\DoxyCodeLine{00049\ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{explicit}\ Exception(\ \textcolor{keyword}{const}\ std::string\ \&\ what\_\ )\ :\ std::runtime\_error(what\_)\ \{\}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{explicit}\ Exception(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ what\_\ )\ :\ std::runtime\_error(what\_)\ \{\}}
+\DoxyCodeLine{00052\ \ \ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00061\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ =\ \mbox{\hyperlink{macros_8hpp_a2ad098b163a5f4829eb00fd7fb0b408d}{CEREAL\_SIZE\_TYPE}};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \textcolor{comment}{//\ forward\ decls}}
+\DoxyCodeLine{00064\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{BinaryOutputArchive}};}
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{BinaryInputArchive}};}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00068\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00069\ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_name_value_pair_core}{NameValuePairCore}}\ \{\};\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_deferred_data_core}{DeferredDataCore}}\ \{\};\ }
+\DoxyCodeLine{00072\ \ \ \}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00138\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00139\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}{NameValuePair}}\ :\ \mbox{\hyperlink{structcereal_1_1detail_1_1_name_value_pair_core}{detail::NameValuePairCore}}}
+\DoxyCodeLine{00140\ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \textcolor{comment}{//\ If\ we\ get\ passed\ an\ array,\ keep\ the\ type\ as\ is,\ otherwise\ store}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \textcolor{comment}{//\ a\ reference\ if\ we\ were\ passed\ an\ l\ value\ reference,\ else\ copy\ the\ value}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \textcolor{keyword}{using\ }Type\ =\ \textcolor{keyword}{typename}\ std::conditional<std::is\_array<typename\ std::remove\_reference<T>::type>::value,}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::remove\_cv<T>::type,}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::conditional<std::is\_lvalue\_reference<T>::value,}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T,}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<T>::type>::type>::type;}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \textcolor{comment}{//\ prevent\ nested\ nvps}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_base\_of<detail::NameValuePairCore,\ T>::value,}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Cannot\ pair\ a\ name\ to\ a\ NameValuePair"{}}\ );}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}{NameValuePair}}\ \&\ operator=(\ \mbox{\hyperlink{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}{NameValuePair}}\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_ada17c8f6c9895a9d2d7fa7859e48537c}{NameValuePair}}(\ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ n,\ T\ \&\&\ v\ )\ :\ name(n),\ value(std::forward<T>(v))\ \{\}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ \textcolor{keyword}{const}\ *\ name;}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}\ value;}
+\DoxyCodeLine{00169\ \ \ \};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00174\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00175\ \ \ \textcolor{keyword}{typename}}
+\DoxyCodeLine{00176\ \ \ std::enable\_if<std::is\_same<Archive,\ ::cereal::BinaryInputArchive>::value\ ||}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_same<Archive,\ ::cereal::BinaryOutputArchive>::value,}
+\DoxyCodeLine{00178\ \ \ T\ \&\&\ >::type}
+\DoxyCodeLine{00179\ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a7b7b9b5e674a363fb8fd9baca2ca73ce}{make\_nvp}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *,\ T\ \&\&\ value\ )}
+\DoxyCodeLine{00180\ \ \ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordflow}{return}\ std::forward<T>(value);}
+\DoxyCodeLine{00182\ \ \ \}}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00187\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00188\ \ \ \textcolor{keyword}{typename}}
+\DoxyCodeLine{00189\ \ \ std::enable\_if<!std::is\_same<Archive,\ ::cereal::BinaryInputArchive>::value\ \&\&}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<Archive,\ ::cereal::BinaryOutputArchive>::value,}
+\DoxyCodeLine{00191\ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ >::type}
+\DoxyCodeLine{00192\ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a4f76432ed952dbfdc7e7973fb0d16ac1}{make\_nvp}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ name,\ T\ \&\&\ value)}
+\DoxyCodeLine{00193\ \ \ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{return}\ \{name,\ std::forward<T>(value)\};}
+\DoxyCodeLine{00195\ \ \ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\ \ \#define\ CEREAL\_NVP\_(name,\ value)\ ::cereal::make\_nvp<Archive>(name,\ value)}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00210\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00211\ \ \ \textcolor{keyword}{struct\ }BinaryData}
+\DoxyCodeLine{00212\ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9}{PT}}\ =\ \textcolor{keyword}{typename}\ std::conditional<std::is\_const<typename\ std::remove\_pointer<typename\ std::remove\_reference<T>::type>::type>::value,}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *>::type;}
+\DoxyCodeLine{00218\ }
+\DoxyCodeLine{00219\ \ \ \ \ BinaryData(\ T\ \&\&\ d,\ uint64\_t\ s\ )\ :\ \mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}}(std::forward<T>(d)),\ \mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}}(s)\ \{\}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9}{PT}}\ \mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00222\ \ \ \ \ uint64\_t\ \mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}};\ }
+\DoxyCodeLine{00223\ \ \ \};}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00231\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00232\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}{DeferredData}}\ :\ \mbox{\hyperlink{structcereal_1_1detail_1_1_deferred_data_core}{detail::DeferredDataCore}}}
+\DoxyCodeLine{00233\ \ \ \{}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \textcolor{comment}{//\ If\ we\ get\ passed\ an\ array,\ keep\ the\ type\ as\ is,\ otherwise\ store}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \textcolor{comment}{//\ a\ reference\ if\ we\ were\ passed\ an\ l\ value\ reference,\ else\ copy\ the\ value}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \textcolor{keyword}{using\ }Type\ =\ \textcolor{keyword}{typename}\ std::conditional<std::is\_array<typename\ std::remove\_reference<T>::type>::value,}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::remove\_cv<T>::type,}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::conditional<std::is\_lvalue\_reference<T>::value,}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T,}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<T>::type>::type>::type;}
+\DoxyCodeLine{00242\ }
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \textcolor{comment}{//\ prevent\ nested\ nvps}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_base\_of<detail::DeferredDataCore,\ T>::value,}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Cannot\ defer\ DeferredData"{}}\ );}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}{DeferredData}}\ \&\ operator=(\ \mbox{\hyperlink{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}{DeferredData}}\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}{DeferredData}}(\ T\ \&\&\ v\ )\ :\ value(std::forward<T>(v))\ \{\}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}\ value;}
+\DoxyCodeLine{00260\ \ \ \};}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00263\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00264\ \ \ \{}
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ base\ classes\ for\ type\ checking}}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{comment}{/*\ The\ rtti\ virtual\ function\ only\ exists\ to\ enable\ an\ archive\ to}}
+\DoxyCodeLine{00267\ \textcolor{comment}{\ \ \ \ \ \ \ be\ used\ in\ a\ polymorphic\ fashion,\ if\ necessary.\ \ See\ the}}
+\DoxyCodeLine{00268\ \textcolor{comment}{\ \ \ \ \ \ \ archive\ adapters\ for\ an\ example\ of\ this\ */}}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keyword}{class\ }OutputArchiveBase}
+\DoxyCodeLine{00270\ \ \ \ \ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ OutputArchiveBase()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ OutputArchiveBase(\ OutputArchiveBase\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ OutputArchiveBase\ \&\ operator=(\ OutputArchiveBase\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~OutputArchiveBase()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ rtti()\ \{\}}
+\DoxyCodeLine{00279\ \ \ \ \ \};}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keyword}{class\ }InputArchiveBase}
+\DoxyCodeLine{00282\ \ \ \ \ \{}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ InputArchiveBase()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ InputArchiveBase(\ InputArchiveBase\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ InputArchiveBase\ \&\ operator=(\ InputArchiveBase\ \&\&\ )\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \string~InputArchiveBase()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ rtti()\ \{\}}
+\DoxyCodeLine{00291\ \ \ \ \ \};}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{comment}{//\ forward\ decls\ for\ polymorphic\ support}}
+\DoxyCodeLine{00294\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support}{polymorphic\_serialization\_support}};}
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\_tag}};}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \textcolor{comment}{//\ used\ during\ saving\ pointers}}
+\DoxyCodeLine{00298\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ uint32\_t\ msb\_32bit\ \ =\ 0x80000000;}
+\DoxyCodeLine{00299\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ int32\_t\ msb2\_32bit\ =\ 0x40000000;}
+\DoxyCodeLine{00300\ \ \ \}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00311\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00312\ \ \ \textcolor{keyword}{class\ }SizeTag}
+\DoxyCodeLine{00313\ \ \ \{}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \textcolor{comment}{//\ Store\ a\ reference\ if\ passed\ an\ lvalue\ reference,\ otherwise}}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \textcolor{comment}{//\ make\ a\ copy\ of\ the\ data}}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \textcolor{keyword}{using\ }Type\ =\ \textcolor{keyword}{typename}\ std::conditional<std::is\_lvalue\_reference<T>::value,}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T,}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<T>::type>::type;}
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00321\ \ \ \ \ \ \ SizeTag\ \&\ operator=(\ SizeTag\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ SizeTag(\ T\ \&\&\ sz\ )\ :\ size(std::forward<T>(sz))\ \{\}}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ \ \ Type\ size;}
+\DoxyCodeLine{00327\ \ \ \};}
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00350\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Key,\ \textcolor{keyword}{class}\ Value>}
+\DoxyCodeLine{00351\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1_map_item_a4f348c6c831ee140b28c2fda7f1075cb}{MapItem}}}
+\DoxyCodeLine{00352\ \ \ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{keyword}{using\ }KeyType\ =\ \textcolor{keyword}{typename}\ std::conditional<}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ std::is\_lvalue\_reference<Key>::value,}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ Key,}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<Key>::type>::type;}
+\DoxyCodeLine{00357\ }
+\DoxyCodeLine{00358\ \ \ \ \ \textcolor{keyword}{using\ }ValueType\ =\ \textcolor{keyword}{typename}\ std::conditional<}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ std::is\_lvalue\_reference<Value>::value,}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}},}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<Value>::type>::type;}
+\DoxyCodeLine{00362\ }
+\DoxyCodeLine{00364\ }
+\DoxyCodeLine{00365\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_map_item_a4f348c6c831ee140b28c2fda7f1075cb}{MapItem}}(\ Key\ \&\&\ key\_,\ \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}}\ \&\&\ value\_\ )\ :\ key(std::forward<Key>(key\_)),\ value(std::forward<\mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}}>(value\_))\ \{\}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_map_item}{MapItem}}\ \&\ operator=(\ \mbox{\hyperlink{structcereal_1_1_map_item}{MapItem}}\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00369\ \ \ \ \ KeyType\ key;}
+\DoxyCodeLine{00370\ \ \ \ \ ValueType\ value;}
+\DoxyCodeLine{00371\ }
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1_map_item_aabc18ae871506e4965cd785ad314e1ec}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(Archive\ \&\ archive)}
+\DoxyCodeLine{00375\ \ \ \ \ \{}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ archive(\ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{make\_nvp<Archive>}}(\textcolor{stringliteral}{"{}key"{}},\ \ \ key),}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{make\_nvp<Archive>}}(\textcolor{stringliteral}{"{}value"{}},\ value)\ );}
+\DoxyCodeLine{00378\ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \};}
+\DoxyCodeLine{00380\ }
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00384\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ KeyType,\ \textcolor{keyword}{class}\ ValueType>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00385\ \ \ \mbox{\hyperlink{structcereal_1_1_map_item}{MapItem<KeyType,\ ValueType>}}\ \mbox{\hyperlink{namespacecereal_a72323b9f6443491b5fe35133c22b7060}{make\_map\_item}}(KeyType\ \&\&\ key,\ ValueType\ \&\&\ value)}
+\DoxyCodeLine{00386\ \ \ \{}
+\DoxyCodeLine{00387\ \ \ \ \ \textcolor{keywordflow}{return}\ \{std::forward<KeyType>(key),\ std::forward<ValueType>(value)\};}
+\DoxyCodeLine{00388\ \ \ \}}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00391\ \ \ \{}
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keyword}{namespace}\{\ \textcolor{keyword}{struct\ }version\_binding\_tag\ \{\};\ \}}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ BindingTag\ =\ version\_binding\_tag>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_version}{Version}}}
+\DoxyCodeLine{00402\ \ \ \ \ \{}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ =\ 0;}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \textcolor{comment}{//\ we\ don't\ need\ to\ explicitly\ register\ these\ types\ since\ they}}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \textcolor{comment}{//\ always\ get\ a\ version\ number\ of\ 0}}
+\DoxyCodeLine{00406\ \ \ \ \ \};}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00409\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_versions}{Versions}}}
+\DoxyCodeLine{00410\ \ \ \ \ \{}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ std::unordered\_map<std::size\_t,\ std::uint32\_t>\ mapping;}
+\DoxyCodeLine{00412\ }
+\DoxyCodeLine{00413\ \ \ \ \ \ \ std::uint32\_t\ find(\ std::size\_t\ hash,\ std::uint32\_t\ version\ )}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ result\ =\ mapping.emplace(\ hash,\ version\ );}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result.first-\/>second;}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00418\ \ \ \ \ \};\ \textcolor{comment}{//\ struct\ Versions}}
+\DoxyCodeLine{00419\ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00420\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_DETAILS\_HELPERS\_HPP\_}}
+
+\end{DoxyCode}

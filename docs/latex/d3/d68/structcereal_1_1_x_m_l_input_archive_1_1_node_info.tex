@@ -1,0 +1,82 @@
+\doxysection{cereal\+::XMLInput\+Archive\+::Node\+Info Struct Reference}
+\hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info}{}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info}\index{cereal::XMLInputArchive::NodeInfo@{cereal::XMLInputArchive::NodeInfo}}
+
+
+A struct that contains metadata about a node.  
+
+
+
+
+{\ttfamily \#include $<$xml.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_ab9ed7bc9b1ba403c48cb61fa31972cc3}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_ab9ed7bc9b1ba403c48cb61fa31972cc3} 
+{\bfseries Node\+Info} (\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}}$<$$>$ \texorpdfstring{$\ast$}{*}n=nullptr)
+\item 
+void \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a93594e014ef1248bdb79753bf53e7018}{advance}} ()
+\begin{DoxyCompactList}\small\item\em Advances to the next sibling node of the child. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a8d3cf82bbbc279a16ac4407ac4759752}{search}} (const char \texorpdfstring{$\ast$}{*}search\+Name)
+\begin{DoxyCompactList}\small\item\em Searches for a child with the given name in this node. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a7a30215936e17ae4b5b47d21b661edb4}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a7a30215936e17ae4b5b47d21b661edb4} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries get\+Child\+Name} () const
+\begin{DoxyCompactList}\small\item\em Returns the actual name of the next child node, if it exists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9} 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}} \texorpdfstring{$\ast$}{*} {\bfseries node}
+\begin{DoxyCompactList}\small\item\em A pointer to this node. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd} 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}} \texorpdfstring{$\ast$}{*} {\bfseries child}
+\begin{DoxyCompactList}\small\item\em A pointer to its current child. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12} 
+size\+\_\+t {\bfseries size}
+\begin{DoxyCompactList}\small\item\em The remaining number of children for this node. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a68a6f48ae6af46e113b7e4618a1992ee}\label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a68a6f48ae6af46e113b7e4618a1992ee} 
+const char \texorpdfstring{$\ast$}{*} {\bfseries name}
+\begin{DoxyCompactList}\small\item\em The NVP name for next child node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A struct that contains metadata about a node. 
+
+Keeps track of some top level node, its number of remaining children, and the current active child node 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a93594e014ef1248bdb79753bf53e7018}\index{cereal::XMLInputArchive::NodeInfo@{cereal::XMLInputArchive::NodeInfo}!advance@{advance}}
+\index{advance@{advance}!cereal::XMLInputArchive::NodeInfo@{cereal::XMLInputArchive::NodeInfo}}
+\doxysubsubsection{\texorpdfstring{advance()}{advance()}}
+{\footnotesize\ttfamily \label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a93594e014ef1248bdb79753bf53e7018} 
+void cereal\+::\+XMLInput\+Archive\+::\+Node\+Info\+::advance (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Advances to the next sibling node of the child. 
+
+If this is the last sibling child will be null after calling \Hypertarget{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a8d3cf82bbbc279a16ac4407ac4759752}\index{cereal::XMLInputArchive::NodeInfo@{cereal::XMLInputArchive::NodeInfo}!search@{search}}
+\index{search@{search}!cereal::XMLInputArchive::NodeInfo@{cereal::XMLInputArchive::NodeInfo}}
+\doxysubsubsection{\texorpdfstring{search()}{search()}}
+{\footnotesize\ttfamily \label{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a8d3cf82bbbc279a16ac4407ac4759752} 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml\+::xml\+\_\+node}} \texorpdfstring{$\ast$}{*} cereal\+::\+XMLInput\+Archive\+::\+Node\+Info\+::search (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{search\+Name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Searches for a child with the given name in this node. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em search\+Name} & The name to search for (must be null terminated) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The node if found, nullptr otherwise 
+\end{DoxyReturn}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{xml_8hpp}{xml.\+hpp}}\end{DoxyCompactItemize}

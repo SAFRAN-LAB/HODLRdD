@@ -1,0 +1,27 @@
+\doxysection{cereal\+::traits\+::detail\+::No\+Convert\+Base Struct Reference}
+\hypertarget{structcereal_1_1traits_1_1detail_1_1_no_convert_base}{}\label{structcereal_1_1traits_1_1detail_1_1_no_convert_base}\index{cereal::traits::detail::NoConvertBase@{cereal::traits::detail::NoConvertBase}}
+
+
+Used to help strip away conversion wrappers.  
+
+
+
+
+{\ttfamily \#include $<$traits.\+hpp$>$}
+
+Inheritance diagram for cereal\+::traits\+::detail\+::No\+Convert\+Base\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.818182cm]{d9/d65/structcereal_1_1traits_1_1detail_1_1_no_convert_base}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Detailed Description}
+Used to help strip away conversion wrappers. 
+
+If someone writes a non-\/member load/save minimal function that accepts its parameter as some generic template type and needs to perform trait checks on that type, our No\+Convert wrappers will interfere with this. Using the struct strip\+\_\+minmal, users can strip away our wrappers to get to the underlying type, allowing traits to work properly 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{traits_8hpp}{traits.\+hpp}}\end{DoxyCompactItemize}

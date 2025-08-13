@@ -1,0 +1,30 @@
+\doxysection{lib/cereal/types/base\+\_\+class.hpp File Reference}
+\hypertarget{base__class_8hpp}{}\label{base__class_8hpp}\index{lib/cereal/types/base\_class.hpp@{lib/cereal/types/base\_class.hpp}}
+
+
+Support for base classes (virtual and non-\/virtual)  
+
+
+{\ttfamily \#include "{}cereal/details/traits.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/polymorphic\+\_\+impl\+\_\+fwd.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1base__class__detail_1_1_register_polymorphic_base_class}{cereal\+::base\+\_\+class\+\_\+detail\+::\+Register\+Polymorphic\+Base\+Class$<$ Base, Derived, Is\+Polymorphic $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1base__class__detail_1_1_register_polymorphic_base_class_3_01_base_00_01_derived_00_01true_01_4}{cereal\+::base\+\_\+class\+\_\+detail\+::\+Register\+Polymorphic\+Base\+Class$<$ Base, Derived, true $>$}}
+\begin{DoxyCompactList}\small\item\em Polymorphic version. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1base__class}{cereal\+::base\+\_\+class$<$ Base $>$}}
+\begin{DoxyCompactList}\small\item\em Casts a derived class to its non-\/virtual base class in a way that safely supports abstract classes. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1virtual__base__class}{cereal\+::virtual\+\_\+base\+\_\+class$<$ Base $>$}}
+\begin{DoxyCompactList}\small\item\em Casts a derived class to its virtual base class in a way that allows cereal to track inheritance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for base classes (virtual and non-\/virtual) 
+

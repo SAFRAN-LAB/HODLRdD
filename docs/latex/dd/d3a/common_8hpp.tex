@@ -1,0 +1,43 @@
+\doxysection{lib/cereal/types/common.hpp File Reference}
+\hypertarget{common_8hpp}{}\label{common_8hpp}\index{lib/cereal/types/common.hpp@{lib/cereal/types/common.hpp}}
+
+
+Support common types -\/ always included automatically.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1common__detail_1_1is__enum}{cereal\+::common\+\_\+detail\+::is\+\_\+enum$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Checks if a type is an enum. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{common_8hpp_a2abf02f44e6a5c2cd686b84791955fae}\label{common_8hpp_a2abf02f44e6a5c2cd686b84791955fae} 
+{\footnotesize template$<$class Archive, class T$>$ }\\void {\bfseries cereal\+::common\+\_\+detail\+::serialize\+Array} (Archive \&ar, T \&array, std\+::true\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Serialization for arrays if \doxylink{structcereal_1_1_binary_data}{Binary\+Data} is supported and we are arithmetic. \end{DoxyCompactList}\item 
+\Hypertarget{common_8hpp_a52dab5e759681d7252858cdadaf2c1e3}\label{common_8hpp_a52dab5e759681d7252858cdadaf2c1e3} 
+{\footnotesize template$<$class Archive, class T$>$ }\\void {\bfseries cereal\+::common\+\_\+detail\+::serialize\+Array} (Archive \&ar, T \&array, std\+::false\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Serialization for arrays if \doxylink{structcereal_1_1_binary_data}{Binary\+Data} is not supported or we are not arithmetic. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aa282de424af3d15ebfd094a216029149}\label{namespacecereal_aa282de424af3d15ebfd094a216029149} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{classcereal_1_1common__detail_1_1is__enum}{common\+\_\+detail\+::is\+\_\+enum}}$<$ T $>$\+::value, typenamecommon\+\_\+detail\+::is\+\_\+enum$<$ T $>$\+::base\+\_\+type $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive const \&, T const \&t)
+\begin{DoxyCompactList}\small\item\em Saving for enum types. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a0a4c34802b85e6ef9331374de8be9d22}\label{namespacecereal_a0a4c34802b85e6ef9331374de8be9d22} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{classcereal_1_1common__detail_1_1is__enum}{common\+\_\+detail\+::is\+\_\+enum}}$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+MINIMAL\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive const \&, T \&\&t, typename \mbox{\hyperlink{classcereal_1_1common__detail_1_1is__enum}{common\+\_\+detail\+::is\+\_\+enum}}$<$ T $>$\+::base\+\_\+type const \&value)
+\begin{DoxyCompactList}\small\item\em Loading for enum types. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\void \mbox{\hyperlink{namespacecereal_a676a85ac8cfcd512a743f930a10b6770}{cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}} (Archive \&, T \texorpdfstring{$\ast$}{*}\&)
+\begin{DoxyCompactList}\small\item\em Serialization for raw pointers. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a03728f69af179b3cb5e2ec9131b8ccc3}\label{namespacecereal_a03728f69af179b3cb5e2ec9131b8ccc3} 
+{\footnotesize template$<$class Archive, class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+array$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, T \&array)
+\begin{DoxyCompactList}\small\item\em Serialization for C style arrays. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support common types -\/ always included automatically. 
+

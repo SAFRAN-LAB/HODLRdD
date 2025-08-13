@@ -1,0 +1,373 @@
+\doxysection{Pretty\+Writer\texorpdfstring{$<$}{<} Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_pretty_writer}{}\label{class_pretty_writer}\index{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}}
+
+
+\doxylink{class_writer}{Writer} with indentation and spacing.  
+
+
+
+
+{\ttfamily \#include $<$prettywriter.\+h$>$}
+
+Inheritance diagram for Pretty\+Writer\texorpdfstring{$<$}{<} Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d4/d03/class_pretty_writer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pretty_writer_a6eecc5c896dcdaffca739dcd39d13a17}\label{class_pretty_writer_a6eecc5c896dcdaffca739dcd39d13a17} 
+typedef \mbox{\hyperlink{class_writer}{Writer}}$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$ {\bfseries Base}
+\item 
+\Hypertarget{class_pretty_writer_ae35c89bda4c5d59d3ff6efcf2fea45a3}\label{class_pretty_writer_ae35c89bda4c5d59d3ff6efcf2fea45a3} 
+typedef Base\+::\+Ch {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{class_writer}{Writer$<$ Output\+Stream, UTF8$<$$>$, UTF8$<$$>$, Crt\+Allocator, k\+Write\+Default\+Flags $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{struct_u_t_f8}{UTF8}}$<$$>$\+::\+Ch {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_pretty_writer_a928ac2a5235b8877048ebdd5f35a556f}{Pretty\+Writer}} (Output\+Stream \&os, Stack\+Allocator \texorpdfstring{$\ast$}{*}allocator=0, size\+\_\+t level\+Depth=Base\+::k\+Default\+Level\+Depth)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+\Hypertarget{class_pretty_writer_a4a9077e0300c6b0e1c830a58c1e738d2}\label{class_pretty_writer_a4a9077e0300c6b0e1c830a58c1e738d2} 
+{\bfseries Pretty\+Writer} (Stack\+Allocator \texorpdfstring{$\ast$}{*}allocator=0, size\+\_\+t level\+Depth=Base\+::k\+Default\+Level\+Depth)
+\item 
+\mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}} \& \mbox{\hyperlink{class_pretty_writer_abbdc83ce02cf4a811a7355aa3879b45a}{Set\+Indent}} (Ch indent\+Char, unsigned indent\+Char\+Count)
+\begin{DoxyCompactList}\small\item\em Set custom indentation. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}} \& \mbox{\hyperlink{class_pretty_writer_aade3381a128071f1da060f5f3075de10}{Set\+Format\+Options}} (Pretty\+Format\+Options options)
+\begin{DoxyCompactList}\small\item\em Set pretty writer formatting options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{Indent}\textbf{ Implementation of Handler}\par
+{\em \begin{DoxySeeAlso}{See also}
+\doxylink{classrapidjson_1_1_handler}{Handler} 
+\end{DoxySeeAlso}
+}\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pretty_writer_aa144f2d0f0c3c69248cdbe957349528c}\label{class_pretty_writer_aa144f2d0f0c3c69248cdbe957349528c} 
+bool {\bfseries Null} ()
+\item 
+\Hypertarget{class_pretty_writer_a6e765ee7ada5ed40f317c78a98f6f90b}\label{class_pretty_writer_a6e765ee7ada5ed40f317c78a98f6f90b} 
+bool {\bfseries Bool} (bool b)
+\item 
+\Hypertarget{class_pretty_writer_aa1815263e61cb7af3b6dfba480a0f481}\label{class_pretty_writer_aa1815263e61cb7af3b6dfba480a0f481} 
+bool {\bfseries Int} (int i)
+\item 
+\Hypertarget{class_pretty_writer_a8c82302877a5588eae77eb7d042c49ef}\label{class_pretty_writer_a8c82302877a5588eae77eb7d042c49ef} 
+bool {\bfseries Uint} (unsigned u)
+\item 
+\Hypertarget{class_pretty_writer_ad42b797429f4ee19efdce610f5aff976}\label{class_pretty_writer_ad42b797429f4ee19efdce610f5aff976} 
+bool {\bfseries Int64} (int64\+\_\+t i64)
+\item 
+\Hypertarget{class_pretty_writer_aba75ac1f13c2629b2a55ffbf3d8a116c}\label{class_pretty_writer_aba75ac1f13c2629b2a55ffbf3d8a116c} 
+bool {\bfseries Uint64} (uint64\+\_\+t u64)
+\item 
+\Hypertarget{class_pretty_writer_ad9d592e86b985da666665926e87db415}\label{class_pretty_writer_ad9d592e86b985da666665926e87db415} 
+bool {\bfseries Double} (double d)
+\item 
+\Hypertarget{class_pretty_writer_a3941bc21d6a261ca8a86eff330db30ef}\label{class_pretty_writer_a3941bc21d6a261ca8a86eff330db30ef} 
+bool {\bfseries Raw\+Number} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+\Hypertarget{class_pretty_writer_ae544ccfe35dd7e80ed694873062409f6}\label{class_pretty_writer_ae544ccfe35dd7e80ed694873062409f6} 
+bool {\bfseries String} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+\Hypertarget{class_pretty_writer_a27bdda225dc152b8974e44c1df7525b7}\label{class_pretty_writer_a27bdda225dc152b8974e44c1df7525b7} 
+bool {\bfseries Start\+Object} ()
+\item 
+\Hypertarget{class_pretty_writer_a20ecbe1d31a871e4da4a3899b40ad3cd}\label{class_pretty_writer_a20ecbe1d31a871e4da4a3899b40ad3cd} 
+bool {\bfseries Key} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+\Hypertarget{class_pretty_writer_a6bfdfa4193193ef763cce5c592c4d20c}\label{class_pretty_writer_a6bfdfa4193193ef763cce5c592c4d20c} 
+bool {\bfseries End\+Object} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} member\+Count=0)
+\item 
+\Hypertarget{class_pretty_writer_aec7fdf4798a3af5e31c147633f4798ed}\label{class_pretty_writer_aec7fdf4798a3af5e31c147633f4798ed} 
+bool {\bfseries Start\+Array} ()
+\item 
+\Hypertarget{class_pretty_writer_a1e9d97fc950d349f55abd864c787ff37}\label{class_pretty_writer_a1e9d97fc950d349f55abd864c787ff37} 
+bool {\bfseries End\+Array} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} member\+Count=0)
+\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_writer}{Writer$<$ Output\+Stream, UTF8$<$$>$, UTF8$<$$>$, Crt\+Allocator, k\+Write\+Default\+Flags $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}} (Output\+Stream \&os, \mbox{\hyperlink{class_crt_allocator}{Crt\+Allocator}} \texorpdfstring{$\ast$}{*}stack\+Allocator=0, size\+\_\+t level\+Depth=k\+Default\+Level\+Depth)
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_writer_a8b53e8f137f7fcf694f5500711b3f58d}{Reset}} (Output\+Stream \&os)
+\begin{DoxyCompactList}\small\item\em Reset the writer with a new stream. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_writer_a07d74d36dd3191b06e0aab678c246157}{Is\+Complete}} () const
+\begin{DoxyCompactList}\small\item\em Checks whether the output is a complete JSON. \end{DoxyCompactList}\item 
+int {\bfseries Get\+Max\+Decimal\+Places} () const
+\item 
+void \mbox{\hyperlink{class_writer_a58e3f94dc5af1432a8eace5ba427eca7}{Set\+Max\+Decimal\+Places}} (int max\+Decimal\+Places)
+\begin{DoxyCompactList}\small\item\em Sets the maximum number of decimal places for double output. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Null} ()
+\item 
+bool {\bfseries Bool} (bool b)
+\item 
+bool {\bfseries Int} (int i)
+\item 
+bool {\bfseries Uint} (unsigned u)
+\item 
+bool {\bfseries Int64} (int64\+\_\+t i64)
+\item 
+bool {\bfseries Uint64} (uint64\+\_\+t u64)
+\item 
+bool \mbox{\hyperlink{class_writer_a22a43e8a7193105deec6b808736f7a1a}{Double}} (double d)
+\begin{DoxyCompactList}\small\item\em Writes the given {\ttfamily double} value to the stream. \end{DoxyCompactList}\item 
+bool {\bfseries Raw\+Number} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+bool {\bfseries String} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+bool {\bfseries Start\+Object} ()
+\item 
+bool {\bfseries Key} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length, bool copy=false)
+\item 
+bool {\bfseries End\+Object} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} member\+Count=0)
+\item 
+bool {\bfseries Start\+Array} ()
+\item 
+bool {\bfseries End\+Array} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} element\+Count=0)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_writer_ae0d1615104e4e88040b9640e6784008a}{Raw\+Value}} (const Ch \texorpdfstring{$\ast$}{*}json, size\+\_\+t length, \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}} type)
+\begin{DoxyCompactList}\small\item\em Write a raw JSON value. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_writer_a8ca4e364c546b2eb526caa68dde011d2}{Flush}} ()
+\begin{DoxyCompactList}\small\item\em Flush the output stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Convenience extensions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_pretty_writer_aaa3f6380daa8466a5101ed18fc33bf04}\label{class_pretty_writer_aaa3f6380daa8466a5101ed18fc33bf04} 
+Ch {\bfseries indent\+Char\+\_\+}
+\item 
+\Hypertarget{class_pretty_writer_a7d00b9716ef3cd7e34ae1b744c968f13}\label{class_pretty_writer_a7d00b9716ef3cd7e34ae1b744c968f13} 
+unsigned {\bfseries indent\+Char\+Count\+\_\+}
+\item 
+\Hypertarget{class_pretty_writer_a15505ed4ea0fa85d339b3a987f1a3aaf}\label{class_pretty_writer_a15505ed4ea0fa85d339b3a987f1a3aaf} 
+Pretty\+Format\+Options {\bfseries format\+Options\+\_\+}
+\item 
+\Hypertarget{class_pretty_writer_a7e85689355a827d273f272c26b447225}\label{class_pretty_writer_a7e85689355a827d273f272c26b447225} 
+bool {\bfseries String} (const Ch \texorpdfstring{$\ast$}{*}str)
+\begin{DoxyCompactList}\small\item\em Simpler but slower overload. \end{DoxyCompactList}\item 
+\Hypertarget{class_pretty_writer_a4b2a2a6eef02c12d7a3fd77966bd4499}\label{class_pretty_writer_a4b2a2a6eef02c12d7a3fd77966bd4499} 
+bool {\bfseries Key} (const Ch \texorpdfstring{$\ast$}{*}str)
+\item 
+bool \mbox{\hyperlink{class_pretty_writer_a440890a72408a150ef46edda6becdc94}{Raw\+Value}} (const Ch \texorpdfstring{$\ast$}{*}json, size\+\_\+t length, \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}} type)
+\begin{DoxyCompactList}\small\item\em Write a raw JSON value. \end{DoxyCompactList}\item 
+\Hypertarget{class_pretty_writer_a09709ffa3b545e007631ecfd35029843}\label{class_pretty_writer_a09709ffa3b545e007631ecfd35029843} 
+void {\bfseries Pretty\+Prefix} (\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}} type)
+\item 
+\Hypertarget{class_pretty_writer_a6f244ecc94fd5b134d424033b1574b7e}\label{class_pretty_writer_a6f244ecc94fd5b134d424033b1574b7e} 
+void {\bfseries Write\+Indent} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Attributes inherited from \mbox{\hyperlink{class_writer}{Writer$<$ Output\+Stream, UTF8$<$$>$, UTF8$<$$>$, Crt\+Allocator, k\+Write\+Default\+Flags $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static const int {\bfseries k\+Default\+Max\+Decimal\+Places}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{class_writer}{Writer$<$ Output\+Stream, UTF8$<$$>$, UTF8$<$$>$, Crt\+Allocator, k\+Write\+Default\+Flags $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Int} (int i)
+\item 
+bool {\bfseries Write\+Uint} (unsigned u)
+\item 
+bool {\bfseries Write\+Int64} (int64\+\_\+t i64)
+\item 
+bool {\bfseries Write\+Uint64} (uint64\+\_\+t u)
+\item 
+bool {\bfseries Write\+Double} (double d)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Null} ()
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Bool} (bool b)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+String} (const Ch \texorpdfstring{$\ast$}{*}str, \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} length)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Scan\+Write\+Unescaped\+String} (\mbox{\hyperlink{struct_generic_string_stream}{Generic\+String\+Stream}}$<$ \mbox{\hyperlink{struct_u_t_f8}{UTF8}}$<$$>$ $>$ \&is, size\+\_\+t length)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Start\+Object} ()
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+End\+Object} ()
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Start\+Array} ()
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+End\+Array} ()
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries Write\+Raw\+Value} (const Ch \texorpdfstring{$\ast$}{*}json, size\+\_\+t length)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Prefix} (\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}} type)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries End\+Value} (bool ret)
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_writer_a3a3f60140f78dd67b5274978fd3a33ff}\label{class_writer_a3a3f60140f78dd67b5274978fd3a33ff} 
+Output\+Stream \texorpdfstring{$\ast$}{*} {\bfseries os\+\_\+}
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_writer_a9e6c13c06fc721dfd8486f17b9ff29de}\label{class_writer_a9e6c13c06fc721dfd8486f17b9ff29de} 
+\mbox{\hyperlink{classinternal_1_1_stack}{internal\+::\+Stack}}$<$ \mbox{\hyperlink{class_crt_allocator}{Crt\+Allocator}} $>$ {\bfseries level\+\_\+stack\+\_\+}
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_writer_a3d4ef664c3cdf34a286b13d27adcdd4d}\label{class_writer_a3d4ef664c3cdf34a286b13d27adcdd4d} 
+int {\bfseries max\+Decimal\+Places\+\_\+}
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_writer_affc6b9e0332b50bee0d33f8b1841c9a6}\label{class_writer_affc6b9e0332b50bee0d33f8b1841c9a6} 
+bool {\bfseries has\+Root\+\_\+}
+\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_writer_a9cb4caeb9d8971f305edff1d70e67acb}\label{class_writer_a9cb4caeb9d8971f305edff1d70e67acb} 
+static const size\+\_\+t {\bfseries k\+Default\+Level\+Depth}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Output\+Stream, typename Source\+Encoding = UTF8$<$$>$, typename Target\+Encoding = UTF8$<$$>$, typename Stack\+Allocator = Crt\+Allocator, unsigned write\+Flags = k\+Write\+Default\+Flags$>$\newline
+class Pretty\+Writer$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$}
+\doxylink{class_writer}{Writer} with indentation and spacing. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Output\+Stream} & \doxylink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} of output os. \\
+\hline
+{\em Source\+Encoding} & \doxylink{classrapidjson_1_1_encoding}{Encoding} of source string. \\
+\hline
+{\em Target\+Encoding} & \doxylink{classrapidjson_1_1_encoding}{Encoding} of output stream. \\
+\hline
+{\em Stack\+Allocator} & \doxylink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} of allocator for allocating memory of stack. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-constructors}
+\Hypertarget{class_pretty_writer_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_pretty_writer_a928ac2a5235b8877048ebdd5f35a556f}\index{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}!PrettyWriter@{PrettyWriter}}
+\index{PrettyWriter@{PrettyWriter}!PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}}
+\doxysubsubsection{\texorpdfstring{PrettyWriter()}{PrettyWriter()}}
+{\footnotesize\ttfamily \label{class_pretty_writer_a928ac2a5235b8877048ebdd5f35a556f} 
+template$<$typename Output\+Stream, typename Source\+Encoding = UTF8$<$$>$, typename Target\+Encoding = UTF8$<$$>$, typename Stack\+Allocator = Crt\+Allocator, unsigned write\+Flags = k\+Write\+Default\+Flags$>$ \\
+\mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}}$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$\mbox{\hyperlink{class_pretty_writer}{\+::\+Pretty\+Writer}} (\begin{DoxyParamCaption}\item[{Output\+Stream \&}]{os}{, }\item[{Stack\+Allocator \texorpdfstring{$\ast$}{*}}]{allocator}{ = {\ttfamily 0}, }\item[{size\+\_\+t}]{level\+Depth}{ = {\ttfamily Base\+:\+:kDefaultLevelDepth}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Constructor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em os} & Output stream. \\
+\hline
+{\em allocator} & User supplied allocator. If it is null, it will create a private one. \\
+\hline
+{\em level\+Depth} & Initial capacity of stack. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{class_pretty_writer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_pretty_writer_a440890a72408a150ef46edda6becdc94}\index{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}!RawValue@{RawValue}}
+\index{RawValue@{RawValue}!PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}}
+\doxysubsubsection{\texorpdfstring{RawValue()}{RawValue()}}
+{\footnotesize\ttfamily \label{class_pretty_writer_a440890a72408a150ef46edda6becdc94} 
+template$<$typename Output\+Stream, typename Source\+Encoding = UTF8$<$$>$, typename Target\+Encoding = UTF8$<$$>$, typename Stack\+Allocator = Crt\+Allocator, unsigned write\+Flags = k\+Write\+Default\+Flags$>$ \\
+bool \mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}}$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$\+::\+Raw\+Value (\begin{DoxyParamCaption}\item[{const Ch \texorpdfstring{$\ast$}{*}}]{json}{, }\item[{size\+\_\+t}]{length}{, }\item[{\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}}]{type}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Write a raw JSON value. 
+
+For user to write a stringified JSON as a value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em json} & A well-\/formed JSON value. It should not contain null character within \mbox{[}0, length -\/ 1\mbox{]} range. \\
+\hline
+{\em length} & Length of the json. \\
+\hline
+{\em type} & \doxylink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type} of the root of json. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+When using \doxylink{class_pretty_writer_a440890a72408a150ef46edda6becdc94}{Pretty\+Writer\+::\+Raw\+Value()}, the result json may not be indented correctly. 
+\end{DoxyNote}
+\Hypertarget{class_pretty_writer_aade3381a128071f1da060f5f3075de10}\index{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}!SetFormatOptions@{SetFormatOptions}}
+\index{SetFormatOptions@{SetFormatOptions}!PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}}
+\doxysubsubsection{\texorpdfstring{SetFormatOptions()}{SetFormatOptions()}}
+{\footnotesize\ttfamily \label{class_pretty_writer_aade3381a128071f1da060f5f3075de10} 
+template$<$typename Output\+Stream, typename Source\+Encoding = UTF8$<$$>$, typename Target\+Encoding = UTF8$<$$>$, typename Stack\+Allocator = Crt\+Allocator, unsigned write\+Flags = k\+Write\+Default\+Flags$>$ \\
+\mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}} \& \mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}}$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$\+::\+Set\+Format\+Options (\begin{DoxyParamCaption}\item[{Pretty\+Format\+Options}]{options}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set pretty writer formatting options. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em options} & Formatting options. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_pretty_writer_abbdc83ce02cf4a811a7355aa3879b45a}\index{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}!SetIndent@{SetIndent}}
+\index{SetIndent@{SetIndent}!PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$@{PrettyWriter$<$ OutputStream, SourceEncoding, TargetEncoding, StackAllocator, writeFlags $>$}}
+\doxysubsubsection{\texorpdfstring{SetIndent()}{SetIndent()}}
+{\footnotesize\ttfamily \label{class_pretty_writer_abbdc83ce02cf4a811a7355aa3879b45a} 
+template$<$typename Output\+Stream, typename Source\+Encoding = UTF8$<$$>$, typename Target\+Encoding = UTF8$<$$>$, typename Stack\+Allocator = Crt\+Allocator, unsigned write\+Flags = k\+Write\+Default\+Flags$>$ \\
+\mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}} \& \mbox{\hyperlink{class_pretty_writer}{Pretty\+Writer}}$<$ Output\+Stream, Source\+Encoding, Target\+Encoding, Stack\+Allocator, write\+Flags $>$\+::\+Set\+Indent (\begin{DoxyParamCaption}\item[{Ch}]{indent\+Char}{, }\item[{unsigned}]{indent\+Char\+Count}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set custom indentation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em indent\+Char} & Character for indentation. Must be whitespace character (\textquotesingle{} \textquotesingle{}, \textquotesingle{}\textbackslash{}t\textquotesingle{}, \textquotesingle{}\textbackslash{}n\textquotesingle{}, \textquotesingle{}\textbackslash{}r\textquotesingle{}). \\
+\hline
+{\em indent\+Char\+Count} & Number of indent characters for each indentation level. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+The default indentation is 4 spaces. 
+\end{DoxyNote}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/fwd.\+h\item 
+lib/cereal/external/rapidjson/prettywriter.\+h\end{DoxyCompactItemize}

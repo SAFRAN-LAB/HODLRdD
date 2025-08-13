@@ -1,0 +1,42 @@
+\doxysection{lib/cereal/types/bitset.hpp File Reference}
+\hypertarget{bitset_8hpp}{}\label{bitset_8hpp}\index{lib/cereal/types/bitset.hpp@{lib/cereal/types/bitset.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}bitset\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/string.\+hpp"{}}\newline
+{\ttfamily \#include $<$bitset$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{bitset_8hpp_a4f5825a3267dd05e798bed76cf7e29cc}\label{bitset_8hpp_a4f5825a3267dd05e798bed76cf7e29cc} 
+enum class \mbox{\hyperlink{bitset_8hpp_a4f5825a3267dd05e798bed76cf7e29cc}{cereal\+::bitset\+\_\+detail\+::type}} \+: uint8\+\_\+t \{ {\bfseries ulong}
+, {\bfseries ullong}
+, {\bfseries string}
+, {\bfseries bits}
+ \}
+\begin{DoxyCompactList}\small\item\em The type the bitset is encoded with. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a397c996c1b3e8bdcb3f43f11edf91126}\label{namespacecereal_a397c996c1b3e8bdcb3f43f11edf91126} 
+{\footnotesize template$<$class Archive, size\+\_\+t N, traits\+::\+Enable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ std\+::uint32\+\_\+t $>$, Archive $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::bitset$<$ N $>$ const \&bits)
+\begin{DoxyCompactList}\small\item\em Serializing (save) for std\+::bitset when \doxylink{structcereal_1_1_binary_data}{Binary\+Data} optimization supported. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a397c996c1b3e8bdcb3f43f11edf91126}\label{namespacecereal_a397c996c1b3e8bdcb3f43f11edf91126} 
+{\footnotesize template$<$class Archive, size\+\_\+t N, traits\+::\+Disable\+If$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ std\+::uint32\+\_\+t $>$, Archive $>$\+::value $>$ = traits\+::sfinae$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::bitset$<$ N $>$ const \&bits)
+\begin{DoxyCompactList}\small\item\em Serializing (save) for std\+::bitset when \doxylink{structcereal_1_1_binary_data}{Binary\+Data} is not supported. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ad8cfa5e251b7a85343f0a92e93f50a60}\label{namespacecereal_ad8cfa5e251b7a85343f0a92e93f50a60} 
+{\footnotesize template$<$class Archive, size\+\_\+t N$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::bitset$<$ N $>$ \&bits)
+\begin{DoxyCompactList}\small\item\em Serializing (load) for std\+::bitset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}bitset\texorpdfstring{$>$}{>} 
+

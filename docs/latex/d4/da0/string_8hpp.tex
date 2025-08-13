@@ -1,0 +1,28 @@
+\doxysection{lib/cereal/types/string.hpp File Reference}
+\hypertarget{string_8hpp}{}\label{string_8hpp}\index{lib/cereal/types/string.hpp@{lib/cereal/types/string.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}string\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a6c8e2f5032a22f0576cb08567f2d8e6f}\label{namespacecereal_a6c8e2f5032a22f0576cb08567f2d8e6f} 
+{\footnotesize template$<$class Archive, class CharT, class Traits, class Alloc$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{traits\+::is\+\_\+output\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ CharT $>$, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::basic\+\_\+string$<$ CharT, Traits, Alloc $>$ const \&str)
+\begin{DoxyCompactList}\small\item\em Serialization for basic\+\_\+string types, if binary data is supported. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ac5719e2d913b81926159a1962ec95547}\label{namespacecereal_ac5719e2d913b81926159a1962ec95547} 
+{\footnotesize template$<$class Archive, class CharT, class Traits, class Alloc$>$ }\\std\+::enable\+\_\+if$<$ \mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{traits\+::is\+\_\+input\+\_\+serializable}}$<$ \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ CharT $>$, Archive $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::basic\+\_\+string$<$ CharT, Traits, Alloc $>$ \&str)
+\begin{DoxyCompactList}\small\item\em Serialization for basic\+\_\+string types, if binary data is supported. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}string\texorpdfstring{$>$}{>} 
+

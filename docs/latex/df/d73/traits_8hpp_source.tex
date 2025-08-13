@@ -1,0 +1,1196 @@
+\doxysection{traits.\+hpp}
+\hypertarget{traits_8hpp_source}{}\label{traits_8hpp_source}\index{lib/cereal/details/traits.hpp@{lib/cereal/details/traits.hpp}}
+\mbox{\hyperlink{traits_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_DETAILS\_TRAITS\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_DETAILS\_TRAITS\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifndef\ \_\_clang\_\_}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#if\ (\_\_GNUC\_\_\ ==\ 4\ \&\&\ \_\_GNUC\_MINOR\_\_\ <=\ 7)}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ gcc\ 4.7\ or\ earlier}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_\_clang\_\_}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <typeindex>}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{macros_8hpp}{cereal/macros.hpp}}"{}}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{access_8hpp}{cereal/access.hpp}}"{}}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00046\ \{}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{namespace\ }traits}
+\DoxyCodeLine{00048\ \ \ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \textcolor{keyword}{using\ }yes\ =\ std::true\_type;}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{using\ }no\ \ =\ std::false\_type;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1delay__static__assert}{delay\_static\_assert}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{comment}{//\ SFINAE\ Helpers}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC\ }\textcolor{comment}{//\ when\ VS\ supports\ better\ SFINAE,\ we\ can\ use\ this\ as\ the\ default}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{struct\ }Void\ \{\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{void}\ type;\ \};}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{traits_8hpp_aafd74e5beca7e112de8b2e20ef41d973}{sfinae}}\ \{\};}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{comment}{//\ Helper\ functionality\ for\ boolean\ integral\ constants\ and\ Enable/DisableIf}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ H,\ \textcolor{keywordtype}{bool}\ ...\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__and}{meta\_bool\_and}}\ :\ std::integral\_constant<bool,\ H\ \&\&\ meta\_bool\_and<T...>::value>\ \{\};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ B>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__and}{meta\_bool\_and}}<B>\ :\ std::integral\_constant<bool,\ B>\ \{\};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ H,\ \textcolor{keywordtype}{bool}\ ...\ T>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__or}{meta\_bool\_or}}\ :\ std::integral\_constant<bool,\ H\ ||\ meta\_bool\_or<T...>::value>\ \{\};}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ B>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1meta__bool__or}{meta\_bool\_or}}<B>\ :\ std::integral\_constant<bool,\ B>\ \{\};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{comment}{//\ workaround\ needed\ due\ to\ bug\ in\ MSVC\ 2013,\ see}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \textcolor{comment}{//\ http://connect.microsoft.com/VisualStudio/feedback/details/800231/c-\/11-\/alias-\/template-\/issue}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ ...\ Conditions>}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_enable_if_helper}{EnableIfHelper}}\ :\ std::enable\_if<meta\_bool\_and<Conditions...>::value,\ sfinae>\ \{\};}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ ...\ Conditions>}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_disable_if_helper}{DisableIfHelper}}\ :\ std::enable\_if<!meta\_bool\_or<Conditions...>::value,\ sfinae>\ \{\};}
+\DoxyCodeLine{00083\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{traits_8hpp_aafd74e5beca7e112de8b2e20ef41d973}{detail::sfinae}}\ sfinae\ =\ \{\};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ ...\ Conditions>}
+\DoxyCodeLine{00116\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{traits_8hpp_a42e5f793ba5a1b3d2fd674d7334b12bd}{EnableIf}}\ =\ \textcolor{keyword}{typename}\ detail::EnableIfHelper<Conditions...>::type;}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{bool}\ ...\ Conditions>}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{traits_8hpp_a07719740a7cec6692b44244201a92603}{DisableIf}}\ =\ \textcolor{keyword}{typename}\ detail::DisableIfHelper<Conditions...>::type;}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00152\ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ InputArchive>}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__output__from__input}{get\_output\_from\_input}}\ :\ no}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1delay__static__assert}{detail::delay\_static\_assert<InputArchive>::value}},}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Could\ not\ find\ an\ associated\ output\ archive\ for\ input\ archive."{}}\ );}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__input__from__output}{get\_input\_from\_output}}\ :\ no}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1delay__static__assert}{detail::delay\_static\_assert<OutputArchive>::value}},}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Could\ not\ find\ an\ associated\ input\ archive\ for\ output\ archive."{}}\ );}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00166\ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_SETUP\_ARCHIVE\_TRAITS(InputArchive,\ OutputArchive)\ \ \(\backslash\)}}
+\DoxyCodeLine{00170\ \textcolor{preprocessor}{\ \ \ \ namespace\ cereal\ \{\ namespace\ traits\ \{\ namespace\ detail\ \{\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <>\ struct\ get\_output\_from\_input<InputArchive>\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00172\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ using\ type\ =\ OutputArchive;\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <>\ struct\ get\_input\_from\_output<OutputArchive>\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ using\ type\ =\ InputArchive;\ \};\ \}\ \}\ \}\ }\textcolor{comment}{/*\ end\ namespaces\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00178\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_VERSIONED\_TEST\ ,0}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00189\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_TEST(name,\ test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00190\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A,\ class\ SFINAE\ =\ void>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name<T,\ A,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\ \ \ \ \ \ typename\ detail::Void<\ decltype(\ cereal::access::member\_\#\#name(\ std::declval<A\&>(),\ std::declval<T\&>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\}}}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\ \ \ \ \#else\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_TEST(name,\ test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#name\#\#\_\#\#versioned\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ cereal::access::member\_\#\#name(\ std::declval<AA\&>(),\ std::declval<TT\&>()\ versioned\ ),\ yes());\ \(\backslash\)}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00207\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00208\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00210\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_member\_\#\#name\#\#\_\#\#versioned\#\#\_impl<T,\ A>::value>\ \{\}}}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST(test\_name,\ func,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ func(\ std::declval<AA\&>(),\ std::declval<TT\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ no\ test(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(\ test<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \{\}}}
+\DoxyCodeLine{00232\ }
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{comment}{//\ Member\ Serialize}}
+\DoxyCodeLine{00235\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}(\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}},\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}},);}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{comment}{//\ Member\ Serialize\ (versioned)}}
+\DoxyCodeLine{00239\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}(\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}},\ versioned\_serialize,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}});}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Serialize}}
+\DoxyCodeLine{00243\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af31f4783772a7f6a3048a793090715cf}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}(\mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}},\ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}},);}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00246\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Serialize\ (versioned)}}
+\DoxyCodeLine{00247\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af31f4783772a7f6a3048a793090715cf}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}(versioned\_serialize,\ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}},\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}});}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{comment}{//\ Member\ Load}}
+\DoxyCodeLine{00251\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}(load,\ load,);}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00254\ \ \ \ \ \textcolor{comment}{//\ Member\ Load\ (versioned)}}
+\DoxyCodeLine{00255\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ad2fc70d51b619b785c0741568f2012ba}{CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}(load,\ versioned\_load,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}});}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Load}}
+\DoxyCodeLine{00259\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af31f4783772a7f6a3048a793090715cf}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}(load,\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}},);}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Load\ (versioned)}}
+\DoxyCodeLine{00263\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af31f4783772a7f6a3048a793090715cf}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}(versioned\_load,\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}},\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}});}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00266\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_TEST}}
+\DoxyCodeLine{00267\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_TEST}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00276\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00277\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00278\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00279\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00280\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00281\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00282\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00283\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ SFINAE\ =\ void>\ struct\ test\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00285\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ test<TT,\ AA,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ typename\ detail::Void<\ decltype(\ cereal::access::member\_save(\ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00287\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \(\backslash\)}}
+\DoxyCodeLine{00288\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ test<T,\ A>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00289\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00290\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ SFINAE\ =\ void>\ struct\ test2\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00291\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00292\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ test2<TT,\ AA,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00293\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ typename\ detail::Void<\ decltype(\ cereal::access::member\_save\_non\_const(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00294\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00295\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \ \(\backslash\)}}
+\DoxyCodeLine{00296\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ test2<T,\ A>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00297\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00298\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00299\ \textcolor{preprocessor}{\ \ \ \ \#else\ }\textcolor{comment}{/*\ NOT\ CEREAL\_OLDER\_GCC\ ===================================\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00300\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00301\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00302\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00303\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00304\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00305\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00306\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00307\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ cereal::access::member\_save(\ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00308\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00309\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00310\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00311\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00312\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00313\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test2(int)\ -\/>\ decltype(\ cereal::access::member\_save\_non\_const(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00314\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00315\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00316\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00317\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00318\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00319\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00320\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{/*\ NOT\ CEREAL\_OLDER\_GCC\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ Member\ Save}}
+\DoxyCodeLine{00324\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a669b39fde8f86acef9e5b1470ceb0364}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}}(save,\ )}
+\DoxyCodeLine{00325\ }
+\DoxyCodeLine{00326\ \ \ \ \ template\ <class\ T,\ class\ A>}
+\DoxyCodeLine{00327\ \ \ \ \ struct\ \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__save}{has\_member\_save}}\ :\ std::integral\_constant<\textcolor{keywordtype}{bool},\ detail::has\_member\_save\_impl<T,\ A>::value>}
+\DoxyCodeLine{00328\ \ \ \ \ \{}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ detail::has\_member\_save\_impl<T,\ A>\ check;}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ check::value\ ||\ !check::not\_const\_type,}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ a\ non-\/const\ save.\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}save\ member\ functions\ must\ always\ be\ const"{}}\ );}
+\DoxyCodeLine{00333\ \ \ \ \ \};}
+\DoxyCodeLine{00334\ }
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{comment}{//\ Member\ Save\ (versioned)}}
+\DoxyCodeLine{00337\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a669b39fde8f86acef9e5b1470ceb0364}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}}(versioned\_save,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__save}{has\_member\_versioned\_save}}\ :\ std::integral\_constant<bool,\ detail::has\_member\_versioned\_save\_impl<T,\ A>::value>}
+\DoxyCodeLine{00341\ \ \ \ \ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ detail::has\_member\_versioned\_save\_impl<T,\ A>\ check;}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ check::value\ ||\ !check::not\_const\_type,}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ detected\ a\ versioned\ non-\/const\ save.\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}save\ member\ functions\ must\ always\ be\ const"{}}\ );}
+\DoxyCodeLine{00346\ \ \ \ \ \};}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00349\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_IMPL}}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00358\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00359\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00360\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00361\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00362\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00363\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00364\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00365\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ CEREAL\_SAVE\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00366\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00367\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00368\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00369\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00370\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00371\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00372\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test2(int)\ -\/>\ decltype(\ CEREAL\_SAVE\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00373\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00374\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00375\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00376\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00377\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00378\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00379\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00380\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00381\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \(\backslash\)}}
+\DoxyCodeLine{00382\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00383\ \textcolor{preprocessor}{\ \ \ \ \ \ using\ check\ =\ typename\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00384\ \textcolor{preprocessor}{\ \ \ \ \ \ static\_assert(\ check::value\ ||\ !check::not\_const\_type,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00385\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}cereal\ detected\ a\ non-\/const\ type\ parameter\ in\ non-\/member\ "{}\ \#test\_name\ "{}.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00386\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#test\_name\ "{}\ non-\/member\ functions\ must\ always\ pass\ their\ types\ as\ const"{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00387\ \textcolor{preprocessor}{\ \ \ \ \};}}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00390\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Save}}
+\DoxyCodeLine{00391\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a5be76cc82813adfc110f793e37636fb1}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}}(save,\ )}
+\DoxyCodeLine{00392\ }
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{comment}{//\ Non\ Member\ Save\ (versioned)}}
+\DoxyCodeLine{00395\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a5be76cc82813adfc110f793e37636fb1}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}}(versioned\_save,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00396\ }
+\DoxyCodeLine{00397\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00398\ \ \ \ \ \textcolor{preprocessor}{\#undef\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_TEST}}
+\DoxyCodeLine{00399\ }
+\DoxyCodeLine{00400\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00401\ \ \ \ \ \textcolor{comment}{//\ Minimal\ Utilities}}
+\DoxyCodeLine{00402\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00403\ \ \ \ \ \{}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \textcolor{comment}{//\ Determines\ if\ the\ provided\ type\ is\ an\ std::string}}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}>\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1is__string}{is\_string}}\ :\ std::false\_type\ \{\};}
+\DoxyCodeLine{00406\ }
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ CharT,\ \textcolor{keyword}{class}\ Traits,\ \textcolor{keyword}{class}\ Alloc>}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1is__string}{is\_string}}<std::basic\_string<CharT,\ Traits,\ Alloc>>\ :\ std::true\_type\ \{\};}
+\DoxyCodeLine{00409\ \ \ \ \ \}}
+\DoxyCodeLine{00410\ }
+\DoxyCodeLine{00411\ \ \ \ \ \textcolor{comment}{//\ Determines\ if\ the\ type\ is\ valid\ for\ use\ with\ a\ minimal\ serialize\ function}}
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00413\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__minimal__type}{is\_minimal\_type}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ detail::is\_string<T>::value\ ||\ std::is\_arithmetic<T>::value>\ \{\};}
+\DoxyCodeLine{00415\ }
+\DoxyCodeLine{00416\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00423\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00424\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00425\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00426\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00427\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00428\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00429\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00430\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ SFINAE\ =\ void>\ struct\ test\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00431\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00432\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ test<TT,\ AA,\ typename\ detail::Void<\ decltype(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00433\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ cereal::access::member\_save\_minimal(\ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00434\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00435\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00436\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ test<T,\ A>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00437\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00438\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ SFINAE\ =\ void>\ struct\ test2\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00439\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00440\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ test2<TT,\ AA,\ typename\ detail::Void<\ decltype(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00441\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ cereal::access::member\_save\_minimal\_non\_const(\ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00442\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \(\backslash\)}}
+\DoxyCodeLine{00443\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ test2<T,\ A>();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00444\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00445\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ valid\ =\ value\ ||\ !not\_const\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00446\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00447\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00448\ \textcolor{preprocessor}{\ \ \ \ \#else\ }\textcolor{comment}{/*\ NOT\ CEREAL\_OLDER\_GCC\ ===================================\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00449\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00450\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00451\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00452\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00453\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00454\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00455\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00456\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ cereal::access::member\_save\_minimal(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00457\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00458\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00459\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00460\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00461\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00462\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00463\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test2(int)\ -\/>\ decltype(\ cereal::access::member\_save\_minimal\_non\_const(\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00464\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00465\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00466\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00467\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \(\backslash\)}}
+\DoxyCodeLine{00468\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00469\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ valid\ =\ value\ ||\ !not\_const\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00470\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00471\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00472\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00474\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00476\ }
+\DoxyCodeLine{00482\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00483\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00484\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00485\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ bool\ Valid>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00486\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ get\_member\_\#\#test\_name\#\#\_type\ \{\ using\ type\ =\ void;\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00487\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00488\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00489\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ get\_member\_\#\#test\_name\#\#\_type<T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00490\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00491\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ type\ =\ decltype(\ cereal::access::member\_save\_minimal(\ std::declval<A\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00492\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<T\ const\ \&>()\ versioned\ )\ );\ \(\backslash\)}}
+\DoxyCodeLine{00493\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00494\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00495\ }
+\DoxyCodeLine{00496\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00502\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST(test\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00503\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00504\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \(\backslash\)}}
+\DoxyCodeLine{00505\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00506\ \textcolor{preprocessor}{\ \ \ \ \ \ using\ check\ =\ typename\ detail::has\_member\_\#\#test\_name\#\#\_impl<T,\ A>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00507\ \textcolor{preprocessor}{\ \ \ \ \ \ static\_assert(\ check::valid,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00508\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}cereal\ detected\ a\ non-\/const\ member\ "{}\ \#test\_name\ "{}.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00509\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#test\_name\ "{}\ member\ functions\ must\ always\ be\ const"{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00510\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00511\ \textcolor{preprocessor}{\ \ \ \ \ \ using\ type\ =\ typename\ detail::get\_member\_\#\#test\_name\#\#\_type<T,\ A,\ check::value>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00512\ \textcolor{preprocessor}{\ \ \ \ \ \ static\_assert(\ (check::value\ \&\&\ is\_minimal\_type<type>::value)\ ||\ !check::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00513\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}cereal\ detected\ a\ member\ "{}\ \#test\_name\ "{}\ with\ an\ invalid\ return\ type.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00514\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}return\ type\ must\ be\ arithmetic\ or\ string"{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00515\ \textcolor{preprocessor}{\ \ \ \ \};}}
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00518\ \ \ \ \ \textcolor{comment}{//\ Member\ Save\ Minimal}}
+\DoxyCodeLine{00519\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a3d9d56e1b4254790186b1565796fdd35}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}}(save\_minimal,\ )}
+\DoxyCodeLine{00520\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_aab60653db33c8898506326963f8a7211}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}}(save\_minimal,\ )}
+\DoxyCodeLine{00521\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33f583ea76bb88656995fa4d5d5e9ade}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}}(save\_minimal)}
+\DoxyCodeLine{00522\ }
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00524\ \ \ \ \ \textcolor{comment}{//\ Member\ Save\ Minimal\ (versioned)}}
+\DoxyCodeLine{00525\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a3d9d56e1b4254790186b1565796fdd35}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}}(versioned\_save\_minimal,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00526\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_aab60653db33c8898506326963f8a7211}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}}(versioned\_save\_minimal,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00527\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33f583ea76bb88656995fa4d5d5e9ade}{CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}}(versioned\_save\_minimal)}
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00530\ \ \ \ \ \textcolor{preprocessor}{\#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_IMPL}}
+\DoxyCodeLine{00531\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_HELPERS\_IMPL}}
+\DoxyCodeLine{00532\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+\DoxyCodeLine{00533\ }
+\DoxyCodeLine{00534\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00536\ }
+\DoxyCodeLine{00541\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00542\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00543\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00544\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00545\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00546\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00547\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00548\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00549\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00550\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ const\ \&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00551\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00552\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00553\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00554\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00555\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test2(int)\ -\/>\ decltype(\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00556\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00557\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<typename\ std::remove\_const<TT>::type\&>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00558\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test2(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00559\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ not\_const\_type\ =\ std::is\_same<decltype(test2<T,\ A>(0)),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00560\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00561\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ valid\ =\ value\ ||\ !not\_const\_type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00562\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00563\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00564\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ bool\ Valid>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00565\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ get\_non\_member\_\#\#test\_name\#\#\_type\ \{\ using\ type\ =\ void;\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00566\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00567\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00568\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ get\_non\_member\_\#\#test\_name\#\#\_type\ <T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00569\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00570\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ type\ =\ decltype(\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(\ std::declval<A\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00571\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<T\ const\ \&>()\ versioned\ )\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00572\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00573\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00574\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00575\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00576\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::value>\ \(\backslash\)}}
+\DoxyCodeLine{00577\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00578\ \textcolor{preprocessor}{\ \ \ \ \ \ using\ check\ =\ typename\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00579\ \textcolor{preprocessor}{\ \ \ \ \ \ static\_assert(\ check::valid,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00580\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}cereal\ detected\ a\ non-\/const\ type\ parameter\ in\ non-\/member\ "{}\ \#test\_name\ "{}.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00581\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#test\_name\ "{}\ non-\/member\ functions\ must\ always\ pass\ their\ types\ as\ const"{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00582\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00583\ \textcolor{preprocessor}{\ \ \ \ \ \ using\ type\ =\ typename\ detail::get\_non\_member\_\#\#test\_name\#\#\_type<T,\ A,\ check::value>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00584\ \textcolor{preprocessor}{\ \ \ \ \ \ static\_assert(\ (check::value\ \&\&\ is\_minimal\_type<type>::value)\ ||\ !check::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00585\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}cereal\ detected\ a\ non-\/member\ "{}\ \#test\_name\ "{}\ with\ an\ invalid\ return\ type.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00586\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ "{}return\ type\ must\ be\ arithmetic\ or\ string"{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00587\ \textcolor{preprocessor}{\ \ \ \ \};}}
+\DoxyCodeLine{00588\ }
+\DoxyCodeLine{00589\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00590\ \ \ \ \ \textcolor{comment}{//\ Non-\/Member\ Save\ Minimal}}
+\DoxyCodeLine{00591\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ae7eb2173790b30144a419f33afcd2710}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}}(save\_minimal,\ )}
+\DoxyCodeLine{00592\ }
+\DoxyCodeLine{00593\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00594\ \ \ \ \ \textcolor{comment}{//\ Non-\/Member\ Save\ Minimal\ (versioned)}}
+\DoxyCodeLine{00595\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_ae7eb2173790b30144a419f33afcd2710}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}}(versioned\_save\_minimal,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00597\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00598\ \ \ \ \ \textcolor{preprocessor}{\#undef\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_SAVE\_MINIMAL\_TEST}}
+\DoxyCodeLine{00599\ }
+\DoxyCodeLine{00600\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00601\ \ \ \ \ \textcolor{comment}{//\ Load\ Minimal\ Utilities}}
+\DoxyCodeLine{00602\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00603\ \ \ \ \ \{}
+\DoxyCodeLine{00605\ }
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_base}{NoConvertBase}}\ \{\};}
+\DoxyCodeLine{00611\ }
+\DoxyCodeLine{00613\ }
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Source>}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_const_ref}{NoConvertConstRef}}\ :\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_base}{NoConvertBase}}}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_const_ref_a2f0889dc37f33f9cca80689b4d974d10}{type}}\ =\ Source;\ }
+\DoxyCodeLine{00621\ }
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ template\ <class\ Dest,\ class\ =\ typename\ std::enable\_if<std::is\_same<Source,\ Dest>::value>\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_const_ref_a2f0889dc37f33f9cca80689b4d974d10}{::type}}>}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ ()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00624\ }
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ template\ <class\ Dest,\ class\ =\ typename\ std::enable\_if<std::is\_same<Source,\ Dest>::value>\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_const_ref_a2f0889dc37f33f9cca80689b4d974d10}{::type}}>}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ \textcolor{keyword}{const}\ \&\ ();}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00631\ }
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Source>}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref}{NoConvertRef}}\ :\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_base}{NoConvertBase}}}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref_ae9337698790d0e1791a02aff22dc2fdb}{type}}\ =\ Source;\ }
+\DoxyCodeLine{00639\ }
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ template\ <class\ Dest,\ class\ =\ typename\ std::enable\_if<std::is\_same<Source,\ Dest>::value>\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref_ae9337698790d0e1791a02aff22dc2fdb}{::type}}>}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ ()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00642\ }
+\DoxyCodeLine{00643\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ template\ <class\ Dest,\ class\ =\ typename\ std::enable\_if<std::is\_same<Source,\ Dest>::value>\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref_ae9337698790d0e1791a02aff22dc2fdb}{::type}}>}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ \textcolor{keyword}{const}\ \&\ ()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00646\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ \_\_clang\_\_}}
+\DoxyCodeLine{00647\ }
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ template\ <class\ Dest,\ class\ =\ typename\ std::enable\_if<std::is\_same<Source,\ Dest>::value>\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_no_convert_ref_ae9337698790d0e1791a02aff22dc2fdb}{::type}}>}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ \&\ ();}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00652\ }
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_any_convert}{AnyConvert}}}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Dest>}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ \&\ ();}
+\DoxyCodeLine{00658\ }
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Dest>}
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \textcolor{keyword}{operator}\ Dest\ \textcolor{keyword}{const}\ \&\ ()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00661\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00662\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00663\ }
+\DoxyCodeLine{00664\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00666\ }
+\DoxyCodeLine{00675\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00676\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00677\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00678\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00679\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ class\ SFINAE\ =\ void>\ struct\ has\_member\_\#\#test\_name\#\#\_impl\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00680\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00681\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl<T,\ A,\ typename\ detail::Void<\ decltype(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00682\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ cereal::access::member\_load\_minimal(\ std::declval<A\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00683\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<T\ \&>(),\ AnyConvert()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00684\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00685\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ T,\ class\ A,\ class\ U,\ class\ SFINAE\ =\ void>\ struct\ has\_member\_\#\#test\_name\#\#\_type\_impl\ :\ no\ \{\};\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00686\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ T,\ class\ A,\ class\ U>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00687\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_type\_impl<T,\ A,\ U,\ typename\ detail::Void<\ decltype(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00688\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ cereal::access::member\_load\_minimal(\ std::declval<A\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00689\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<T\ \&>(),\ NoConvertConstRef<U>()\ versioned\ )\ )\ >::type>\ :\ yes\ \{\};\ \(\backslash\)}}
+\DoxyCodeLine{00690\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00691\ \textcolor{preprocessor}{\ \ \ \ \#else\ }\textcolor{comment}{/*\ NOT\ CEREAL\_OLDER\_GCC\ ===================================\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00692\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00693\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00694\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00695\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00696\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00697\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00698\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00699\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ cereal::access::member\_load\_minimal(\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00700\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00701\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ \&>(),\ AnyConvert()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00702\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00703\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A>(0)),\ yes>::value;\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00704\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00705\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ class\ U>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00706\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#test\_name\#\#\_type\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00707\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00708\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ UU>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00709\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ cereal::access::member\_load\_minimal(\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00710\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00711\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<TT\ \&>(),\ NoConvertConstRef<UU>()\ versioned\ ),\ yes());\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00712\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class,\ class>\ static\ no\ test(...);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00713\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(test<T,\ A,\ U>(0)),\ yes>::value;\ \(\backslash\)}}
+\DoxyCodeLine{00714\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00715\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00716\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00717\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00718\ }
+\DoxyCodeLine{00719\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00721\ }
+\DoxyCodeLine{00731\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL(load\_test\_name,\ save\_test\_name,\ save\_test\_prefix,\ versioned)\ \(\backslash\)}}
+\DoxyCodeLine{00732\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00733\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00734\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ bool\ Valid>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00735\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#load\_test\_name\#\#\_wrapper\ :\ std::false\_type\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00736\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00737\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00738\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_member\_\#\#load\_test\_name\#\#\_wrapper<T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00739\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00740\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ AOut\ =\ typename\ detail::get\_output\_from\_input<A>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00741\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00742\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\_assert(\ has\_member\_\#\#save\_test\_prefix\#\#\_minimal<T,\ AOut>::value,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00743\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}cereal\ detected\ member\ "{}\ \#load\_test\_name\ "{}\ but\ no\ valid\ member\ "{}\ \#save\_test\_name\ "{}.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00744\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}cannot\ evaluate\ correctness\ of\ "{}\ \#load\_test\_name\ "{}\ without\ valid\ "{}\ \#save\_test\_name\ "{}."{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00745\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00746\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ SaveType\ =\ typename\ detail::get\_member\_\#\#save\_test\_prefix\#\#\_minimal\_type<T,\ AOut,\ true>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00747\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ static\ bool\ value\ =\ has\_member\_\#\#load\_test\_name\#\#\_impl<T,\ A>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00748\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ const\ static\ bool\ valid\ =\ has\_member\_\#\#load\_test\_name\#\#\_type\_impl<T,\ A,\ SaveType>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00749\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00750\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\_assert(\ valid\ ||\ !value,\ "{}cereal\ detected\ different\ or\ invalid\ types\ in\ corresponding\ member\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00751\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#load\_test\_name\ "{}\ and\ "{}\ \#save\_test\_name\ "{}\ functions.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00752\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ "{}the\ paramater\ to\ "{}\ \#load\_test\_name\ "{}\ must\ be\ a\ constant\ reference\ to\ the\ type\ that\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00753\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#save\_test\_name\ "{}\ returns."{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00754\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00755\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{00756\ }
+\DoxyCodeLine{00757\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00764\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST(load\_test\_name,\ load\_test\_prefix)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00765\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00766\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_member\_\#\#load\_test\_prefix\#\#\_minimal\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00767\ \textcolor{preprocessor}{\ \ \ \ \ \ detail::has\_member\_\#\#load\_test\_name\#\#\_wrapper<T,\ A,\ detail::has\_member\_\#\#load\_test\_name\#\#\_impl<T,\ A>::value>::value>\ \{\};}}
+\DoxyCodeLine{00768\ }
+\DoxyCodeLine{00769\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00770\ \ \ \ \ \textcolor{comment}{//\ Member\ Load\ Minimal}}
+\DoxyCodeLine{00771\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a41354a9a797549bb6802c0f16435f675}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}}(load\_minimal,\ )}
+\DoxyCodeLine{00772\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a4d829a1189314b4adb3b1f6f72d94151}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}}(load\_minimal,\ save\_minimal,\ save,\ )}
+\DoxyCodeLine{00773\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a4497ffc80b9053f731b781d740b98af2}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}}(load\_minimal,\ load)}
+\DoxyCodeLine{00774\ }
+\DoxyCodeLine{00775\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00776\ \ \ \ \ \textcolor{comment}{//\ Member\ Load\ Minimal\ (versioned)}}
+\DoxyCodeLine{00777\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a41354a9a797549bb6802c0f16435f675}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}}(versioned\_load\_minimal,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00778\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a4d829a1189314b4adb3b1f6f72d94151}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}}(versioned\_load\_minimal,\ versioned\_save\_minimal,\ versioned\_save,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00779\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a4497ffc80b9053f731b781d740b98af2}{CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}}(versioned\_load\_minimal,\ versioned\_load)}
+\DoxyCodeLine{00780\ }
+\DoxyCodeLine{00781\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00782\ \ \ \ \ \textcolor{preprocessor}{\#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_IMPL}}
+\DoxyCodeLine{00783\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_HELPERS\_IMPL}}
+\DoxyCodeLine{00784\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+\DoxyCodeLine{00785\ }
+\DoxyCodeLine{00786\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00787\ \ \ \ \ \textcolor{comment}{//\ Non-\/Member\ Load\ Minimal}}
+\DoxyCodeLine{00788\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00789\ \ \ \ \ \{}
+\DoxyCodeLine{00790\ \textcolor{preprocessor}{\ \ \ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a6d46fc40eb865ec42dd40929ed5db73f}{CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}}();\ \textcolor{comment}{//\ prevents\ nonsense\ complaining\ about\ not\ finding\ this}}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_ac018dce5e1c47d8948842e8eaa08815e}{CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}}();}
+\DoxyCodeLine{00793\ \textcolor{preprocessor}{\ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{00794\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00795\ }
+\DoxyCodeLine{00796\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00798\ }
+\DoxyCodeLine{00818\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST(test\_name,\ save\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00819\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00820\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00821\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ class\ U\ =\ void>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00822\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00823\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00824\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00825\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00826\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ std::declval<TT\&>(),\ AnyConvert()\ versioned\ ),\ yes()\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00827\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00828\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ exists\ =\ std::is\_same<decltype(\ test<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00829\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00830\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA,\ class\ UU>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00831\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test2(int)\ -\/>\ decltype(\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00832\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ std::declval<TT\&>(),\ NoConvertConstRef<UU>()\ versioned\ ),\ yes()\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00833\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class,\ class>\ static\ no\ test2(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00834\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ valid\ =\ std::is\_same<decltype(\ test2<T,\ A,\ U>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00835\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00836\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00837\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test3(int)\ -\/>\ decltype(\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00838\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\ const\ \&>(),\ NoConvertRef<TT>(),\ AnyConvert()\ versioned\ ),\ yes()\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00839\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ static\ no\ test3(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00840\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ const\_valid\ =\ std::is\_same<decltype(\ test3<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00841\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00842\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00843\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A,\ bool\ Valid>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00844\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_wrapper\ :\ std::false\_type\ \{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00845\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00846\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00847\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_wrapper<T,\ A,\ true>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00848\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00849\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ AOut\ =\ typename\ detail::get\_output\_from\_input<A>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00850\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00851\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\_assert(\ detail::has\_non\_member\_\#\#save\_name\#\#\_impl<T,\ AOut>::valid,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00852\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}cereal\ detected\ non-\/member\ "{}\ \#test\_name\ "{}\ but\ no\ valid\ non-\/member\ "{}\ \#save\_name\ "{}.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00853\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ "{}cannot\ evaluate\ correctness\ of\ "{}\ \#test\_name\ "{}\ without\ valid\ "{}\ \#save\_name\ "{}."{}\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00854\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00855\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ SaveType\ =\ typename\ detail::get\_non\_member\_\#\#save\_name\#\#\_type<T,\ AOut,\ true>::type;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00856\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ using\ check\ =\ has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A,\ SaveType>;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00857\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ check::exists;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00858\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00859\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\_assert(\ check::valid\ ||\ !check::exists,\ "{}cereal\ detected\ different\ types\ in\ corresponding\ non-\/member\ "{}\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00860\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \#test\_name\ "{}\ and\ "{}\ \#save\_name\ "{}\ functions.\ \(\backslash\)n\ "{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00861\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ "{}the\ paramater\ to\ "{}\ \#test\_name\ "{}\ must\ be\ a\ constant\ reference\ to\ the\ type\ that\ "{}\ \#save\_name\ "{}\ returns."{}\ );\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00862\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00863\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00864\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00865\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00866\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_non\_member\_\#\#test\_name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00867\ \textcolor{preprocessor}{\ \ \ \ \ \ detail::has\_non\_member\_\#\#test\_name\#\#\_wrapper<T,\ A,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<T,\ A>::exists>::value>\ \{\};}}
+\DoxyCodeLine{00868\ }
+\DoxyCodeLine{00869\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00870\ \ \ \ \ \textcolor{comment}{//\ Non-\/Member\ Load\ Minimal}}
+\DoxyCodeLine{00871\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a99298ef5f4678723f35d175291eb5770}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}}(load\_minimal,\ save\_minimal,\ )}
+\DoxyCodeLine{00872\ }
+\DoxyCodeLine{00873\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00874\ \ \ \ \ \textcolor{comment}{//\ Non-\/Member\ Load\ Minimal\ (versioned)}}
+\DoxyCodeLine{00875\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a99298ef5f4678723f35d175291eb5770}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}}(versioned\_load\_minimal,\ versioned\_save\_minimal,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00876\ }
+\DoxyCodeLine{00877\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00878\ \ \ \ \ \textcolor{preprocessor}{\#undef\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_MINIMAL\_TEST}}
+\DoxyCodeLine{00879\ }
+\DoxyCodeLine{00880\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00881\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00882\ \ \ \ \ \{}
+\DoxyCodeLine{00883\ \ \ \ \ \ \ \textcolor{comment}{//\ const\ stripped\ away\ before\ reaching\ here,\ prevents\ errors\ on\ conversion\ from}}
+\DoxyCodeLine{00884\ \ \ \ \ \ \ \textcolor{comment}{//\ construct<const\ T>\ to\ construct<T>}}
+\DoxyCodeLine{00885\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ A>}
+\DoxyCodeLine{00886\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__load__and__construct__impl}{has\_member\_load\_and\_construct\_impl}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00887\ \ \ \ \ \ \ \ \ std::is\_same<decltype(\ access::load\_and\_construct<T>(\ std::declval<A\&>(),\ std::declval<\ ::cereal::construct<T>\&>()\ )\ ),\ void>::value>}
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \{\ \};}
+\DoxyCodeLine{00889\ }
+\DoxyCodeLine{00890\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ A>}
+\DoxyCodeLine{00891\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__versioned__load__and__construct__impl}{has\_member\_versioned\_load\_and\_construct\_impl}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00892\ \ \ \ \ \ \ \ \ std::is\_same<decltype(\ access::load\_and\_construct<T>(\ std::declval<A\&>(),\ std::declval<\ ::cereal::construct<T>\&>(),\ 0\ )\ ),\ void>::value>}
+\DoxyCodeLine{00893\ \ \ \ \ \ \ \{\ \};}
+\DoxyCodeLine{00894\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00895\ }
+\DoxyCodeLine{00897\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ A>}
+\DoxyCodeLine{00898\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__member__load__and__construct}{has\_member\_load\_and\_construct}}\ :\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__load__and__construct__impl}{detail::has\_member\_load\_and\_construct\_impl}}<typename\ std::remove\_const<T>::type,\ A>}
+\DoxyCodeLine{00899\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{00900\ }
+\DoxyCodeLine{00902\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T,\ \textcolor{keyword}{typename}\ A>}
+\DoxyCodeLine{00903\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__load__and__construct}{has\_member\_versioned\_load\_and\_construct}}\ :\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__member__versioned__load__and__construct__impl}{detail::has\_member\_versioned\_load\_and\_construct\_impl}}<typename\ std::remove\_const<T>::type,\ A>}
+\DoxyCodeLine{00904\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{00905\ }
+\DoxyCodeLine{00906\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00908\ }
+\DoxyCodeLine{00910\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST(test\_name,\ versioned)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00911\ \textcolor{preprocessor}{\ \ \ \ namespace\ detail\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00912\ \textcolor{preprocessor}{\ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00913\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00914\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ has\_non\_member\_\#\#test\_name\#\#\_impl\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00915\ \textcolor{preprocessor}{\ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00916\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class\ TT,\ class\ AA>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00917\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ auto\ test(int)\ -\/>\ decltype(\ LoadAndConstruct<TT>::load\_and\_construct(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00918\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::declval<AA\&>(),\ std::declval<\ ::cereal::construct<TT>\&>()\ versioned\ ),\ yes());\ \ \(\backslash\)}}
+\DoxyCodeLine{00919\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ template\ <class,\ class>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00920\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ no\ test(\ ...\ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00921\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ static\ const\ bool\ value\ =\ std::is\_same<decltype(\ test<T,\ A>(\ 0\ )\ ),\ yes>::value;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00922\ \textcolor{preprocessor}{\ \ \ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00923\ \textcolor{preprocessor}{\ \ \ \ \}\ }\textcolor{comment}{/*\ end\ namespace\ detail\ */}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00924\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00925\ \textcolor{preprocessor}{\ \ \ \ struct\ has\_non\_member\_\#\#test\_name\ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00926\ \textcolor{preprocessor}{\ \ \ \ \ \ std::integral\_constant<bool,\ detail::has\_non\_member\_\#\#test\_name\#\#\_impl<typename\ std::remove\_const<T>::type,\ A>::value>\ \{\};}}
+\DoxyCodeLine{00927\ }
+\DoxyCodeLine{00928\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00930\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a65a75d150c050c8a44ab1d9d2b85bba6}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}}(load\_and\_construct,\ )}
+\DoxyCodeLine{00931\ }
+\DoxyCodeLine{00932\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00934\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a65a75d150c050c8a44ab1d9d2b85bba6}{CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}}(versioned\_load\_and\_construct,\ \mbox{\hyperlink{traits_8hpp_a8638d8b3af51cf4f6bed0ed2dae54928}{CEREAL\_MAKE\_VERSIONED\_TEST}})}
+\DoxyCodeLine{00935\ }
+\DoxyCodeLine{00936\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00938\ \ \ \ \ template<typename\ T,\ typename\ A>}
+\DoxyCodeLine{00939\ \ \ \ \ struct\ \mbox{\hyperlink{structcereal_1_1traits_1_1has__load__and__construct}{has\_load\_and\_construct}}\ :\ std::integral\_constant<\textcolor{keywordtype}{bool},}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__load__and__construct}{has\_member\_load\_and\_construct}}<T,\ A>::value\ ||\ has\_non\_member\_load\_and\_construct<T,\ A>::value\ ||}
+\DoxyCodeLine{00941\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__load__and__construct}{has\_member\_versioned\_load\_and\_construct}}<T,\ A>::value\ ||\ has\_non\_member\_versioned\_load\_and\_construct<T,\ A>::value>}
+\DoxyCodeLine{00942\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{00943\ }
+\DoxyCodeLine{00944\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00945\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_HAS\_NON\_MEMBER\_LOAD\_AND\_CONSTRUCT\_TEST}}
+\DoxyCodeLine{00946\ }
+\DoxyCodeLine{00947\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00948\ \ \ \ \ \textcolor{comment}{//\ End\ of\ serialization\ existence\ tests}}
+\DoxyCodeLine{00949\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_VERSIONED\_TEST}}
+\DoxyCodeLine{00950\ }
+\DoxyCodeLine{00951\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00952\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{00953\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__member__split}{has\_member\_split}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00954\ \ \ \ \ \ \ (has\_member\_load<T,\ InputArchive>::value\ \&\&\ has\_member\_save<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00955\ \ \ \ \ \ \ (has\_member\_versioned\_load<T,\ InputArchive>::value\ \&\&\ has\_member\_versioned\_save<T,\ OutputArchive>::value)>\ \{\};}
+\DoxyCodeLine{00956\ }
+\DoxyCodeLine{00957\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00958\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{00959\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__non__member__split}{has\_non\_member\_split}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00960\ \ \ \ \ \ \ (has\_non\_member\_load<T,\ InputArchive>::value\ \&\&\ has\_non\_member\_save<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00961\ \ \ \ \ \ \ (has\_non\_member\_versioned\_load<T,\ InputArchive>::value\ \&\&\ has\_non\_member\_versioned\_save<T,\ OutputArchive>::value)>\ \{\};}
+\DoxyCodeLine{00962\ }
+\DoxyCodeLine{00963\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00964\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{00965\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__invalid__output__versioning}{has\_invalid\_output\_versioning}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00966\ \ \ \ \ \ \ (has\_member\_versioned\_save<T,\ OutputArchive>::value\ \&\&\ has\_member\_save<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00967\ \ \ \ \ \ \ (has\_non\_member\_versioned\_save<T,\ OutputArchive>::value\ \&\&\ has\_non\_member\_save<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00968\ \ \ \ \ \ \ (has\_member\_versioned\_serialize<T,\ OutputArchive>::value\ \&\&\ has\_member\_serialize<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00969\ \ \ \ \ \ \ (has\_non\_member\_versioned\_serialize<T,\ OutputArchive>::value\ \&\&\ has\_non\_member\_serialize<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00970\ \ \ \ \ \ \ (has\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value\ \&\&\ has\_member\_save\_minimal<T,\ OutputArchive>::value)\ ||}
+\DoxyCodeLine{00971\ \ \ \ \ \ \ (has\_non\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value\ \&\&\ \ has\_non\_member\_save\_minimal<T,\ OutputArchive>::value)>\ \{\};}
+\DoxyCodeLine{00972\ }
+\DoxyCodeLine{00973\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00974\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive>}
+\DoxyCodeLine{00975\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__invalid__input__versioning}{has\_invalid\_input\_versioning}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{00976\ \ \ \ \ \ \ (has\_member\_versioned\_load<T,\ InputArchive>::value\ \&\&\ has\_member\_load<T,\ InputArchive>::value)\ ||}
+\DoxyCodeLine{00977\ \ \ \ \ \ \ (has\_non\_member\_versioned\_load<T,\ InputArchive>::value\ \&\&\ has\_non\_member\_load<T,\ InputArchive>::value)\ ||}
+\DoxyCodeLine{00978\ \ \ \ \ \ \ (has\_member\_versioned\_serialize<T,\ InputArchive>::value\ \&\&\ has\_member\_serialize<T,\ InputArchive>::value)\ ||}
+\DoxyCodeLine{00979\ \ \ \ \ \ \ (has\_non\_member\_versioned\_serialize<T,\ InputArchive>::value\ \&\&\ has\_non\_member\_serialize<T,\ InputArchive>::value)\ ||}
+\DoxyCodeLine{00980\ \ \ \ \ \ \ (has\_member\_versioned\_load\_minimal<T,\ InputArchive>::value\ \&\&\ has\_member\_load\_minimal<T,\ InputArchive>::value)\ ||}
+\DoxyCodeLine{00981\ \ \ \ \ \ \ (has\_non\_member\_versioned\_load\_minimal<T,\ InputArchive>::value\ \&\&\ \ has\_non\_member\_load\_minimal<T,\ InputArchive>::value)>\ \{\};}
+\DoxyCodeLine{00982\ }
+\DoxyCodeLine{00983\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00984\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00985\ \ \ \ \ \{}
+\DoxyCodeLine{00987\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL(name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00988\ \textcolor{preprocessor}{\ \ \ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00989\ \textcolor{preprocessor}{\ \ \ \ \ \ struct\ is\_specialized\_\#\#name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00990\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ !std::is\_base\_of<std::false\_type,\ specialize<A,\ T,\ specialization::name>>::value>\ \{\}}}
+\DoxyCodeLine{00991\ }
+\DoxyCodeLine{00992\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(member\_serialize);}
+\DoxyCodeLine{00993\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(member\_load\_save);}
+\DoxyCodeLine{00994\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(member\_load\_save\_minimal);}
+\DoxyCodeLine{00995\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(non\_member\_serialize);}
+\DoxyCodeLine{00996\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(non\_member\_load\_save);}
+\DoxyCodeLine{00997\ \ \ \ \ \ \ \mbox{\hyperlink{traits_8hpp_a33ec65e257576ae208d6a71cf01c4258}{CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}(non\_member\_load\_save\_minimal);}
+\DoxyCodeLine{00998\ }
+\DoxyCodeLine{00999\ \textcolor{preprocessor}{\ \ \ \ \ \ \#undef\ CEREAL\_MAKE\_IS\_SPECIALIZED\_IMPL}}
+\DoxyCodeLine{01000\ }
+\DoxyCodeLine{01002\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01003\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__specializations}{count\_specializations}}\ :\ std::integral\_constant<int,}
+\DoxyCodeLine{01004\ \ \ \ \ \ \ \ \ is\_specialized\_member\_serialize<T,\ A>::value\ +}
+\DoxyCodeLine{01005\ \ \ \ \ \ \ \ \ is\_specialized\_member\_load\_save<T,\ A>::value\ +}
+\DoxyCodeLine{01006\ \ \ \ \ \ \ \ \ is\_specialized\_member\_load\_save\_minimal<T,\ A>::value\ +}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ is\_specialized\_non\_member\_serialize<T,\ A>::value\ +}
+\DoxyCodeLine{01008\ \ \ \ \ \ \ \ \ is\_specialized\_non\_member\_load\_save<T,\ A>::value\ +}
+\DoxyCodeLine{01009\ \ \ \ \ \ \ \ \ is\_specialized\_non\_member\_load\_save\_minimal<T,\ A>::value>\ \{\};}
+\DoxyCodeLine{01010\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{01011\ }
+\DoxyCodeLine{01013\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01014\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__specialized}{is\_specialized}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01015\ \ \ \ \ \ \ detail::is\_specialized\_member\_serialize<T,\ A>::value\ ||}
+\DoxyCodeLine{01016\ \ \ \ \ \ \ detail::is\_specialized\_member\_load\_save<T,\ A>::value\ ||}
+\DoxyCodeLine{01017\ \ \ \ \ \ \ detail::is\_specialized\_member\_load\_save\_minimal<T,\ A>::value\ ||}
+\DoxyCodeLine{01018\ \ \ \ \ \ \ detail::is\_specialized\_non\_member\_serialize<T,\ A>::value\ ||}
+\DoxyCodeLine{01019\ \ \ \ \ \ \ detail::is\_specialized\_non\_member\_load\_save<T,\ A>::value\ ||}
+\DoxyCodeLine{01020\ \ \ \ \ \ \ detail::is\_specialized\_non\_member\_load\_save\_minimal<T,\ A>::value>}
+\DoxyCodeLine{01021\ \ \ \ \ \{}
+\DoxyCodeLine{01022\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__specializations}{detail::count\_specializations<T,\ A>::value}}\ <=\ 1,\ \textcolor{stringliteral}{"{}More\ than\ one\ explicit\ specialization\ detected\ for\ type."{}});}
+\DoxyCodeLine{01023\ \ \ \ \ \};}
+\DoxyCodeLine{01024\ }
+\DoxyCodeLine{01026\ }
+\DoxyCodeLine{01028\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT(name,\ versioned\_name,\ print\_name,\ spec\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01029\ \textcolor{preprocessor}{\ \ \ \ static\_assert(\ (is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value\ \&\&\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01030\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (has\_\#\#name<T,\ A>::value\ ||\ has\_\#\#versioned\_name<T,\ A>::value))\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01031\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ !(is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value),\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01032\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ "{}cereal\ detected\ "{}\ \#print\_name\ "{}\ specialization\ but\ no\ "{}\ \#print\_name\ "{}\ serialize\ function"{}\ )}}
+\DoxyCodeLine{01033\ }
+\DoxyCodeLine{01035\ }
+\DoxyCodeLine{01037\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_MAKE\_IS\_SPECIALIZED(name,\ versioned\_name,\ spec\_name)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01038\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01039\ \textcolor{preprocessor}{\ \ \ \ struct\ is\_specialized\_\#\#name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01040\ \textcolor{preprocessor}{\ \ \ \ \ \ is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value>\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01041\ \textcolor{preprocessor}{\ \ \ \ \{\ CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT(name,\ versioned\_name,\ name,\ spec\_name);\ \};\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01042\ \textcolor{preprocessor}{\ \ \ \ template\ <class\ T,\ class\ A>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01043\ \textcolor{preprocessor}{\ \ \ \ struct\ is\_specialized\_\#\#versioned\_name\ :\ std::integral\_constant<bool,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01044\ \textcolor{preprocessor}{\ \ \ \ \ \ is\_specialized<T,\ A>::value\ \&\&\ detail::is\_specialized\_\#\#spec\_name<T,\ A>::value>\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{01045\ \textcolor{preprocessor}{\ \ \ \ \{\ CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT(name,\ versioned\_name,\ versioned\_name,\ spec\_name);\ \}}}
+\DoxyCodeLine{01046\ }
+\DoxyCodeLine{01047\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(member\_serialize,\ member\_versioned\_serialize,\ member\_serialize);}
+\DoxyCodeLine{01048\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(non\_member\_serialize,\ non\_member\_versioned\_serialize,\ non\_member\_serialize);}
+\DoxyCodeLine{01049\ }
+\DoxyCodeLine{01050\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(member\_save,\ member\_versioned\_save,\ member\_load\_save);}
+\DoxyCodeLine{01051\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(non\_member\_save,\ non\_member\_versioned\_save,\ non\_member\_load\_save);}
+\DoxyCodeLine{01052\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(member\_load,\ member\_versioned\_load,\ member\_load\_save);}
+\DoxyCodeLine{01053\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(non\_member\_load,\ non\_member\_versioned\_load,\ non\_member\_load\_save);}
+\DoxyCodeLine{01054\ }
+\DoxyCodeLine{01055\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(member\_save\_minimal,\ member\_versioned\_save\_minimal,\ member\_load\_save\_minimal);}
+\DoxyCodeLine{01056\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(non\_member\_save\_minimal,\ non\_member\_versioned\_save\_minimal,\ non\_member\_load\_save\_minimal);}
+\DoxyCodeLine{01057\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(member\_load\_minimal,\ member\_versioned\_load\_minimal,\ member\_load\_save\_minimal);}
+\DoxyCodeLine{01058\ \ \ \ \ \mbox{\hyperlink{traits_8hpp_af566f627f0de18c31e2bbb21a01cce70}{CEREAL\_MAKE\_IS\_SPECIALIZED}}(non\_member\_load\_minimal,\ non\_member\_versioned\_load\_minimal,\ non\_member\_load\_save\_minimal);}
+\DoxyCodeLine{01059\ }
+\DoxyCodeLine{01060\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_IS\_SPECIALIZED\_ASSERT}}
+\DoxyCodeLine{01061\ \textcolor{preprocessor}{\ \ \ \ \#undef\ CEREAL\_MAKE\_IS\_SPECIALIZED}}
+\DoxyCodeLine{01062\ }
+\DoxyCodeLine{01063\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01064\ \ \ \ \ \textcolor{comment}{//\ detects\ if\ a\ type\ has\ any\ active\ minimal\ output\ serialization}}
+\DoxyCodeLine{01065\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{01066\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{has\_minimal\_output\_serialization}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01067\ \ \ \ \ \ \ is\_specialized\_member\_save\_minimal<T,\ OutputArchive>::value\ ||}
+\DoxyCodeLine{01068\ \ \ \ \ \ \ ((has\_member\_save\_minimal<T,\ OutputArchive>::value\ ||}
+\DoxyCodeLine{01069\ \ \ \ \ \ \ \ \ has\_non\_member\_save\_minimal<T,\ OutputArchive>::value\ ||}
+\DoxyCodeLine{01070\ \ \ \ \ \ \ \ \ has\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value\ ||}
+\DoxyCodeLine{01071\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value)\ \&\&}
+\DoxyCodeLine{01072\ \ \ \ \ \ \ \ !(is\_specialized\_member\_serialize<T,\ OutputArchive>::value\ ||}
+\DoxyCodeLine{01073\ \ \ \ \ \ \ \ \ \ is\_specialized\_member\_save<T,\ OutputArchive>::value))>\ \{\};}
+\DoxyCodeLine{01074\ }
+\DoxyCodeLine{01075\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01076\ \ \ \ \ \textcolor{comment}{//\ detects\ if\ a\ type\ has\ any\ active\ minimal\ input\ serialization}}
+\DoxyCodeLine{01077\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive>}
+\DoxyCodeLine{01078\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__input__serialization}{has\_minimal\_input\_serialization}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01079\ \ \ \ \ \ \ is\_specialized\_member\_load\_minimal<T,\ InputArchive>::value\ ||}
+\DoxyCodeLine{01080\ \ \ \ \ \ \ ((has\_member\_load\_minimal<T,\ InputArchive>::value\ ||}
+\DoxyCodeLine{01081\ \ \ \ \ \ \ \ \ has\_non\_member\_load\_minimal<T,\ InputArchive>::value\ ||}
+\DoxyCodeLine{01082\ \ \ \ \ \ \ \ \ has\_member\_versioned\_load\_minimal<T,\ InputArchive>::value\ ||}
+\DoxyCodeLine{01083\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_load\_minimal<T,\ InputArchive>::value)\ \&\&}
+\DoxyCodeLine{01084\ \ \ \ \ \ \ \ !(is\_specialized\_member\_serialize<T,\ InputArchive>::value\ ||}
+\DoxyCodeLine{01085\ \ \ \ \ \ \ \ \ \ is\_specialized\_member\_load<T,\ InputArchive>::value))>\ \{\};}
+\DoxyCodeLine{01086\ }
+\DoxyCodeLine{01087\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01088\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01089\ \ \ \ \ \{}
+\DoxyCodeLine{01091\ }
+\DoxyCodeLine{01092\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{01093\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__output__serializers}{count\_output\_serializers}}\ :\ std::integral\_constant<int,}
+\DoxyCodeLine{01094\ \ \ \ \ \ \ \ \ count\_specializations<T,\ OutputArchive>::value\ ?\ count\_specializations<T,\ OutputArchive>::value\ :}
+\DoxyCodeLine{01095\ \ \ \ \ \ \ \ \ has\_member\_save<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01096\ \ \ \ \ \ \ \ \ has\_non\_member\_save<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01097\ \ \ \ \ \ \ \ \ has\_member\_serialize<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01098\ \ \ \ \ \ \ \ \ has\_non\_member\_serialize<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01099\ \ \ \ \ \ \ \ \ has\_member\_save\_minimal<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01100\ \ \ \ \ \ \ \ \ has\_non\_member\_save\_minimal<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01101\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*-\/versioned-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{01102\ \ \ \ \ \ \ \ \ has\_member\_versioned\_save<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01103\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_save<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01104\ \ \ \ \ \ \ \ \ has\_member\_versioned\_serialize<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01105\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_serialize<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01106\ \ \ \ \ \ \ \ \ has\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value\ +}
+\DoxyCodeLine{01107\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_save\_minimal<T,\ OutputArchive>::value>\ \{\};}
+\DoxyCodeLine{01108\ \ \ \ \ \}}
+\DoxyCodeLine{01109\ }
+\DoxyCodeLine{01110\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ OutputArchive>}
+\DoxyCodeLine{01111\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__output__serializable}{is\_output\_serializable}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01112\ \ \ \ \ \ \ detail::count\_output\_serializers<T,\ OutputArchive>::value\ ==\ 1>\ \{\};}
+\DoxyCodeLine{01113\ }
+\DoxyCodeLine{01114\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01115\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01116\ \ \ \ \ \{}
+\DoxyCodeLine{01118\ }
+\DoxyCodeLine{01119\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive>}
+\DoxyCodeLine{01120\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1count__input__serializers}{count\_input\_serializers}}\ :\ std::integral\_constant<int,}
+\DoxyCodeLine{01121\ \ \ \ \ \ \ \ \ count\_specializations<T,\ InputArchive>::value\ ?\ count\_specializations<T,\ InputArchive>::value\ :}
+\DoxyCodeLine{01122\ \ \ \ \ \ \ \ \ has\_member\_load<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01123\ \ \ \ \ \ \ \ \ has\_non\_member\_load<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01124\ \ \ \ \ \ \ \ \ has\_member\_serialize<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01125\ \ \ \ \ \ \ \ \ has\_non\_member\_serialize<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01126\ \ \ \ \ \ \ \ \ has\_member\_load\_minimal<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01127\ \ \ \ \ \ \ \ \ has\_non\_member\_load\_minimal<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01128\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*-\/versioned-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{01129\ \ \ \ \ \ \ \ \ has\_member\_versioned\_load<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01130\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_load<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01131\ \ \ \ \ \ \ \ \ has\_member\_versioned\_serialize<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01132\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_serialize<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01133\ \ \ \ \ \ \ \ \ has\_member\_versioned\_load\_minimal<T,\ InputArchive>::value\ +}
+\DoxyCodeLine{01134\ \ \ \ \ \ \ \ \ has\_non\_member\_versioned\_load\_minimal<T,\ InputArchive>::value>\ \{\};}
+\DoxyCodeLine{01135\ \ \ \ \ \}}
+\DoxyCodeLine{01136\ }
+\DoxyCodeLine{01137\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ InputArchive>}
+\DoxyCodeLine{01138\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__input__serializable}{is\_input\_serializable}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01139\ \ \ \ \ \ \ detail::count\_input\_serializers<T,\ InputArchive>::value\ ==\ 1>\ \{\};}
+\DoxyCodeLine{01140\ }
+\DoxyCodeLine{01141\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01142\ \ \ \ \ \textcolor{comment}{//\ Base\ Class\ Support}}
+\DoxyCodeLine{01143\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01144\ \ \ \ \ \{}
+\DoxyCodeLine{01145\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }base\_class\_id}
+\DoxyCodeLine{01146\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01147\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{01148\ \ \ \ \ \ \ \ \ \ \ base\_class\_id(T\ \textcolor{keyword}{const}\ *\ \textcolor{keyword}{const}\ t)\ :}
+\DoxyCodeLine{01149\ \ \ \ \ \ \ \ \ \ \ type(\textcolor{keyword}{typeid}(T)),}
+\DoxyCodeLine{01150\ \ \ \ \ \ \ \ \ \ \ ptr(t),}
+\DoxyCodeLine{01151\ \ \ \ \ \ \ \ \ \ \ hash(std::hash<std::type\_index>()(\textcolor{keyword}{typeid}(T))\ \string^\ (std::hash<void\ const\ *>()(t)\ <<\ 1))}
+\DoxyCodeLine{01152\ \ \ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{01153\ }
+\DoxyCodeLine{01154\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ operator==(base\_class\_id\ \textcolor{keyword}{const}\ \&\ other)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{01155\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ (type\ ==\ other.type)\ \&\&\ (ptr\ ==\ other.ptr);\ \}}
+\DoxyCodeLine{01156\ }
+\DoxyCodeLine{01157\ \ \ \ \ \ \ \ \ \ \ std::type\_index\ type;}
+\DoxyCodeLine{01158\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \textcolor{keyword}{const}\ *\ ptr;}
+\DoxyCodeLine{01159\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ hash;}
+\DoxyCodeLine{01160\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{01161\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1base__class__id__hash}{base\_class\_id\_hash}}\ \{\ \textcolor{keywordtype}{size\_t}\ operator()(\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1base__class__id}{base\_class\_id}}\ \textcolor{keyword}{const}\ \&\ \textcolor{keywordtype}{id})\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}.hash;\ \}\ \ \};}
+\DoxyCodeLine{01162\ \ \ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{01163\ }
+\DoxyCodeLine{01164\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01165\ \ \ \ \ \{}
+\DoxyCodeLine{01167\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_base_cast_base}{BaseCastBase}}\ \{\};}
+\DoxyCodeLine{01168\ }
+\DoxyCodeLine{01169\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}>}
+\DoxyCodeLine{01170\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__base__class}{get\_base\_class}};}
+\DoxyCodeLine{01171\ }
+\DoxyCodeLine{01172\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{template}<\textcolor{keyword}{typename}>\ \textcolor{keyword}{class\ }Cast,\ \textcolor{keyword}{class\ }Base>}
+\DoxyCodeLine{01173\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1get__base__class}{get\_base\_class}}<Cast<Base>>}
+\DoxyCodeLine{01174\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01175\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ Base;}
+\DoxyCodeLine{01176\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{01177\ }
+\DoxyCodeLine{01179\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Cast,\ \textcolor{keyword}{template}<\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{class\ }Test,\ \textcolor{keyword}{class\ }Archive,}
+\DoxyCodeLine{01180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ IsBaseCast\ =\ std::is\_base\_of<BaseCastBase,\ Cast>::value>}
+\DoxyCodeLine{01181\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__minimal__base__class__serialization__impl}{has\_minimal\_base\_class\_serialization\_impl}}\ :\ Test<typename\ get\_base\_class<Cast>::type,\ Archive>}
+\DoxyCodeLine{01182\ \ \ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01183\ }
+\DoxyCodeLine{01185\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Cast,\ \textcolor{keyword}{template}<\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{class\ }Test,\ \textcolor{keyword}{class\ }Archive>}
+\DoxyCodeLine{01186\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__minimal__base__class__serialization__impl}{has\_minimal\_base\_class\_serialization\_impl}}<Cast,Test,\ Archive,\ false>\ :\ std::false\_type}
+\DoxyCodeLine{01187\ \ \ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01188\ \ \ \ \ \}}
+\DoxyCodeLine{01189\ }
+\DoxyCodeLine{01191\ }
+\DoxyCodeLine{01194\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Cast,\ \textcolor{keyword}{template}<\textcolor{keyword}{class},\ \textcolor{keyword}{class}>\ \textcolor{keyword}{class\ }Test,\ \textcolor{keyword}{class\ }Archive>}
+\DoxyCodeLine{01195\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__base__class__serialization}{has\_minimal\_base\_class\_serialization}}\ :\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1has__minimal__base__class__serialization__impl}{detail::has\_minimal\_base\_class\_serialization\_impl}}<Cast,\ Test,\ Archive>}
+\DoxyCodeLine{01196\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01197\ }
+\DoxyCodeLine{01198\ }
+\DoxyCodeLine{01199\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01200\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01201\ \ \ \ \ \{}
+\DoxyCodeLine{01202\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper}{shared\_from\_this\_wrapper}}}
+\DoxyCodeLine{01203\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01204\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{01205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ (check)(\ U\ \textcolor{keyword}{const}\ \&\ t\ )\ -\/>\ \textcolor{keyword}{decltype}(\ ::cereal::access::shared\_from\_this(t),\ std::true\_type()\ );}
+\DoxyCodeLine{01206\ }
+\DoxyCodeLine{01207\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ (check)(\ ...\ )\ -\/>\ \textcolor{keyword}{decltype}(\ std::false\_type()\ );}
+\DoxyCodeLine{01208\ }
+\DoxyCodeLine{01209\ \ \ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ U>}
+\DoxyCodeLine{01210\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ get(\ U\ \textcolor{keyword}{const}\ \&\ t\ )\ -\/>\ \textcolor{keyword}{decltype}(\ t.shared\_from\_this()\ );}
+\DoxyCodeLine{01211\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{01212\ \ \ \ \ \}}
+\DoxyCodeLine{01213\ }
+\DoxyCodeLine{01215\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{01216\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1has__shared__from__this}{has\_shared\_from\_this}}\ :\ decltype((detail::shared\_from\_this\_wrapper::check)(std::declval<T>()))}
+\DoxyCodeLine{01217\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01218\ }
+\DoxyCodeLine{01220\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{01221\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1get__shared__from__this__base}{get\_shared\_from\_this\_base}}}
+\DoxyCodeLine{01222\ \ \ \ \ \{}
+\DoxyCodeLine{01223\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{01224\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }PtrType\ =\ \textcolor{keyword}{decltype}(detail::shared\_from\_this\_wrapper::get(std::declval<T>()));}
+\DoxyCodeLine{01225\ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{01227\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{structcereal_1_1traits_1_1get__shared__from__this__base_ad4b377aa8d9519752dd58ecfd791a7ab}{type}}\ =\ \textcolor{keyword}{typename}\ std::decay<typename\ PtrType::element\_type>::type;}
+\DoxyCodeLine{01228\ \ \ \ \ \};}
+\DoxyCodeLine{01229\ }
+\DoxyCodeLine{01230\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01232\ }
+\DoxyCodeLine{01238\ \ \ \ \ template\ <class\ T,\ bool\ IsCerealMinimalTrait\ =\ std::is\_base\_of<detail::NoConvertBase,\ T>::value>}
+\DoxyCodeLine{01239\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1strip__minimal}{strip\_minimal}}}
+\DoxyCodeLine{01240\ \ \ \ \ \{}
+\DoxyCodeLine{01241\ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ T;}
+\DoxyCodeLine{01242\ \ \ \ \ \};}
+\DoxyCodeLine{01243\ }
+\DoxyCodeLine{01245\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{01246\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1strip__minimal}{strip\_minimal}}<T,\ true>}
+\DoxyCodeLine{01247\ \ \ \ \ \{}
+\DoxyCodeLine{01248\ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \textcolor{keyword}{typename}\ T::type;}
+\DoxyCodeLine{01249\ \ \ \ \ \};}
+\DoxyCodeLine{01250\ }
+\DoxyCodeLine{01251\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01253\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{01254\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__default__constructible}{is\_default\_constructible}}}
+\DoxyCodeLine{01255\ \ \ \ \ \{}
+\DoxyCodeLine{01256\ \textcolor{preprocessor}{\ \ \ \ \ \ \#ifdef\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{01257\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT,\ \textcolor{keyword}{class}\ SFINAE\ =\ \textcolor{keywordtype}{void}>}
+\DoxyCodeLine{01258\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }test\ :\ no\ \{\};}
+\DoxyCodeLine{01259\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT>}
+\DoxyCodeLine{01260\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }test<TT,\ typename\ detail::Void<\ decltype(\ cereal::access::construct<TT>()\ )\ >::type>\ :\ yes\ \{\};}
+\DoxyCodeLine{01261\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ test<T>();}
+\DoxyCodeLine{01262\ \textcolor{preprocessor}{\ \ \ \ \ \ \#else\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC\ =========================================}}
+\DoxyCodeLine{01263\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ TT>}
+\DoxyCodeLine{01264\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ test(\textcolor{keywordtype}{int})\ -\/>\ \textcolor{keyword}{decltype}(\ cereal::access::construct<TT>(),\ yes());}
+\DoxyCodeLine{01265\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}>}
+\DoxyCodeLine{01266\ \ \ \ \ \ \ \textcolor{keyword}{static}\ no\ test(...);}
+\DoxyCodeLine{01267\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ value\ =\ std::is\_same<decltype(test<T>(0)),\ yes>::value;}
+\DoxyCodeLine{01268\ \textcolor{preprocessor}{\ \ \ \ \ \ \#endif\ }\textcolor{comment}{//\ NOT\ CEREAL\_OLDER\_GCC}}
+\DoxyCodeLine{01269\ \ \ \ \ \};}
+\DoxyCodeLine{01270\ }
+\DoxyCodeLine{01271\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01272\ \ \ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01273\ \ \ \ \ \{}
+\DoxyCodeLine{01275\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01276\ \ \ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{traits_8hpp_a62a02bbfa227a78cbc43d689fe57083d}{decay\_archive}}\ =\ \textcolor{keyword}{typename}\ std::decay<typename\ strip\_minimal<A>::type>::type;}
+\DoxyCodeLine{01277\ \ \ \ \ \}}
+\DoxyCodeLine{01278\ }
+\DoxyCodeLine{01280\ }
+\DoxyCodeLine{01289\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ ArchiveT,\ \textcolor{keyword}{class}\ CerealArchiveT>}
+\DoxyCodeLine{01290\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__same__archive}{is\_same\_archive}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01291\ \ \ \ \ \ \ std::is\_same<detail::decay\_archive<ArchiveT>,\ CerealArchiveT>::value>}
+\DoxyCodeLine{01292\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01293\ }
+\DoxyCodeLine{01294\ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01296\ }
+\DoxyCodeLine{01315\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_ARCHIVE\_RESTRICT(INTYPE,\ OUTTYPE)\ \(\backslash\)}}
+\DoxyCodeLine{01316\ \textcolor{preprocessor}{\ \ \ \ typename\ std::enable\_if<cereal::traits::is\_same\_archive<Archive,\ INTYPE>::value\ ||\ cereal::traits::is\_same\_archive<Archive,\ OUTTYPE>::value,\ void>::type}}
+\DoxyCodeLine{01317\ }
+\DoxyCodeLine{01319\ }
+\DoxyCodeLine{01321\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1_text_archive}{TextArchive}}\ \{\};}
+\DoxyCodeLine{01322\ }
+\DoxyCodeLine{01324\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01325\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1traits_1_1is__text__archive}{is\_text\_archive}}\ :\ std::integral\_constant<bool,}
+\DoxyCodeLine{01326\ \ \ \ \ \ \ std::is\_base\_of<TextArchive,\ detail::decay\_archive<A>>::value>}
+\DoxyCodeLine{01327\ \ \ \ \ \{\ \};}
+\DoxyCodeLine{01328\ \ \ \}\ \textcolor{comment}{//\ namespace\ traits}}
+\DoxyCodeLine{01329\ }
+\DoxyCodeLine{01330\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{01331\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{01332\ \ \ \{}
+\DoxyCodeLine{01333\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }T,\ \textcolor{keyword}{class\ }A,}
+\DoxyCodeLine{01334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ Member\ =\ \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__load__and__construct}{traits::has\_member\_load\_and\_construct<T,\ A>::value}},}
+\DoxyCodeLine{01335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ MemberVersioned\ =\ \mbox{\hyperlink{structcereal_1_1traits_1_1has__member__versioned__load__and__construct}{traits::has\_member\_versioned\_load\_and\_construct<T,\ A>::value}},}
+\DoxyCodeLine{01336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ NonMember\ =\ traits::has\_non\_member\_load\_and\_construct<T,\ A>::value,}
+\DoxyCodeLine{01337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ NonMemberVersioned\ =\ traits::has\_non\_member\_versioned\_load\_and\_construct<T,\ A>::value>}
+\DoxyCodeLine{01338\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}}
+\DoxyCodeLine{01339\ \ \ \ \ \{}
+\DoxyCodeLine{01340\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1delay__static__assert}{cereal::traits::detail::delay\_static\_assert<T>::value}},}
+\DoxyCodeLine{01341\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}cereal\ found\ more\ than\ one\ compatible\ load\_and\_construct\ function\ for\ the\ provided\ type\ and\ archive\ combination.\ \(\backslash\)n\(\backslash\)n\ "{}}}
+\DoxyCodeLine{01342\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Types\ must\ either\ have\ a\ member\ load\_and\_construct\ function\ or\ a\ non-\/member\ specialization\ of\ LoadAndConstruct\ (you\ may\ not\ mix\ these).\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01343\ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}In\ addition,\ you\ may\ not\ mix\ versioned\ with\ non-\/versioned\ load\_and\_construct\ functions.\ \(\backslash\)n\(\backslash\)n\ "{}}\ );}
+\DoxyCodeLine{01344\ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ *\ load\_andor\_construct(\ A\ \&\ \textcolor{comment}{/*ar*/},\ \mbox{\hyperlink{classcereal_1_1construct}{construct<T>}}\ \&\ \textcolor{comment}{/*construct*/}\ )}
+\DoxyCodeLine{01345\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};\ \}}
+\DoxyCodeLine{01346\ \ \ \ \ \};}
+\DoxyCodeLine{01347\ }
+\DoxyCodeLine{01348\ \ \ \ \ \textcolor{comment}{//\ no\ load\ and\ construct\ case}}
+\DoxyCodeLine{01349\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01350\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}<T,\ A,\ false,\ false,\ false,\ false>}
+\DoxyCodeLine{01351\ \ \ \ \ \{}
+\DoxyCodeLine{01352\ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ ::cereal::traits::is\_default\_constructible<T>::value,}
+\DoxyCodeLine{01353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Trying\ to\ serialize\ a\ an\ object\ with\ no\ default\ constructor.\ \(\backslash\)n\(\backslash\)n\ "{}}}
+\DoxyCodeLine{01354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Types\ must\ either\ be\ default\ constructible\ or\ define\ either\ a\ member\ or\ non\ member\ Construct\ function.\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Construct\ functions\ generally\ have\ the\ signature:\ \(\backslash\)n\(\backslash\)n\ "{}}}
+\DoxyCodeLine{01356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}template\ <class\ Archive>\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}static\ void\ load\_and\_construct(Archive\ \&\ ar,\ cereal::construct<T>\ \&\ construct)\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\{\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ var\ a;\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ ar(\ a\ )\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\ \ construct(\ a\ );\ \(\backslash\)n\ "{}}}
+\DoxyCodeLine{01362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}\}\ \(\backslash\)n\(\backslash\)n"{}}\ );}
+\DoxyCodeLine{01363\ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ *\ load\_andor\_construct()}
+\DoxyCodeLine{01364\ \ \ \ \ \ \ \{\ return\ ::cereal::access::construct<T>();\ \}}
+\DoxyCodeLine{01365\ \ \ \ \ \};}
+\DoxyCodeLine{01366\ }
+\DoxyCodeLine{01367\ \ \ \ \ \textcolor{comment}{//\ member\ non-\/versioned}}
+\DoxyCodeLine{01368\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01369\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}<T,\ A,\ true,\ false,\ false,\ false>}
+\DoxyCodeLine{01370\ \ \ \ \ \{}
+\DoxyCodeLine{01371\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_andor\_construct(\ A\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct<T>}}\ \&\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ )}
+\DoxyCodeLine{01372\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01373\ \ \ \ \ \ \ \ \ access::load\_and\_construct<T>(\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ );}
+\DoxyCodeLine{01374\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01375\ \ \ \ \ \};}
+\DoxyCodeLine{01376\ }
+\DoxyCodeLine{01377\ \ \ \ \ \textcolor{comment}{//\ member\ versioned}}
+\DoxyCodeLine{01378\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01379\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}<T,\ A,\ false,\ true,\ false,\ false>}
+\DoxyCodeLine{01380\ \ \ \ \ \{}
+\DoxyCodeLine{01381\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_andor\_construct(\ A\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct<T>}}\ \&\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ )}
+\DoxyCodeLine{01382\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01383\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ version\ =\ ar.template\ loadClassVersion<T>();}
+\DoxyCodeLine{01384\ \ \ \ \ \ \ \ \ access::load\_and\_construct<T>(\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct}},\ version\ );}
+\DoxyCodeLine{01385\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01386\ \ \ \ \ \};}
+\DoxyCodeLine{01387\ }
+\DoxyCodeLine{01388\ \ \ \ \ \textcolor{comment}{//\ non-\/member\ non-\/versioned}}
+\DoxyCodeLine{01389\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01390\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}<T,\ A,\ false,\ false,\ true,\ false>}
+\DoxyCodeLine{01391\ \ \ \ \ \{}
+\DoxyCodeLine{01392\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_andor\_construct(\ A\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct<T>}}\ \&\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ )}
+\DoxyCodeLine{01393\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01394\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_load_and_construct}{LoadAndConstruct<T>::load\_and\_construct}}(\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ );}
+\DoxyCodeLine{01395\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01396\ \ \ \ \ \};}
+\DoxyCodeLine{01397\ }
+\DoxyCodeLine{01398\ \ \ \ \ \textcolor{comment}{//\ non-\/member\ versioned}}
+\DoxyCodeLine{01399\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>}
+\DoxyCodeLine{01400\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1detail_1_1_construct}{Construct}}<T,\ A,\ false,\ false,\ false,\ true>}
+\DoxyCodeLine{01401\ \ \ \ \ \{}
+\DoxyCodeLine{01402\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_andor\_construct(\ A\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct<T>}}\ \&\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ )}
+\DoxyCodeLine{01403\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01404\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ version\ =\ ar.template\ loadClassVersion<T>();}
+\DoxyCodeLine{01405\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_load_and_construct}{LoadAndConstruct<T>::load\_and\_construct}}(\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct}},\ version\ );}
+\DoxyCodeLine{01406\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01407\ \ \ \ \ \};}
+\DoxyCodeLine{01408\ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{01409\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{01410\ }
+\DoxyCodeLine{01411\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_DETAILS\_TRAITS\_HPP\_}}
+
+\end{DoxyCode}

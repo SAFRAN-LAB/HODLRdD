@@ -1,0 +1,110 @@
+\doxysection{static\+\_\+object.\+hpp}
+\hypertarget{static__object_8hpp_source}{}\label{static__object_8hpp_source}\index{lib/cereal/details/static\_object.hpp@{lib/cereal/details/static\_object.hpp}}
+\mbox{\hyperlink{static__object_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00027\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_DETAILS\_STATIC\_OBJECT\_HPP\_}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ CEREAL\_DETAILS\_STATIC\_OBJECT\_HPP\_}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{macros_8hpp}{cereal/macros.hpp}}"{}}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#if\ CEREAL\_THREAD\_SAFE}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <mutex>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ \&\&\ !defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#\ \ \ define\ CEREAL\_DLL\_EXPORT\ \_\_declspec(dllexport)}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#\ \ \ define\ CEREAL\_USED}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ clang\ or\ gcc}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#\ \ \ define\ CEREAL\_DLL\_EXPORT\ \_\_attribute\_\_\ ((visibility("{}default"{})))}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#\ \ \ define\ CEREAL\_USED\ \_\_attribute\_\_\ ((\_\_used\_\_))}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00056\ \{}
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{namespace\ }detail}
+\DoxyCodeLine{00058\ \ \ \{}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\_DLL\_EXPORT}}\ StaticObject}
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ \&\ create()}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ t;}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ (void)instance;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ t;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ StaticObject(\ StaticObject\ \textcolor{keyword}{const}\ \&\ \textcolor{comment}{/*other*/}\ )\ \{\}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ \&\ getInstance()}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ create();}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{class\ }LockGuard}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#if\ CEREAL\_THREAD\_SAFE}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ LockGuard(std::mutex\ \&\ m)\ :\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}{lock}}(m)\ \{\}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ std::unique\_lock<std::mutex>\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}{lock}};}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ LockGuard()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ LockGuard(LockGuard\ \textcolor{keyword}{const}\ \&)\ =\ \textcolor{keywordflow}{default};\ \textcolor{comment}{//\ prevents\ implicit\ copy\ ctor\ warning}}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \string~LockGuard()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ \{\}\ \textcolor{comment}{//\ prevents\ variable\ not\ used}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{LockGuard}}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}{lock}}()}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#if\ CEREAL\_THREAD\_SAFE}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::mutex\ instanceMutex;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{LockGuard}}\{instanceMutex\};}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{LockGuard}}\{\};}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ \&\ instance;}
+\DoxyCodeLine{00122\ \ \ \ \ \};}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ T\ \&\ StaticObject<T>::instance\ =\ StaticObject<T>::create();}
+\DoxyCodeLine{00125\ \ \ \}\ \textcolor{comment}{//\ namespace\ detail}}
+\DoxyCodeLine{00126\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_DETAILS\_STATIC\_OBJECT\_HPP\_}}
+
+\end{DoxyCode}

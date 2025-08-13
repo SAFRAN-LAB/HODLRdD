@@ -1,0 +1,46 @@
+\doxysection{lib/cereal/types/boost\+\_\+variant.hpp File Reference}
+\hypertarget{boost__variant_8hpp}{}\label{boost__variant_8hpp}\index{lib/cereal/types/boost\_variant.hpp@{lib/cereal/types/boost\_variant.hpp}}
+
+
+Support for boost\+::variant.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$boost/variant/variant\+\_\+fwd.\+hpp$>$}\newline
+{\ttfamily \#include $<$boost/variant/static\+\_\+visitor.\+hpp$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1boost__variant__detail_1_1variant__save__visitor}{cereal\+::boost\+\_\+variant\+\_\+detail\+::variant\+\_\+save\+\_\+visitor$<$ Archive $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1boost__variant__detail_1_1_load_and_construct_load_wrapper}{cereal\+::boost\+\_\+variant\+\_\+detail\+::\+Load\+And\+Construct\+Load\+Wrapper$<$ Archive, T $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1boost__variant__detail_1_1load__variant__wrapper_3_01boost_1_1detail_1_1variant_1_1void___01_4}{cereal\+::boost\+\_\+variant\+\_\+detail\+::load\+\_\+variant\+\_\+wrapper$<$ boost\+::detail\+::variant\+::void\+\_\+ $>$}}
+\begin{DoxyCompactList}\small\item\em Avoid serializing variant void\+\_\+ type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1boost__variant__detail_1_1load__variant__wrapper}{cereal\+::boost\+\_\+variant\+\_\+detail\+::load\+\_\+variant\+\_\+wrapper$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{boost__variant_8hpp_a92a2730ed1973ee064e402d49429392d}\label{boost__variant_8hpp_a92a2730ed1973ee064e402d49429392d} 
+\#define {\bfseries CEREAL\+\_\+\+CONSTEXPR\+\_\+\+LAMBDA}~constexpr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_aaef0d6cf11362910537f60cf2d977bff}\label{namespacecereal_aaef0d6cf11362910537f60cf2d977bff} 
+{\footnotesize template$<$class Archive, typename ... Variant\+Types$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, boost\+::variant$<$ Variant\+Types... $>$ const \&variant)
+\begin{DoxyCompactList}\small\item\em Saving for boost\+::variant. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a890ad33a3d0ec4f9d7408e6e7e25e772}\label{namespacecereal_a890ad33a3d0ec4f9d7408e6e7e25e772} 
+{\footnotesize template$<$class Archive, typename ... Variant\+Types$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, boost\+::variant$<$ Variant\+Types... $>$ \&variant)
+\begin{DoxyCompactList}\small\item\em Loading for boost\+::variant. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for boost\+::variant. 
+

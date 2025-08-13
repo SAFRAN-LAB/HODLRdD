@@ -1,0 +1,180 @@
+\doxysection{Hclustering.\+hpp}
+\hypertarget{_hclustering_8hpp_source}{}\label{_hclustering_8hpp_source}\index{include/Hclustering.hpp@{include/Hclustering.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ Hclustering\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ Hclustering\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ NDIM\ =\ 2;}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Struture\ that\ holds\ the\ individual\ location\ of\ points}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structptsn_d}{ptsnD}}\{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{double}\ x[NDIM];}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ id;\ \ \textcolor{comment}{//\ User\ provides\ a\ unique\ identifier\ if\ not\ then\ kernel\ is\ defined\ by\ considering\ two\ points}}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//\ Eucledian\ distance\ between\ two\ points\ in\ any\ dimensions}}
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{double}\ compute\_distance(\mbox{\hyperlink{structptsn_d}{ptsnD}}\&\ a,\mbox{\hyperlink{structptsn_d}{ptsnD}}\&\ b)\{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ 0.0;}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<\ NDIM;i++)\{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ sum\ +=\ (a.x[i]\ -\/\ b.x[i])\ *\ (a.x[i]\ -\/\ b.x[i]);}
+\DoxyCodeLine{00020\ \ \ \ \ \}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Update\ the\ above\ to\ reduce\ operation\ in\ openMP}}
+\DoxyCodeLine{00022\ \ \ \ \ sum\ =\ sqrt(sum);}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{return}\ sum;}
+\DoxyCodeLine{00024\ \}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{class\ }cluster\{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ N;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{comment}{//\ Bounding\ box\ of\ the\ cluster!\ [x1[1],\ x2[1]]\ is\ the\ interval\ in\ dimension\ 1\ and\ x1[1]\ <\ x2[1]}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{comment}{//\ the\ bounding\ box\ here\ is\ provided\ by\ the\ user,\ TODO\ :\ If\ not\ provided\ the\ minimum\ possible\ hypercube\ that\ fits\ set\ of\ points\ needs\ to\ be\ done}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{comment}{//\ The\ center\ of\ the\ cluster\ is\ not\ determined\ now,\ this\ we\ can\ do\ it\ while\ forming\ the\ Node\ of\ the\ tree.}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{double}\ x1[NDIM],\ x2[NDIM];}
+\DoxyCodeLine{00033\ \ \ \ \ std::vector<ptsnD>\ gridPoints;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ cluster\_id;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ level;\ \textcolor{comment}{//\ This\ is\ the\ level\ in\ the\ hierarchical\ clustering}}
+\DoxyCodeLine{00036\ \ \ \ \ cluster(Eigen::VectorXd\ x1,\ Eigen::VectorXd\ x2)}
+\DoxyCodeLine{00037\ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ N\ =\ 0;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Optimize\ copy}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x1[i]\ =\ x1(i);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x2[i]\ =\ x2(i);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_point(\mbox{\hyperlink{structptsn_d}{ptsnD}}\ a)\{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints.push\_back(a);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ N++;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ add\_points(std::vector<ptsnD>\&\ gridPoints\_)\{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints.insert(gridPoints.end(),\ gridPoints\_.begin(),\ gridPoints\_.end());}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ N\ =\ gridPoints.size();}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ remove\_point(\textcolor{keywordtype}{size\_t}\ i)\{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints.erase(gridPoints.begin()\ +\ i);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ N-\/-\/;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ remove\_all\_points()\{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints.clear();}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ N\ =\ 0;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ get\_cluster\_size()\{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ N;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \string~cluster()\{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{comment}{//\ Uniform\ clustering\ of\ points\ provided\ the\ bounding\ box,\ results\ in\ a\ set\ of\ clusters\ with\ N\_max\ leaf\ points.\ TODO\ :\ Find\ the\ bounding\ box}}
+\DoxyCodeLine{00073\ \textcolor{keyword}{class\ }Hclustering\{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{int}\ nLevel\ =\ 0\ ;}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordtype}{bool}\ isLeaf\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ N\_max;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ nClusters;}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{bool}\ isAdaptive\ =\ \textcolor{keyword}{false};\ \textcolor{comment}{//\ TODO:\ Needs\ work\ on\ Adaptive\ clustering}}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{comment}{//\ this\ class\ takes\ a\ complete\ set\ of\ points\ and\ provides\ }}
+\DoxyCodeLine{00080\ \ \ \ \ std::vector<cluster>\ h\_clusters;}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x1[NDIM],\ x2[NDIM];\ \textcolor{comment}{//\ Bounding\ box\ of\ the\ root\ and\ is\ set\ at\ the\ initialization\ of\ the\ cluster}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ Hclustering(\mbox{\hyperlink{classcluster}{cluster}}\&\ src,\ \textcolor{keywordtype}{size\_t}\ Nmx)\{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ N\_max\ =\ Nmx;}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ Updating\ the\ root\ domain\ in\ the\ clustering}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ src.cluster\_id\ =\ 0;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ src.level\ =\ 0;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Bounding\ box\ is\ set}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<NDIM;\ i++)\{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x1[i]\ =\ src.x1[i];}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x2[i]\ =\ src.x2[i];}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ h\_clusters.push\_back(src);\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ sanity\ check\ on\ whether\ cluster\ size\ is\ greater\ than\ N\_max\ specified}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(N\_max\ <\ src.get\_cluster\_size())}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ getHClustering();}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Call\ to\ this\ routine\ the\ first\ time\ }}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ getHClustering()\{\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (!isLeaf)\{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ N\_buff\ =\ 0;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nLevel++;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ cluster\_count\ =\ h\_clusters.size();}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ l\ =\ 0;\ l\ <\ cluster\_count;\ l++)\{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<cluster>\ binary\_clusters;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters.push\_back(h\_clusters[0]);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Form\ 2\string^NDIM\ empty\ cluster\ by\ initialising\ through\ the\ bounding\ box\ of\ the\ parent}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i\ <NDIM;i++)\{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clustering(binary\_clusters,\ i);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Remove\ the\ first\ in\ the\ cluster\ (this\ works\ like\ a\ queue,\ work\ added\ at\ back)}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\_clusters.erase(h\_clusters.begin());}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Adding\ the\ subdivided\ clusters}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ h\_clusters.insert(h\_clusters.end(),\ binary\_clusters.begin(),\ binary\_clusters.end());}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ the\ top\ and\ add\ each\ and\ every\ point\ to\ the\ \ appropriate\ clusters.}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ cl\ =\ 0;\ cl\ <\ h\_clusters.size();\ cl++)}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (N\_buff\ <\ h\_clusters[cl].get\_cluster\_size())}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ N\_buff\ =\ h\_clusters[cl].get\_cluster\_size();}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (N\_buff\ <\ N\_max)}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isLeaf\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ binary\_clustering(std::vector<cluster>\&\ binary\_clusters,\textcolor{keywordtype}{int}\ dim\_i)\{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ binary\_clusters.size();}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t}\ i=0;i<n;i++)\{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ boundary\ bdy}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ bdy\ =\ 0.0;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ a\ =\ binary\_clusters[0].x1[dim\_i];}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ b\ =\ binary\_clusters[0].x2[dim\_i];}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bdy\ +=\ 0.5\ *\ (a+b);}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ x1\ =\ Eigen::VectorXd::Zero(NDIM);}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ x2\ =\ Eigen::VectorXd::Zero(NDIM);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ the\ bounding\ box\ [x\_1,x\_2]\string^NDIM\ for\ the\ cluster}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ k\ =0\ ;k<NDIM;k++)\{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x1(k)\ =\ binary\_clusters[0].x1[k];}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x2(k)\ =\ binary\_clusters[0].x2[k];}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ two\ clusters!!\ this\ subdivide\ the\ particles\ two\ ways\ TODO\ :\ HPC\ way<>}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x2(dim\_i)\ =\ bdy;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcluster}{cluster}}\ A(x1,x2);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Assigning\ cluster\ id\ =\ parent*2\ in\ binary\ subdivision}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A.cluster\_id\ \ =\ binary\_clusters[0].cluster\_id*2;\ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x1(dim\_i)\ =\ bdy;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x2(dim\_i)\ =\ b;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcluster}{cluster}}\ B(x1,x2);}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Assigning\ cluster\ id\ =\ parent*2+1\ in\ binary\ subdivision\ (this\ holds\ being\ the\ binary\ division\ of\ the\ domain)}}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A.cluster\_id\ =\ binary\_clusters[0].cluster\_id\ *\ 2\ +\ 1;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Here\ goes\ a\ while\ loop\ to\ subdivide\ the\ points\ in\ one\ dimension\ at\ the\ same\ time\ remove\ from\ source\ This\ ensure\ O(N)\ space\ for\ points\ at\ all\ times...}}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (binary\_clusters[0].gridPoints.size()!=0)\{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Use\ toggle\ to\ place\ the\ points\ inside\ the\ cluster\ A\ and\ B\ if\ it\ lies\ in\ the\ boundary}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (binary\_clusters[0].gridPoints[0].x[dim\_i]<bdy)\{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A.add\_point(binary\_clusters[0].gridPoints[0]);}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters[0].remove\_point(0);}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B.add\_point(binary\_clusters[0].gridPoints[0]);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters[0].remove\_point(0);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters.erase(binary\_clusters.begin());}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \string~Hclustering()\{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \};}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \textcolor{comment}{//\ TODO\ :\ Adaptive\ clustering\ at\ different\ levels}}
+\DoxyCodeLine{00172\ \textcolor{comment}{//\ TODO\ :\ Sort\ the\ points\ inside\ the\ cluster}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00174\ }
+
+\end{DoxyCode}

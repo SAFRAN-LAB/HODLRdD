@@ -1,0 +1,19 @@
+\doxysection{cereal\+::traits\+::detail\+::shared\+\_\+from\+\_\+this\+\_\+wrapper Struct Reference}
+\hypertarget{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper}{}\label{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper}\index{cereal::traits::detail::shared\_from\_this\_wrapper@{cereal::traits::detail::shared\_from\_this\_wrapper}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_a98b31ebedec587c3f6630a0c79787f32}\label{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_a98b31ebedec587c3f6630a0c79787f32} 
+{\footnotesize template$<$class U$>$ }\\static auto {\bfseries check} (U const \&t) -\/$>$ decltype(\+::cereal\+::access\+::shared\+\_\+from\+\_\+this(t), std\+::true\+\_\+type())
+\item 
+\Hypertarget{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_a1aeb7407218f1436585aca9cd90c8b90}\label{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_a1aeb7407218f1436585aca9cd90c8b90} 
+static auto {\bfseries check} (...) -\/$>$ decltype(std\+::false\+\_\+type())
+\item 
+\Hypertarget{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_aaaf714eabbbce7ee2e8cc9a9a9facd59}\label{structcereal_1_1traits_1_1detail_1_1shared__from__this__wrapper_aaaf714eabbbce7ee2e8cc9a9a9facd59} 
+{\footnotesize template$<$class U$>$ }\\static auto {\bfseries get} (U const \&t) -\/$>$ decltype(t.\+shared\+\_\+from\+\_\+this())
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{traits_8hpp}{traits.\+hpp}}\end{DoxyCompactItemize}

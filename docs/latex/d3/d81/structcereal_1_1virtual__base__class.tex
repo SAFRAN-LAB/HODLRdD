@@ -1,0 +1,110 @@
+\doxysection{cereal\+::virtual\+\_\+base\+\_\+class\texorpdfstring{$<$}{<} Base \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1virtual__base__class}{}\label{structcereal_1_1virtual__base__class}\index{cereal::virtual\_base\_class$<$ Base $>$@{cereal::virtual\_base\_class$<$ Base $>$}}
+
+
+Casts a derived class to its virtual base class in a way that allows cereal to track inheritance.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+class.\+hpp$>$}
+
+Inheritance diagram for cereal\+::virtual\+\_\+base\+\_\+class\texorpdfstring{$<$}{<} Base \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d3/d81/structcereal_1_1virtual__base__class}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1virtual__base__class_afd6b37327af310dc6cdbf26f93ed9a06}\label{structcereal_1_1virtual__base__class_afd6b37327af310dc6cdbf26f93ed9a06} 
+{\footnotesize template$<$class Derived$>$ }\\{\bfseries virtual\+\_\+base\+\_\+class} (Derived const \texorpdfstring{$\ast$}{*}derived)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1virtual__base__class_a05ecaf63e04ea18fec2733628f9679eb}\label{structcereal_1_1virtual__base__class_a05ecaf63e04ea18fec2733628f9679eb} 
+Base \texorpdfstring{$\ast$}{*} {\bfseries base\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Base$>$\newline
+struct cereal\+::virtual\+\_\+base\+\_\+class$<$ Base $>$}
+Casts a derived class to its virtual base class in a way that allows cereal to track inheritance. 
+
+This should be used in cases when a derived type features virtual inheritance from some base type. This allows cereal to track the inheritance and to avoid making duplicate copies during serialization.
+
+It is safe to use \doxylink{structcereal_1_1virtual__base__class}{virtual\+\_\+base\+\_\+class} in all circumstances for serializing base classes, even in cases where virtual inheritance does not take place, though it may be slightly faster to utilize \doxylink{structcereal_1_1base__class}{cereal\+::base\+\_\+class$<$$>$} if you do not need to worry about virtual inheritance.
+
+This also automatically registers polymorphic relation between the base and derived class, assuming they are indeed polymorphic. Note this is not the same as polymorphic type registration. For more information see the documentation on polymorphism. If using a polymorphic class, be sure to include support for polymorphism (\doxylink{polymorphic_8hpp}{cereal/types/polymorphic.\+hpp}).
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{structcereal_1_1base__class}{base\+\_\+class}
+\end{DoxySeeAlso}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \textcolor{keyword}{struct\ }MyBase}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{int}\ x;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ ar(\ x\ );}
+\DoxyCodeLine{\ \ \ \}}
+\DoxyCodeLine{\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keyword}{struct\ }MyLeft\ :\ \textcolor{keyword}{virtual}\ MyBase\ \textcolor{comment}{//<-\/-\/\ Note\ the\ virtual\ inheritance}}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{int}\ y;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ ar(\ cereal::virtual\_base\_class<MyBase>(\ \textcolor{keyword}{this}\ )\ );}
+\DoxyCodeLine{\ \ \ \ \ ar(\ y\ );}
+\DoxyCodeLine{\ \ \ \}}
+\DoxyCodeLine{\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{keyword}{struct\ }MyRight\ :\ \textcolor{keyword}{virtual}\ MyBase}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{int}\ z;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ ar(\ cereal::virtual\_base\_clas<MyBase>(\ \textcolor{keyword}{this}\ )\ );}
+\DoxyCodeLine{\ \ \ \ \ ar(\ z\ );}
+\DoxyCodeLine{\ \ \ \}}
+\DoxyCodeLine{\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \textcolor{comment}{//\ diamond\ virtual\ inheritance;\ contains\ one\ copy\ of\ each\ base\ class}}
+\DoxyCodeLine{\ \textcolor{keyword}{struct\ }MyDerived\ :\ \textcolor{keyword}{virtual}\ MyLeft,\ \textcolor{keyword}{virtual}\ MyRight}
+\DoxyCodeLine{\ \{}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{int}\ a;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ ar(\ cereal::virtual\_base\_class<MyLeft>(\ \textcolor{keyword}{this}\ )\ );\ \ \textcolor{comment}{//\ safely\ serialize\ data\ members\ in\ MyLeft}}
+\DoxyCodeLine{\ \ \ \ \ ar(\ cereal::virtual\_base\_class<MyRight>(\ \textcolor{keyword}{this}\ )\ );\ \textcolor{comment}{//\ safely\ serialize\ data\ members\ in\ MyRight}}
+\DoxyCodeLine{\ \ \ \ \ ar(\ a\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ Because\ we\ used\ virtual\_base\_class,\ cereal\ will\ ensure\ that\ only\ one\ instance\ of\ MyBase\ is}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ serialized\ as\ we\ traverse\ the\ inheritance\ heirarchy.\ This\ means\ that\ there\ will\ be\ one\ copy}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ each\ of\ the\ variables\ x,\ y,\ z,\ and\ a}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ If\ we\ had\ chosen\ to\ use\ static\_cast<>\ instead,\ cereal\ would\ perform\ no\ tracking\ and}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ assume\ that\ every\ base\ class\ should\ be\ serialized\ (in\ this\ case\ leading\ to\ a\ duplicate}}
+\DoxyCodeLine{\ \ \ \ \ \textcolor{comment}{//\ serialization\ of\ MyBase\ due\ to\ diamond\ inheritance}}
+\DoxyCodeLine{\ \};}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{base__class_8hpp}{base\+\_\+class.\+hpp}}\end{DoxyCompactItemize}

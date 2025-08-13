@@ -1,0 +1,179 @@
+\doxysection{cereal\+::JSONInput\+Archive Class Reference}
+\hypertarget{classcereal_1_1_j_s_o_n_input_archive}{}\label{classcereal_1_1_j_s_o_n_input_archive}\index{cereal::JSONInputArchive@{cereal::JSONInputArchive}}
+
+
+An input archive designed to load data from JSON.  
+
+
+
+
+{\ttfamily \#include $<$json.\+hpp$>$}
+
+Inheritance diagram for cereal\+::JSONInput\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{d4/d7b/classcereal_1_1_j_s_o_n_input_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{Indent}\textbf{ Common Functionality}\par
+{\em Common use cases for directly interacting with an \doxylink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive} }\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive_a3ae0714f99d4014117026749135860e3}{JSONInput\+Archive}} (std\+::istream \&stream)
+\begin{DoxyCompactList}\small\item\em Construct, reading from the provided stream. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive_a618425a8a54490a0f1d16f464dd7717e}{load\+Binary\+Value}} (void \texorpdfstring{$\ast$}{*}data, size\+\_\+t size, const char \texorpdfstring{$\ast$}{*}name=nullptr)
+\begin{DoxyCompactList}\small\item\em Loads some binary data, encoded as a base64 string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\end{Indent}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive$<$ JSONInput\+Archive $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{Input\+Archive}} (\mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}{get\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves a shared pointer given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}{register\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id, std\+::shared\+\_\+ptr$<$ void $>$ ptr)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer to its unique identifier. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}{get\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves the string for a polymorphic type given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}{register\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id, std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic name string to its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}{operator$>$$>$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{cereal\+::detail\+::\+Input\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Input\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Internal Functionality}
+Functionality designed for use by those requiring control over the inner mechanisms of the \doxylink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive} \begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive_aa5bf6c42760a02f56657325ed542f1e7}{start\+Node}} ()
+\begin{DoxyCompactList}\small\item\em Starts a new node, going into its proper iterator. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_ab4df5fd2235e7798da73e7b144d13278}\label{classcereal_1_1_j_s_o_n_input_archive_ab4df5fd2235e7798da73e7b144d13278} 
+void {\bfseries finish\+Node} ()
+\begin{DoxyCompactList}\small\item\em Finishes the most recently started node. \end{DoxyCompactList}\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1_j_s_o_n_input_archive_a93eb90affbb58ebfd3dbd3485b028372}{get\+Node\+Name}} () const
+\begin{DoxyCompactList}\small\item\em Retrieves the current node name. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_afccba6c5547664fbffc72f205557a1ef}\label{classcereal_1_1_j_s_o_n_input_archive_afccba6c5547664fbffc72f205557a1ef} 
+void {\bfseries set\+Next\+Name} (const char \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Sets the name for the next node created with start\+Node. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An input archive designed to load data from JSON. 
+
+This archive uses Rapid\+JSON to read in a JSON archive.
+
+As with the output JSON archive, the preferred way to use this archive is in an RAII fashion, ensuring its destruction after all data has been read.
+
+Input JSON should have been produced by the \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}. Data can only be added to dynamically sized containers (marked by JSON arrays) -\/ the input archive will determine their size by looking at the number of child nodes. Only JSON originating from a \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive} is officially supported, but data from other sources may work if properly formatted.
+
+The \doxylink{classcereal_1_1_j_s_o_n_input_archive}{JSONInput\+Archive} does not require that nodes are loaded in the same order they were saved by \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}. Using name value pairs (NVPs), it is possible to load in an out of order fashion or otherwise skip/select specific nodes to load.
+
+The default behavior of the input archive is to read sequentially starting with the first node and exploring its children. When a given NVP does not match the read in name for a node, the archive will search for that node at the current level and load it if it exists. After loading an out of order node, the archive will then proceed back to loading sequentially from its new position.
+
+Consider this simple example where loading of some data is skipped\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ imagine\ the\ input\ file\ has\ someData(1-\/9)\ saved\ in\ order\ at\ the\ top\ level\ node}}
+\DoxyCodeLine{ar(\ someData1,\ someData2,\ someData3\ );\ \ \ \ \ \ \ \ \textcolor{comment}{//\ XML\ loads\ in\ the\ order\ it\ sees\ in\ the\ file}}
+\DoxyCodeLine{ar(\ \mbox{\hyperlink{classcereal_1_1_name_value_pair_a5bfb9090edc7c741335fba284e462a49}{cereal::make\_nvp}}(\ \textcolor{stringliteral}{"{}hello"{}},\ someData6\ )\ );\ \textcolor{comment}{//\ NVP\ given\ does\ not}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ match\ expected\ NVP\ name,\ so\ we\ search}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ the\ given\ NVP\ and\ load\ that\ value}}
+\DoxyCodeLine{ar(\ someData7,\ someData8,\ someData9\ );\ \ \ \ \ \ \ \ \textcolor{comment}{//\ with\ no\ NVP\ given,\ loading\ resumes\ at\ its}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ current\ location,\ proceeding\ sequentially}}
+
+\end{DoxyCode}
+ 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_a3ae0714f99d4014117026749135860e3}\index{cereal::JSONInputArchive@{cereal::JSONInputArchive}!JSONInputArchive@{JSONInputArchive}}
+\index{JSONInputArchive@{JSONInputArchive}!cereal::JSONInputArchive@{cereal::JSONInputArchive}}
+\doxysubsubsection{\texorpdfstring{JSONInputArchive()}{JSONInputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_input_archive_a3ae0714f99d4014117026749135860e3} 
+cereal\+::\+JSONInput\+Archive\+::\+JSONInput\+Archive (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, reading from the provided stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to read from \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_a93eb90affbb58ebfd3dbd3485b028372}\index{cereal::JSONInputArchive@{cereal::JSONInputArchive}!getNodeName@{getNodeName}}
+\index{getNodeName@{getNodeName}!cereal::JSONInputArchive@{cereal::JSONInputArchive}}
+\doxysubsubsection{\texorpdfstring{getNodeName()}{getNodeName()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_input_archive_a93eb90affbb58ebfd3dbd3485b028372} 
+const char \texorpdfstring{$\ast$}{*} cereal\+::\+JSONInput\+Archive\+::get\+Node\+Name (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the current node name. 
+
+\begin{DoxyReturn}{Returns}
+nullptr if no name exists 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1_j_s_o_n_input_archive_a618425a8a54490a0f1d16f464dd7717e}\index{cereal::JSONInputArchive@{cereal::JSONInputArchive}!loadBinaryValue@{loadBinaryValue}}
+\index{loadBinaryValue@{loadBinaryValue}!cereal::JSONInputArchive@{cereal::JSONInputArchive}}
+\doxysubsubsection{\texorpdfstring{loadBinaryValue()}{loadBinaryValue()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_input_archive_a618425a8a54490a0f1d16f464dd7717e} 
+void cereal\+::\+JSONInput\+Archive\+::load\+Binary\+Value (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{data}{, }\item[{size\+\_\+t}]{size}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{name}{ = {\ttfamily nullptr}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Loads some binary data, encoded as a base64 string. 
+
+This will automatically start and finish a node to load the data, and can be called directly by users.
+
+Note that this follows the same ordering rules specified in the class description in regards to loading in/out of order \Hypertarget{classcereal_1_1_j_s_o_n_input_archive_aa5bf6c42760a02f56657325ed542f1e7}\index{cereal::JSONInputArchive@{cereal::JSONInputArchive}!startNode@{startNode}}
+\index{startNode@{startNode}!cereal::JSONInputArchive@{cereal::JSONInputArchive}}
+\doxysubsubsection{\texorpdfstring{startNode()}{startNode()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_input_archive_aa5bf6c42760a02f56657325ed542f1e7} 
+void cereal\+::\+JSONInput\+Archive\+::start\+Node (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Starts a new node, going into its proper iterator. 
+
+This places an iterator for the next node to be parsed onto the iterator stack. If the next node is an array, this will be a value iterator, otherwise it will be a member iterator.
+
+By default our strategy is to start with the document root node and then recursively iterate through all children in the order they show up in the document. We don\textquotesingle{}t need to know NVPs to do this; we\textquotesingle{}ll just blindly load in the order things appear in.
+
+If we were given an NVP, we will search for it if it does not match our the name of the next node that would normally be loaded. This functionality is provided by search(). 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{json_8hpp}{json.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,45 @@
+\doxysection{lib/cereal/archives/binary.hpp File Reference}
+\hypertarget{binary_8hpp}{}\label{binary_8hpp}\index{lib/cereal/archives/binary.hpp@{lib/cereal/archives/binary.hpp}}
+
+
+Binary input and output archives.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1_binary_output_archive}{cereal\+::\+Binary\+Output\+Archive}}
+\begin{DoxyCompactList}\small\item\em An output archive designed to save data in a compact binary representation. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1_binary_input_archive}{cereal\+::\+Binary\+Input\+Archive}}
+\begin{DoxyCompactList}\small\item\em An input archive designed to load data saved using \doxylink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_a2287a243ece679a7cfad54641c790ecc}\label{namespacecereal_a2287a243ece679a7cfad54641c790ecc} 
+{\footnotesize template$<$class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \&ar, T const \&t)
+\begin{DoxyCompactList}\small\item\em Saving for POD types to binary. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a960b7971cfb99b3c826258369bfc01e9}\label{namespacecereal_a960b7971cfb99b3c826258369bfc01e9} 
+{\footnotesize template$<$class T$>$ }\\std\+::enable\+\_\+if$<$ std\+::is\+\_\+arithmetic$<$ T $>$\+::value, void $>$\+::type {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \&ar, T \&t)
+\begin{DoxyCompactList}\small\item\em Loading for POD types from binary. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\\mbox{\hyperlink{namespacecereal_a64ec0a04e5dc57a58de5e78b5a87b8d3}{cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}} (Archive \&ar, \mbox{\hyperlink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}}$<$ T $>$ \&t)
+\begin{DoxyCompactList}\small\item\em Serializing NVP types to binary. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class Archive, class T$>$ }\\\mbox{\hyperlink{namespacecereal_ac5fb9b1468920e7e23cb2817e65fed4a}{cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME}} (Archive \&ar, \mbox{\hyperlink{classcereal_1_1_size_tag}{Size\+Tag}}$<$ T $>$ \&t)
+\begin{DoxyCompactList}\small\item\em Serializing Size\+Tags to binary. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a189662781a0f3b710901f892d87792d5}\label{namespacecereal_a189662781a0f3b710901f892d87792d5} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \&ar, \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$ const \&bd)
+\begin{DoxyCompactList}\small\item\em Saving binary data. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_af8577c2834d64922e9460cad77f9a3ac}\label{namespacecereal_af8577c2834d64922e9460cad77f9a3ac} 
+{\footnotesize template$<$class T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \&ar, \mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$ \&bd)
+\begin{DoxyCompactList}\small\item\em Loading binary data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Binary input and output archives. 
+

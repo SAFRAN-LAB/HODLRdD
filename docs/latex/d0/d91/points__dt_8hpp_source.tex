@@ -1,0 +1,47 @@
+\doxysection{points\+\_\+dt.\+hpp}
+\hypertarget{points__dt_8hpp_source}{}\label{points__dt_8hpp_source}\index{include/points\_dt.hpp@{include/points\_dt.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_points\_dt\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_points\_dt\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ Struture\ that\ holds\ the\ individual\ location\ of\ points}}
+\DoxyCodeLine{00009\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structptsn_d}{ptsnD}}}
+\DoxyCodeLine{00010\ \{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{double}\ x[NDIM];}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \textcolor{keywordtype}{id}=-\/1;\ \textcolor{comment}{//\ User\ provides\ a\ unique\ identifier\ if\ not\ then\ kernel\ is\ defined\ by\ considering\ two\ points}}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ \textcolor{keywordtype}{void}\ print\_point(\mbox{\hyperlink{structptsn_d}{ptsnD}}\&\ a)\{}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;i<NDIM;i++)}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ std::cout\ <<\ a.x[i]\ <<\textcolor{stringliteral}{"{}\ "{}}\ <<\ std::endl;}
+\DoxyCodeLine{00017\ \}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{namespace\ }nd\_points\{}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ Computes\ the\ infinity\ norm\ of\ the\ |x-\/y|\ R\string^d\ -\/>\ R}}
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{double}\ max\_norm\_distance(ptsnD\&\ a,\ ptsnD\&\ b)\{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ dist\ =\ abs(a.x[0]\ -\/\ b.x[0]);}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;\ i<NDIM;\ i++)\{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ t\ =\ abs(a.x[i]\ -\/\ b.x[i]);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(t>dist)}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ dist\ =\ t;}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{return}\ dist;}
+\DoxyCodeLine{00028\ \}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{comment}{//\ Computes\ the\ Euclidean\ norm\ or\ 2\ norm\ of\ the\ difference\ vector}}
+\DoxyCodeLine{00031\ \textcolor{keywordtype}{double}\ euclidean\_distance(ptsnD\&\ a,\ ptsnD\&\ b)}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{double}\ dist\ =\ 0.0;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)\{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ dist\ +=\ (a.x[i]\ -\/\ b.x[i])\ *\ (a.x[i]\ -\/\ b.x[i]);}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ dist\ =\ sqrt(dist);}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordflow}{return}\ dist;}
+\DoxyCodeLine{00039\ \}}
+\DoxyCodeLine{00040\ \}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

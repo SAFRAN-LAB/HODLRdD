@@ -1,0 +1,40 @@
+\doxysection{lib/cereal/types/unordered\+\_\+set.hpp File Reference}
+\hypertarget{unordered__set_8hpp}{}\label{unordered__set_8hpp}\index{lib/cereal/types/unordered\_set.hpp@{lib/cereal/types/unordered\_set.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}unordered\+\_\+set\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{unordered__set_8hpp_a7076a0f3d08344f0a3043db713059454}\label{unordered__set_8hpp_a7076a0f3d08344f0a3043db713059454} 
+{\footnotesize template$<$class Archive, class SetT$>$ }\\void {\bfseries cereal\+::unordered\+\_\+set\+\_\+detail\+::save} (Archive \&ar, SetT const \&set)
+\item 
+\Hypertarget{unordered__set_8hpp_a9cedd394dbac991a842d3c91eb7cccbc}\label{unordered__set_8hpp_a9cedd394dbac991a842d3c91eb7cccbc} 
+{\footnotesize template$<$class Archive, class SetT$>$ }\\void {\bfseries cereal\+::unordered\+\_\+set\+\_\+detail\+::load} (Archive \&ar, SetT \&set)
+\item 
+\Hypertarget{namespacecereal_a220a6067b52ed669c0c151d76567b561}\label{namespacecereal_a220a6067b52ed669c0c151d76567b561} 
+{\footnotesize template$<$class Archive, class K, class H, class KE, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unordered\+\_\+set$<$ K, H, KE, A $>$ const \&unordered\+\_\+set)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::unordered\+\_\+set. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_af0b6234fc5a858bd294a833ccc9045ba}\label{namespacecereal_af0b6234fc5a858bd294a833ccc9045ba} 
+{\footnotesize template$<$class Archive, class K, class H, class KE, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unordered\+\_\+set$<$ K, H, KE, A $>$ \&unordered\+\_\+set)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::unordered\+\_\+set. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a4385e91ff798d9c5f8c336470011b889}\label{namespacecereal_a4385e91ff798d9c5f8c336470011b889} 
+{\footnotesize template$<$class Archive, class K, class H, class KE, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unordered\+\_\+multiset$<$ K, H, KE, A $>$ const \&unordered\+\_\+multiset)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::unordered\+\_\+multiset. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a7da956bad9ffcece46b8b3578a05567a}\label{namespacecereal_a7da956bad9ffcece46b8b3578a05567a} 
+{\footnotesize template$<$class Archive, class K, class H, class KE, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::unordered\+\_\+multiset$<$ K, H, KE, A $>$ \&unordered\+\_\+multiset)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::unordered\+\_\+multiset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}unordered\+\_\+set\texorpdfstring{$>$}{>} 
+

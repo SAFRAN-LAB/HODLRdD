@@ -1,0 +1,49 @@
+\doxysection{swap.\+h}
+\hypertarget{swap_8h_source}{}\label{swap_8h_source}\index{lib/cereal/external/rapidjson/internal/swap.h@{lib/cereal/external/rapidjson/internal/swap.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Tencent\ is\ pleased\ to\ support\ the\ open\ source\ community\ by\ making\ RapidJSON\ available.}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Copyright\ (C)\ 2015\ THL\ A29\ Limited,\ a\ Tencent\ company,\ and\ Milo\ Yip.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Licensed\ under\ the\ MIT\ License\ (the\ "{}License"{});\ you\ may\ not\ use\ this\ file\ except}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ in\ compliance\ with\ the\ License.\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ http://opensource.org/licenses/MIT}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software\ distributed}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,\ WITHOUT\ WARRANTIES\ OR}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.\ See\ the\ License\ for\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ specific\ language\ governing\ permissions\ and\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_INTERNAL\_SWAP\_H\_}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_INTERNAL\_SWAP\_H\_}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{rapidjson_8h}{../rapidjson.h}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00021\ CEREAL\_RAPIDJSON\_DIAG\_PUSH}
+\DoxyCodeLine{00022\ CEREAL\_RAPIDJSON\_DIAG\_OFF(c++98-\/compat)}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga69bf61966c74b09b5d90b386847f39be}{CEREAL\_RAPIDJSON\_NAMESPACE\_BEGIN}}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{namespace\ }internal\ \{}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00033\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Swap(T\&\ a,\ T\&\ b)\ CEREAL\_RAPIDJSON\_NOEXCEPT\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ T\ tmp\ =\ a;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ a\ =\ b;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ b\ =\ tmp;}
+\DoxyCodeLine{00037\ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \}\ \textcolor{comment}{//\ namespace\ internal}}
+\DoxyCodeLine{00040\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaddb083c1a6a5beaafbecc3f99973a3ff}{CEREAL\_RAPIDJSON\_NAMESPACE\_END}}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00043\ CEREAL\_RAPIDJSON\_DIAG\_POP}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_RAPIDJSON\_INTERNAL\_SWAP\_H\_}}
+
+\end{DoxyCode}

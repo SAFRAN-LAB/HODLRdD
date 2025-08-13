@@ -1,0 +1,211 @@
+\doxysection{access.\+hpp}
+\hypertarget{access_8hpp_source}{}\label{access_8hpp_source}\index{lib/cereal/access.hpp@{lib/cereal/access.hpp}}
+\mbox{\hyperlink{access_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_ACCESS\_HPP\_}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ CEREAL\_ACCESS\_HPP\_}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{macros_8hpp}{cereal/macros.hpp}}"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{specialize_8hpp}{cereal/specialize.hpp}}"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{helpers_8hpp}{cereal/details/helpers.hpp}}"{}}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00107\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00108\ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1_load_and_construct}{LoadAndConstruct}}}
+\DoxyCodeLine{00109\ \ \ \{\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{comment}{//\ forward\ decl\ for\ construct}}
+\DoxyCodeLine{00113\ \ \ \textcolor{keyword}{namespace\ }memory\_detail\{\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Ar,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }LoadAndConstructLoadWrapper;\ \}}
+\DoxyCodeLine{00114\ \ \ \textcolor{keyword}{namespace\ }boost\_variant\_detail\{\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Ar,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{struct\ }LoadAndConstructLoadWrapper;\ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00163\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00164\ \ \ \textcolor{keyword}{class\ }construct}
+\DoxyCodeLine{00165\ \ \ \{}
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }...\ Args>}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1construct_aaba035d9e4f28e789055ee05f4de83e9}{operator()}}(\ Args\ \&\&\ ...\ args\ );}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \textcolor{comment}{//\ implementation\ deferred\ due\ to\ reliance\ on\ cereal::access}}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ T\ *\ \mbox{\hyperlink{classcereal_1_1construct_ae9a3def7525d6f7b039efac03bc023ae}{operator-\/>}}()}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !itsValid\ )}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Object\ must\ be\ initialized\ prior\ to\ accessing\ members"{}});}
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ itsPtr;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00201\ \ \ \ \ \ \ T\ *\ \mbox{\hyperlink{classcereal_1_1construct_a41ffab6ac35c486fd34e047714de26eb}{ptr}}()}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1construct_ae9a3def7525d6f7b039efac03bc023ae}{operator-\/>}}();}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Ar,\ \textcolor{keyword}{class}\ TT>\ \textcolor{keyword}{friend}\ struct\ ::cereal::memory\_detail::LoadAndConstructLoadWrapper;}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Ar,\ \textcolor{keyword}{class}\ TT>\ \textcolor{keyword}{friend}\ struct\ ::cereal::boost\_variant\_detail::LoadAndConstructLoadWrapper;}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1construct}{construct}}(\ T\ *\ p\ )\ :\ itsPtr(\ p\ ),\ itsEnableSharedRestoreFunction(\ []()\{\}\ ),\ itsValid(\ \textcolor{keyword}{false}\ )\ \{\}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ construct(\ T\ *\ p,\ std::function<\textcolor{keywordtype}{void}()>\ enableSharedFunc\ )\ :\ \textcolor{comment}{//\ g++4.7\ ice\ with\ default\ lambda\ to\ std\ func}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ itsPtr(\ p\ ),\ itsEnableSharedRestoreFunction(\ enableSharedFunc\ ),\ itsValid(\ false\ )\ \{\}}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ construct(\ construct\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ construct\ \&\ operator=(\ construct\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ \ \ T\ *\ itsPtr;}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ std::function<void()>\ itsEnableSharedRestoreFunction;}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsValid;}
+\DoxyCodeLine{00219\ \ \ \};}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00240\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1access}{access}}}
+\DoxyCodeLine{00241\ \ \ \{}
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\ Standard\ Serialization\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_serialize(Archive\ \&\ ar,\ T\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SERIALIZE\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SERIALIZE\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save(Archive\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00251\ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_non\_const(Archive\ \&\ ar,\ T\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_load(Archive\ \&\ ar,\ T\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_LOAD\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_LOAD\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00259\ }
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_minimal(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_minimal\_non\_const(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar))}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar);\ \}}
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ U>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_load\_minimal(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \&\ t,\ U\ \&\&\ u)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(ar,\ std::forward<U>(u)))}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(ar,\ std::forward<U>(u));\ \}}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\ Versioned\ Serialization\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_serialize(Archive\ \&\ ar,\ T\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ )\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SERIALIZE\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SERIALIZE\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save(Archive\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ )\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_non\_const(Archive\ \&\ ar,\ T\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ )\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_load(Archive\ \&\ ar,\ T\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version\ )\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_LOAD\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_LOAD\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00288\ }
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_minimal(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_save\_minimal\_non\_const(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \&\ t,\ \textcolor{keyword}{const}\ std::uint32\_t\ version)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar,\ version))}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME(ar,\ version);\ \}}
+\DoxyCodeLine{00296\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ U>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ member\_load\_minimal(Archive\ \textcolor{keyword}{const}\ \&\ ar,\ T\ \&\ t,\ U\ \&\&\ u,\ \textcolor{keyword}{const}\ std::uint32\_t\ version)\ -\/>\ \textcolor{keyword}{decltype}(t.CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(ar,\ std::forward<U>(u),\ version))}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ t.CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME(ar,\ std::forward<U>(u),\ version);\ \}}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\ Other\ Functionality\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \textcolor{comment}{//\ for\ detecting\ inheritance\ from\ enable\_shared\_from\_this}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ shared\_from\_this(T\ \&\ t)\ -\/>\ \textcolor{keyword}{decltype}(t.shared\_from\_this());}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \textcolor{comment}{//\ for\ placement\ new}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }T,\ \textcolor{keyword}{class\ }...\ Args>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ construct(\ T\ *\&\ ptr,\ Args\ \&\&\ ...\ args\ )}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ (ptr)\ T(\ std::forward<Args>(\ args\ )...\ );}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00312\ }
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \textcolor{comment}{//\ for\ non-\/placement\ new\ with\ a\ default\ constructor}}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \textcolor{keyword}{static}\ T\ *\ construct()}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ T();}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::false\_type\ load\_and\_construct(...)}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ std::false\_type();\ \}}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Archive>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ load\_and\_construct(Archive\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{::cereal::construct<T>}}\ \&\ construct)\ -\/>\ \textcolor{keyword}{decltype}(T::load\_and\_construct(ar,\ construct))}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ T::load\_and\_construct(\ ar,\ construct\ );}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ Archive>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{auto}\ load\_and\_construct(Archive\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{::cereal::construct<T>}}\ \&\ construct,\ \textcolor{keyword}{const}\ std::uint32\_t\ version)\ -\/>\ \textcolor{keyword}{decltype}(T::load\_and\_construct(ar,\ construct,\ version))}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ T::load\_and\_construct(\ ar,\ construct,\ version\ );}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00335\ \ \ \};\ \textcolor{comment}{//\ end\ class\ access}}
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00337\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00338\ \ \ \textcolor{comment}{//\ Deferred\ Implementation,\ see\ construct\ for\ more\ information}}
+\DoxyCodeLine{00339\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }...\ Args>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00340\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1construct_aaba035d9e4f28e789055ee05f4de83e9}{construct<T>::operator()}}(\ Args\ \&\&\ ...\ args\ )}
+\DoxyCodeLine{00341\ \ \ \{}
+\DoxyCodeLine{00342\ \ \ \ \ \textcolor{keywordflow}{if}(\ itsValid\ )}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Attempting\ to\ construct\ an\ already\ initialized\ object"{}});}
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \ \ \ \ ::cereal::access::construct(\ itsPtr,\ std::forward<Args>(\ args\ )...\ );}
+\DoxyCodeLine{00346\ \ \ \ \ itsEnableSharedRestoreFunction();}
+\DoxyCodeLine{00347\ \ \ \ \ itsValid\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00348\ \ \ \}}
+\DoxyCodeLine{00349\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_ACCESS\_HPP\_}}
+
+\end{DoxyCode}

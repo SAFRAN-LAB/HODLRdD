@@ -1,0 +1,40 @@
+\doxysection{cereal\+::tuple\+\_\+detail\+::tuple\+\_\+element\+\_\+name\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1tuple__detail_1_1tuple__element__name}{}\label{structcereal_1_1tuple__detail_1_1tuple__element__name}\index{cereal::tuple\_detail::tuple\_element\_name$<$ T $>$@{cereal::tuple\_detail::tuple\_element\_name$<$ T $>$}}
+
+
+Generates a c string for a given index of a tuple.  
+
+
+
+
+{\ttfamily \#include $<$tuple.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1tuple__detail_1_1tuple__element__name_aac4b7d1bc13970bf67789be3e6ded646}\label{structcereal_1_1tuple__detail_1_1tuple__element__name_aac4b7d1bc13970bf67789be3e6ded646} 
+using {\bfseries type} = typename \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\+\_\+string\+\_\+impl}}$<$T/10, T\%10$>$\+::type
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1tuple__detail_1_1tuple__element__name_ae698e81fe812085109be91f8d2a1cc82}\label{structcereal_1_1tuple__detail_1_1tuple__element__name_ae698e81fe812085109be91f8d2a1cc82} 
+static const type\+::arr\+\_\+type {\bfseries c\+\_\+str} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$size\+\_\+t T$>$\newline
+struct cereal\+::tuple\+\_\+detail\+::tuple\+\_\+element\+\_\+name$<$ T $>$}
+Generates a c string for a given index of a tuple. 
+
+Example use\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{tuple\_element\_name<3>::c\_str();\textcolor{comment}{//\ returns\ "{}tuple\_element3"{}}}
+
+\end{DoxyCode}
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{tuple_8hpp}{tuple.\+hpp}}\end{DoxyCompactItemize}

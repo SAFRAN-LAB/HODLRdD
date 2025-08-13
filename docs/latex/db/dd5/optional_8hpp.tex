@@ -1,0 +1,28 @@
+\doxysection{lib/cereal/types/optional.hpp File Reference}
+\hypertarget{optional_8hpp}{}\label{optional_8hpp}\index{lib/cereal/types/optional.hpp@{lib/cereal/types/optional.hpp}}
+
+
+Support for std\+::optional.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{namespacecereal_aede65f937d9a4d9ebaef35db8c6e7ae7}\label{namespacecereal_aede65f937d9a4d9ebaef35db8c6e7ae7} 
+{\footnotesize template$<$class Archive, typename T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, const std\+::optional$<$ T $>$ \&optional)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::optional. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a8be4f81090e80f115a2ac4041a9f16ca}\label{namespacecereal_a8be4f81090e80f115a2ac4041a9f16ca} 
+{\footnotesize template$<$class Archive, typename T$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::optional$<$ T $>$ \&optional)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::optional. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for std\+::optional. 
+

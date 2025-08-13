@@ -1,0 +1,129 @@
+\doxysection{queue.\+hpp}
+\hypertarget{queue_8hpp_source}{}\label{queue_8hpp_source}\index{lib/cereal/types/queue.hpp@{lib/cereal/types/queue.hpp}}
+\mbox{\hyperlink{queue_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_QUEUE\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_QUEUE\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{helpers_8hpp}{cereal/details/helpers.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <queue>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{comment}{//\ The\ default\ container\ for\ queue\ is\ deque,\ so\ let's\ include\ that\ too}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{deque_8hpp}{cereal/types/deque.hpp}}"{}}}
+\DoxyCodeLine{00038\ \textcolor{comment}{//\ The\ default\ comparator\ for\ queue\ is\ less}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{functional_8hpp}{cereal/types/functional.hpp}}"{}}}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00042\ \{}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{namespace\ }queue\_detail}
+\DoxyCodeLine{00044\ \ \ \{}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00048\ \ \ \ \ C\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf}{container}}(\ std::queue<T,\ C>\ \textcolor{keyword}{const}\ \&\ queue\ )}
+\DoxyCodeLine{00049\ \ \ \ \ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }H\ :\ \textcolor{keyword}{public}\ std::queue<T,\ C>}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ C\ \textcolor{keyword}{const}\ \&\ get(\ std::queue<T,\ C>\ \textcolor{keyword}{const}\ \&\ q\ )}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ q.*(\&H::c);}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ H::get(\ queue\ );}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C,\ \textcolor{keyword}{class}\ Comp>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00064\ \ \ \ \ C\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf}{container}}(\ std::priority\_queue<T,\ C,\ Comp>\ \textcolor{keyword}{const}\ \&\ priority\_queue\ )}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }H\ :\ \textcolor{keyword}{public}\ std::priority\_queue<T,\ C,\ Comp>}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ C\ \textcolor{keyword}{const}\ \&\ get(\ std::priority\_queue<T,\ C,\ Comp>\ \textcolor{keyword}{const}\ \&\ pq\ )}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pq.*(\&H::c);}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ H::get(\ priority\_queue\ );}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C,\ \textcolor{keyword}{class}\ Comp>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00080\ \ \ \ \ Comp\ \textcolor{keyword}{const}\ \&\ \mbox{\hyperlink{queue_8hpp_a26f76c77bfb0f4b0ffa109a9cbebc05e}{comparator}}(\ std::priority\_queue<T,\ C,\ Comp>\ \textcolor{keyword}{const}\ \&\ priority\_queue\ )}
+\DoxyCodeLine{00081\ \ \ \ \ \{}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }H\ :\ \textcolor{keyword}{public}\ std::priority\_queue<T,\ C,\ Comp>}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ Comp\ \textcolor{keyword}{const}\ \&\ get(\ std::priority\_queue<T,\ C,\ Comp>\ \textcolor{keyword}{const}\ \&\ pq\ )}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pq.*(\&H::comp);}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ H::get(\ priority\_queue\ );}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \}}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00095\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00096\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::queue<T,\ C>\ \textcolor{keyword}{const}\ \&\ queue\ )}
+\DoxyCodeLine{00097\ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ \mbox{\hyperlink{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf}{queue\_detail::container}}(\ queue\ ))\ );}
+\DoxyCodeLine{00099\ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00102\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00103\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::queue<T,\ C>\ \&\ queue\ )}
+\DoxyCodeLine{00104\ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ C\ container;}
+\DoxyCodeLine{00106\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ container)\ );}
+\DoxyCodeLine{00107\ \ \ \ \ queue\ =\ std::queue<T,\ C>(\ std::move(\ container\ )\ );}
+\DoxyCodeLine{00108\ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00111\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C,\ \textcolor{keyword}{class}\ Comp>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00112\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::priority\_queue<T,\ C,\ Comp>\ \textcolor{keyword}{const}\ \&\ priority\_queue\ )}
+\DoxyCodeLine{00113\ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}comparator"{}},\ \mbox{\hyperlink{queue_8hpp_a26f76c77bfb0f4b0ffa109a9cbebc05e}{queue\_detail::comparator}}(\ priority\_queue\ ))\ );}
+\DoxyCodeLine{00115\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ \mbox{\hyperlink{queue_8hpp_a469781bfdd1f3b351a2bcce6ffe814bf}{queue\_detail::container}}(\ priority\_queue\ ))\ );}
+\DoxyCodeLine{00116\ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00119\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ C,\ \textcolor{keyword}{class}\ Comp>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00120\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::priority\_queue<T,\ C,\ Comp>\ \&\ priority\_queue\ )}
+\DoxyCodeLine{00121\ \ \ \{}
+\DoxyCodeLine{00122\ \ \ \ \ Comp\ comparator;}
+\DoxyCodeLine{00123\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}comparator"{}},\ comparator)\ );}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ C\ container;}
+\DoxyCodeLine{00126\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}container"{}},\ container)\ );}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ priority\_queue\ =\ std::priority\_queue<T,\ C,\ Comp>(\ comparator,\ std::move(\ container\ )\ );}
+\DoxyCodeLine{00129\ \ \ \}}
+\DoxyCodeLine{00130\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_QUEUE\_HPP\_}}
+
+\end{DoxyCode}

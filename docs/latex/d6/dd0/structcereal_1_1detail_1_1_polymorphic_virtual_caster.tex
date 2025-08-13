@@ -1,0 +1,115 @@
+\doxysection{cereal\+::detail\+::Polymorphic\+Virtual\+Caster\texorpdfstring{$<$}{<} Base, Derived \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{}\label{structcereal_1_1detail_1_1_polymorphic_virtual_caster}\index{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}}
+
+
+Strongly typed derivation of \doxylink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+Inheritance diagram for cereal\+::detail\+::Polymorphic\+Virtual\+Caster\texorpdfstring{$<$}{<} Base, Derived \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d6/dd0/structcereal_1_1detail_1_1_polymorphic_virtual_caster}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a8bef2d14f5bb2d295263d41659c4f1f0}{Polymorphic\+Virtual\+Caster}} ()
+\begin{DoxyCompactList}\small\item\em Inserts an entry in the polymorphic casting map for this pairing. \end{DoxyCompactList}\item 
+void const \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a96629db9086bffdc376055629e4041af}{downcast}} (void const \texorpdfstring{$\ast$}{*}const ptr) const override
+\begin{DoxyCompactList}\small\item\em Performs the proper downcast with the templated types. \end{DoxyCompactList}\item 
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_acaf2413d8bd17dfd83d1f7abef0a8cf0}{upcast}} (void \texorpdfstring{$\ast$}{*}const ptr) const override
+\begin{DoxyCompactList}\small\item\em Performs the proper upcast with the templated types. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a0ccc43b1887c37ac639b585e42ad319e}{upcast}} (std\+::shared\+\_\+ptr$<$ void $>$ const \&ptr) const override
+\begin{DoxyCompactList}\small\item\em Performs the proper upcast with the templated types (shared\+\_\+ptr version) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{cereal\+::detail\+::\+Polymorphic\+Caster}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Polymorphic\+Caster} (const \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \&)=default
+\item 
+\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \& {\bfseries operator=} (const \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \&)=default
+\item 
+{\bfseries Polymorphic\+Caster} (\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \& {\bfseries operator=} (\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Base, class Derived$>$\newline
+struct cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster$<$ Base, Derived $>$}
+Strongly typed derivation of \doxylink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}. 
+
+\label{doc-constructors}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a8bef2d14f5bb2d295263d41659c4f1f0}\index{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}!PolymorphicVirtualCaster@{PolymorphicVirtualCaster}}
+\index{PolymorphicVirtualCaster@{PolymorphicVirtualCaster}!cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}}
+\doxysubsubsection{\texorpdfstring{PolymorphicVirtualCaster()}{PolymorphicVirtualCaster()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a8bef2d14f5bb2d295263d41659c4f1f0} 
+template$<$class Base, class Derived$>$ \\
+\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster}}$<$ Base, Derived $>$\+::\+Polymorphic\+Virtual\+Caster (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Inserts an entry in the polymorphic casting map for this pairing. 
+
+Creates an explicit mapping between Base and Derived in both upwards and downwards directions, allowing void pointers to either to be properly cast assuming dynamic type information is available 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a96629db9086bffdc376055629e4041af}\index{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}!downcast@{downcast}}
+\index{downcast@{downcast}!cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}}
+\doxysubsubsection{\texorpdfstring{downcast()}{downcast()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a96629db9086bffdc376055629e4041af} 
+template$<$class Base, class Derived$>$ \\
+void const  \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster}}$<$ Base, Derived $>$\+::downcast (\begin{DoxyParamCaption}\item[{void const \texorpdfstring{$\ast$}{*}const}]{ptr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Performs the proper downcast with the templated types. 
+
+
+
+Implements \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_ace4914fb5be63a42823787217a0efa13}{cereal\+::detail\+::\+Polymorphic\+Caster}}.
+
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a0ccc43b1887c37ac639b585e42ad319e}\index{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}!upcast@{upcast}}
+\index{upcast@{upcast}!cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}}
+\doxysubsubsection{\texorpdfstring{upcast()}{upcast()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_virtual_caster_a0ccc43b1887c37ac639b585e42ad319e} 
+template$<$class Base, class Derived$>$ \\
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster}}$<$ Base, Derived $>$\+::upcast (\begin{DoxyParamCaption}\item[{std\+::shared\+\_\+ptr$<$ void $>$ const \&}]{ptr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Performs the proper upcast with the templated types (shared\+\_\+ptr version) 
+
+
+
+Implements \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_a0343cafc5560566a81cf7216d1adf96f}{cereal\+::detail\+::\+Polymorphic\+Caster}}.
+
+\Hypertarget{structcereal_1_1detail_1_1_polymorphic_virtual_caster_acaf2413d8bd17dfd83d1f7abef0a8cf0}\index{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}!upcast@{upcast}}
+\index{upcast@{upcast}!cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$@{cereal::detail::PolymorphicVirtualCaster$<$ Base, Derived $>$}}
+\doxysubsubsection{\texorpdfstring{upcast()}{upcast()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_polymorphic_virtual_caster_acaf2413d8bd17dfd83d1f7abef0a8cf0} 
+template$<$class Base, class Derived$>$ \\
+void \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster}}$<$ Base, Derived $>$\+::upcast (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}const}]{ptr}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Performs the proper upcast with the templated types. 
+
+
+
+Implements \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster_a771ea4d4bdc3e5e8992f3cb4ffeb5022}{cereal\+::detail\+::\+Polymorphic\+Caster}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

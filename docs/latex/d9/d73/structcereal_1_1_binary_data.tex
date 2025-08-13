@@ -1,0 +1,91 @@
+\doxysection{cereal\+::Binary\+Data\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1_binary_data}{}\label{structcereal_1_1_binary_data}\index{cereal::BinaryData$<$ T $>$@{cereal::BinaryData$<$ T $>$}}
+
+
+A wrapper around data that can be serialized in a binary fashion.  
+
+
+
+
+{\ttfamily \#include $<$helpers.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9}{PT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_binary_data_a08d9ac1b5fe0d01ff61e520ec974293a}\label{structcereal_1_1_binary_data_a08d9ac1b5fe0d01ff61e520ec974293a} 
+{\bfseries Binary\+Data} (T \&\&d, uint64\+\_\+t s)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}\label{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109} 
+\mbox{\hyperlink{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9}{PT}} {\bfseries data}
+\begin{DoxyCompactList}\small\item\em pointer to beginning of data \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}\label{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3} 
+uint64\+\_\+t {\bfseries size}
+\begin{DoxyCompactList}\small\item\em size in bytes \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Related Symbols}
+(Note that these are not member symbols.) \begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$ \mbox{\hyperlink{structcereal_1_1_binary_data_a593d161603775672f91ab448ef65083e}{binary\+\_\+data}} (T \&\&\mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}}, size\+\_\+t \mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}})
+\begin{DoxyCompactList}\small\item\em Convenience function to create binary data for both const and non const pointers. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+struct cereal\+::\+Binary\+Data$<$ T $>$}
+A wrapper around data that can be serialized in a binary fashion. 
+
+This class is used to demarcate data that can safely be serialized as a binary chunk of data. Individual archives can then choose how best represent this during serialization. 
+
+\label{doc-typedef-members}
+\Hypertarget{structcereal_1_1_binary_data_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9}\index{cereal::BinaryData$<$ T $>$@{cereal::BinaryData$<$ T $>$}!PT@{PT}}
+\index{PT@{PT}!cereal::BinaryData$<$ T $>$@{cereal::BinaryData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{PT}{PT}}
+{\footnotesize\ttfamily \label{structcereal_1_1_binary_data_a95d9f4b8a1167ffc334ae783e3e420f9} 
+template$<$class T$>$ \\
+using \mbox{\hyperlink{structcereal_1_1_binary_data}{cereal\+::\+Binary\+Data}}$<$ T $>$\+::\+PT}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \textcolor{keyword}{typename}\ std::conditional<std::is\_const<typename\ std::remove\_pointer<typename\ std::remove\_reference<T>::type>::type>::value,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *>::type}
+
+\end{DoxyCode}
+Internally store the pointer as a void \texorpdfstring{$\ast$}{*}, keeping const if created with a const pointer 
+
+\label{doc-related-members}
+\Hypertarget{structcereal_1_1_binary_data_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{structcereal_1_1_binary_data_a593d161603775672f91ab448ef65083e}\index{cereal::BinaryData$<$ T $>$@{cereal::BinaryData$<$ T $>$}!binary\_data@{binary\_data}}
+\index{binary\_data@{binary\_data}!cereal::BinaryData$<$ T $>$@{cereal::BinaryData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{binary\_data()}{binary\_data()}}
+{\footnotesize\ttfamily \label{structcereal_1_1_binary_data_a593d161603775672f91ab448ef65083e} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{structcereal_1_1_binary_data}{Binary\+Data}}$<$ T $>$ binary\+\_\+data (\begin{DoxyParamCaption}\item[{T \&\&}]{data}{, }\item[{size\+\_\+t}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [related]}}
+
+
+
+Convenience function to create binary data for both const and non const pointers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & Pointer to beginning of the data \\
+\hline
+{\em size} & The size in bytes of the data \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,192 @@
+\doxysection{user\+\_\+kernel.\+hpp}
+\hypertarget{user__kernel_8hpp_source}{}\label{user__kernel_8hpp_source}\index{include/user\_kernel.hpp@{include/user\_kernel.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_user\_kernel\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_user\_kernel\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}points\_dt.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}HDD\_clusters.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}integral4d.hpp"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ Test\ Greens'\ function\ in\ 2d,\ 3d\ and\ 4d}}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }kernel\_2d\_test\{}
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{double}\ c\ =\ -\/1.0\ /\ (2\ *\ PI);}
+\DoxyCodeLine{00012\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{comment}{//\ location\ of\ particles\ in\ the\ domain}}
+\DoxyCodeLine{00014\ \ \ \ \ std::vector<ptsnD>\ *gridPoints;}
+\DoxyCodeLine{00015\ \ \ \ \ kernel\_2d\_test()}
+\DoxyCodeLine{00016\ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ gridPoints\ =\ \textcolor{keyword}{new}\ std::vector<ptsnD>;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Nodes\ in\ one\ dimension\ \#\ Test\ considers\ a\ tensor\ grid\ in\ NDIM\ using\ loc\_dir}}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ VectorXd\ loc\_dir[NDIM];}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ X(NDIM),\ Y(NDIM);}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ X(i)\ =\ -\/1;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ Y(i)\ =\ 1;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cts\ =\ 0;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ loc\_dir[i]\ =\ uniform\_nodes(X(i),\ Y(i),\ numPoints);}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Forming\ the\ tensor\ product\ grid\ of\ the\ points}}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ numPoints;\ i++)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ numPoints;\ j++)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structptsn_d}{ptsnD}}\ temp;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[0]\ =\ loc\_dir[0][i];}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[1]\ =\ loc\_dir[1][j];}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.id\ =\ cts++;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints-\/>push\_back(temp);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ get\_points(std::vector<ptsnD>*\&\ src)\{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ src\ =\ this-\/>gridPoints;}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ The\ Green's\ function\ in\ 2D}}
+\DoxyCodeLine{00046\ \ \ \ \ dtype\_base\ Kernel\_Fun(dtype\_base\ x)}
+\DoxyCodeLine{00047\ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c\ *\ log(x);}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ dtype\_base\ getMatrixEntry(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)}
+\DoxyCodeLine{00051\ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ r;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ j)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ 0.0;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ Kernel\_Fun(nd\_points::euclidean\_distance(gridPoints-\/>at(i),\ gridPoints-\/>at(j)));\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \string~kernel\_2d\_test()\ \{\}}
+\DoxyCodeLine{00060\ \};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{keyword}{class\ }kernel\_3d\_test\{}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{double}\ c\ =\ 1.0\ /\ (4\ *\ PI);}
+\DoxyCodeLine{00064\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00065\ \ \ \ \ std::vector<ptsnD>\ *gridPoints;}
+\DoxyCodeLine{00066\ \ \ \ \ kernel\_3d\_test()}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ location\ of\ particles\ in\ the\ domain}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints\ =\ \textcolor{keyword}{new}\ std::vector<ptsnD>;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Nodes\ in\ one\ dimension\ \#\ Test\ considers\ a\ tensor\ grid\ in\ NDIM\ using\ loc\_dir}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ VectorXd\ loc\_dir[NDIM];}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ X(NDIM),\ Y(NDIM);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X(i)\ =\ -\/1;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y(i)\ =\ 1;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cts\ =\ 0;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loc\_dir[i]\ =\ uniform\_nodes(X(i),\ Y(i),\ numPoints);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Forming\ the\ tensor\ product\ grid\ of\ the\ points}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ numPoints;\ i++)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ numPoints;\ j++)}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ numPoints;\ k++)\{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structptsn_d}{ptsnD}}\ temp;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[0]\ =\ loc\_dir[0][i];}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[1]\ =\ loc\_dir[1][j];}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[2]\ =\ loc\_dir[2][k];}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.id\ =\ cts++;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints-\/>push\_back(temp);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{void}\ get\_points(std::vector<ptsnD>\ *\&src)\{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ src\ =\ this-\/>gridPoints;}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{comment}{//\ The\ Green's\ function\ in\ 3D}}
+\DoxyCodeLine{00101\ \ \ \ \ dtype\_base\ Kernel\_Fun(dtype\_base\ x)}
+\DoxyCodeLine{00102\ \ \ \ \ \{\ \ \ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c/x;}
+\DoxyCodeLine{00104\ \ \ \ \ \}}
+\DoxyCodeLine{00105\ \ \ \ \ dtype\_base\ getMatrixEntry(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)}
+\DoxyCodeLine{00106\ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ r;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ j)}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ 0.0;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ Kernel\_Fun(nd\_points::euclidean\_distance(gridPoints-\/>at(i),\ gridPoints-\/>at(j)));}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ r;}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \string~kernel\_3d\_test()\ \{\}}
+\DoxyCodeLine{00115\ \};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \textcolor{keyword}{class\ }kernel\_4d\_test\{}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordtype}{double}\ c\ =\ -\/1.0\ /\ (4\ *\ PI\ *\ PI);}
+\DoxyCodeLine{00119\ \ \ \ \ \textcolor{keywordtype}{double}\ h\ =\ 1.0\ /\ numPoints;}
+\DoxyCodeLine{00120\ \ \ \ \ \textcolor{keywordtype}{double}\ h4\ =\ pow(h,\ 4.0);}
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordtype}{double}\ kii\ =\ 0.0;}
+\DoxyCodeLine{00122\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00123\ \ \ \ \ std::vector<ptsnD>\ *gridPoints;}
+\DoxyCodeLine{00124\ \ \ \ \ kernel\_4d\_test()}
+\DoxyCodeLine{00125\ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ location\ of\ particles\ in\ the\ domain}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ *a\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{double}[4];}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ *b\ =\ \textcolor{keyword}{new}\ \textcolor{keywordtype}{double}[4];}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ a[0]\ =\ 0,\ a[1]\ =\ 0,\ a[2]\ =\ 0,\ a[3]\ =\ 0;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ b[0]\ =\ h\ *\ 0.5,\ b[1]\ =\ h\ *\ 0.5,\ b[2]\ =\ h\ *\ 0.5,\ b[3]\ =\ h\ *\ 0.5;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ kii\ =\ 1.0\ +\ quadruple\_integral(a,\ b);\ \textcolor{comment}{//\ Second\ kind}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ kii\ /=\ h4;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints\ =\ \textcolor{keyword}{new}\ std::vector<ptsnD>;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Nodes\ in\ one\ dimension\ \#\ Test\ considers\ a\ tensor\ grid\ in\ NDIM\ using\ loc\_dir}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ VectorXd\ loc\_dir[NDIM];}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ X(NDIM),\ Y(NDIM);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ X(i)\ =\ -\/1;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Y(i)\ =\ 1;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cts\ =\ 0;}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ ++i)}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ loc\_dir[i]\ =\ uniform\_nodes(X(i),\ Y(i),\ numPoints);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Forming\ the\ tensor\ product\ grid\ of\ the\ points}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ numPoints;\ i++)}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ numPoints;\ j++)}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ numPoints;\ k++)\{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ l\ =\ 0;\ l\ <\ numPoints;\ l++)\{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structptsn_d}{ptsnD}}\ temp;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[0]\ =\ loc\_dir[0][i];}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[1]\ =\ loc\_dir[1][j];}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[2]\ =\ loc\_dir[2][k];}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.x[3]\ =\ loc\_dir[3][l];}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp.id\ =\ cts++;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ gridPoints-\/>push\_back(temp);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordtype}{void}\ get\_points(std::vector<ptsnD>*\&\ src)\{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ src\ =\ this-\/>gridPoints;}
+\DoxyCodeLine{00166\ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{comment}{//\ The\ Green's\ function\ in\ 4D}}
+\DoxyCodeLine{00168\ \ \ \ \ dtype\_base\ Kernel\_Fun(dtype\_base\ x)}
+\DoxyCodeLine{00169\ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c/(x*x);}
+\DoxyCodeLine{00171\ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \ \ \ \ dtype\_base\ getMatrixEntry(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)}
+\DoxyCodeLine{00173\ \ \ \ \ \{}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ ==\ j)}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kii;}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Kernel\_Fun(nd\_points::euclidean\_distance(gridPoints-\/>at(i),\ gridPoints-\/>at(j)));}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00181\ \ \ \ \ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \string~kernel\_4d\_test()\{\}}
+\DoxyCodeLine{00183\ \};}
+\DoxyCodeLine{00184\ }
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

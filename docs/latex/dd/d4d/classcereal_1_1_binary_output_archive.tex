@@ -1,0 +1,98 @@
+\doxysection{cereal\+::Binary\+Output\+Archive Class Reference}
+\hypertarget{classcereal_1_1_binary_output_archive}{}\label{classcereal_1_1_binary_output_archive}\index{cereal::BinaryOutputArchive@{cereal::BinaryOutputArchive}}
+
+
+An output archive designed to save data in a compact binary representation.  
+
+
+
+
+{\ttfamily \#include $<$binary.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Binary\+Output\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{dd/d4d/classcereal_1_1_binary_output_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16}{Binary\+Output\+Archive}} (std\+::ostream \&stream)
+\begin{DoxyCompactList}\small\item\em Construct, outputting to the provided stream. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_binary_output_archive_ad80ca965dd00c99a9578d7df763006a7}\label{classcereal_1_1_binary_output_archive_ad80ca965dd00c99a9578d7df763006a7} 
+void {\bfseries save\+Binary} (const void \texorpdfstring{$\ast$}{*}data, std\+::streamsize size)
+\begin{DoxyCompactList}\small\item\em Writes size bytes of data to the output stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_output_archive}{cereal\+::\+Output\+Archive$<$ Binary\+Output\+Archive, Allow\+Empty\+Class\+Elision $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{Output\+Archive}} (\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_output_archive}{Output\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_output_archive_ac0070bbf21d6a02a48d55b8052b90f64}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_a0efb18ad82f46327f48449e84222328b}{register\+Shared\+Pointer}} (const std\+::shared\+\_\+ptr$<$ const void $>$ \&shared\+Pointer)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer with the archive. \end{DoxyCompactList}\item 
+std\+::uint32\+\_\+t \mbox{\hyperlink{classcereal_1_1_output_archive_abf97e7c48f6d307d6fa87d4b3fd3ad0e}{register\+Polymorphic\+Type}} (char const \texorpdfstring{$\ast$}{*}name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic type name with the archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a4562095b2f2bcaadd7d05f957daa42bf}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_output_archive_a3f308da8efd1473d94ff03a3b7862b7c}{operator$<$$<$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{cereal\+::detail\+::\+Output\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Output\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_output_archive_base}{Output\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_a8f3be4fe8a965bbce4eb1cf36068e611}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_output_archive_ad48175118ea9b931ef42a74f8efd0389}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An output archive designed to save data in a compact binary representation. 
+
+This archive outputs data to a stream in an extremely compact binary representation with as little extra metadata as possible.
+
+This archive does nothing to ensure that the endianness of the saved and loaded data is the same. If you need to have portability over architectures with different endianness, use \doxylink{classcereal_1_1_portable_binary_output_archive}{Portable\+Binary\+Output\+Archive}.
+
+When using a binary archive and a file stream, you must use the std\+::ios\+::binary format flag to avoid having your data altered inadvertently. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_binary_output_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16}\index{cereal::BinaryOutputArchive@{cereal::BinaryOutputArchive}!BinaryOutputArchive@{BinaryOutputArchive}}
+\index{BinaryOutputArchive@{BinaryOutputArchive}!cereal::BinaryOutputArchive@{cereal::BinaryOutputArchive}}
+\doxysubsubsection{\texorpdfstring{BinaryOutputArchive()}{BinaryOutputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_binary_output_archive_ac1e4544b74594d2752e8a41ea5992f16} 
+cereal\+::\+Binary\+Output\+Archive\+::\+Binary\+Output\+Archive (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, outputting to the provided stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to output to. Can be a stringstream, a file stream, or even cout! \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{binary_8hpp}{binary.\+hpp}}\end{DoxyCompactItemize}

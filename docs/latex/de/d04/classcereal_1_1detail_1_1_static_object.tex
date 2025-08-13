@@ -1,0 +1,55 @@
+\doxysection{cereal\+::detail\+::Static\+Object\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1detail_1_1_static_object}{}\label{classcereal_1_1detail_1_1_static_object}\index{cereal::detail::StaticObject$<$ T $>$@{cereal::detail::StaticObject$<$ T $>$}}
+
+
+A static, pre-\/execution object.  
+
+
+
+
+{\ttfamily \#include $<$static\+\_\+object.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{Lock\+Guard}}
+\begin{DoxyCompactList}\small\item\em A class that acts like std\+::lock\+\_\+guard. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1detail_1_1_static_object_a8d63ddbb162e16cd6acbc8a442be0e18}\label{classcereal_1_1detail_1_1_static_object_a8d63ddbb162e16cd6acbc8a442be0e18} 
+static T \& {\bfseries get\+Instance} ()
+\item 
+static \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{Lock\+Guard}} \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}{lock}} ()
+\begin{DoxyCompactList}\small\item\em Attempts to lock this static object for the current scope. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::detail\+::\+Static\+Object$<$ T $>$}
+A static, pre-\/execution object. 
+
+This class will create a single copy (singleton) of some type and ensures that merely referencing this type will cause it to be instantiated and initialized pre-\/execution. For example, this is used heavily in the polymorphic pointer serialization mechanisms to bind various archive types with different polymorphic classes 
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1detail_1_1_static_object_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f}\index{cereal::detail::StaticObject$<$ T $>$@{cereal::detail::StaticObject$<$ T $>$}!lock@{lock}}
+\index{lock@{lock}!cereal::detail::StaticObject$<$ T $>$@{cereal::detail::StaticObject$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{lock()}{lock()}}
+{\footnotesize\ttfamily \label{classcereal_1_1detail_1_1_static_object_aec75ae3fd5f5ad79132a368f984b385f} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{classcereal_1_1detail_1_1_static_object_1_1_lock_guard}{Lock\+Guard}} \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{cereal\+::detail\+::\+Static\+Object}}$<$ T $>$\+::lock (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Attempts to lock this static object for the current scope. 
+
+\begin{DoxyNote}{Note}
+This function is a no-\/op if cereal is not compiled with thread safety enabled (CEREAL\+\_\+\+THREAD\+\_\+\+SAFE = 1).
+\end{DoxyNote}
+This function returns an object that holds a lock for this \doxylink{classcereal_1_1detail_1_1_static_object}{Static\+Object} that will release its lock upon destruction. This call will block until the lock is available. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{static__object_8hpp}{static\+\_\+object.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,307 @@
+\doxysection{HDD\+\_\+node.\+hpp}
+\hypertarget{_h_d_d__node_8hpp_source}{}\label{_h_d_d__node_8hpp_source}\index{include/HDD\_node.hpp@{include/HDD\_node.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_HDD\_node\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_HDD\_node\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}points\_dt.hpp"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}HDD\_clusters.hpp"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}kernel\_function.hpp"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}LowRank\_matrix.hpp"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }Node}
+\DoxyCodeLine{00012\ \{}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{classkernel__function}{kernel\_function<Kernel>}}\ *userkernel;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ self\_id;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ Matrix\ operators\ ...\ Full\ memory}}
+\DoxyCodeLine{00017\ \ \ \ \ Mat\ P2P\_self;}
+\DoxyCodeLine{00018\ \ \ \ \ Mat\ *P2P,\ *P2M,\ *L2P;}
+\DoxyCodeLine{00019\ \ \ \ \ Vec\ node\_charge;}
+\DoxyCodeLine{00020\ \ \ \ \ Vec\ node\_potential;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ Matrix\ operators\ ...\ reduced\ memory}}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ MEM\ efficient\ ACA}}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{bool}\ is\_admissible(Node<Kernel>*\&\ A)\{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ the\ max\ norm\ between\ the\ center\ of\ two\ clusters}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ dist\_btwn\_cluster\_center\ =\ nd\_points::max\_norm\_distance(this-\/>cluster\_center,\ A-\/>cluster\_center);}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dist\_btwn\_cluster\_center\ <\ 1.5\ *\ this-\/>my\_cluster-\/>box\_length())}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (interaction\_type(this-\/>my\_cluster,\ A-\/>my\_cluster)\ >\ INTERACTION\_TYPE\_ALLOWED)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00033\ \ \ \ \ Node<Kernel>\ *parent;}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classcluster}{cluster}}\ *my\_cluster;}
+\DoxyCodeLine{00035\ \ \ \ \ \mbox{\hyperlink{structptsn_d}{ptsnD}}\ cluster\_center;\ \textcolor{comment}{//\ Computed\ post\ initialisation\ of\ all\ the\ nodes\ for\ the\ tree}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\_particles;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{bool}\ isleaf\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{bool}\ isroot;}
+\DoxyCodeLine{00039\ \ \ \ \ std::vector<Node<Kernel>\ *>\ Child;}
+\DoxyCodeLine{00040\ \ \ \ \ std::vector<Node<Kernel>\ *>\ my\_neighbour\_addr;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_neighbours,\ n\_intraction;}
+\DoxyCodeLine{00042\ \ \ \ \ std::vector<Node<Kernel>\ *>\ my\_intr\_list\_addr;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{double}\ my\_flop\_il\ =\ 0.0;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ node\_rank;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{comment}{//\ Node\ can\ be\ initialised\ with\ just\ parent\ and\ child\ information}}
+\DoxyCodeLine{00046\ \ \ \ \ Node(\mbox{\hyperlink{classcluster}{cluster}}*\&\ src,\ \mbox{\hyperlink{classkernel__function}{kernel\_function<Kernel>}}*\&\ usr\_)}
+\DoxyCodeLine{00047\ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ this-\/>my\_cluster\ =\ src;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ this-\/>userkernel\ =\ usr\_;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ n\_neighbours\ =\ 0;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ n\_intraction\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ n\_particles\ =\ src-\/>get\_cluster\_size();}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ isroot\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ self\_id\ =\ 0;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ this-\/>my\_cluster-\/>compute\_cluster\_center(cluster\_center);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ cluster\_center.id\ =\ -\/1;\ }
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ Node(\mbox{\hyperlink{classcluster}{cluster}}*\&\ src,\ Node*\&\ parent\_,\ \mbox{\hyperlink{classkernel__function}{kernel\_function<Kernel>}}*\&\ usr\_)}
+\DoxyCodeLine{00059\ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ this-\/>my\_cluster\ =\ src;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ this-\/>parent\ =\ parent\_;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ this-\/>userkernel\ =\ usr\_;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ n\_neighbours\ =\ 0;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ n\_intraction\ =\ 0;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ n\_particles\ =\ src-\/>get\_cluster\_size();}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}cluster\ size\ "{}\ <<\ n\_particles\ <<\ std::endl;}}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Update\ child\ list\ of\ the\ parents}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{comment}{//parent-\/>Child.push\_back(this);}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ isroot\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ self\_id\ =\ src-\/>cluster\_id;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ my\_cluster-\/>compute\_cluster\_center(cluster\_center);}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ cluster\_center.id\ =\ -\/1;\ \textcolor{comment}{//\ center\ points\ provided\ with\ id\ -\/1}}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ get\_id()\{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ this-\/>self\_id;}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}\ Initialize\_node();}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ find\_max\_rank(\textcolor{keywordtype}{size\_t}\ \&MAX\_RANK);}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ update\_matrix\_node(std::vector<std::vector<int>>\&\ mat\_color,\ \textcolor{keywordtype}{int}\ lvl);}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{double}\ compute\_flop\_count();}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ get\_interaction\_list();}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ get\_node\_potential();}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_node\_charge(\textcolor{keyword}{const}\ Vec\ \&b)\{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ node\_charge\ =\ Vec::Zero(n\_particles);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ node\_potential\ =\ Vec::Zero(n\_particles);}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n\_particles;\ i++)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ tmp\ =\ my\_cluster-\/>index\_of\_points[i];}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ node\_charge(i)\ =\ b(tmp);}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{void}\ collect\_potential(Vec\&\ b)\{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Collects\ the\ potential}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ node\_charge\ =\ Vec::Zero(n\_particles);}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n\_particles;\ i++)}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ tmp\ =\ my\_cluster-\/>index\_of\_points[i];}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ b(tmp)\ +=\ node\_potential(i);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{void}\ print\_node\_details()\{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}**************"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Node\ ["{}}\ <<\ self\_id\ <<\ \textcolor{stringliteral}{"{}]\ ,\ Nunmber\ particles\ =\ "{}}\ <<\ n\_particles\ <<\ std::endl;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ my\_cluster-\/>print\_bounding\_box();}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Neighbours\ -\/"{}};}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_neighbours;\ i++)}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ my\_neighbour\_addr[i]-\/>self\_id;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Interaction\ List\ -\/"{}};}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ this-\/>my\_intr\_list\_addr[i]-\/>self\_id;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}**************"{}}\ <<\ std::endl;}
+\DoxyCodeLine{00115\ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \};}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \textcolor{comment}{//\ Routine\ to\ compute\ the\ interaction\ list\ and\ neighbor\ list}}
+\DoxyCodeLine{00119\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00120\ \textcolor{keywordtype}{void}\ Node<Kernel>::Initialize\_node()}
+\DoxyCodeLine{00121\ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{comment}{//\ Initialise\ the\ matrix\ operators\ -\/\ Full\ memory}}
+\DoxyCodeLine{00123\ \ \ \ \ \textcolor{keywordflow}{if}\ (n\_particles\ !=\ 0)}
+\DoxyCodeLine{00124\ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ node\_charge\ =\ Vec::Zero(n\_particles);}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ L2P\ =\ \textcolor{keyword}{new}\ Mat[n\_intraction];}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ P2M\ =\ \textcolor{keyword}{new}\ Mat[n\_intraction];}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (int\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ LR[i]\ =\ LowRankMat<Kernel>(userkernel,\ my\_cluster-\/>index\_of\_points,}}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_intr\_list\_addr[i]-\/>my\_cluster-\/>index\_of\_points);}}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (int\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)\ }}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)}}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ userkernel-\/>ACA\_FAST(L2P[i],\ P2M[i],\ eps\_ACA,}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_cluster-\/>index\_of\_points,}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_intr\_list\_addr[i]-\/>my\_cluster-\/>index\_of\_points);}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (isleaf)}}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \{}}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ P2P\ =\ new\ Mat[n\_neighbours];}}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ //P2P\_self\ =\ userkernel-\/>getMatrix(my\_cluster-\/>index\_of\_points,\ my\_cluster-\/>index\_of\_points);}}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ for\ (int\ i\ =\ 0;\ i\ <\ n\_neighbours;\ i++)}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ \ \ \ \ if\ (my\_neighbour\_addr[i]-\/>n\_particles\ !=\ 0)}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ \ \ \ \ \ \ \ \ P2P[i]\ =\ userkernel-\/>getMatrix(my\_cluster-\/>index\_of\_points,}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ //\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_neighbour\_addr[i]-\/>my\_cluster-\/>index\_of\_points);}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00146\ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \ \ \ \ node\_potential\ =\ Vec::Zero(n\_particles);}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//TODO\ :\ Initialise\ the\ matrix\ operator\ -\/\ Reduced\ memory}}
+\DoxyCodeLine{00149\ \}}
+\DoxyCodeLine{00150\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00151\ \textcolor{keywordtype}{void}\ Node<Kernel>::get\_interaction\_list()}
+\DoxyCodeLine{00152\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ "{}Self-\/-\/-\/\ "{}\ <<\ self\_id\ <<\ std::endl;}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{if}(!isroot)\{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ interaction\ list\ consists\ of\ nodes\ from\ two\ sources}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 1)\ Siblings}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ this-\/>parent-\/>Child.size();\ i++)\{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_node}{Node<Kernel>}}*\ tmp;}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ tmp\ =\ this-\/>parent-\/>Child[i];}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>self\_id\ !=\ tmp-\/>self\_id)\{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(this-\/>is\_admissible(tmp))}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>my\_intr\_list\_addr.push\_back(tmp);}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>my\_neighbour\_addr.push\_back(tmp);}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ 2)\ Children\ of\ one's\ parent's\ neighbours}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ this-\/>parent-\/>my\_neighbour\_addr.size();\ i++)\{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ this-\/>parent-\/>my\_neighbour\_addr[i]-\/>Child.size();\ j++)\{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_node}{Node<Kernel>}}\ *tmp;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp\ =\ this-\/>parent-\/>my\_neighbour\_addr[i]-\/>Child[j];}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>is\_admissible(tmp))}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>my\_intr\_list\_addr.push\_back(tmp);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>my\_neighbour\_addr.push\_back(tmp);}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ }
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00178\ \ \ \ \ \}}
+\DoxyCodeLine{00179\ \ \ \ \ this-\/>n\_neighbours\ =\ this-\/>my\_neighbour\_addr.size();}
+\DoxyCodeLine{00180\ \ \ \ \ this-\/>n\_intraction\ =\ this-\/>my\_intr\_list\_addr.size();}
+\DoxyCodeLine{00181\ \}}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{double}\ Node<Kernel>::compute\_flop\_count()}
+\DoxyCodeLine{00185\ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ my\_flop\_nn\ =\ 0.0;}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(n\_particles\ !=\ 0)\{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(this-\/>isleaf)\{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_flop\_nn\ +=\ n\_particles;}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_neighbours;\ i++)\{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (my\_neighbour\_addr[i]-\/>n\_particles\ !=\ 0)}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_flop\_nn\ +=\ my\_neighbour\_addr[i]-\/>n\_particles;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_flop\_nn\ *=\ n\_particles;}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ for\ (int\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)\{}}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)\{}}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ my\_flop\ +=\ LR[i].rank()\ *\ (n\_particles\ +\ my\_intr\_list\_addr[i]-\/>n\_particles);}}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ my\_flop\_nn;}
+\DoxyCodeLine{00203\ \ \ \ \ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//\ template\ <class\ Kernel>}}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//\ void\ Node<Kernel>::find\_max\_rank(size\_t\&\ MAX\_RANK)\{}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ size\_t\ tmp\ =\ MAX\_RANK;}}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if(n\_particles\ !=\ 0)\{}}
+\DoxyCodeLine{00209\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ for\ (int\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00211\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ if\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)}}
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ ((size\_t)\ LR[i].rank()\ >\ tmp)}}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tmp\ =\ LR[i].rank();}}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00217\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \}}}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ MAX\_RANK\ =\ tmp;}}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordtype}{void}\ Node<Kernel>::get\_node\_potential()}
+\DoxyCodeLine{00225\ \ \ \ \ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{comment}{//\ Routine\ for\ Full\ memory\ matvec}}
+\DoxyCodeLine{00227\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Self\ ID\ "{}\ <<\ self\_id\ <<\ std::endl;}}
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{if}(isleaf)}
+\DoxyCodeLine{00229\ \ \ \ \ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(n\_particles\ !=\ 0)}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}("{}\ <<\ P2P\_self.rows()\ <<\ "{},"{}\ <<\ P2P\_self.cols()\ <<"{})\ x\ ("{}<<\ node\_charge.size()\ <<\ "{}x1)"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//node\_potential\ +=\ P2P\_self\ *\ node\_charge;}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n\_particles;\ i++)}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\_potential(i)\ +=\ userkernel-\/>getRow(my\_cluster-\/>index\_of\_points[i],\ my\_cluster-\/>index\_of\_points).dot(node\_charge);}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Neighbor\ id\ "{};}}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_neighbours;\ i++)}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ \ <<\ my\_neighbour\_addr[i]-\/>self\_id\ <<\ "{}\ "{}\ <<\ std::endl;}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (my\_neighbour\_addr[i]-\/>n\_particles\ !=\ 0)}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//node\_potential\ +=\ P2P[i]\ *\ my\_neighbour\_addr[i]-\/>node\_charge;}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ j\ =\ 0;\ j\ <\ n\_particles;\ j++)}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\_potential(j)\ +=\ userkernel-\/>getRow(my\_cluster-\/>index\_of\_points[j],\ my\_neighbour\_addr[i]-\/>my\_cluster-\/>index\_of\_points).dot(my\_neighbour\_addr[i]-\/>node\_charge);}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Neighbor\ id\ "{};}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00247\ \ \ \ \ \}}
+\DoxyCodeLine{00248\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ std::endl;}}
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Interaction\ \ id\ "{}\ ;}}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)}
+\DoxyCodeLine{00251\ \ \ \ \ \{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ my\_intr\_list\_addr[i]-\/>self\_id\ <<\ "{}\ "{};}}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ if\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ node\_potential\ +=\ (L2P[i]\ *\ (P2M[i].transpose()\ *\ my\_intr\_list\_addr[i]-\/>node\_charge));}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (my\_intr\_list\_addr[i]-\/>n\_particles\ !=\ 0)\{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ tmp\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_low_rank_mat}{LowRankMat<Kernel>}}\ *LR\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{class_low_rank_mat}{LowRankMat<Kernel>}}[n\_intraction];}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ LR[i]\ =\ \mbox{\hyperlink{class_low_rank_mat}{LowRankMat<Kernel>}}(userkernel,\ my\_cluster-\/>index\_of\_points,}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ my\_intr\_list\_addr[i]-\/>my\_cluster-\/>index\_of\_points);}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ init\_time\ +=\ omp\_get\_wtime()\ -\/\ tmp;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ node\_potential\ +=\ LR[i]\ *\ my\_intr\_list\_addr[i]-\/>node\_charge;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ tmp\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>my\_flop\_il\ +=\ LR[i].rank()\ *\ (n\_particles\ +\ my\_intr\_list\_addr[i]-\/>n\_particles);}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((\textcolor{keywordtype}{int})\ this-\/>node\_rank\ <\ LR[i].rank())}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>node\_rank\ =\ LR[i].rank();}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ meas\_time\ +=\ omp\_get\_wtime()\ -\/\ tmp;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00268\ \ \ \ \ \}}
+\DoxyCodeLine{00269\ \ \ \ \ \}}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ std::endl;}}
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Kernel>}
+\DoxyCodeLine{00272\ \ \ \ \ \textcolor{keywordtype}{void}\ Node<Kernel>::update\_matrix\_node(std::vector<std::vector<int>\ >\&\ mat\_color,\ \textcolor{keywordtype}{int}\ lvl)}
+\DoxyCodeLine{00273\ \ \ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ source\ list\ corresponding\ to\ leaf\ nodes,\ lvl\ is\ 4\string^\{leaf\_level\ -\/\ my\_level\}}}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ std::vector<size\_t>\ row\_indices;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ drift\ =\ pow(pow(2,NDIM),\ lvl);}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ start\_index\ =\ drift\ *\ int(this-\/>self\_id);}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int}\ i=0;\ i<\ drift;\ i++)}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ row\_indices.push\_back((\textcolor{keywordtype}{size\_t})start\_index\ +\ i);}
+\DoxyCodeLine{00280\ }
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ update\ the\ mat\ color\ based\ on\ the\ interaction\ list\ in\ the\ matrix}}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ n\_intraction;\ i++)}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ target\ list\ corresponding\ to\ leaf\ nodes}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<size\_t>\ col\_indices;\ \ \ \ \ \ }
+\DoxyCodeLine{00286\ }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ start\_index\ =\ drift\ *\ int(my\_intr\_list\_addr[i]-\/>self\_id);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ drift;\ k++)}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ col\_indices.push\_back((\textcolor{keywordtype}{size\_t})start\_index\ +\ k);}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Make\ appropriate\ color\ changes}}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ (int)row\_indices.size();\ j++)}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ (int)col\_indices.size();\ k++)}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mat\_color[row\_indices[j]][col\_indices[k]]\ =\ 1;}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00298\ \ \ \ \ \}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Routine\ Reduced\ memory\ matvec}}
+\DoxyCodeLine{00301\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

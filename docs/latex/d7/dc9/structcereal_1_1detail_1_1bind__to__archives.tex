@@ -1,0 +1,50 @@
+\doxysection{cereal\+::detail\+::bind\+\_\+to\+\_\+archives\texorpdfstring{$<$}{<} T, Tag \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1bind__to__archives}{}\label{structcereal_1_1detail_1_1bind__to__archives}\index{cereal::detail::bind\_to\_archives$<$ T, Tag $>$@{cereal::detail::bind\_to\_archives$<$ T, Tag $>$}}
+
+
+Begins the binding process of a type to all registered archives.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1bind__to__archives_a691a82f3c9926493923725dd468779c1}\label{structcereal_1_1detail_1_1bind__to__archives_a691a82f3c9926493923725dd468779c1} 
+void {\bfseries bind} (std\+::false\+\_\+type) const
+\begin{DoxyCompactList}\small\item\em Binding for non abstract types. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1detail_1_1bind__to__archives_a6c61fc1dddb581a47b331eda2b366083}\label{structcereal_1_1detail_1_1bind__to__archives_a6c61fc1dddb581a47b331eda2b366083} 
+void {\bfseries bind} (std\+::true\+\_\+type) const
+\begin{DoxyCompactList}\small\item\em Binding for abstract types. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{bind\+\_\+to\+\_\+archives}} const \& \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives_a1dcd0adc16df7ab299b83862d8ab2755}{bind}} () const
+\begin{DoxyCompactList}\small\item\em Binds the type T to all registered archives. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T, class Tag = polymorphic\+\_\+binding\+\_\+tag$>$\newline
+struct cereal\+::detail\+::bind\+\_\+to\+\_\+archives$<$ T, Tag $>$}
+Begins the binding process of a type to all registered archives. 
+
+Archives need to be registered prior to this struct being instantiated via the CEREAL\+\_\+\+REGISTER\+\_\+\+ARCHIVE macro. Overload resolution will then force several static objects to be made that allow us to bind together all registered archive types with the parameter type T. 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1bind__to__archives_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1bind__to__archives_a1dcd0adc16df7ab299b83862d8ab2755}\index{cereal::detail::bind\_to\_archives$<$ T, Tag $>$@{cereal::detail::bind\_to\_archives$<$ T, Tag $>$}!bind@{bind}}
+\index{bind@{bind}!cereal::detail::bind\_to\_archives$<$ T, Tag $>$@{cereal::detail::bind\_to\_archives$<$ T, Tag $>$}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1bind__to__archives_a1dcd0adc16df7ab299b83862d8ab2755} 
+template$<$class T, class Tag = polymorphic\+\_\+binding\+\_\+tag$>$ \\
+\mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{bind\+\_\+to\+\_\+archives}} const  \& \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{cereal\+::detail\+::bind\+\_\+to\+\_\+archives}}$<$ T, Tag $>$\+::bind (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Binds the type T to all registered archives. 
+
+If T is abstract, we will not serialize it and thus do not need to make a binding 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

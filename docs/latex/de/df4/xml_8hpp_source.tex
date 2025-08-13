@@ -1,0 +1,758 @@
+\doxysection{xml.\+hpp}
+\hypertarget{xml_8hpp_source}{}\label{xml_8hpp_source}\index{lib/cereal/archives/xml.hpp@{lib/cereal/archives/xml.hpp}}
+\mbox{\hyperlink{xml_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_ARCHIVES\_XML\_HPP\_}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ CEREAL\_ARCHIVES\_XML\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{util_8hpp}{cereal/details/util.hpp}}"{}}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}cereal/external/rapidxml/rapidxml.hpp"{}}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ "{}cereal/external/rapidxml/rapidxml\_print.hpp"{}}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ "{}cereal/external/base64.hpp"{}}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00047\ \{}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{namespace\ }xml\_detail}
+\DoxyCodeLine{00049\ \ \ \{}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\ \ \ \ \#ifndef\ CEREAL\_XML\_STRING\_VALUE}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\ \ \ \ \#define\ CEREAL\_XML\_STRING\_VALUE\ "{}cereal"{}}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ CEREAL\_XML\_STRING\_VALUE}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ CEREAL\_XML\_STRING\ =\ \mbox{\hyperlink{xml_8hpp_a44505fe952f8c1f6fef02efc4d7cfefa}{CEREAL\_XML\_STRING\_VALUE}};}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{xml_8hpp_a6931d2bbffc4579c110dead25437e297}{isWhitespace}}(\ \textcolor{keywordtype}{char}\ c\ )}
+\DoxyCodeLine{00062\ \ \ \ \ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ c\ ==\ \textcolor{charliteral}{'\ '}\ ||\ c\ ==\ \textcolor{charliteral}{'\(\backslash\)t'}\ ||\ c\ ==\ \textcolor{charliteral}{'\(\backslash\)n'}\ ||\ c\ ==\ \textcolor{charliteral}{'\(\backslash\)r'};}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}{XMLOutputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<XMLOutputArchive>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcereal_1_1traits_1_1_text_archive}{traits::TextArchive}}}
+\DoxyCodeLine{00097\ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87}{Default}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}();\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}(\ \textcolor{keywordtype}{int}\ precision\_\ =\ std::numeric\_limits<double>::max\_digits10,}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ indent\_\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ outputType\_\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ sizeAttributes\_\ =\ \textcolor{keyword}{true}\ )\ :}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ itsPrecision(\ precision\_\ ),}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ itsIndent(\ indent\_\ ),}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ itsOutputType(\ outputType\_\ ),}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ itsSizeAttributes(\ sizeAttributes\_\ )}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_a0cdcb4f7954108b0fdef7b689753eee4}{precision}}(\ \textcolor{keywordtype}{int}\ value\ )\{\ itsPrecision\ =\ value;\ \textcolor{keywordflow}{return}\ *\ \textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_add6270ed2b7d9761feb53d0b36d7f789}{indent}}(\ \textcolor{keywordtype}{bool}\ enable\ )\{\ itsIndent\ =\ enable;\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_a8a2518b687af2c0e8c62d75fab0e3f48}{outputType}}(\ \textcolor{keywordtype}{bool}\ enable\ )\{\ itsOutputType\ =\ enable;\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ad0720fae6be971e51ca8230b3868b894}{Options}}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_a45ffd33216da9a809739d005039fb7c2}{sizeAttributes}}(\ \textcolor{keywordtype}{bool}\ enable\ )\{\ itsSizeAttributes\ =\ enable;\ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}{XMLOutputArchive}};}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ itsPrecision;}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsIndent;}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsOutputType;}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsSizeAttributes;}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}{XMLOutputArchive}}(\ std::ostream\ \&\ stream,\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options}{Options}}\ \textcolor{keyword}{const}\ \&\ options\ =\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_1_1_options_ab7120fd4a284844186093c581e922c87}{Options::Default}}()\ )\ :}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a38f4d3926118a014c72a56b1d7547dac}{XMLOutputArchive}}>(this),}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ itsStream(stream),}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ itsOutputType(\ options.itsOutputType\ ),}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ itsIndent(\ options.itsIndent\ ),}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ itsSizeAttributes(options.itsSizeAttributes)}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ rapidxml\ will\ delete\ all\ allocations\ when\ xml\_document\ is\ cleared}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ itsXML.allocate\_node(\ rapidxml::node\_declaration\ );}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ \textcolor{stringliteral}{"{}version"{}},\ \textcolor{stringliteral}{"{}1.0"{}}\ )\ );}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ \textcolor{stringliteral}{"{}encoding"{}},\ \textcolor{stringliteral}{"{}utf-\/8"{}}\ )\ );}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ itsXML.append\_node(\ node\ );}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ allocate\ root\ node}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ root\ =\ itsXML.allocate\_node(\ rapidxml::node\_element,\ xml\_detail::CEREAL\_XML\_STRING\ );}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ itsXML.append\_node(\ root\ );}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ itsNodes.emplace(\ root\ );}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ set\ attributes\ on\ the\ streams}}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ itsStream\ <<\ std::boolalpha;}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ itsStream.precision(\ options.itsPrecision\ );}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ itsOS\ <<\ std::boolalpha;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ itsOS.precision(\ options.itsPrecision\ );}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a27af07bb73acbc1ad38d3f9a625e0d3c}{\string~XMLOutputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ flags\ =\ itsIndent\ ?\ 0x0\ :\ rapidxml::print\_no\_indenting;}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ rapidxml::print(\ itsStream,\ itsXML,\ flags\ );}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ itsXML.clear();}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a2aa0db0f3e102d463b0cdb20e3caed10}{saveBinaryValue}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ name\ =\ \textcolor{keyword}{nullptr}\ )}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ itsNodes.top().name\ =\ name;}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5}{startNode}}();}
+\DoxyCodeLine{00205\ }
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ base64string\ =\ base64::encode(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *\textcolor{keyword}{>}(\ data\ ),\ size\ );}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ base64string\ );}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ itsOutputType\ )}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ \textcolor{stringliteral}{"{}type"{}},\ \textcolor{stringliteral}{"{}cereal\ binary\ data"{}}\ )\ );}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_aa71de505f1aa29fe74065df4bbb39d7e}{finishNode}}();}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5}{startNode}}()}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generate\ a\ name\ for\ this\ new\ node}}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ nameString\ =\ itsNodes.top().getValueName();}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ allocate\ strings\ for\ all\ of\ the\ data\ in\ the\ XML\ object}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ namePtr\ =\ itsXML.allocate\_string(\ nameString.data(),\ nameString.length()\ +\ 1\ );}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ insert\ into\ the\ XML}}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ node\ =\ itsXML.allocate\_node(\ rapidxml::node\_element,\ namePtr,\ \textcolor{keyword}{nullptr},\ nameString.size()\ );}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_node(\ node\ );}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ itsNodes.emplace(\ node\ );}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_aa71de505f1aa29fe74065df4bbb39d7e}{finishNode}}()}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ itsNodes.pop();}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_aa301c06076e60466516f7d69198c2185}{setNextName}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ name\ )}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ itsNodes.top().name\ =\ name;}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00252\ }
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ T\ \textcolor{keyword}{const}\ \&\ value\ )}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ itsOS.clear();\ itsOS.seekp(\ 0,\ std::ios::beg\ );}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ itsOS\ <<\ value\ <<\ std::ends;}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ strValue\ =\ itsOS.str();}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ itsOS.str()\ may\ contain\ data\ from\ previous\ calls\ after\ the\ first\ '\(\backslash\)0'\ that\ was\ just\ inserted}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ and\ this\ data\ is\ counted\ in\ the\ length\ call.\ We\ make\ sure\ to\ remove\ that\ section\ so\ that\ the}}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ whitespace\ validation\ is\ done\ properly}}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ strValue.resize(std::strlen(strValue.c\_str()));}
+\DoxyCodeLine{00269\ }
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ the\ first\ or\ last\ character\ is\ a\ whitespace,\ add\ xml:space\ attribute}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ len\ =\ strValue.length();}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ len\ >\ 0\ \&\&\ (\ \mbox{\hyperlink{xml_8hpp_a6931d2bbffc4579c110dead25437e297}{xml\_detail::isWhitespace}}(\ strValue[0]\ )\ ||\ \mbox{\hyperlink{xml_8hpp_a6931d2bbffc4579c110dead25437e297}{xml\_detail::isWhitespace}}(\ strValue[len\ -\/\ 1]\ )\ )\ )}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ \textcolor{stringliteral}{"{}xml:space"{}},\ \textcolor{stringliteral}{"{}preserve"{}}\ )\ );}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ allocate\ strings\ for\ all\ of\ the\ data\ in\ the\ XML\ object}}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dataPtr\ =\ itsXML.allocate\_string(strValue.c\_str(),\ strValue.length()\ +\ 1\ );}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ insert\ into\ the\ XML}}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_node(\ itsXML.allocate\_node(\ rapidxml::node\_data,\ \textcolor{keyword}{nullptr},\ dataPtr\ )\ );}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a2d85b7350ab575fedeebcc0c31a56777}{saveValue}}(\ uint8\_t\ \textcolor{keyword}{const}\ \&\ value\ )}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ \textcolor{keyword}{static\_cast<}uint32\_t\textcolor{keyword}{>}(\ value\ )\ );}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a05f3803cec394e287d1088bc78f2381b}{saveValue}}(\ int8\_t\ \textcolor{keyword}{const}\ \&\ value\ )}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ \textcolor{keyword}{static\_cast<}int32\_t\textcolor{keyword}{>}(\ value\ )\ );}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a4af064c2dc6a9451ef9a4dd93bdd304e}{insertType}}()}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !itsOutputType\ )}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00302\ }
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generate\ a\ name\ for\ this\ new\ node}}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ nameString\ =\ \mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{util::demangledName<T>}}();}
+\DoxyCodeLine{00305\ }
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ allocate\ strings\ for\ all\ of\ the\ data\ in\ the\ XML\ object}}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ namePtr\ =\ itsXML.allocate\_string(\ nameString.data(),\ nameString.length()\ +\ 1\ );}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ \textcolor{stringliteral}{"{}type"{}},\ namePtr\ )\ );}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_afbc756983609a1600576faff3c558c57}{appendAttribute}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ name,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ value\ )}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ namePtr\ =\ \ itsXML.allocate\_string(\ name\ );}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ valuePtr\ =\ itsXML.allocate\_string(\ value\ );}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ itsNodes.top().node-\/>append\_attribute(\ itsXML.allocate\_attribute(\ namePtr,\ valuePtr\ )\ );}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00319\ }
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasSizeAttributes()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ itsSizeAttributes;\ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }NodeInfo}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ NodeInfo(\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ n\ =\ \textcolor{keyword}{nullptr},}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ nm\ =\ \textcolor{keyword}{nullptr}\ )\ :}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a240a9b7d14c064a1c43925a4fd43a6c6}{node}}(\ n\ ),}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ac7786637d9acb060450d67fcbab4cd04}{counter}}(\ 0\ ),}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}{name}}(\ nm\ )}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00332\ }
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a240a9b7d14c064a1c43925a4fd43a6c6}{node}};\ }
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ac7786637d9acb060450d67fcbab4cd04}{counter}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}{name}};\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00336\ }
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ std::string\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_a7ba5c914f9b830e92259794062e51257}{getValueName}}()}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}{name}}\ )}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}{name}};}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_aba4e8217e142a36fbfc4dbbdca28a398}{name}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{n\};}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}value"{}}\ +\ std::to\_string(\ \mbox{\hyperlink{structcereal_1_1_x_m_l_output_archive_1_1_node_info_ac7786637d9acb060450d67fcbab4cd04}{counter}}++\ )\ +\ \textcolor{stringliteral}{"{}\(\backslash\)0"{}};}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \};\ \textcolor{comment}{//\ NodeInfo}}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00355\ }
+\DoxyCodeLine{00356\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ std::ostream\ \&\ itsStream;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__document}{rapidxml::xml\_document<>}}\ itsXML;\ }
+\DoxyCodeLine{00359\ \ \ \ \ \ \ std::stack<NodeInfo>\ itsNodes;\ \ \ }
+\DoxyCodeLine{00360\ \ \ \ \ \ \ std::ostringstream\ itsOS;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsOutputType;\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsIndent;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsSizeAttributes;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00364\ \ \ \};\ \textcolor{comment}{//\ XMLOutputArchive}}
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00368\ }
+\DoxyCodeLine{00405\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184}{XMLInputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<XMLInputArchive>,\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcereal_1_1traits_1_1_text_archive}{traits::TextArchive}}}
+\DoxyCodeLine{00406\ \ \ \{}
+\DoxyCodeLine{00407\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184}{XMLInputArchive}}(\ std::istream\ \&\ stream\ )\ :}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ab641ded4033d8e998e41dd002ece9184}{XMLInputArchive}}>(\ this\ ),}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ itsData(\ std::istreambuf\_iterator<char>(\ stream\ ),\ std::istreambuf\_iterator<char>()\ )}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ itsData.push\_back(\textcolor{charliteral}{'\(\backslash\)0'});\ \textcolor{comment}{//\ rapidxml\ will\ do\ terrible\ things\ without\ the\ data\ being\ null\ terminated}}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ itsXML.parse<rapidxml::parse\_trim\_whitespace\ |\ rapidxml::parse\_no\_data\_nodes\ |\ rapidxml::parse\_declaration\_node>(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}\ *\textcolor{keyword}{>}(\ itsData.data()\ )\ );}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}(\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1parse__error}{rapidxml::parse\_error}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cerr\ <<\ "{}-\/-\/-\/-\/-\/Original-\/-\/-\/-\/-\/"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//stream.seekg(0);}}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ std::string(\ std::istreambuf\_iterator<char>(\ stream\ ),\ std::istreambuf\_iterator<char>()\ )\ <<\ std::endl;}}
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cerr\ <<\ "{}-\/-\/-\/-\/-\/Error-\/-\/-\/-\/-\/"{}\ <<\ std::endl;}}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cerr\ <<\ e.what()\ <<\ std::endl;}}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cerr\ <<\ e.where<char>()\ <<\ std::endl;}}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}XML\ Parsing\ failed\ -\/\ likely\ due\ to\ invalid\ characters\ or\ invalid\ naming"{}});}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Parse\ the\ root}}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ root\ =\ itsXML.first\_node(\ xml\_detail::CEREAL\_XML\_STRING\ );}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ root\ ==\ \textcolor{keyword}{nullptr}\ )}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Could\ not\ detect\ cereal\ root\ node\ -\/\ likely\ due\ to\ empty\ or\ invalid\ input"{}});}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ itsNodes.emplace(\ root\ );}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{\string~XMLInputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ default;}
+\DoxyCodeLine{00447\ }
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a974ecacf6a6411fb98e89182011b4b55}{loadBinaryValue}}(\ \textcolor{keywordtype}{void}\ *\ data,\ \textcolor{keywordtype}{size\_t}\ size,\ const\ \textcolor{keywordtype}{char}\ *\ name\ =\ \textcolor{keywordtype}{nullptr}\ )}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a3303435877555d5d5366ee654eb24f60}{setNextName}}(\ name\ );}
+\DoxyCodeLine{00457\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0}{startNode}}();}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ std::string\ encoded;}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ encoded\ );}
+\DoxyCodeLine{00461\ }
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ decoded\ =\ base64::decode(\ encoded\ );}
+\DoxyCodeLine{00463\ }
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ size\ !=\ decoded.size()\ )}
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Decoded\ binary\ data\ size\ does\ not\ match\ specified\ size"{}});}
+\DoxyCodeLine{00466\ }
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ std::memcpy(\ data,\ decoded.data(),\ decoded.size()\ );}
+\DoxyCodeLine{00468\ }
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a06f0c412f74f3b538efac94886005b44}{finishNode}}();}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00477\ }
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0}{startNode}}()}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ next\ =\ itsNodes.top().child;\ \textcolor{comment}{//\ By\ default\ we\ would\ move\ to\ the\ next\ child\ node}}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ expectedName\ =\ itsNodes.top().name;\ \textcolor{comment}{//\ this\ is\ the\ expected\ name\ from\ the\ NVP,\ if\ provided}}
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ If\ we\ were\ given\ an\ NVP\ name,\ look\ for\ it\ in\ the\ current\ level\ of\ the\ document.}}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ We\ only\ need\ to\ do\ this\ if\ either\ we\ have\ exhausted\ the\ siblings\ of\ the\ current\ level\ or}}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ the\ NVP\ name\ does\ not\ match\ the\ name\ of\ the\ node\ we\ would\ normally\ read\ next}}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ expectedName\ \&\&\ (\ next\ ==\ \textcolor{keyword}{nullptr}\ ||\ std::strcmp(\ next-\/>name(),\ expectedName\ )\ !=\ 0\ )\ )}
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ next\ =\ itsNodes.top().search(\ expectedName\ );}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ next\ ==\ \textcolor{keyword}{nullptr}\ )}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}XML\ Parsing\ failed\ -\/\ provided\ NVP\ ("{}}\ +\ std::string(expectedName)\ +\ \textcolor{stringliteral}{"{})\ not\ found"{}});}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ itsNodes.emplace(\ next\ );}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a06f0c412f74f3b538efac94886005b44}{finishNode}}()}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ remove\ current}}
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ itsNodes.pop();}
+\DoxyCodeLine{00512\ }
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ advance\ parent}}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ itsNodes.top().advance();}
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Reset\ name}}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ itsNodes.top().name\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acba55850d08642d1c5532c91eb360325}{getNodeName}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00523\ \textcolor{keyword}{\ \ \ \ \ \ }\{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ itsNodes.top().getChildName();}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00528\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a3303435877555d5d5366ee654eb24f60}{setNextName}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ name\ )}
+\DoxyCodeLine{00529\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ itsNodes.top().name\ =\ name;}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00532\ }
+\DoxyCodeLine{00534\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_unsigned<T>::value,}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::is\_same<T,\ bool>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ std::istringstream\ is(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00539\ \ \ \ \ \ \ \ \ is.setf(\ std::ios::boolalpha\ );}
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ is\ >>\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}};}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00544\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_integral<T>::value,}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ bool>::value,}
+\DoxyCodeLine{00546\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ ==\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char})>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ *\textcolor{keyword}{reinterpret\_cast<}T*\textcolor{keyword}{>}(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00551\ }
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a2fdbedad1accc2982d3e8261e7510d6c}{loadValue}}(\ int8\_t\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ int32\_t\ val;\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ val\ );\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \textcolor{keyword}{static\_cast<}int8\_t\textcolor{keyword}{>}(\ val\ );}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00557\ }
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_af0d2453dc4bf78cd48b227f7bdbf1448}{loadValue}}(\ uint8\_t\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ uint32\_t\ val;\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ val\ );\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(\ val\ );}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00563\ }
+\DoxyCodeLine{00565\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_unsigned<T>::value,}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ bool>::value,}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ char>::value,}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ unsigned\ char>::value,}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ <\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ value\ )}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ value\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(\ std::stoul(\ itsNodes.top().node-\/>value()\ )\ );}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00574\ }
+\DoxyCodeLine{00576\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_unsigned<T>::value,}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ bool>::value,}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ >=\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long})>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ value\ )}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ value\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(\ std::stoull(\ itsNodes.top().node-\/>value()\ )\ );}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00583\ }
+\DoxyCodeLine{00585\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_signed<T>::value,}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ !std::is\_same<T,\ char>::value,}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ <=\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int})>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(\ std::stoi(\ itsNodes.top().node-\/>value()\ )\ );}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00592\ }
+\DoxyCodeLine{00594\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_signed<T>::value,}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{sizeof}(T)\ >\ \textcolor{keyword}{sizeof}(int)),}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ <=\ \textcolor{keyword}{sizeof}(long)>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(\ std::stol(\ itsNodes.top().node-\/>value()\ )\ );}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00601\ }
+\DoxyCodeLine{00603\ \ \ \ \ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_signed<T>::value,}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{sizeof}(T)\ >\ \textcolor{keyword}{sizeof}(long)),}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{sizeof}(T)\ <=\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{long}\ long)>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \textcolor{keyword}{static\_cast<}T\textcolor{keyword}{>}(\ std::stoll(\ itsNodes.top().node-\/>value()\ )\ );}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00610\ }
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ \textcolor{keywordtype}{float}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ std::stof(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::out\_of\_range\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ special\ case\ for\ denormalized\ values}}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ std::istringstream\ is(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ is\ >>\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}};}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ std::fpclassify(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )\ !=\ FP\_SUBNORMAL\ )}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00627\ }
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a55244b5ef0902217f14491eb3c03151c}{loadValue}}(\ \textcolor{keywordtype}{double}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ std::stod(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::out\_of\_range\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ special\ case\ for\ denormalized\ values}}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ std::istringstream\ is(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ is\ >>\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}};}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ std::fpclassify(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )\ !=\ FP\_SUBNORMAL\ )}
+\DoxyCodeLine{00641\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00644\ }
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a703207c2e0bc195ebd8ba8e81170ad7d}{loadValue}}(\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{double}\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ std::stold(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::out\_of\_range\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ special\ case\ for\ denormalized\ values}}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ std::istringstream\ is(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ is\ >>\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}};}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ std::fpclassify(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )\ !=\ FP\_SUBNORMAL\ )}
+\DoxyCodeLine{00658\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw};}
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00661\ }
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ CharT,\ \textcolor{keyword}{class}\ Traits,\ \textcolor{keyword}{class}\ Alloc>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a5874ffacb2c44546e71819cc23f7040e}{loadValue}}(\ std::basic\_string<CharT,\ Traits,\ Alloc>\ \&\ str\ )}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ std::basic\_istringstream<CharT,\ Traits>\ is(\ itsNodes.top().node-\/>value()\ );}
+\DoxyCodeLine{00667\ }
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ str.assign(\ std::istreambuf\_iterator<CharT,\ Traits>(\ is\ ),}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::istreambuf\_iterator<CharT,\ Traits>()\ );}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00671\ }
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ad9ed2b9bd88b279e999b4df1f3f129f8}{loadSize}}(\ T\ \&\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ )}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1008c15adcf15e8a942c01c323f61d14}{value}}\ =\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d}{getNumChildren}}(\ itsNodes.top().node\ );}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00678\ }
+\DoxyCodeLine{00679\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d}{getNumChildren}}(\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ node\ )}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ 0;}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ node\ =\ node-\/>\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node_aeb38e338fd97ce5ebddb9117e23eb005}{first\_node}}();\ \textcolor{comment}{//\ get\ first\ child}}
+\DoxyCodeLine{00685\ }
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\ node\ !=\ \textcolor{keyword}{nullptr}\ )}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ ++size;}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \ \ node\ =\ node-\/>\mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node_ac4753f534d63ec6c959ff856c4df63a3}{next\_sibling}}();}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ size;}
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00694\ }
+\DoxyCodeLine{00696\ }
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }NodeInfo}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ NodeInfo(\ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ n\ =\ \textcolor{keyword}{nullptr}\ )\ :}
+\DoxyCodeLine{00701\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9}{node}}(\ n\ ),}
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}(\ n-\/>first\_node()\ ),}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}{size}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d}{XMLInputArchive::getNumChildren}}(\ n\ )\ ),}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a68a6f48ae6af46e113b7e4618a1992ee}{name}}(\ \textcolor{keyword}{nullptr}\ )}
+\DoxyCodeLine{00705\ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00706\ }
+\DoxyCodeLine{00708\ }
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a93594e014ef1248bdb79753bf53e7018}{advance}}()}
+\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}{size}}\ >\ 0\ )}
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/\mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}{size}};}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}\ =\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}-\/>next\_sibling();}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00717\ }
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a8d3cf82bbbc279a16ac4407ac4759752}{search}}(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ searchName\ )}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ searchName\ )}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ new\_size\ =\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a1e396aeced2f05e4d76b0e4c7ef3f25d}{XMLInputArchive::getNumChildren}}(\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9}{node}}\ );}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ name\_size\ =\ rapidxml::internal::measure(\ searchName\ );}
+\DoxyCodeLine{00727\ }
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{auto}\ new\_child\ =\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9}{node}}-\/>first\_node();\ new\_child\ !=\ \textcolor{keyword}{nullptr};\ new\_child\ =\ new\_child-\/>next\_sibling()\ )}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ rapidxml::internal::compare(\ new\_child-\/>name(),\ new\_child-\/>name\_size(),\ searchName,\ name\_size,\ \textcolor{keyword}{true}\ )\ )}
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}{size}}\ =\ new\_size;}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}\ =\ new\_child;}
+\DoxyCodeLine{00734\ }
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ new\_child;}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/-\/new\_size;}
+\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00739\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00740\ }
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00742\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00743\ }
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a7a30215936e17ae4b5b47d21b661edb4}{getChildName}}()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00746\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}\ ?\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}}-\/>name()\ :\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00749\ }
+\DoxyCodeLine{00750\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a98d18a1207a14f5b3f279f58d82ab9e9}{node}};\ \ }
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__node}{rapidxml::xml\_node<>}}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a0bfbad4de0c4509b402410b3201903bd}{child}};\ }
+\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a066a0d18f828d5266d8c186468d9de12}{size}};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ \mbox{\hyperlink{structcereal_1_1_x_m_l_input_archive_1_1_node_info_a68a6f48ae6af46e113b7e4618a1992ee}{name}};\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \};\ \textcolor{comment}{//\ NodeInfo}}
+\DoxyCodeLine{00755\ }
+\DoxyCodeLine{00757\ }
+\DoxyCodeLine{00758\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00759\ \ \ \ \ \ \ std::vector<char>\ itsData;\ \ \ \ \ \ \ }
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1rapidxml_1_1xml__document}{rapidxml::xml\_document<>}}\ itsXML;\ }
+\DoxyCodeLine{00761\ \ \ \ \ \ \ std::stack<NodeInfo>\ itsNodes;\ \ \ }
+\DoxyCodeLine{00762\ \ \ \};}
+\DoxyCodeLine{00763\ }
+\DoxyCodeLine{00764\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00765\ \ \ \textcolor{comment}{//\ XMLArchive\ prologue\ and\ epilogue\ functions}}
+\DoxyCodeLine{00766\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00767\ }
+\DoxyCodeLine{00768\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00770\ }
+\DoxyCodeLine{00771\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00772\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00773\ \ \ \{\ \}}
+\DoxyCodeLine{00774\ }
+\DoxyCodeLine{00776\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00777\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00778\ \ \ \{\ \}}
+\DoxyCodeLine{00779\ }
+\DoxyCodeLine{00780\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00782\ }
+\DoxyCodeLine{00783\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00784\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00785\ \ \ \{\ \}}
+\DoxyCodeLine{00786\ }
+\DoxyCodeLine{00788\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00789\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00790\ \ \ \{\ \}}
+\DoxyCodeLine{00791\ }
+\DoxyCodeLine{00792\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00794\ }
+\DoxyCodeLine{00795\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00796\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_deferred_data}{DeferredData<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00797\ \ \ \{\ \}}
+\DoxyCodeLine{00798\ }
+\DoxyCodeLine{00800\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00801\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_deferred_data}{DeferredData<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00802\ \ \ \{\ \}}
+\DoxyCodeLine{00803\ }
+\DoxyCodeLine{00804\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00806\ }
+\DoxyCodeLine{00807\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00808\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_deferred_data}{DeferredData<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00809\ \ \ \{\ \}}
+\DoxyCodeLine{00810\ }
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00813\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00814\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_deferred_data}{DeferredData<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00815\ \ \ \{\ \}}
+\DoxyCodeLine{00816\ }
+\DoxyCodeLine{00817\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00819\ }
+\DoxyCodeLine{00820\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00821\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00822\ \ \ \{}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ar.hasSizeAttributes())}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_afbc756983609a1600576faff3c558c57}{appendAttribute}}(\textcolor{stringliteral}{"{}size"{}},\ \textcolor{stringliteral}{"{}dynamic"{}});}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00827\ \ \ \}}
+\DoxyCodeLine{00828\ }
+\DoxyCodeLine{00829\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00830\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ XMLInputArchive\ \&,\ SizeTag<T>\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00831\ \ \ \{\ \}}
+\DoxyCodeLine{00832\ }
+\DoxyCodeLine{00834\ }
+\DoxyCodeLine{00835\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00836\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00837\ \ \ \{\ \}}
+\DoxyCodeLine{00838\ }
+\DoxyCodeLine{00839\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00840\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ XMLInputArchive\ \&,\ SizeTag<T>\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00841\ \ \ \{\ \}}
+\DoxyCodeLine{00842\ }
+\DoxyCodeLine{00843\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00845\ }
+\DoxyCodeLine{00849\ \ \ template\ <class\ T,\ traits::DisableIf<traits::has\_minimal\_base\_class\_serialization<T,\ traits::has\_minimal\_output\_serialization,\ XMLOutputArchive>::value\ ||}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1traits_1_1has__minimal__output__serialization}{traits::has\_minimal\_output\_serialization<T,\ XMLOutputArchive>::value}}>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00851\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00852\ \ \ \{}
+\DoxyCodeLine{00853\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a3a5f5505fa97e7544ae4f027ccba27d5}{startNode}}();}
+\DoxyCodeLine{00854\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a4af064c2dc6a9451ef9a4dd93bdd304e}{insertType}}<T>();}
+\DoxyCodeLine{00855\ \ \ \}}
+\DoxyCodeLine{00856\ }
+\DoxyCodeLine{00858\ \ \ template\ <class\ T,\ traits::DisableIf<traits::has\_minimal\_base\_class\_serialization<T,\ traits::has\_minimal\_input\_serialization,\ XMLInputArchive>::value\ ||}
+\DoxyCodeLine{00859\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ traits::has\_minimal\_input\_serialization<T,\ XMLInputArchive>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00860\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_ac267b8915a13f4433fc25aa9d310ee40}{prologue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00861\ \ \ \{}
+\DoxyCodeLine{00862\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a96c8399e6e6651126aaf5d38631c14d0}{startNode}}();}
+\DoxyCodeLine{00863\ \ \ \}}
+\DoxyCodeLine{00864\ }
+\DoxyCodeLine{00865\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00867\ }
+\DoxyCodeLine{00870\ \ \ template\ <class\ T,\ traits::DisableIf<traits::has\_minimal\_base\_class\_serialization<T,\ traits::has\_minimal\_output\_serialization,\ XMLOutputArchive>::value\ ||}
+\DoxyCodeLine{00871\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ traits::has\_minimal\_output\_serialization<T,\ XMLOutputArchive>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00872\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00873\ \ \ \{}
+\DoxyCodeLine{00874\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_aa71de505f1aa29fe74065df4bbb39d7e}{finishNode}}();}
+\DoxyCodeLine{00875\ \ \ \}}
+\DoxyCodeLine{00876\ }
+\DoxyCodeLine{00878\ \ \ template\ <class\ T,\ traits::DisableIf<traits::has\_minimal\_base\_class\_serialization<T,\ traits::has\_minimal\_input\_serialization,\ XMLInputArchive>::value\ ||}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ traits::has\_minimal\_input\_serialization<T,\ XMLInputArchive>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00880\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a3bec173adc6146ecc712921c2d257ade}{epilogue}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00881\ \ \ \{}
+\DoxyCodeLine{00882\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a06f0c412f74f3b538efac94886005b44}{finishNode}}();}
+\DoxyCodeLine{00883\ \ \ \}}
+\DoxyCodeLine{00884\ }
+\DoxyCodeLine{00885\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00886\ \ \ \textcolor{comment}{//\ Common\ XMLArchive\ serialization\ functions}}
+\DoxyCodeLine{00887\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00888\ }
+\DoxyCodeLine{00890\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00891\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \textcolor{keyword}{const}\ \&\ t\ )}
+\DoxyCodeLine{00892\ \ \ \{}
+\DoxyCodeLine{00893\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_aa301c06076e60466516f7d69198c2185}{setNextName}}(\ t.name\ );}
+\DoxyCodeLine{00894\ \ \ \ \ ar(\ t.value\ );}
+\DoxyCodeLine{00895\ \ \ \}}
+\DoxyCodeLine{00896\ }
+\DoxyCodeLine{00898\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00899\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_name_value_pair}{NameValuePair<T>}}\ \&\ t\ )}
+\DoxyCodeLine{00900\ \ \ \{}
+\DoxyCodeLine{00901\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_a3303435877555d5d5366ee654eb24f60}{setNextName}}(\ t.name\ );}
+\DoxyCodeLine{00902\ \ \ \ \ ar(\ t.value\ );}
+\DoxyCodeLine{00903\ \ \ \}}
+\DoxyCodeLine{00904\ }
+\DoxyCodeLine{00905\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00907\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00908\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag<T>}}\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00909\ \ \ \{\ \}}
+\DoxyCodeLine{00910\ }
+\DoxyCodeLine{00912\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00913\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ \mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag<T>}}\ \&\ st\ )}
+\DoxyCodeLine{00914\ \ \ \{}
+\DoxyCodeLine{00915\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_ad9ed2b9bd88b279e999b4df1f3f129f8}{loadSize}}(\ st.size\ );}
+\DoxyCodeLine{00916\ \ \ \}}
+\DoxyCodeLine{00917\ }
+\DoxyCodeLine{00918\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00920\ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_arithmetic<T>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00921\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t)}
+\DoxyCodeLine{00922\ \ \ \{}
+\DoxyCodeLine{00923\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ t\ );}
+\DoxyCodeLine{00924\ \ \ \}}
+\DoxyCodeLine{00925\ }
+\DoxyCodeLine{00927\ \ \ template\ <class\ T,\ traits::EnableIf<std::is\_arithmetic<T>::value>\ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00928\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ T\ \&\ t)}
+\DoxyCodeLine{00929\ \ \ \{}
+\DoxyCodeLine{00930\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ t\ );}
+\DoxyCodeLine{00931\ \ \ \}}
+\DoxyCodeLine{00932\ }
+\DoxyCodeLine{00933\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00935\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ CharT,\ \textcolor{keyword}{class}\ Traits,\ \textcolor{keyword}{class}\ Alloc>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00936\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{XMLOutputArchive}}\ \&\ ar,\ std::basic\_string<CharT,\ Traits,\ Alloc>\ \textcolor{keyword}{const}\ \&\ str)}
+\DoxyCodeLine{00937\ \ \ \{}
+\DoxyCodeLine{00938\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive_a9024955d0fd8cf818bf068d3814b9e09}{saveValue}}(\ str\ );}
+\DoxyCodeLine{00939\ \ \ \}}
+\DoxyCodeLine{00940\ }
+\DoxyCodeLine{00942\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ CharT,\ \textcolor{keyword}{class}\ Traits,\ \textcolor{keyword}{class}\ Alloc>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00943\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{XMLInputArchive}}\ \&\ ar,\ std::basic\_string<CharT,\ Traits,\ Alloc>\ \&\ str)}
+\DoxyCodeLine{00944\ \ \ \{}
+\DoxyCodeLine{00945\ \ \ \ \ ar.\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive_acd6c82e07be922011364cb0d74df70a4}{loadValue}}(\ str\ );}
+\DoxyCodeLine{00946\ \ \ \}}
+\DoxyCodeLine{00947\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00948\ }
+\DoxyCodeLine{00949\ \textcolor{comment}{//\ register\ archives\ for\ polymorphic\ support}}
+\DoxyCodeLine{00950\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{cereal::XMLOutputArchive}})}
+\DoxyCodeLine{00951\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{cereal::XMLInputArchive}})}
+\DoxyCodeLine{00952\ }
+\DoxyCodeLine{00953\ \textcolor{comment}{//\ tie\ input\ and\ output\ archives\ together}}
+\DoxyCodeLine{00954\ \mbox{\hyperlink{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666}{CEREAL\_SETUP\_ARCHIVE\_TRAITS}}(\mbox{\hyperlink{classcereal_1_1_x_m_l_input_archive}{cereal::XMLInputArchive}},\ \mbox{\hyperlink{classcereal_1_1_x_m_l_output_archive}{cereal::XMLOutputArchive}})}
+\DoxyCodeLine{00955\ }
+\DoxyCodeLine{00956\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_ARCHIVES\_XML\_HPP\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,54 @@
+\doxysection{cereal\+::detail\+::Register\+Polymorphic\+Caster\texorpdfstring{$<$}{<} Base, Derived \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_register_polymorphic_caster}{}\label{structcereal_1_1detail_1_1_register_polymorphic_caster}\index{cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$@{cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$}}
+
+
+Registers a polymorphic casting relation between a Base and Derived type.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_register_polymorphic_caster_afb27b03f98c42c0f27be03f39d449ea5}\label{structcereal_1_1detail_1_1_register_polymorphic_caster_afb27b03f98c42c0f27be03f39d449ea5} 
+static \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} {\bfseries bind} (std\+::true\+\_\+type)
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_register_polymorphic_caster_a82fd368674ee8c9ba9bf1bc3190bb35a}\label{structcereal_1_1detail_1_1_register_polymorphic_caster_a82fd368674ee8c9ba9bf1bc3190bb35a} 
+static \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} {\bfseries bind} (std\+::false\+\_\+type)
+\item 
+static \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{bind}} ()
+\begin{DoxyCompactList}\small\item\em Performs registration (binding) between Base and Derived. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Base, class Derived$>$\newline
+struct cereal\+::detail\+::\+Register\+Polymorphic\+Caster$<$ Base, Derived $>$}
+Registers a polymorphic casting relation between a Base and Derived type. 
+
+Forward declaration, see \doxylink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp} for more information.
+
+Registering a relation allows cereal to properly cast between the two types given runtime type information and void pointers.
+
+Registration happens automatically via \doxylink{structcereal_1_1base__class}{cereal\+::base\+\_\+class} and \doxylink{structcereal_1_1virtual__base__class}{cereal\+::virtual\+\_\+base\+\_\+class} instantiations. For cases where neither is called, see the CEREAL\+\_\+\+REGISTER\+\_\+\+POLYMORPHIC\+\_\+\+RELATION macro 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1_register_polymorphic_caster_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}\index{cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$@{cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$}!bind@{bind}}
+\index{bind@{bind}!cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$@{cereal::detail::RegisterPolymorphicCaster$<$ Base, Derived $>$}}
+\doxysubsubsection{\texorpdfstring{bind()}{bind()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f} 
+template$<$class Base, class Derived$>$ \\
+\mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}} const  \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster}{cereal\+::detail\+::\+Register\+Polymorphic\+Caster}}$<$ Base, Derived $>$\+::bind (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Performs registration (binding) between Base and Derived. 
+
+If the type is not polymorphic, nothing will happen 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

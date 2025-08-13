@@ -1,0 +1,67 @@
+\doxysection{UTF32\+BE\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_u_t_f32_b_e}{}\label{struct_u_t_f32_b_e}\index{UTF32BE$<$ CharType $>$@{UTF32BE$<$ CharType $>$}}
+
+
+UTF-\/32 big endian encoding.  
+
+
+
+
+{\ttfamily \#include $<$encodings.\+h$>$}
+
+Inheritance diagram for UTF32\+BE\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d4/d67/struct_u_t_f32_b_e}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_u_t_f32_b_e_a07d228f51ad43ef83af2529ca4bd1181}\label{struct_u_t_f32_b_e_a07d228f51ad43ef83af2529ca4bd1181} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Char\+Type {\bfseries Take\+BOM} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_u_t_f32_b_e_ace3086ece3b13417c758b5abcf3016c8}\label{struct_u_t_f32_b_e_ace3086ece3b13417c758b5abcf3016c8} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Char\+Type {\bfseries Take} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_u_t_f32_b_e_a8b1a216dd267ff06a9000cbe593ebd24}\label{struct_u_t_f32_b_e_a8b1a216dd267ff06a9000cbe593ebd24} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put\+BOM} (Output\+Byte\+Stream \&os)
+\item 
+\Hypertarget{struct_u_t_f32_b_e_ad270b8b016d477f7f7354df535fa28c5}\label{struct_u_t_f32_b_e_ad270b8b016d477f7f7354df535fa28c5} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put} (Output\+Byte\+Stream \&os, Char\+Type c)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{struct_u_t_f32}{UTF32$<$ unsigned $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static void {\bfseries Encode} (Output\+Stream \&os, unsigned codepoint)
+\item 
+static void {\bfseries Encode\+Unsafe} (Output\+Stream \&os, unsigned codepoint)
+\item 
+static bool {\bfseries Decode} (Input\+Stream \&is, unsigned \texorpdfstring{$\ast$}{*}codepoint)
+\item 
+static bool {\bfseries Validate} (Input\+Stream \&is, Output\+Stream \&os)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{struct_u_t_f32}{UTF32$<$ unsigned $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_u_t_f32_a31f49d459745a80d2d4ac7e7e492a07b}\label{struct_u_t_f32_a31f49d459745a80d2d4ac7e7e492a07b} 
+enum 
+\item 
+typedef unsigned {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{struct_u_t_f32}{UTF32$<$ unsigned $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries CEREAL\+\_\+\+RAPIDJSON\+\_\+\+STATIC\+\_\+\+ASSERT} (sizeof(Ch) $>$=4)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Char\+Type = unsigned$>$\newline
+struct UTF32\+BE$<$ Char\+Type $>$}
+UTF-\/32 big endian encoding. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodings.\+h\end{DoxyCompactItemize}

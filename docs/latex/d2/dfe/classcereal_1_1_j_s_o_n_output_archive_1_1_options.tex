@@ -1,0 +1,73 @@
+\doxysection{cereal\+::JSONOutput\+Archive\+::Options Class Reference}
+\hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{}\label{classcereal_1_1_j_s_o_n_output_archive_1_1_options}\index{cereal::JSONOutputArchive::Options@{cereal::JSONOutputArchive::Options}}
+
+
+A class containing various advanced options for the JSON archive.  
+
+
+
+
+{\ttfamily \#include $<$json.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_abf98703312edbd7e053fe71acb737cdf}\label{classcereal_1_1_j_s_o_n_output_archive_1_1_options_abf98703312edbd7e053fe71acb737cdf} 
+enum class \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_abf98703312edbd7e053fe71acb737cdf}{Indent\+Char}} \+: char \{ {\bfseries space} = \textquotesingle{} \textquotesingle{}
+, {\bfseries tab} = \textquotesingle{}\textbackslash{}t\textquotesingle{}
+, {\bfseries newline} = \textquotesingle{}\textbackslash{}n\textquotesingle{}
+, {\bfseries carriage\+\_\+return} = \textquotesingle{}\textbackslash{}r\textquotesingle{}
+ \}
+\begin{DoxyCompactList}\small\item\em The character to use for indenting. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a46352db3f7cb7de2923f5a0d9dbfadd4}{Options}} (int precision=JSONWriter\+::k\+Default\+Max\+Decimal\+Places, \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_abf98703312edbd7e053fe71acb737cdf}{Indent\+Char}} indent\+Char=Indent\+Char\+::space, unsigned int indent\+Length=4)
+\begin{DoxyCompactList}\small\item\em Specify specific options for the \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a82ac8216b731ffc3669c9a16e18efc86}\label{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a82ac8216b731ffc3669c9a16e18efc86} 
+static \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options}} {\bfseries Default} ()
+\begin{DoxyCompactList}\small\item\em Default options. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a288d513a2bdbfbe0bdf2573146972432}\label{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a288d513a2bdbfbe0bdf2573146972432} 
+static \mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options}{Options}} {\bfseries No\+Indent} ()
+\begin{DoxyCompactList}\small\item\em Default options with no indentation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_af73d1a239b2d4ac3eb2d0d4f85d7e504}\label{classcereal_1_1_j_s_o_n_output_archive_1_1_options_af73d1a239b2d4ac3eb2d0d4f85d7e504} 
+class {\bfseries JSONOutput\+Archive}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class containing various advanced options for the JSON archive. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a46352db3f7cb7de2923f5a0d9dbfadd4}\index{cereal::JSONOutputArchive::Options@{cereal::JSONOutputArchive::Options}!Options@{Options}}
+\index{Options@{Options}!cereal::JSONOutputArchive::Options@{cereal::JSONOutputArchive::Options}}
+\doxysubsubsection{\texorpdfstring{Options()}{Options()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_j_s_o_n_output_archive_1_1_options_a46352db3f7cb7de2923f5a0d9dbfadd4} 
+cereal\+::\+JSONOutput\+Archive\+::\+Options\+::\+Options (\begin{DoxyParamCaption}\item[{int}]{precision}{ = {\ttfamily JSONWriter\+:\+:kDefaultMaxDecimalPlaces}, }\item[{\mbox{\hyperlink{classcereal_1_1_j_s_o_n_output_archive_1_1_options_abf98703312edbd7e053fe71acb737cdf}{Indent\+Char}}}]{indent\+Char}{ = {\ttfamily IndentChar\+:\+:space}, }\item[{unsigned int}]{indent\+Length}{ = {\ttfamily 4}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Specify specific options for the \doxylink{classcereal_1_1_j_s_o_n_output_archive}{JSONOutput\+Archive}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em precision} & The precision used for floating point numbers \\
+\hline
+{\em indent\+Char} & The type of character to indent with \\
+\hline
+{\em indent\+Length} & The number of indent\+Char to use for indentation (0 corresponds to no indentation) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{json_8hpp}{json.\+hpp}}\end{DoxyCompactItemize}

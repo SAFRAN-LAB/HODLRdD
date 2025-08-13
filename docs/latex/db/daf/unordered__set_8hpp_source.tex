@@ -1,0 +1,97 @@
+\doxysection{unordered\+\_\+set.\+hpp}
+\hypertarget{unordered__set_8hpp_source}{}\label{unordered__set_8hpp_source}\index{lib/cereal/types/unordered\_set.hpp@{lib/cereal/types/unordered\_set.hpp}}
+\mbox{\hyperlink{unordered__set_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_UNORDERED\_SET\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_UNORDERED\_SET\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <unordered\_set>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{namespace\ }unordered\_set\_detail}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ SetT>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ save(\ Archive\ \&\ ar,\ SetT\ \textcolor{keyword}{const}\ \&\ set\ )}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\textcolor{keyword}{>}(set.size())\ )\ );}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&\ i\ :\ set\ )}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ ar(\ i\ );}
+\DoxyCodeLine{00048\ \ \ \ \ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ SetT>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{void}\ load(\ Archive\ \&\ ar,\ SetT\ \&\ set\ )}
+\DoxyCodeLine{00053\ \ \ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ size;}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ size\ )\ );}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ set.clear();}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ set.reserve(\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(\ size\ )\ );}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ \mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ i\ =\ 0;\ i\ <\ size;\ ++i\ )}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ SetT::key\_type\ key;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ ar(\ key\ );}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ set.emplace(\ std::move(\ key\ )\ );}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ K,\ \textcolor{keyword}{class}\ H,\ \textcolor{keyword}{class}\ KE,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unordered\_set<K,\ H,\ KE,\ A>\ \textcolor{keyword}{const}\ \&\ unordered\_set\ )}
+\DoxyCodeLine{00073\ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ unordered\_set\_detail::save(\ ar,\ unordered\_set\ );}
+\DoxyCodeLine{00075\ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ K,\ \textcolor{keyword}{class}\ H,\ \textcolor{keyword}{class}\ KE,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unordered\_set<K,\ H,\ KE,\ A>\ \&\ unordered\_set\ )}
+\DoxyCodeLine{00080\ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ unordered\_set\_detail::load(\ ar,\ unordered\_set\ );}
+\DoxyCodeLine{00082\ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ K,\ \textcolor{keyword}{class}\ H,\ \textcolor{keyword}{class}\ KE,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00086\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unordered\_multiset<K,\ H,\ KE,\ A>\ \textcolor{keyword}{const}\ \&\ unordered\_multiset\ )}
+\DoxyCodeLine{00087\ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ unordered\_set\_detail::save(\ ar,\ unordered\_multiset\ );}
+\DoxyCodeLine{00089\ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ K,\ \textcolor{keyword}{class}\ H,\ \textcolor{keyword}{class}\ KE,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unordered\_multiset<K,\ H,\ KE,\ A>\ \&\ unordered\_multiset\ )}
+\DoxyCodeLine{00094\ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ unordered\_set\_detail::load(\ ar,\ unordered\_multiset\ );}
+\DoxyCodeLine{00096\ \ \ \}}
+\DoxyCodeLine{00097\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_UNORDERED\_SET\_HPP\_}}
+
+\end{DoxyCode}

@@ -1,0 +1,110 @@
+\doxysection{vector.\+hpp}
+\hypertarget{vector_8hpp_source}{}\label{vector_8hpp_source}\index{lib/cereal/types/vector.hpp@{lib/cereal/types/vector.hpp}}
+\mbox{\hyperlink{vector_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_VECTOR\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_VECTOR\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<traits::is\_output\_serializable<BinaryData<T>,\ Archive>::value}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ std::is\_arithmetic<T>::value\ \&\&\ !std::is\_same<T,\ bool>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00042\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<T,\ A>\ \textcolor{keyword}{const}\ \&\ vector\ )}
+\DoxyCodeLine{00043\ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\textcolor{keyword}{>}(vector.size())\ )\ );\ \textcolor{comment}{//\ number\ of\ elements}}
+\DoxyCodeLine{00045\ \ \ \ \ ar(\ \mbox{\hyperlink{structcereal_1_1_binary_data_a593d161603775672f91ab448ef65083e}{binary\_data}}(\ vector.data(),\ vector.size()\ *\ \textcolor{keyword}{sizeof}(T)\ )\ );}
+\DoxyCodeLine{00046\ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00049\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<traits::is\_input\_serializable<BinaryData<T>,\ Archive>::value}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \&\&\ std::is\_arithmetic<T>::value\ \&\&\ !std::is\_same<T,\ bool>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00052\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<T,\ A>\ \&\ vector\ )}
+\DoxyCodeLine{00053\ \ \ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ vectorSize;}
+\DoxyCodeLine{00055\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ vectorSize\ )\ );}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ vector.resize(\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(\ vectorSize\ )\ );}
+\DoxyCodeLine{00058\ \ \ \ \ ar(\ \mbox{\hyperlink{structcereal_1_1_binary_data_a593d161603775672f91ab448ef65083e}{binary\_data}}(\ vector.data(),\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(\ vectorSize\ )\ *\ \textcolor{keyword}{sizeof}(T)\ )\ );}
+\DoxyCodeLine{00059\ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00062\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00063\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<(!traits::is\_output\_serializable<BinaryData<T>,\ Archive>::value}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ !std::is\_arithmetic<T>::value)\ \&\&\ !std::is\_same<T,\ bool>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00065\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<T,\ A>\ \textcolor{keyword}{const}\ \&\ vector\ )}
+\DoxyCodeLine{00066\ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\textcolor{keyword}{>}(vector.size())\ )\ );\ \textcolor{comment}{//\ number\ of\ elements}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ \&\&\ v\ :\ vector)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ ar(\ v\ );}
+\DoxyCodeLine{00070\ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00074\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<(!traits::is\_input\_serializable<BinaryData<T>,\ Archive>::value}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ||\ !std::is\_arithmetic<T>::value)\ \&\&\ !std::is\_same<T,\ bool>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00076\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<T,\ A>\ \&\ vector\ )}
+\DoxyCodeLine{00077\ \ \ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ size;}
+\DoxyCodeLine{00079\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ size\ )\ );}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ vector.resize(\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(\ size\ )\ );}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ \&\&\ v\ :\ vector)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ ar(\ v\ );}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00088\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<bool,\ A>\ \textcolor{keyword}{const}\ \&\ vector\ )}
+\DoxyCodeLine{00089\ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\textcolor{keyword}{>}(vector.size())\ )\ );\ \textcolor{comment}{//\ number\ of\ elements}}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ v\ :\ vector)}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ ar(\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{bool}\textcolor{keyword}{>}(v)\ );}
+\DoxyCodeLine{00093\ \ \ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ A>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00097\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::vector<bool,\ A>\ \&\ vector\ )}
+\DoxyCodeLine{00098\ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \mbox{\hyperlink{namespacecereal_a0e01d80aaafe0efb12b75abdee310ae4}{size\_type}}\ size;}
+\DoxyCodeLine{00100\ \ \ \ \ ar(\ \mbox{\hyperlink{classcereal_1_1_size_tag_a4d4b256b14671c8270d06f40e4c4a077}{make\_size\_tag}}(\ size\ )\ );}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \ \ \ \ vector.resize(\ \textcolor{keyword}{static\_cast<}std::size\_t\textcolor{keyword}{>}(\ size\ )\ );}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{for}(\textcolor{keyword}{auto}\ v\ :\ vector)}
+\DoxyCodeLine{00104\ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ b;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ ar(\ b\ );}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ v\ =\ b;}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \}}
+\DoxyCodeLine{00110\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_VECTOR\_HPP\_}}
+
+\end{DoxyCode}

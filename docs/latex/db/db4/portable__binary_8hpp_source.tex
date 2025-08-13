@@ -1,0 +1,263 @@
+\doxysection{portable\+\_\+binary.\+hpp}
+\hypertarget{portable__binary_8hpp_source}{}\label{portable__binary_8hpp_source}\index{lib/cereal/archives/portable\_binary.hpp@{lib/cereal/archives/portable\_binary.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00003\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00006\ \textcolor{comment}{}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00017\ \textcolor{comment}{}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_ARCHIVES\_PORTABLE\_BINARY\_HPP\_}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ CEREAL\_ARCHIVES\_PORTABLE\_BINARY\_HPP\_}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <limits>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{namespace\ }portable\_binary\_detail}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{inline}\ std::uint8\_t\ is\_little\_endian()}
+\DoxyCodeLine{00043\ \ \ \ \ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::int32\_t\ test\ =\ 1;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{reinterpret\_cast<}std::int8\_t*\textcolor{keyword}{>}(\ \&test\ )\ ==\ 1;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{template}\ <std::\textcolor{keywordtype}{size\_t}\ DataSize>}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ swap\_bytes(\ std::uint8\_t\ *\ data\ )}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ std::size\_t\ i\ =\ 0,\ end\ =\ DataSize\ /\ 2;\ i\ <\ end;\ ++i\ )}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ std::swap(\ data[i],\ data[DataSize\ -\/\ i\ -\/\ 1]\ );}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \}\ \textcolor{comment}{//\ end\ namespace\ portable\_binary\_detail}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_adf9a65bdf31ed3a829eec529a0ec3fd3}{PortableBinaryOutputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<PortableBinaryOutputArchive,\ AllowEmptyClassElision>}
+\DoxyCodeLine{00079\ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}}\ :\ std::uint8\_t}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \{\ big,\ little\ \};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a98642199679b45167f773b9c6f4f3ac2}{Default}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}();\ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a7ad926cd9e8e50f5795807ec14cc0e8e}{LittleEndian}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}(\ Endianness::little\ );\ \}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a16c01f4198a9d3b2df4f0b1c29582fa6}{BigEndian}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}(\ Endianness::big\ );\ \}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}}(\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}}\ outputEndian\ =\ getEndianness()\ )\ :}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ itsOutputEndianness(\ outputEndian\ )\ \{\ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}}\ getEndianness()}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ portable\_binary\_detail::is\_little\_endian()\ ?\ Endianness::little\ :\ Endianness::big;\ \}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::uint8\_t\ is\_little\_endian()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00110\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ itsOutputEndianness\ ==\ Endianness::little;\ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }PortableBinaryOutputArchive;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}}\ itsOutputEndianness;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_adf9a65bdf31ed3a829eec529a0ec3fd3}{PortableBinaryOutputArchive}}(std::ostream\ \&\ stream,\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options}{Options}}\ \textcolor{keyword}{const}\ \&\ options\ =\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a98642199679b45167f773b9c6f4f3ac2}{Options::Default}}())\ :}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_output_archive_a98fbde73bf6d41f4e717e91011e3be7f}{OutputArchive}}<\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_adf9a65bdf31ed3a829eec529a0ec3fd3}{PortableBinaryOutputArchive}},\ AllowEmptyClassElision>(this),}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ itsStream(stream),}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ itsConvertEndianness(\ portable\_binary\_detail::is\_little\_endian()\ \string^\ options.is\_little\_endian()\ )}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcereal_1_1_output_archive_ab723320e0ca258f65788ac3c8b599a66}{operator()}}(\ options.is\_little\_endian()\ );}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{\string~PortableBinaryOutputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ default;}
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00131\ \ \ \ \ \ \ template\ <std::streamsize\ DataSize>\ inline}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_a594ed9401ba2f79fafa4b63f473d6516}{saveBinary}}(\ const\ \textcolor{keywordtype}{void}\ *\ data,\ std::streamsize\ size\ )}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ std::streamsize\ writtenSize\ =\ 0;}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ itsConvertEndianness\ )}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ std::streamsize\ i\ =\ 0;\ i\ <\ size;\ i\ +=\ DataSize\ )}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ std::streamsize\ j\ =\ 0;\ j\ <\ DataSize;\ ++j\ )}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ writtenSize\ +=\ itsStream.rdbuf()-\/>sputn(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ data\ )\ +\ DataSize\ -\/\ j\ -\/\ 1\ +\ i,\ 1\ );}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ writtenSize\ =\ itsStream.rdbuf()-\/>sputn(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ data\ ),\ size\ );}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(writtenSize\ !=\ size)}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Failed\ to\ write\ "{}}\ +\ std::to\_string(size)\ +\ \textcolor{stringliteral}{"{}\ bytes\ to\ output\ stream!\ Wrote\ "{}}\ +\ std::to\_string(writtenSize));}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ std::ostream\ \&\ itsStream;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8\_t\ itsConvertEndianness;\ }
+\DoxyCodeLine{00152\ \ \ \};}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00180\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5}{PortableBinaryInputArchive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<PortableBinaryInputArchive,\ AllowEmptyClassElision>}
+\DoxyCodeLine{00181\ \ \ \{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_ae81663827b6e75d37a19c616e1abba6c}{Endianness}}\ :\ std::uint8\_t}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ \{\ big,\ little\ \};}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a965f5ff5784f38bbd080c30984bbd12a}{Default}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}();\ \}}
+\DoxyCodeLine{00193\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a85b0a94d5678e872e4b4fbf8b61a8df6}{LittleEndian}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}(\ Endianness::little\ );\ \}}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a578a84e69ff03c6a87e2f67f9824c11c}{BigEndian}}()\{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}(\ Endianness::big\ );\ \}}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a299a0069acdca43dedb3778f65ce624a}{Options}}(\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_ae81663827b6e75d37a19c616e1abba6c}{Endianness}}\ inputEndian\ =\ getEndianness()\ )\ :}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ itsInputEndianness(\ inputEndian\ )\ \{\ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_ae81663827b6e75d37a19c616e1abba6c}{Endianness}}\ getEndianness()}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ portable\_binary\_detail::is\_little\_endian()\ ?\ Endianness::little\ :\ Endianness::big;\ \}}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::uint8\_t\ is\_little\_endian()\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00212\ \textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ }\{\ \textcolor{keywordflow}{return}\ itsInputEndianness\ ==\ Endianness::little;\ \}}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }PortableBinaryInputArchive;}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_ae81663827b6e75d37a19c616e1abba6c}{Endianness}}\ itsInputEndianness;}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5}{PortableBinaryInputArchive}}(std::istream\ \&\ stream,\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options}{Options}}\ \textcolor{keyword}{const}\ \&\ options\ =\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a965f5ff5784f38bbd080c30984bbd12a}{Options::Default}}())\ :}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{InputArchive}}<\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5}{PortableBinaryInputArchive}},\ AllowEmptyClassElision>(this),}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ itsStream(stream),}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ itsConvertEndianness(\ false\ )}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ uint8\_t\ streamLittleEndian;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}}(\ streamLittleEndian\ );}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ itsConvertEndianness\ =\ options.is\_little\_endian()\ \string^\ streamLittleEndian;}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00231\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{\string~PortableBinaryInputArchive}}()\ \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\_NOEXCEPT}}\ =\ default;}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ template\ <std::streamsize\ DataSize>\ inline}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_ac4f71b625bb06db5fd0fec7b12a2cd97}{loadBinary}}(\ \textcolor{keywordtype}{void}\ *\ const\ data,\ std::streamsize\ size\ )}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ load\ data}}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ readSize\ =\ itsStream.rdbuf()-\/>sgetn(\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\ data\ ),\ size\ );}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(readSize\ !=\ size)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Failed\ to\ read\ "{}}\ +\ std::to\_string(size)\ +\ \textcolor{stringliteral}{"{}\ bytes\ from\ input\ stream!\ Read\ "{}}\ +\ std::to\_string(readSize));}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ flip\ bits\ if\ needed}}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ itsConvertEndianness\ )}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ std::uint8\_t\ *\ ptr\ =\ \textcolor{keyword}{reinterpret\_cast<}std::uint8\_t*\textcolor{keyword}{>}(\ data\ );}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ std::streamsize\ i\ =\ 0;\ i\ <\ size;\ i\ +=\ DataSize\ )}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ portable\_binary\_detail::swap\_bytes<DataSize>(\ ptr\ +\ i\ );}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ std::istream\ \&\ itsStream;}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ uint8\_t\ itsConvertEndianness;\ }
+\DoxyCodeLine{00259\ \ \ \};}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00262\ \ \ \textcolor{comment}{//\ Common\ BinaryArchive\ serialization\ functions}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00265\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00266\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<std::is\_arithmetic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00267\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{PortableBinaryOutputArchive}}\ \&\ ar,\ T\ \textcolor{keyword}{const}\ \&\ t)}
+\DoxyCodeLine{00268\ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_floating\_point<T>::value\ ||}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::is\_floating\_point<T>::value\ \&\&\ std::numeric\_limits<T>::is\_iec559),}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Portable\ binary\ only\ supports\ IEEE\ 754\ standardized\ floating\ point"{}}\ );}
+\DoxyCodeLine{00272\ \ \ \ \ ar.template\ saveBinary<sizeof(T)>(std::addressof(t),\ \textcolor{keyword}{sizeof}(t));}
+\DoxyCodeLine{00273\ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00276\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00277\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<std::is\_arithmetic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00278\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{PortableBinaryInputArchive}}\ \&\ ar,\ T\ \&\ t)}
+\DoxyCodeLine{00279\ \ \ \{}
+\DoxyCodeLine{00280\ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_floating\_point<T>::value\ ||}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::is\_floating\_point<T>::value\ \&\&\ std::numeric\_limits<T>::is\_iec559),}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Portable\ binary\ only\ supports\ IEEE\ 754\ standardized\ floating\ point"{}}\ );}
+\DoxyCodeLine{00283\ \ \ \ \ ar.template\ loadBinary<sizeof(T)>(std::addressof(t),\ \textcolor{keyword}{sizeof}(t));}
+\DoxyCodeLine{00284\ \ \ \}}
+\DoxyCodeLine{00285\ }
+\DoxyCodeLine{00287\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00288\ \ \ \mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\_ARCHIVE\_RESTRICT}}(PortableBinaryInputArchive,\ PortableBinaryOutputArchive)}
+\DoxyCodeLine{00289\ \ \ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ NameValuePair<T>\ \&\ t\ )}
+\DoxyCodeLine{00290\ \ \ \{}
+\DoxyCodeLine{00291\ \ \ \ \ ar(\ t.value\ );}
+\DoxyCodeLine{00292\ \ \ \}}
+\DoxyCodeLine{00293\ }
+\DoxyCodeLine{00295\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00296\ \ \ \mbox{\hyperlink{traits_8hpp_a29490687675183194498a843f7beeb8b}{CEREAL\_ARCHIVE\_RESTRICT}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{PortableBinaryInputArchive}},\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{PortableBinaryOutputArchive}})}
+\DoxyCodeLine{00297\ \ \ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{classcereal_1_1_size_tag}{SizeTag<T>}}\ \&\ t\ )}
+\DoxyCodeLine{00298\ \ \ \{}
+\DoxyCodeLine{00299\ \ \ \ \ ar(\ t.size\ );}
+\DoxyCodeLine{00300\ \ \ \}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00303\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00304\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{PortableBinaryOutputArchive}}\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1_binary_data}{BinaryData<T>}}\ \textcolor{keyword}{const}\ \&\ bd)}
+\DoxyCodeLine{00305\ \ \ \{}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ std::remove\_pointer<T>::type\ TT;}
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_floating\_point<TT>::value\ ||}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::is\_floating\_point<TT>::value\ \&\&\ std::numeric\_limits<TT>::is\_iec559),}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Portable\ binary\ only\ supports\ IEEE\ 754\ standardized\ floating\ point"{}}\ );}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00311\ \ \ \ \ ar.template\ saveBinary<sizeof(TT)>(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}},\ \textcolor{keyword}{static\_cast<}std::streamsize\textcolor{keyword}{>}(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}}\ )\ );}
+\DoxyCodeLine{00312\ \ \ \}}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00315\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00316\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{PortableBinaryInputArchive}}\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1_binary_data}{BinaryData<T>}}\ \&\ bd)}
+\DoxyCodeLine{00317\ \ \ \{}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ std::remove\_pointer<T>::type\ TT;}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{keyword}{static\_assert}(\ !std::is\_floating\_point<TT>::value\ ||}
+\DoxyCodeLine{00320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (std::is\_floating\_point<TT>::value\ \&\&\ std::numeric\_limits<TT>::is\_iec559),}
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Portable\ binary\ only\ supports\ IEEE\ 754\ standardized\ floating\ point"{}}\ );}
+\DoxyCodeLine{00322\ }
+\DoxyCodeLine{00323\ \ \ \ \ ar.template\ loadBinary<sizeof(TT)>(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a0bac12b9a4e870dfb89a73d6731f9109}{data}},\ \textcolor{keyword}{static\_cast<}std::streamsize\textcolor{keyword}{>}(\ bd.\mbox{\hyperlink{structcereal_1_1_binary_data_a6c5b15fee4187ac9d948081a3ea9cfe3}{size}}\ )\ );}
+\DoxyCodeLine{00324\ \ \ \}}
+\DoxyCodeLine{00325\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00326\ }
+\DoxyCodeLine{00327\ \textcolor{comment}{//\ register\ archives\ for\ polymorphic\ support}}
+\DoxyCodeLine{00328\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{cereal::PortableBinaryOutputArchive}})}
+\DoxyCodeLine{00329\ \mbox{\hyperlink{cereal_8hpp_a80fe42796f7a4d6132ade9cb632cb1d1}{CEREAL\_REGISTER\_ARCHIVE}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{cereal::PortableBinaryInputArchive}})}
+\DoxyCodeLine{00330\ }
+\DoxyCodeLine{00331\ \textcolor{comment}{//\ tie\ input\ and\ output\ archives\ together}}
+\DoxyCodeLine{00332\ \mbox{\hyperlink{traits_8hpp_a039bc7d4a3e8994d3fd7eedf5cae1666}{CEREAL\_SETUP\_ARCHIVE\_TRAITS}}(\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{cereal::PortableBinaryInputArchive}},\ \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive}{cereal::PortableBinaryOutputArchive}})}
+\DoxyCodeLine{00333\ }
+\DoxyCodeLine{00334\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_ARCHIVES\_PORTABLE\_BINARY\_HPP\_}}
+
+\end{DoxyCode}

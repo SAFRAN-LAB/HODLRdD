@@ -1,0 +1,84 @@
+\doxysection{util.\+hpp}
+\hypertarget{util_8hpp_source}{}\label{util_8hpp_source}\index{lib/cereal/details/util.hpp@{lib/cereal/details/util.hpp}}
+\mbox{\hyperlink{util_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_DETAILS\_UTIL\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_DETAILS\_UTIL\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <typeinfo>}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{namespace\ }util}
+\DoxyCodeLine{00040\ \ \ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ \mbox{\hyperlink{util_8hpp_a3378464965f0d222673a51822c02f95e}{demangle}}(\ std::string\ \textcolor{keyword}{const}\ \&\ name\ )}
+\DoxyCodeLine{00044\ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ name;\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00049\ \ \ \ \ std::string\ \mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}}()}
+\DoxyCodeLine{00050\ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{typeid}(\ T\ ).name();\ \}}
+\DoxyCodeLine{00051\ \ \ \}\ \textcolor{comment}{//\ namespace\ util}}
+\DoxyCodeLine{00052\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ clang\ or\ gcc}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ <cxxabi.h>}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00057\ \{}
+\DoxyCodeLine{00058\ \ \ \textcolor{keyword}{namespace\ }util}
+\DoxyCodeLine{00059\ \ \ \{}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ \mbox{\hyperlink{util_8hpp_a3378464965f0d222673a51822c02f95e}{demangle}}(std::string\ mangledName)}
+\DoxyCodeLine{00063\ \ \ \ \ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ status\ =\ 0;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ std::size\_t\ len;}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}}\ =\ abi::\_\_cxa\_demangle(mangledName.c\_str(),\ 0,\ \&len,\ \&status);}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ std::string\ retName(\mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}});}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ free(\mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}});}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ retName;}
+\DoxyCodeLine{00074\ \ \ \ \ \}}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00079\ \ \ \ \ std::string\ \mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{demangledName}}()}
+\DoxyCodeLine{00080\ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{util_8hpp_a3378464965f0d222673a51822c02f95e}{demangle}}(\textcolor{keyword}{typeid}(T).name());\ \}}
+\DoxyCodeLine{00081\ \ \ \}}
+\DoxyCodeLine{00082\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ clang\ or\ gcc\ branch\ of\ \_MSC\_VER}}
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_DETAILS\_UTIL\_HPP\_}}
+
+\end{DoxyCode}

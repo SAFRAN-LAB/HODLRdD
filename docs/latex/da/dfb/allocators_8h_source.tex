@@ -1,0 +1,205 @@
+\doxysection{allocators.\+h}
+\hypertarget{allocators_8h_source}{}\label{allocators_8h_source}\index{lib/cereal/external/rapidjson/allocators.h@{lib/cereal/external/rapidjson/allocators.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Tencent\ is\ pleased\ to\ support\ the\ open\ source\ community\ by\ making\ RapidJSON\ available.}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Copyright\ (C)\ 2015\ THL\ A29\ Limited,\ a\ Tencent\ company,\ and\ Milo\ Yip.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Licensed\ under\ the\ MIT\ License\ (the\ "{}License"{});\ you\ may\ not\ use\ this\ file\ except}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ in\ compliance\ with\ the\ License.\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ http://opensource.org/licenses/MIT}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software\ distributed\ }}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,\ WITHOUT\ WARRANTIES\ OR\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.\ See\ the\ License\ for\ the\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ specific\ language\ governing\ permissions\ and\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_ALLOCATORS\_H\_}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_ALLOCATORS\_H\_}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{rapidjson_8h}{rapidjson.h}}"{}}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga69bf61966c74b09b5d90b386847f39be}{CEREAL\_RAPIDJSON\_NAMESPACE\_BEGIN}}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ Allocator}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_ALLOCATOR\_DEFAULT\_CHUNK\_CAPACITY}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_ALLOCATOR\_DEFAULT\_CHUNK\_CAPACITY\ (64\ *\ 1024)}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00069\ \textcolor{comment}{//\ CrtAllocator}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_crt_allocator}{CrtAllocator}}\ \{}
+\DoxyCodeLine{00076\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ kNeedFree\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{void}*\ Malloc(\textcolor{keywordtype}{size\_t}\ size)\ \{\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (size)\ \textcolor{comment}{//\ \ behavior\ of\ malloc(0)\ is\ implementation\ defined.}}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::malloc(size);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;\ \textcolor{comment}{//\ standardize\ to\ returning\ NULL.}}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}*\ Realloc(\textcolor{keywordtype}{void}*\ originalPtr,\ \textcolor{keywordtype}{size\_t}\ originalSize,\ \textcolor{keywordtype}{size\_t}\ newSize)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ (void)originalSize;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (newSize\ ==\ 0)\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ std::free(originalPtr);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::realloc(originalPtr,\ newSize);}
+\DoxyCodeLine{00091\ \ \ \ \ \}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ Free(\textcolor{keywordtype}{void}\ *ptr)\ \{\ std::free(ptr);\ \}}
+\DoxyCodeLine{00093\ \};}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ \textcolor{comment}{//\ MemoryPoolAllocator}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ BaseAllocator\ =\ CrtAllocator>}
+\DoxyCodeLine{00115\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209}{MemoryPoolAllocator}}\ \{}
+\DoxyCodeLine{00116\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_memory_pool_allocator_ab4c7c5c631e451689bc9da392a65194f}{kNeedFree}}\ =\ \textcolor{keyword}{false};\ \ \ \ }
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00123\ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209}{MemoryPoolAllocator}}(\textcolor{keywordtype}{size\_t}\ chunkSize\ =\ kDefaultChunkCapacity,\ BaseAllocator*\ baseAllocator\ =\ 0)\ :\ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ chunkHead\_(0),\ chunk\_capacity\_(chunkSize),\ userBuffer\_(0),\ baseAllocator\_(baseAllocator),\ ownBaseAllocator\_(0)}
+\DoxyCodeLine{00125\ \ \ \ \ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00138\ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator_a1f0d865093fdb955d956b7a445a8ddbf}{MemoryPoolAllocator}}(\textcolor{keywordtype}{void}\ *buffer,\ \textcolor{keywordtype}{size\_t}\ size,\ \textcolor{keywordtype}{size\_t}\ chunkSize\ =\ kDefaultChunkCapacity,\ BaseAllocator*\ baseAllocator\ =\ 0)\ :}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ chunkHead\_(0),\ chunk\_capacity\_(chunkSize),\ userBuffer\_(buffer),\ baseAllocator\_(baseAllocator),\ ownBaseAllocator\_(0)}
+\DoxyCodeLine{00140\ \ \ \ \ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(buffer\ !=\ 0);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(size\ >\ \textcolor{keyword}{sizeof}(ChunkHeader));}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ chunkHead\_\ =\ \textcolor{keyword}{reinterpret\_cast<}ChunkHeader*\textcolor{keyword}{>}(buffer);}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ chunkHead\_-\/>capacity\ =\ size\ -\/\ \textcolor{keyword}{sizeof}(ChunkHeader);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ chunkHead\_-\/>size\ =\ 0;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ chunkHead\_-\/>next\ =\ 0;}
+\DoxyCodeLine{00147\ \ \ \ \ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00152\ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator_ad4eee0ef3cfe8cda31034fbce98b7a9b}{\string~MemoryPoolAllocator}}()\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator_a57bbc80e570db6110901b9a7e36dbda0}{Clear}}();}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rapidjson_8h_a423256b968105e87ee4cf34bee2dfed4}{CEREAL\_RAPIDJSON\_DELETE}}(ownBaseAllocator\_);}
+\DoxyCodeLine{00155\ \ \ \ \ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_memory_pool_allocator_a57bbc80e570db6110901b9a7e36dbda0}{Clear}}()\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (chunkHead\_\ \&\&\ chunkHead\_\ !=\ userBuffer\_)\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ ChunkHeader*\ next\ =\ chunkHead\_-\/>next;}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ baseAllocator\_-\/>Free(chunkHead\_);}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ chunkHead\_\ =\ next;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunkHead\_\ \&\&\ chunkHead\_\ ==\ userBuffer\_)}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ chunkHead\_-\/>size\ =\ 0;\ \textcolor{comment}{//\ Clear\ user\ buffer}}
+\DoxyCodeLine{00166\ \ \ \ \ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_memory_pool_allocator_a5672e0833fda2e71ce987911397489ed}{Capacity}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ capacity\ =\ 0;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (ChunkHeader*\ c\ =\ chunkHead\_;\ c\ !=\ 0;\ c\ =\ c-\/>next)}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ capacity\ +=\ c-\/>capacity;}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ capacity;}
+\DoxyCodeLine{00176\ \ \ \ \ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{class_memory_pool_allocator_ae7fcf0341c13e899cf488bc7c8949956}{Size}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size\ =\ 0;}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (ChunkHeader*\ c\ =\ chunkHead\_;\ c\ !=\ 0;\ c\ =\ c-\/>next)}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ size\ +=\ c-\/>size;}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ size;}
+\DoxyCodeLine{00186\ \ \ \ \ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{class_memory_pool_allocator_a8d300531c1f556172aef1259ff55cb48}{Malloc}}(\textcolor{keywordtype}{size\_t}\ size)\ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!size)}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ size\ =\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(size);}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunkHead\_\ ==\ 0\ ||\ chunkHead\_-\/>size\ +\ size\ >\ chunkHead\_-\/>capacity)}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!AddChunk(chunk\_capacity\_\ >\ size\ ?\ chunk\_capacity\_\ :\ size))}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *buffer\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}\ *\textcolor{keyword}{>}(chunkHead\_)\ +\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(\textcolor{keyword}{sizeof}(ChunkHeader))\ +\ chunkHead\_-\/>size;}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ chunkHead\_-\/>size\ +=\ size;}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ buffer;}
+\DoxyCodeLine{00201\ \ \ \ \ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{class_memory_pool_allocator_a7c273279d361b207ff622d4bdfc63074}{Realloc}}(\textcolor{keywordtype}{void}*\ originalPtr,\ \textcolor{keywordtype}{size\_t}\ originalSize,\ \textcolor{keywordtype}{size\_t}\ newSize)\ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (originalPtr\ ==\ 0)}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_memory_pool_allocator_a8d300531c1f556172aef1259ff55cb48}{Malloc}}(newSize);}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (newSize\ ==\ 0)}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ originalSize\ =\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(originalSize);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ newSize\ =\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(newSize);}
+\DoxyCodeLine{00213\ }
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Do\ not\ shrink\ if\ new\ size\ is\ smaller\ than\ original}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (originalSize\ >=\ newSize)}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ originalPtr;}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Simply\ expand\ it\ if\ it\ is\ the\ last\ allocation\ and\ there\ is\ sufficient\ space}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (originalPtr\ ==\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}\ *\textcolor{keyword}{>}(chunkHead\_)\ +\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(\textcolor{keyword}{sizeof}(ChunkHeader))\ +\ chunkHead\_-\/>size\ -\/\ originalSize)\ \{}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ increment\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(newSize\ -\/\ originalSize);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (chunkHead\_-\/>size\ +\ increment\ <=\ chunkHead\_-\/>capacity)\ \{}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ chunkHead\_-\/>size\ +=\ increment;}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ originalPtr;}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Realloc\ process:\ allocate\ and\ copy\ memory,\ do\ not\ free\ original\ buffer.}}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{void}*\ newBuffer\ =\ \mbox{\hyperlink{class_memory_pool_allocator_a8d300531c1f556172aef1259ff55cb48}{Malloc}}(newSize))\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (originalSize)}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(newBuffer,\ originalPtr,\ originalSize);}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ newBuffer;}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NULL;}
+\DoxyCodeLine{00235\ \ \ \ \ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00238\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_memory_pool_allocator_a6b180eb150451b4df8b70d827cd1191c}{Free}}(\textcolor{keywordtype}{void}\ *ptr)\ \{\ (void)ptr;\ \}\ \textcolor{comment}{//\ Do\ nothing}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00242\ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator_aeec85ac657f242ac5620115141be5209}{MemoryPoolAllocator}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_memory_pool_allocator}{MemoryPoolAllocator}}\&\ rhs)\ \textcolor{comment}{/*\ =\ delete\ */};}
+\DoxyCodeLine{00244\ \ \ \ \ \mbox{\hyperlink{class_memory_pool_allocator}{MemoryPoolAllocator}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_memory_pool_allocator}{MemoryPoolAllocator}}\&\ rhs)\ \textcolor{comment}{/*\ =\ delete\ */};}
+\DoxyCodeLine{00245\ }
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordtype}{bool}\ AddChunk(\textcolor{keywordtype}{size\_t}\ capacity)\ \{}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!baseAllocator\_)}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ ownBaseAllocator\_\ =\ baseAllocator\_\ =\ \mbox{\hyperlink{rapidjson_8h_a7534610ea72614148b80e56a1d030d4d}{CEREAL\_RAPIDJSON\_NEW}}(BaseAllocator)();}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ChunkHeader*\ chunk\ =\ \textcolor{keyword}{reinterpret\_cast<}ChunkHeader*\textcolor{keyword}{>}(baseAllocator\_-\/>Malloc(\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga462b56c1940cab4a9387ec5f2ae4efe9}{CEREAL\_RAPIDJSON\_ALIGN}}(\textcolor{keyword}{sizeof}(ChunkHeader))\ +\ capacity)))\ \{}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ chunk-\/>capacity\ =\ capacity;}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ chunk-\/>size\ =\ 0;}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ chunk-\/>next\ =\ chunkHead\_;}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ chunkHead\_\ =\ \ chunk;}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00262\ \ \ \ \ \}}
+\DoxyCodeLine{00263\ }
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ kDefaultChunkCapacity\ =\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gafc9f261644a83884e025727f2090eb99}{CEREAL\_RAPIDJSON\_ALLOCATOR\_DEFAULT\_CHUNK\_CAPACITY}};\ }
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00267\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keyword}{struct\ }ChunkHeader\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ capacity;\ \ \ \ }
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ size;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ ChunkHeader\ *next;\ \ }
+\DoxyCodeLine{00273\ \ \ \ \ \};}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ ChunkHeader\ *chunkHead\_;\ \ \ \ }
+\DoxyCodeLine{00276\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ chunk\_capacity\_;\ \ \ \ \ }
+\DoxyCodeLine{00277\ \ \ \ \ \textcolor{keywordtype}{void}\ *userBuffer\_;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00278\ \ \ \ \ BaseAllocator*\ baseAllocator\_;\ \ }
+\DoxyCodeLine{00279\ \ \ \ \ BaseAllocator*\ ownBaseAllocator\_;\ \ \ }
+\DoxyCodeLine{00280\ \};}
+\DoxyCodeLine{00281\ }
+\DoxyCodeLine{00282\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaddb083c1a6a5beaafbecc3f99973a3ff}{CEREAL\_RAPIDJSON\_NAMESPACE\_END}}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_RAPIDJSON\_ENCODINGS\_H\_}}
+
+\end{DoxyCode}

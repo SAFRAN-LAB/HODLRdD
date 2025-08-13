@@ -1,0 +1,176 @@
+\doxysection{bitset.\+hpp}
+\hypertarget{bitset_8hpp_source}{}\label{bitset_8hpp_source}\index{lib/cereal/types/bitset.hpp@{lib/cereal/types/bitset.hpp}}
+\mbox{\hyperlink{bitset_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_BITSET\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_BITSET\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{string_8hpp}{cereal/types/string.hpp}}"{}}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <bitset>}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{namespace\ }bitset\_detail}
+\DoxyCodeLine{00040\ \ \ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{bitset_8hpp_a4f5825a3267dd05e798bed76cf7e29cc}{type}}\ :\ uint8\_t}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ ulong,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ ullong,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ string,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ bits}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keywordtype}{size\_t}\ N,}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ traits::EnableIf<traits::is\_output\_serializable<BinaryData<std::uint32\_t>,\ Archive>::value>}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::bitset<N>\ \textcolor{keyword}{const}\ \&\ bits\ )}
+\DoxyCodeLine{00057\ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}type"{}},\ bitset\_detail::type::bits)\ );}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{comment}{//\ Serialize\ 8\ bit\ chunks}}
+\DoxyCodeLine{00061\ \ \ \ \ std::uint8\_t\ chunk\ =\ 0;}
+\DoxyCodeLine{00062\ \ \ \ \ std::uint8\_t\ mask\ =\ 0x80;}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{comment}{//\ Set\ each\ chunk\ using\ a\ rotating\ mask\ for\ the\ current\ bit}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordflow}{for}(\ std::size\_t\ i\ =\ 0;\ i\ <\ N;\ ++i\ )}
+\DoxyCodeLine{00066\ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ bits[i]\ )}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ chunk\ |=\ mask;}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ mask\ =\ \textcolor{keyword}{static\_cast<}std::uint8\_t\textcolor{keyword}{>}(mask\ >>\ 1);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \textcolor{comment}{//\ output\ current\ chunk\ when\ mask\ is\ empty\ (8\ bits)}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ mask\ ==\ 0\ )}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ ar(\ chunk\ );}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ chunk\ =\ 0;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ mask\ =\ 0x80;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{comment}{//\ serialize\ remainder,\ if\ it\ exists}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordflow}{if}(\ mask\ !=\ 0x80\ )}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ ar(\ chunk\ );}
+\DoxyCodeLine{00084\ \ \ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keywordtype}{size\_t}\ N,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ traits::DisableIf<traits::is\_output\_serializable<BinaryData<std::uint32\_t>,\ Archive>::value>}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ =\ traits::sfinae>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::bitset<N>\ \textcolor{keyword}{const}\ \&\ bits\ )}
+\DoxyCodeLine{00091\ \ \ \{}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00093\ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ b\ =\ bits.to\_ulong();}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}type"{}},\ bitset\_detail::type::ulong)\ );}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ b)\ );}
+\DoxyCodeLine{00097\ \ \ \ \ \}}
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::overflow\_error\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00099\ \ \ \ \ \{}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ b\ =\ bits.to\_ullong();}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}type"{}},\ bitset\_detail::type::ullong)\ );}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ b)\ );}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \textcolor{keywordflow}{catch}(\ std::overflow\_error\ \textcolor{keyword}{const}\ \&\ )}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}type"{}},\ bitset\_detail::type::string)\ );}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ bits.to\_string())\ );}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00115\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keywordtype}{size\_t}\ N>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00116\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::bitset<N>\ \&\ bits\ )}
+\DoxyCodeLine{00117\ \ \ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \mbox{\hyperlink{bitset_8hpp_a4f5825a3267dd05e798bed76cf7e29cc}{bitset\_detail::type}}\ t;}
+\DoxyCodeLine{00119\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}type"{}},\ t)\ );}
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ \ \ \ \ \textcolor{keywordflow}{switch}(\ t\ )}
+\DoxyCodeLine{00122\ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ bitset\_detail::type::ulong:}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ b;}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ b)\ );}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ bits\ =\ std::bitset<N>(\ b\ );}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ bitset\_detail::type::ullong:}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{long}\ b;}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ b)\ );}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ bits\ =\ std::bitset<N>(\ b\ );}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ bitset\_detail::type::string:}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ std::string\ b;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ b)\ );}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ bits\ =\ std::bitset<N>(\ b\ );}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ bitset\_detail::type::bits:}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Normally\ we\ would\ use\ BinaryData\ to\ route\ this\ at\ compile\ time,}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ but\ doing\ this\ at\ runtime\ doesn't\ break\ any\ old\ serialization}}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ std::uint8\_t\ chunk\ =\ 0;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ std::uint8\_t\ mask\ \ =\ 0;}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ bits.reset();}
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Load\ one\ chunk\ at\ a\ time,\ rotating\ through\ the\ chunk}}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ to\ set\ bits\ in\ the\ bitset}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\ std::size\_t\ i\ =\ 0;\ i\ <\ N;\ ++i\ )}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ mask\ ==\ 0\ )}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ ar(\ chunk\ );}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ mask\ =\ 0x80;}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ chunk\ \&\ mask\ )}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ bits[i]\ =\ 1;}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ mask\ =\ \textcolor{keyword}{static\_cast<}std::uint8\_t\textcolor{keyword}{>}(mask\ >>\ 1);}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Invalid\ bitset\ data\ representation"{}});}
+\DoxyCodeLine{00172\ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \}}
+\DoxyCodeLine{00174\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_BITSET\_HPP\_}}
+
+\end{DoxyCode}

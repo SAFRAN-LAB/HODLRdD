@@ -1,0 +1,88 @@
+\doxysection{Node\texorpdfstring{$<$}{<} Kernel \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{class_node}{}\label{class_node}\index{Node$<$ Kernel $>$@{Node$<$ Kernel $>$}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_node_a513b88d7c4f959be6ed15d183f3135ac}\label{class_node_a513b88d7c4f959be6ed15d183f3135ac} 
+{\bfseries Node} (\mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*}\&src, \mbox{\hyperlink{classkernel__function}{kernel\+\_\+function}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*}\&usr\+\_\+)
+\item 
+\Hypertarget{class_node_ad9efc1acf967ea32eb5509ee3a2d8b0f}\label{class_node_ad9efc1acf967ea32eb5509ee3a2d8b0f} 
+{\bfseries Node} (\mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*}\&src, \mbox{\hyperlink{class_node}{Node}} \texorpdfstring{$\ast$}{*}\&parent\+\_\+, \mbox{\hyperlink{classkernel__function}{kernel\+\_\+function}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*}\&usr\+\_\+)
+\item 
+\Hypertarget{class_node_afee4273211d7423f72126be2a86a695b}\label{class_node_afee4273211d7423f72126be2a86a695b} 
+size\+\_\+t {\bfseries get\+\_\+id} ()
+\item 
+\Hypertarget{class_node_af77aecfb1a836ade6550c443ce496748}\label{class_node_af77aecfb1a836ade6550c443ce496748} 
+void {\bfseries Initialize\+\_\+node} ()
+\item 
+\Hypertarget{class_node_a0d2d2c033b9f88be9c132c2d58c90856}\label{class_node_a0d2d2c033b9f88be9c132c2d58c90856} 
+void {\bfseries find\+\_\+max\+\_\+rank} (size\+\_\+t \&MAX\+\_\+\+RANK)
+\item 
+\Hypertarget{class_node_ab052eba57dfd6e5f537803772430c57e}\label{class_node_ab052eba57dfd6e5f537803772430c57e} 
+void {\bfseries update\+\_\+matrix\+\_\+node} (std\+::vector$<$ std\+::vector$<$ int $>$ $>$ \&mat\+\_\+color, int lvl)
+\item 
+\Hypertarget{class_node_af98ff9b4acb1a96a0e8e0fa8581427d7}\label{class_node_af98ff9b4acb1a96a0e8e0fa8581427d7} 
+double {\bfseries compute\+\_\+flop\+\_\+count} ()
+\item 
+\Hypertarget{class_node_ae358123cd2e4c12a809c38697a3ca08b}\label{class_node_ae358123cd2e4c12a809c38697a3ca08b} 
+void {\bfseries get\+\_\+interaction\+\_\+list} ()
+\item 
+\Hypertarget{class_node_a5024878923aa8b098196c739450e4429}\label{class_node_a5024878923aa8b098196c739450e4429} 
+void {\bfseries get\+\_\+node\+\_\+potential} ()
+\item 
+\Hypertarget{class_node_ae9b4b4d3b2c06d2fecc7fbd4c5abf9b3}\label{class_node_ae9b4b4d3b2c06d2fecc7fbd4c5abf9b3} 
+void {\bfseries set\+\_\+node\+\_\+charge} (const Vec \&b)
+\item 
+\Hypertarget{class_node_ad97c235f3c65fc04a6163d821a52594d}\label{class_node_ad97c235f3c65fc04a6163d821a52594d} 
+void {\bfseries collect\+\_\+potential} (Vec \&b)
+\item 
+\Hypertarget{class_node_aded6ea93dc527303d08e7ce43dd649cc}\label{class_node_aded6ea93dc527303d08e7ce43dd649cc} 
+void {\bfseries print\+\_\+node\+\_\+details} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_node_a12b5a32161120b01c69d4f9b018a3d6c}\label{class_node_a12b5a32161120b01c69d4f9b018a3d6c} 
+\mbox{\hyperlink{class_node}{Node}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*} {\bfseries parent}
+\item 
+\Hypertarget{class_node_a22aa01bb4fb5f16a56cea08bedd2b956}\label{class_node_a22aa01bb4fb5f16a56cea08bedd2b956} 
+\mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*} {\bfseries my\+\_\+cluster}
+\item 
+\Hypertarget{class_node_a6ed1331ba41798a7ed15504962ca4c97}\label{class_node_a6ed1331ba41798a7ed15504962ca4c97} 
+\mbox{\hyperlink{structptsn_d}{ptsnD}} {\bfseries cluster\+\_\+center}
+\item 
+\Hypertarget{class_node_a9b385701d00348b68f3181be50cf180f}\label{class_node_a9b385701d00348b68f3181be50cf180f} 
+size\+\_\+t {\bfseries n\+\_\+particles}
+\item 
+\Hypertarget{class_node_a6c277fb9e5da1245f2b998f975d63660}\label{class_node_a6c277fb9e5da1245f2b998f975d63660} 
+bool {\bfseries isleaf} = false
+\item 
+\Hypertarget{class_node_ab5ed208c28cb9ec0fa24215feadb0e0b}\label{class_node_ab5ed208c28cb9ec0fa24215feadb0e0b} 
+bool {\bfseries isroot}
+\item 
+\Hypertarget{class_node_a504487ddb2322528361245f71cea18a3}\label{class_node_a504487ddb2322528361245f71cea18a3} 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*} $>$ {\bfseries Child}
+\item 
+\Hypertarget{class_node_a6663b7b7f05485097a160f8307300bc6}\label{class_node_a6663b7b7f05485097a160f8307300bc6} 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*} $>$ {\bfseries my\+\_\+neighbour\+\_\+addr}
+\item 
+\Hypertarget{class_node_a09ba9562fc9c0ecc3b0b033aeb1bf9c7}\label{class_node_a09ba9562fc9c0ecc3b0b033aeb1bf9c7} 
+int {\bfseries n\+\_\+neighbours}
+\item 
+\Hypertarget{class_node_ab223d0cbc7a92aab77d24f8916d9b3cb}\label{class_node_ab223d0cbc7a92aab77d24f8916d9b3cb} 
+int {\bfseries n\+\_\+intraction}
+\item 
+\Hypertarget{class_node_ad211364a1951dab8670d8a9f07b61300}\label{class_node_ad211364a1951dab8670d8a9f07b61300} 
+std\+::vector$<$ \mbox{\hyperlink{class_node}{Node}}$<$ Kernel $>$ \texorpdfstring{$\ast$}{*} $>$ {\bfseries my\+\_\+intr\+\_\+list\+\_\+addr}
+\item 
+\Hypertarget{class_node_a3a326233f8620751acb01d99e6490c13}\label{class_node_a3a326233f8620751acb01d99e6490c13} 
+double {\bfseries my\+\_\+flop\+\_\+il} = 0.\+0
+\item 
+\Hypertarget{class_node_a11822c4a6998434aaf99e100683fa83c}\label{class_node_a11822c4a6998434aaf99e100683fa83c} 
+size\+\_\+t {\bfseries node\+\_\+rank}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/HDD\+\_\+node.\+hpp\end{DoxyCompactItemize}

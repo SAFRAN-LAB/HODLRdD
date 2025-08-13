@@ -1,0 +1,122 @@
+\doxysection{cereal\+::Deferred\+Data\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1_deferred_data}{}\label{classcereal_1_1_deferred_data}\index{cereal::DeferredData$<$ T $>$@{cereal::DeferredData$<$ T $>$}}
+
+
+A wrapper around data that should be serialized after all non-\/deferred data.  
+
+
+
+
+{\ttfamily \#include $<$helpers.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Deferred\+Data\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d0/de7/classcereal_1_1_deferred_data}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}{Deferred\+Data}} (T \&\&v)
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_deferred_data_a04a4ede9f2c93d416938d87db5d69ccc}\label{classcereal_1_1_deferred_data_a04a4ede9f2c93d416938d87db5d69ccc} 
+Type {\bfseries value}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Related Symbols}
+(Note that these are not member symbols.) \begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T$>$ }\\\mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ \mbox{\hyperlink{classcereal_1_1_deferred_data_afc913c738d15fc5dd7f4a7a20edb5225}{defer}} (T \&\&value)
+\begin{DoxyCompactList}\small\item\em Marks data for deferred serialization. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::\+Deferred\+Data$<$ T $>$}
+A wrapper around data that should be serialized after all non-\/deferred data. 
+
+This class is used to demarcate data that can only be safely serialized after any data not wrapped in this class. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_deferred_data_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de}\index{cereal::DeferredData$<$ T $>$@{cereal::DeferredData$<$ T $>$}!DeferredData@{DeferredData}}
+\index{DeferredData@{DeferredData}!cereal::DeferredData$<$ T $>$@{cereal::DeferredData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DeferredData()}{DeferredData()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_deferred_data_abb8804a82675ae86a3c78efc06a2a2de} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{classcereal_1_1_deferred_data}{cereal\+::\+Deferred\+Data}}$<$ T $>$\+::\+Deferred\+Data (\begin{DoxyParamCaption}\item[{T \&\&}]{v}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructs a new \doxylink{classcereal_1_1_name_value_pair}{Name\+Value\+Pair}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em v} & The value to defer. Ideally this should be an l-\/value reference so that the value can be both loaded and saved to. If you pass an r-\/value reference, the \doxylink{classcereal_1_1_deferred_data}{Deferred\+Data} will store a copy of it instead of a reference. Thus you should only pass r-\/values in cases where this makes sense, such as the result of some size() call. \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-related-members}
+\Hypertarget{classcereal_1_1_deferred_data_doc-related-members}
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classcereal_1_1_deferred_data_afc913c738d15fc5dd7f4a7a20edb5225}\index{cereal::DeferredData$<$ T $>$@{cereal::DeferredData$<$ T $>$}!defer@{defer}}
+\index{defer@{defer}!cereal::DeferredData$<$ T $>$@{cereal::DeferredData$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{defer()}{defer()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_deferred_data_afc913c738d15fc5dd7f4a7a20edb5225} 
+template$<$class T$>$ \\
+\mbox{\hyperlink{classcereal_1_1_deferred_data}{Deferred\+Data}}$<$ T $>$ defer (\begin{DoxyParamCaption}\item[{T \&\&}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [related]}}
+
+
+
+Marks data for deferred serialization. 
+
+cereal performs a recursive depth-\/first traversal of data it serializes. When serializing smart pointers to large, nested, or cyclical data structures, it is possible to encounter a stack overflow from excessive recursion when following a chain of pointers.
+
+Deferment can help in these situations if the data can be serialized separately from the pointers used to traverse the structure. For example, a graph structure can have its nodes serialized before its edges\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyEdge}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ std::shared\_ptr<MyNode>\ connection;}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ some\_value;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(Archive\ \&\ archive)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ when\ we\ serialize\ an\ edge,\ we'll\ defer\ serializing\ the\ associated\ node}}
+\DoxyCodeLine{\ \ \ \ archive(\ \mbox{\hyperlink{classcereal_1_1_deferred_data_afc913c738d15fc5dd7f4a7a20edb5225}{cereal::defer}}(\ connection\ ),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ some\_value\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyGraphStructure}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ std::vector<MyEdge>\ edges;}
+\DoxyCodeLine{\ \ std::vector<MyNodes>\ nodes;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(Archive\ \&\ archive)}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ because\ of\ the\ deferment,\ we\ ensure\ all\ nodes\ are\ fully\ serialized}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ before\ any\ connection\ pointers\ to\ those\ nodes\ are\ serialized}}
+\DoxyCodeLine{\ \ \ \ archive(\ edges,\ nodes\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ we\ have\ to\ explicitly\ inform\ the\ archive\ when\ it\ is\ safe\ to\ serialize}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ the\ deferred\ data}}
+\DoxyCodeLine{\ \ \ \ archive.serializeDeferments();}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,58 @@
+\doxysection{cereal\+::rapidxml\+::parse\+\_\+error Class Reference}
+\hypertarget{classcereal_1_1rapidxml_1_1parse__error}{}\label{classcereal_1_1rapidxml_1_1parse__error}\index{cereal::rapidxml::parse\_error@{cereal::rapidxml::parse\_error}}
+
+
+{\ttfamily \#include $<$rapidxml.\+hpp$>$}
+
+Inheritance diagram for cereal\+::rapidxml\+::parse\+\_\+error\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d6/d64/classcereal_1_1rapidxml_1_1parse__error}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1rapidxml_1_1parse__error_a3aea132b4a6f15f2fc1e88a8e7801dd0}\label{classcereal_1_1rapidxml_1_1parse__error_a3aea132b4a6f15f2fc1e88a8e7801dd0} 
+{\bfseries parse\+\_\+error} (const char \texorpdfstring{$\ast$}{*}what\+\_\+, void \texorpdfstring{$\ast$}{*}where\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructs parse error. \end{DoxyCompactList}\item 
+virtual const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1parse__error_a21972d3b7f5f23526b0d82ff657ef4ee}{what}} () const \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}} override
+\item 
+{\footnotesize template$<$class Ch$>$ }\\Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1parse__error_ac4bd70e66761d63b603a35a1e4644f4a}{where}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Parse error exception. This exception is thrown by the parser when an error occurs. Use \doxylink{classcereal_1_1rapidxml_1_1parse__error_a21972d3b7f5f23526b0d82ff657ef4ee}{what()} function to get human-\/readable error message. Use \doxylink{classcereal_1_1rapidxml_1_1parse__error_ac4bd70e66761d63b603a35a1e4644f4a}{where()} function to get a pointer to position within source text where error was detected. ~\newline
+~\newline
+ If throwing exceptions by the parser is undesirable, it can be disabled by defining CEREAL\+\_\+\+RAPIDXML\+\_\+\+NO\+\_\+\+EXCEPTIONS macro before \doxylink{rapidxml_8hpp_source}{rapidxml.\+hpp} is included. This will cause the parser to call rapidxml\+::parse\+\_\+error\+\_\+handler() function instead of throwing an exception. This function must be defined by the user. ~\newline
+~\newline
+ This class derives from {\ttfamily std\+::exception} class. 
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1rapidxml_1_1parse__error_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1rapidxml_1_1parse__error_a21972d3b7f5f23526b0d82ff657ef4ee}\index{cereal::rapidxml::parse\_error@{cereal::rapidxml::parse\_error}!what@{what}}
+\index{what@{what}!cereal::rapidxml::parse\_error@{cereal::rapidxml::parse\_error}}
+\doxysubsubsection{\texorpdfstring{what()}{what()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1parse__error_a21972d3b7f5f23526b0d82ff657ef4ee} 
+virtual const char \texorpdfstring{$\ast$}{*} cereal\+::rapidxml\+::parse\+\_\+error\+::what (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Gets human readable description of error. \begin{DoxyReturn}{Returns}
+Pointer to null terminated description of the error. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1parse__error_ac4bd70e66761d63b603a35a1e4644f4a}\index{cereal::rapidxml::parse\_error@{cereal::rapidxml::parse\_error}!where@{where}}
+\index{where@{where}!cereal::rapidxml::parse\_error@{cereal::rapidxml::parse\_error}}
+\doxysubsubsection{\texorpdfstring{where()}{where()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1parse__error_ac4bd70e66761d63b603a35a1e4644f4a} 
+template$<$class Ch$>$ \\
+Ch \texorpdfstring{$\ast$}{*} cereal\+::rapidxml\+::parse\+\_\+error\+::where (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets pointer to character data where error happened. Ch should be the same as char type of \doxylink{classcereal_1_1rapidxml_1_1xml__document}{xml\+\_\+document} that produced the error. \begin{DoxyReturn}{Returns}
+Pointer to location within the parsed string where error occured. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidxml/rapidxml.\+hpp\end{DoxyCompactItemize}

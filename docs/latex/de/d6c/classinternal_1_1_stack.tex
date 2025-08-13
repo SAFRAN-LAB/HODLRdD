@@ -1,0 +1,88 @@
+\doxysection{internal\+::Stack\texorpdfstring{$<$}{<} Allocator \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classinternal_1_1_stack}{}\label{classinternal_1_1_stack}\index{internal::Stack$<$ Allocator $>$@{internal::Stack$<$ Allocator $>$}}
+
+
+A type-\/unsafe stack for storing different types of data.  
+
+
+
+
+{\ttfamily \#include $<$stack.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classinternal_1_1_stack_af09ab91f9e5143deccf7c9af837f451e}\label{classinternal_1_1_stack_af09ab91f9e5143deccf7c9af837f451e} 
+{\bfseries Stack} (\mbox{\hyperlink{classrapidjson_1_1_allocator}{Allocator}} \texorpdfstring{$\ast$}{*}allocator, size\+\_\+t stack\+Capacity)
+\item 
+\Hypertarget{classinternal_1_1_stack_ac72c9533051c7abf108bbceb1cfc3c24}\label{classinternal_1_1_stack_ac72c9533051c7abf108bbceb1cfc3c24} 
+void {\bfseries Swap} (\mbox{\hyperlink{classinternal_1_1_stack}{Stack}} \&rhs) CEREAL\+\_\+\+RAPIDJSON\+\_\+\+NOEXCEPT
+\item 
+\Hypertarget{classinternal_1_1_stack_a02da31665a372738e81ded2f7b7d598e}\label{classinternal_1_1_stack_a02da31665a372738e81ded2f7b7d598e} 
+void {\bfseries Clear} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_a3852b8494d69c91f6a238a51572e591e}\label{classinternal_1_1_stack_a3852b8494d69c91f6a238a51572e591e} 
+void {\bfseries Shrink\+To\+Fit} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_a46c5c91927a9beb505c058375319d5cf}\label{classinternal_1_1_stack_a46c5c91927a9beb505c058375319d5cf} 
+{\footnotesize template$<$typename T$>$ }\\CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE void {\bfseries Reserve} (size\+\_\+t count=1)
+\item 
+\Hypertarget{classinternal_1_1_stack_a1f45c1e9d76876ba6f9cbaab4a511407}\label{classinternal_1_1_stack_a1f45c1e9d76876ba6f9cbaab4a511407} 
+{\footnotesize template$<$typename T$>$ }\\CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE T \texorpdfstring{$\ast$}{*} {\bfseries Push} (size\+\_\+t count=1)
+\item 
+\Hypertarget{classinternal_1_1_stack_a2e6599137a815cfa87093fcfd5d476a5}\label{classinternal_1_1_stack_a2e6599137a815cfa87093fcfd5d476a5} 
+{\footnotesize template$<$typename T$>$ }\\CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE T \texorpdfstring{$\ast$}{*} {\bfseries Push\+Unsafe} (size\+\_\+t count=1)
+\item 
+\Hypertarget{classinternal_1_1_stack_a1cb63cab765815c0624c6676b3712b03}\label{classinternal_1_1_stack_a1cb63cab765815c0624c6676b3712b03} 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} {\bfseries Pop} (size\+\_\+t count)
+\item 
+\Hypertarget{classinternal_1_1_stack_a9c2611699081d74be865ebe67315dc6d}\label{classinternal_1_1_stack_a9c2611699081d74be865ebe67315dc6d} 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} {\bfseries Top} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_a18e79cab61089f955d42b6c45bb51c23}\label{classinternal_1_1_stack_a18e79cab61089f955d42b6c45bb51c23} 
+{\footnotesize template$<$typename T$>$ }\\const T \texorpdfstring{$\ast$}{*} {\bfseries Top} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_acb8a65d110faf22be514db83524409c5}\label{classinternal_1_1_stack_acb8a65d110faf22be514db83524409c5} 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} {\bfseries End} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_a242967361d9e254d13b85cfc2161861e}\label{classinternal_1_1_stack_a242967361d9e254d13b85cfc2161861e} 
+{\footnotesize template$<$typename T$>$ }\\const T \texorpdfstring{$\ast$}{*} {\bfseries End} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_a6acd2f7a16458184084c40d9f06f4a55}\label{classinternal_1_1_stack_a6acd2f7a16458184084c40d9f06f4a55} 
+{\footnotesize template$<$typename T$>$ }\\T \texorpdfstring{$\ast$}{*} {\bfseries Bottom} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_aeb6c4af6d6de57865232e1926dc0834e}\label{classinternal_1_1_stack_aeb6c4af6d6de57865232e1926dc0834e} 
+{\footnotesize template$<$typename T$>$ }\\const T \texorpdfstring{$\ast$}{*} {\bfseries Bottom} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_a657ae4d477b25d4e0045aee0efd809c3}\label{classinternal_1_1_stack_a657ae4d477b25d4e0045aee0efd809c3} 
+bool {\bfseries Has\+Allocator} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_aa6f933acc7ecd92a2b567db5fa8cd43a}\label{classinternal_1_1_stack_aa6f933acc7ecd92a2b567db5fa8cd43a} 
+\mbox{\hyperlink{classrapidjson_1_1_allocator}{Allocator}} \& {\bfseries Get\+Allocator} ()
+\item 
+\Hypertarget{classinternal_1_1_stack_a2b8bda380e33838a99e3c73ff9785f03}\label{classinternal_1_1_stack_a2b8bda380e33838a99e3c73ff9785f03} 
+bool {\bfseries Empty} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_ac484468a2791bd3e9ba609bd1600ab48}\label{classinternal_1_1_stack_ac484468a2791bd3e9ba609bd1600ab48} 
+size\+\_\+t {\bfseries Get\+Size} () const
+\item 
+\Hypertarget{classinternal_1_1_stack_a67d5d7ee9424d3dd46cf9d001b6cdc6b}\label{classinternal_1_1_stack_a67d5d7ee9424d3dd46cf9d001b6cdc6b} 
+size\+\_\+t {\bfseries Get\+Capacity} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename \mbox{\hyperlink{classrapidjson_1_1_allocator}{Allocator}}$>$\newline
+class internal\+::\+Stack$<$ Allocator $>$}
+A type-\/unsafe stack for storing different types of data. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em \doxylink{classrapidjson_1_1_allocator}{Allocator}} & \doxylink{classrapidjson_1_1_allocator}{Allocator} for allocating stack memory. \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/internal/stack.\+h\end{DoxyCompactItemize}

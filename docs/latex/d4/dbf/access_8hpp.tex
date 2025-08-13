@@ -1,0 +1,33 @@
+\doxysection{lib/cereal/access.hpp File Reference}
+\hypertarget{access_8hpp}{}\label{access_8hpp}\index{lib/cereal/access.hpp@{lib/cereal/access.hpp}}
+
+
+Access control and default construction.  
+
+
+{\ttfamily \#include $<$type\+\_\+traits$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include "{}cereal/macros.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/specialize.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/helpers.\+hpp"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1_load_and_construct}{cereal\+::\+Load\+And\+Construct$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em A class that allows cereal to load smart pointers to types that have no default constructor. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1construct}{cereal\+::construct$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Used to construct types with no default constructor. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1access}{cereal\+::access}}
+\begin{DoxyCompactList}\small\item\em A class that can be made a friend to give cereal access to non public functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Access control and default construction. 
+

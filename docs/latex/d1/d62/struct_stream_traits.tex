@@ -1,0 +1,43 @@
+\doxysection{Stream\+Traits\texorpdfstring{$<$}{<} Stream \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_stream_traits}{}\label{struct_stream_traits}\index{StreamTraits$<$ Stream $>$@{StreamTraits$<$ Stream $>$}}
+
+
+Provides additional information for stream.  
+
+
+
+
+{\ttfamily \#include $<$stream.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ {\bfseries copy\+Optimization} = 0
+ \}
+\begin{DoxyCompactList}\small\item\em Whether to make local copy of stream for optimization during parsing. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename \mbox{\hyperlink{classrapidjson_1_1_stream}{Stream}}$>$\newline
+struct Stream\+Traits$<$ Stream $>$}
+Provides additional information for stream. 
+
+By using traits pattern, this type provides a default configuration for stream. For custom stream, this type can be specialized for other configuration. See TEST(\+Reader, Custom\+String\+Stream) in readertest.\+cpp for example. 
+
+\label{doc-enum-members}
+\Hypertarget{struct_stream_traits_doc-enum-members}
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{struct_stream_traits_a288e221a8e7010a534d24ccec1e16c82}\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily \label{struct_stream_traits_a288e221a8e7010a534d24ccec1e16c82} 
+template$<$typename \mbox{\hyperlink{classrapidjson_1_1_stream}{Stream}}$>$ \\
+anonymous enum}
+
+
+
+Whether to make local copy of stream for optimization during parsing. 
+
+By default, for safety, streams do not use local copy optimization. \doxylink{classrapidjson_1_1_stream}{Stream} that can be copied fast should specialize this, like \doxylink{struct_stream_traits}{Stream\+Traits$<$\+String\+Stream$>$}. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/stream.\+h\end{DoxyCompactItemize}

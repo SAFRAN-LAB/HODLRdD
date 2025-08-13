@@ -1,0 +1,58 @@
+\doxysection{cereal\+::detail\+::Input\+Binding\+Map\texorpdfstring{$<$}{<} Archive \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_input_binding_map}{}\label{structcereal_1_1detail_1_1_input_binding_map}\index{cereal::detail::InputBindingMap$<$ Archive $>$@{cereal::detail::InputBindingMap$<$ Archive $>$}}
+
+
+A structure holding a map from type name strings to input serializer functions.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers}{Serializers}}
+\begin{DoxyCompactList}\small\item\em Struct containing the serializer functions for all pointer types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ void(void \texorpdfstring{$\ast$}{*}, std\+::shared\+\_\+ptr$<$ void $>$ \&, std\+::type\+\_\+info const \&)$>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_a8b3e4f742e4cd9f5210930e0f272383b}{Shared\+Serializer}}
+\begin{DoxyCompactList}\small\item\em Shared ptr serializer function. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1detail_1_1_input_binding_map_a429d50a04386c8de48e99723564bfbeb}\label{structcereal_1_1detail_1_1_input_binding_map_a429d50a04386c8de48e99723564bfbeb} 
+typedef std\+::function$<$ void(void \texorpdfstring{$\ast$}{*}, std\+::unique\+\_\+ptr$<$ void, \mbox{\hyperlink{structcereal_1_1detail_1_1_empty_deleter}{Empty\+Deleter}}$<$ void $>$ $>$ \&, std\+::type\+\_\+info const \&)$>$ {\bfseries Unique\+Serializer}
+\begin{DoxyCompactList}\small\item\em Unique ptr serializer function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_input_binding_map_a92bc21af466e376f1fd9a97e4571dc43}\label{structcereal_1_1detail_1_1_input_binding_map_a92bc21af466e376f1fd9a97e4571dc43} 
+std\+::map$<$ std\+::string, \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers}{Serializers}} $>$ {\bfseries map}
+\begin{DoxyCompactList}\small\item\em A map of serializers for pointers of all registered types. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive$>$\newline
+struct cereal\+::detail\+::\+Input\+Binding\+Map$<$ Archive $>$}
+A structure holding a map from type name strings to input serializer functions. 
+
+A static object of this map should be created for each registered archive type, containing entries for every registered type that describe how to properly cast the type to its real type in polymorphic scenarios for shared\+\_\+ptr, weak\+\_\+ptr, and unique\+\_\+ptr. 
+
+\label{doc-typedef-members}
+\Hypertarget{structcereal_1_1detail_1_1_input_binding_map_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_input_binding_map_a8b3e4f742e4cd9f5210930e0f272383b}\index{cereal::detail::InputBindingMap$<$ Archive $>$@{cereal::detail::InputBindingMap$<$ Archive $>$}!SharedSerializer@{SharedSerializer}}
+\index{SharedSerializer@{SharedSerializer}!cereal::detail::InputBindingMap$<$ Archive $>$@{cereal::detail::InputBindingMap$<$ Archive $>$}}
+\doxysubsubsection{\texorpdfstring{SharedSerializer}{SharedSerializer}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_input_binding_map_a8b3e4f742e4cd9f5210930e0f272383b} 
+template$<$class Archive$>$ \\
+typedef std\+::function$<$void(void\texorpdfstring{$\ast$}{*}, std\+::shared\+\_\+ptr$<$void$>$ \&, std\+::type\+\_\+info const \&)$>$ \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map}{cereal\+::detail\+::\+Input\+Binding\+Map}}$<$ Archive $>$\+::\+Shared\+Serializer}
+
+
+
+Shared ptr serializer function. 
+
+Serializer functions return nothing and take an archive as their first parameter (will be cast properly inside the function, a shared\+\_\+ptr (or unique\+\_\+ptr for the unique case) of any base type, and the type id of said base type as the third parameter. Internally it will properly be loaded and cast to the correct type. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

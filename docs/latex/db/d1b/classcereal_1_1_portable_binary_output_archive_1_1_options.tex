@@ -1,0 +1,70 @@
+\doxysection{cereal\+::Portable\+Binary\+Output\+Archive\+::Options Class Reference}
+\hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options}{}\label{classcereal_1_1_portable_binary_output_archive_1_1_options}\index{cereal::PortableBinaryOutputArchive::Options@{cereal::PortableBinaryOutputArchive::Options}}
+
+
+A class containing various advanced options for the Portable\+Binary\+Output archive.  
+
+
+
+
+{\ttfamily \#include $<$portable\+\_\+binary.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}\label{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534} 
+enum class \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}} \+: std\+::uint8\+\_\+t \{ {\bfseries big}
+, {\bfseries little}
+ \}
+\begin{DoxyCompactList}\small\item\em Represents desired endianness. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}{Options}} (\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}} output\+Endian=get\+Endianness())
+\begin{DoxyCompactList}\small\item\em Specify specific options for the \doxylink{classcereal_1_1_portable_binary_output_archive}{Portable\+Binary\+Output\+Archive}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_a98642199679b45167f773b9c6f4f3ac2}\label{classcereal_1_1_portable_binary_output_archive_1_1_options_a98642199679b45167f773b9c6f4f3ac2} 
+static \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options}{Options}} {\bfseries Default} ()
+\begin{DoxyCompactList}\small\item\em Default options, preserve system endianness. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_a7ad926cd9e8e50f5795807ec14cc0e8e}\label{classcereal_1_1_portable_binary_output_archive_1_1_options_a7ad926cd9e8e50f5795807ec14cc0e8e} 
+static \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options}{Options}} {\bfseries Little\+Endian} ()
+\begin{DoxyCompactList}\small\item\em Save as little endian. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_a16c01f4198a9d3b2df4f0b1c29582fa6}\label{classcereal_1_1_portable_binary_output_archive_1_1_options_a16c01f4198a9d3b2df4f0b1c29582fa6} 
+static \mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options}{Options}} {\bfseries Big\+Endian} ()
+\begin{DoxyCompactList}\small\item\em Save as big endian. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_a861ac8d5a96a2a4ffc640593822459ec}\label{classcereal_1_1_portable_binary_output_archive_1_1_options_a861ac8d5a96a2a4ffc640593822459ec} 
+class {\bfseries Portable\+Binary\+Output\+Archive}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A class containing various advanced options for the Portable\+Binary\+Output archive. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f}\index{cereal::PortableBinaryOutputArchive::Options@{cereal::PortableBinaryOutputArchive::Options}!Options@{Options}}
+\index{Options@{Options}!cereal::PortableBinaryOutputArchive::Options@{cereal::PortableBinaryOutputArchive::Options}}
+\doxysubsubsection{\texorpdfstring{Options()}{Options()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_portable_binary_output_archive_1_1_options_a4d1a04340ee609126fa20e25397e1e9f} 
+cereal\+::\+Portable\+Binary\+Output\+Archive\+::\+Options\+::\+Options (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcereal_1_1_portable_binary_output_archive_1_1_options_ae2a21b6c39ca3520f070c8484c40f534}{Endianness}}}]{output\+Endian}{ = {\ttfamily getEndianness()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Specify specific options for the \doxylink{classcereal_1_1_portable_binary_output_archive}{Portable\+Binary\+Output\+Archive}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em output\+Endian} & The desired endianness of saved (output) data \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/portable\+\_\+binary.\+hpp\end{DoxyCompactItemize}

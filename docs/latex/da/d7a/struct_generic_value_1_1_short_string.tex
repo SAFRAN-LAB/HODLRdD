@@ -1,0 +1,37 @@
+\doxysection{Generic\+Value\texorpdfstring{$<$}{<} Encoding, Allocator \texorpdfstring{$>$}{>}\+::Short\+String Struct Reference}
+\hypertarget{struct_generic_value_1_1_short_string}{}\label{struct_generic_value_1_1_short_string}\index{GenericValue$<$ Encoding, Allocator $>$::ShortString@{GenericValue$<$ Encoding, Allocator $>$::ShortString}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_value_1_1_short_string_a001cd2596dcd8c7fc26f20df61ebb579}\label{struct_generic_value_1_1_short_string_a001cd2596dcd8c7fc26f20df61ebb579} 
+enum \{ {\bfseries Max\+Chars} = sizeof(static\+\_\+cast\texorpdfstring{$<$}{<}Flag\texorpdfstring{$\ast$}{*}\texorpdfstring{$>$}{>}(0)-\/\texorpdfstring{$>$}{>}payload) / sizeof(Ch)
+, {\bfseries Max\+Size} = Max\+Chars -\/ 1
+, {\bfseries Len\+Pos} = Max\+Size
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_value_1_1_short_string_adbfe8461e0cb0ccb2cb3825489e743c2}\label{struct_generic_value_1_1_short_string_adbfe8461e0cb0ccb2cb3825489e743c2} 
+void {\bfseries Set\+Length} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} len)
+\item 
+\Hypertarget{struct_generic_value_1_1_short_string_a4aa295331ab0d019fd64f8f5d57d450b}\label{struct_generic_value_1_1_short_string_a4aa295331ab0d019fd64f8f5d57d450b} 
+\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} {\bfseries Get\+Length} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_value_1_1_short_string_a73e40f625c1abbd84f95ac7fff8365f7}\label{struct_generic_value_1_1_short_string_a73e40f625c1abbd84f95ac7fff8365f7} 
+static bool {\bfseries Usable} (\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{Size\+Type}} len)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_value_1_1_short_string_a444e24523d4cc33830d18a2cfcfd333b}\label{struct_generic_value_1_1_short_string_a444e24523d4cc33830d18a2cfcfd333b} 
+\mbox{\hyperlink{class_generic_value_ade0e0ce64ccd5d852da57a35e720bafb}{Ch}} {\bfseries str} \mbox{[}Max\+Chars\mbox{]}
+\end{DoxyCompactItemize}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/\mbox{\hyperlink{document_8h}{document.\+h}}\end{DoxyCompactItemize}

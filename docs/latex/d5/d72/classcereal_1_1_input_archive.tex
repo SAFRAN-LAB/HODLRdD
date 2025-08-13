@@ -1,0 +1,230 @@
+\doxysection{cereal\+::Input\+Archive\texorpdfstring{$<$}{<} Archive\+Type, Flags \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1_input_archive}{}\label{classcereal_1_1_input_archive}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+
+
+The base input archive class.  
+
+
+
+
+{\ttfamily \#include $<$cereal.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Input\+Archive\texorpdfstring{$<$}{<} Archive\+Type, Flags \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d5/d72/classcereal_1_1_input_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{Input\+Archive}} (Archive\+Type \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_input_archive_a9c35edcb5a55280e3ac0628d327f2f49}\label{classcereal_1_1_input_archive_a9c35edcb5a55280e3ac0628d327f2f49} 
+\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} const \&)=delete
+\item 
+{\footnotesize template$<$class ... Types$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}{get\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves a shared pointer given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}{register\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id, std\+::shared\+\_\+ptr$<$ void $>$ ptr)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer to its unique identifier. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}{get\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves the string for a polymorphic type given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}{register\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id, std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic name string to its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{cereal\+::detail\+::\+Input\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Input\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_input_archive_a41750b871b4e635565f892e4abfb20b0}\label{classcereal_1_1_input_archive_a41750b871b4e635565f892e4abfb20b0} 
+{\footnotesize template$<$class A, class B, bool C, bool D, bool E, bool F$>$ }\\struct {\bfseries detail\+::\+Construct}
+\begin{DoxyCompactList}\small\item\em Befriend for versioning in load\+\_\+and\+\_\+construct. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Boost Transition Layer}
+Functionality that mirrors the syntax for Boost. This is useful if you are transitioning a large project from Boost to cereal. The preferred interface for cereal is using operator(). \begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}{is\+\_\+loading}} = std\+::true\+\_\+type
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for loading. \end{DoxyCompactList}\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}{is\+\_\+saving}} = std\+::false\+\_\+type
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for saving. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class T$>$ }\\Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}{operator$>$$>$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$\newline
+class cereal\+::\+Input\+Archive$<$ Archive\+Type, Flags $>$}
+The base input archive class. 
+
+This is the base input archive for all input archives. If you create a custom archive class, it should derive from this, passing itself as a template parameter for the Archive\+Type.
+
+The base class provides all of the functionality necessary to properly forward data to the correct serialization functions.
+
+Individual archives should use a combination of prologue and epilogue functions together with specializations of serialize, save, and load to alter the functionality of their serialization.
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Archive\+Type} & The archive type that derives from \doxylink{classcereal_1_1_input_archive}{Input\+Archive} \\
+\hline
+{\em \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} & \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags} to control advanced functionality. See the \doxylink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags} enum for more information. \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-typedef-members}
+\Hypertarget{classcereal_1_1_input_archive_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!is\_loading@{is\_loading}}
+\index{is\_loading@{is\_loading}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{is\_loading}{is\_loading}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+using \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::is\+\_\+loading = std\+::true\+\_\+type}
+
+
+
+Indicates this archive is intended for loading. 
+
+This ensures compatibility with boost archive types. If you are transitioning from boost, you can check this value within a member or external serialize function (i.\+e., Archive\+::is\+\_\+loading\+::value) to enable behavior specific to loading, until you can transition to split save/load or save\+\_\+minimal/load\+\_\+minimal functions \Hypertarget{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!is\_saving@{is\_saving}}
+\index{is\_saving@{is\_saving}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{is\_saving}{is\_saving}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+using \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::is\+\_\+saving = std\+::false\+\_\+type}
+
+
+
+Indicates this archive is not intended for saving. 
+
+This ensures compatibility with boost archive types. If you are transitioning from boost, you can check this value within a member or external serialize function (i.\+e., Archive\+::is\+\_\+saving\+::value) to disable behavior specific to loading, until you can transition to split save/load or save\+\_\+minimal/load\+\_\+minimal functions 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_input_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!InputArchive@{InputArchive}}
+\index{InputArchive@{InputArchive}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{InputArchive()}{InputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+\mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::\+Input\+Archive (\begin{DoxyParamCaption}\item[{Archive\+Type \texorpdfstring{$\ast$}{*}const}]{derived}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct the output archive. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em derived} & A pointer to the derived Archive\+Type (pass this from the derived archive) \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_input_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!getPolymorphicName@{getPolymorphicName}}
+\index{getPolymorphicName@{getPolymorphicName}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{getPolymorphicName()}{getPolymorphicName()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::get\+Polymorphic\+Name (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t const}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves the string for a polymorphic type given a unique key for it. 
+
+This is used to retrieve a string previously registered during a polymorphic load. \Hypertarget{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!getSharedPointer@{getSharedPointer}}
+\index{getSharedPointer@{getSharedPointer}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{getSharedPointer()}{getSharedPointer()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::get\+Shared\+Pointer (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t const}]{id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Retrieves a shared pointer given a unique key for it. 
+
+This is used to retrieve a previously registered shared\+\_\+ptr which has already been loaded. \Hypertarget{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!operator\&@{operator\&}}
+\index{operator\&@{operator\&}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator\&()}{operator\&()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class T$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator\& (\begin{DoxyParamCaption}\item[{T \&\&}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes passed in data. 
+
+This is a boost compatability layer and is not the preferred way of using cereal. If you are transitioning from boost, use this until you can transition to the operator() overload \Hypertarget{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class ... Types$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator() (\begin{DoxyParamCaption}\item[{Types \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes all passed in data. 
+
+This is the primary interface for serializing data with an archive \Hypertarget{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!operator$>$$>$@{operator$>$$>$}}
+\index{operator$>$$>$@{operator$>$$>$}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{operator$>$$>$()}{operator>>()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+template$<$class T$>$ \\
+Archive\+Type \& \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::operator$>$$>$ (\begin{DoxyParamCaption}\item[{T \&\&}]{arg}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes passed in data. 
+
+This is a boost compatability layer and is not the preferred way of using cereal. If you are transitioning from boost, use this until you can transition to the operator() overload \Hypertarget{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!registerPolymorphicName@{registerPolymorphicName}}
+\index{registerPolymorphicName@{registerPolymorphicName}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{registerPolymorphicName()}{registerPolymorphicName()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+void \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::register\+Polymorphic\+Name (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t const}]{id}{, }\item[{std\+::string const \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registers a polymorphic name string to its unique identifier. 
+
+After a polymorphic type has been loaded for the first time, it should be registered with its loaded id for future references to it. \Hypertarget{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!registerSharedPointer@{registerSharedPointer}}
+\index{registerSharedPointer@{registerSharedPointer}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{registerSharedPointer()}{registerSharedPointer()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+void \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::register\+Shared\+Pointer (\begin{DoxyParamCaption}\item[{std\+::uint32\+\_\+t const}]{id}{, }\item[{std\+::shared\+\_\+ptr$<$ void $>$}]{ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Registers a shared pointer to its unique identifier. 
+
+After a shared pointer has been allocated for the first time, it should be registered with its loaded id for future references to it. \Hypertarget{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}\index{cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}!serializeDeferments@{serializeDeferments}}
+\index{serializeDeferments@{serializeDeferments}!cereal::InputArchive$<$ ArchiveType, Flags $>$@{cereal::InputArchive$<$ ArchiveType, Flags $>$}}
+\doxysubsubsection{\texorpdfstring{serializeDeferments()}{serializeDeferments()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307} 
+template$<$class Archive\+Type, std\+::uint32\+\_\+t Flags = 0$>$ \\
+void \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive}}$<$ Archive\+Type, \mbox{\hyperlink{namespacecereal_a95185aa9f39e4ac382bb6631beb68a67}{Flags}} $>$\+::serialize\+Deferments (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Serializes any data marked for deferment using defer. 
+
+This will cause any data wrapped in \doxylink{classcereal_1_1_deferred_data}{Deferred\+Data} to be immediately serialized 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/\mbox{\hyperlink{cereal_8hpp}{cereal.\+hpp}}\end{DoxyCompactItemize}

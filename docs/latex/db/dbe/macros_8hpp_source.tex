@@ -1,0 +1,114 @@
+\doxysection{macros.\+hpp}
+\hypertarget{macros_8hpp_source}{}\label{macros_8hpp_source}\index{lib/cereal/macros.hpp@{lib/cereal/macros.hpp}}
+\mbox{\hyperlink{macros_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00017\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00020\ \textcolor{comment}{}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00029\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00030\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00031\ \textcolor{comment}{}}
+\DoxyCodeLine{00032\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00033\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00034\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00035\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00036\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00037\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00038\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00039\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00040\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00041\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00042\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_MACROS\_HPP\_}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ CEREAL\_MACROS\_HPP\_}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_THREAD\_SAFE}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#define\ CEREAL\_THREAD\_SAFE\ 0}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_THREAD\_SAFE}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_SIZE\_TYPE}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ CEREAL\_SIZE\_TYPE\ uint64\_t}}
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_SIZE\_TYPE}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_SERIALIZE\_FUNCTION\_NAME}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ CEREAL\_SERIALIZE\_FUNCTION\_NAME\ serialize}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_SERIALIZE\_FUNCTION\_NAME}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_LOAD\_FUNCTION\_NAME}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ CEREAL\_LOAD\_FUNCTION\_NAME\ load}}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_LOAD\_FUNCTION\_NAME}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_SAVE\_FUNCTION\_NAME}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00092\ \textcolor{preprocessor}{\#define\ CEREAL\_SAVE\_FUNCTION\_NAME\ save}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_SAVE\_FUNCTION\_NAME}}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME\ load\_minimal}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_LOAD\_MINIMAL\_FUNCTION\_NAME}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME\ save\_minimal}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_SAVE\_MINIMAL\_FUNCTION\_NAME}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#if\ !defined(CEREAL\_HAS\_NOEXCEPT)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\ \ \#if\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\ \ \ \ \#if\ \_\_has\_feature(cxx\_noexcept)}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_HAS\_NOEXCEPT}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\ \ \ \ \#endif}}
+\DoxyCodeLine{00119\ \textcolor{preprocessor}{\ \ \#else\ }\textcolor{comment}{//\ NOT\ clang}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\ \ \ \ \#if\ defined(\_\_GXX\_EXPERIMENTAL\_CXX0X\_\_)\ \&\&\ \_\_GNUC\_\_\ *\ 10\ +\ \_\_GNUC\_MINOR\_\_\ >=\ 46\ ||\ \(\backslash\)}}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ defined(\_MSC\_FULL\_VER)\ \&\&\ \_MSC\_FULL\_VER\ >=\ 190023026}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_HAS\_NOEXCEPT}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ end\ GCC/MSVC\ check}}
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\ \ \#endif\ }\textcolor{comment}{//\ end\ NOT\ clang\ block}}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\ \ \#ifndef\ CEREAL\_NOEXCEPT}}
+\DoxyCodeLine{00127\ \textcolor{preprocessor}{\ \ \ \ \#ifdef\ CEREAL\_HAS\_NOEXCEPT}}
+\DoxyCodeLine{00128\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_NOEXCEPT\ noexcept}}
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\ \ \ \ \#else}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\ \ \ \ \ \ \#define\ CEREAL\_NOEXCEPT}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\ \ \ \ \#endif\ }\textcolor{comment}{//\ end\ CEREAL\_HAS\_NOEXCEPT}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\ \ \#endif\ }\textcolor{comment}{//\ end\ !defined(CEREAL\_HAS\_NOEXCEPT)}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ifndef\ CEREAL\_NOEXCEPT}}
+\DoxyCodeLine{00134\ }
+\DoxyCodeLine{00135\ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#if\ (\_\_cplusplus\ >=\ 201703L\ ||\ (defined(\_MSVC\_LANG)\ \&\&\ \_MSVC\_LANG\ >=\ 201703L))\ \(\backslash\)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\ \ \ \ \&\&\ (!defined(\_\_clang\_\_)\ ||\ \_\_clang\_major\_\_\ >\ 5)}}
+\DoxyCodeLine{00140\ \textcolor{preprocessor}{\#define\ CEREAL\_HAS\_CPP17}}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 201402L}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ CEREAL\_HAS\_CPP14}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ \&\&\ \_MSC\_VER\ <\ 1900}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#define\ CEREAL\_ALIGNOF\ \_\_alignof}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#else\ }\textcolor{comment}{//\ not\ MSVC\ 2013\ or\ older}}
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#define\ CEREAL\_ALIGNOF\ alignof}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ end\ MSVC\ check}}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_MACROS\_HPP\_}}
+
+\end{DoxyCode}

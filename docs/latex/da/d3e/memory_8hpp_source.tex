@@ -1,0 +1,353 @@
+\doxysection{memory.\+hpp}
+\hypertarget{memory_8hpp_source}{}\label{memory_8hpp_source}\index{lib/cereal/types/memory.hpp@{lib/cereal/types/memory.hpp}}
+\mbox{\hyperlink{memory_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_SHARED\_PTR\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_SHARED\_PTR\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <cstring>}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{namespace\ }memory\_detail}
+\DoxyCodeLine{00040\ \ \ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{struct\ }PtrWrapper}
+\DoxyCodeLine{00046\ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ PtrWrapper(T\ \&\&\ p)\ :\ ptr(std::forward<T>(p))\ \{\}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ T\ \&\ ptr;}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \ \ PtrWrapper(\ PtrWrapper\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ PtrWrapper\ \&\ operator=(\ PtrWrapper\ \textcolor{keyword}{const}\ \&\ )\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00052\ \ \ \ \ \};}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{PtrWrapper<T>}}\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{make\_ptr\_wrapper}}(T\ \&\&\ t)}
+\DoxyCodeLine{00058\ \ \ \ \ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{std::forward<T>(t)\};}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keyword}{struct\ }LoadAndConstructLoadWrapper}
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ LoadAndConstructLoadWrapper(\ T\ *\ ptr\ )\ :}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ construct(\ ptr\ )}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ F>}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a4a5d6680bcd070710a252ac285d96217}{LoadAndConstructLoadWrapper}}(\ T\ *\ ptr,\ F\ \&\&\ sharedFromThisFunc\ )\ :}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ construct(\ ptr,\ sharedFromThisFunc\ )}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ ::cereal::detail::Construct<T,\ Archive>::load\_andor\_construct(\ ar,\ \mbox{\hyperlink{classcereal_1_1construct}{construct}}\ );}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1construct}{::cereal::construct<T>}}\ \mbox{\hyperlink{classcereal_1_1construct}{construct}};}
+\DoxyCodeLine{00085\ \ \ \ \ \};}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_a7358952ac850c005295f899a5aa3b184}{EnableSharedStateHelper}}}
+\DoxyCodeLine{00133\ \ \ \ \ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \textcolor{comment}{//\ typedefs\ for\ parent\ type\ and\ storage\ type}}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \textcolor{keyword}{using\ }BaseType\ =\ typename\ ::cereal::traits::get\_shared\_from\_this\_base<T>::type;}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \textcolor{keyword}{using\ }ParentType\ =\ std::enable\_shared\_from\_this<BaseType>;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \textcolor{keyword}{using\ }StorageType\ =\ \textcolor{keyword}{typename}\ std::aligned\_storage<\textcolor{keyword}{sizeof}(ParentType),\ \mbox{\hyperlink{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d}{CEREAL\_ALIGNOF}}(ParentType)>::type;}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_a7358952ac850c005295f899a5aa3b184}{EnableSharedStateHelper}}(\ T\ *\ ptr\ )\ :}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ itsPtr(\ static\_cast<ParentType\ *>(\ ptr\ )\ ),}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ itsState(),}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ itsRestored(\ false\ )}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ std::memcpy(\ \&itsState,\ itsPtr,\ \textcolor{keyword}{sizeof}(ParentType)\ );}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00149\ }
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_ae9cd690a665f3c864b6963f9b69b64cf}{restore}}()}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ !itsRestored\ )}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ void\ *\ cast\ needed\ when\ type\ has\ no\ trivial\ copy-\/assignment}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ std::memcpy(\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{void}\ *\textcolor{keyword}{>}(itsPtr),\ \&itsState,\ \textcolor{keyword}{sizeof}(ParentType)\ );}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ itsRestored\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_a33651283607ae0b7cf4eb7918931a98a}{\string~EnableSharedStateHelper}}()}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_ae9cd690a665f3c864b6963f9b69b64cf}{restore}}();}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ ParentType\ *\ itsPtr;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ StorageType\ itsState;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ itsRestored;}
+\DoxyCodeLine{00171\ \ \ \ \ \};\ \textcolor{comment}{//\ end\ EnableSharedStateHelper}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf}{loadAndConstructSharedPtr}}(\ Archive\ \&\ ar,\ T\ *\ ptr,\ std::true\_type\ \textcolor{comment}{/*\ has\_shared\_from\_this\ */}\ )}
+\DoxyCodeLine{00180\ \ \ \ \ \{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper}{memory\_detail::EnableSharedStateHelper<T>}}\ state(\ ptr\ );}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}{memory\_detail::LoadAndConstructLoadWrapper<Archive,\ T>}}\ loadWrapper(\ ptr,\ [\&]()\{\ state.\mbox{\hyperlink{classcereal_1_1memory__detail_1_1_enable_shared_state_helper_ae9cd690a665f3c864b6963f9b69b64cf}{restore}}();\ \}\ );}
+\DoxyCodeLine{00183\ }
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \textcolor{comment}{//\ let\ the\ user\ perform\ their\ initialization,\ shared\ state\ will\ be\ restored\ as\ soon\ as\ construct()}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \textcolor{comment}{//\ is\ called}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ loadWrapper)\ );}
+\DoxyCodeLine{00187\ \ \ \ \ \}}
+\DoxyCodeLine{00188\ }
+\DoxyCodeLine{00191\ }
+\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf}{loadAndConstructSharedPtr}}(\ Archive\ \&\ ar,\ T\ *\ ptr,\ std::false\_type\ \textcolor{comment}{/*\ has\_shared\_from\_this\ */}\ )}
+\DoxyCodeLine{00199\ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}{memory\_detail::LoadAndConstructLoadWrapper<Archive,\ T>}}\ loadWrapper(\ ptr\ );}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ loadWrapper)\ );}
+\DoxyCodeLine{00202\ \ \ \ \ \}}
+\DoxyCodeLine{00203\ \ \ \}\ \textcolor{comment}{//\ end\ namespace\ memory\_detail}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00206\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00208\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::shared\_ptr<T>\ \textcolor{keyword}{const}\ \&\ ptr\ )}
+\DoxyCodeLine{00209\ \ \ \{}
+\DoxyCodeLine{00210\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ ptr\ ))\ );}
+\DoxyCodeLine{00211\ \ \ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00214\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00215\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00216\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::shared\_ptr<T>\ \&\ ptr\ )}
+\DoxyCodeLine{00217\ \ \ \{}
+\DoxyCodeLine{00218\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ ptr\ ))\ );}
+\DoxyCodeLine{00219\ \ \ \}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00222\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00223\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00224\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::weak\_ptr<T>\ \textcolor{keyword}{const}\ \&\ ptr\ )}
+\DoxyCodeLine{00225\ \ \ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keyword}{const}\ sptr\ =\ ptr.lock();}
+\DoxyCodeLine{00227\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ sptr\ ))\ );}
+\DoxyCodeLine{00228\ \ \ \}}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00231\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00232\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00233\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::weak\_ptr<T>\ \&\ ptr\ )}
+\DoxyCodeLine{00234\ \ \ \{}
+\DoxyCodeLine{00235\ \ \ \ \ std::shared\_ptr<T>\ sptr;}
+\DoxyCodeLine{00236\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ sptr\ ))\ );}
+\DoxyCodeLine{00237\ \ \ \ \ ptr\ =\ sptr;}
+\DoxyCodeLine{00238\ \ \ \}}
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00241\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ D>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00242\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00243\ \ \ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unique\_ptr<T,\ D>\ \textcolor{keyword}{const}\ \&\ ptr\ )}
+\DoxyCodeLine{00244\ \ \ \{}
+\DoxyCodeLine{00245\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ ptr\ ))\ );}
+\DoxyCodeLine{00246\ \ \ \}}
+\DoxyCodeLine{00247\ }
+\DoxyCodeLine{00249\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ D>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00250\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!std::is\_polymorphic<T>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00251\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::unique\_ptr<T,\ D>\ \&\ ptr\ )}
+\DoxyCodeLine{00252\ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}ptr\_wrapper"{}},\ \mbox{\hyperlink{memory_8hpp_a89420022991908207a506e30a8f44b6f}{memory\_detail::make\_ptr\_wrapper}}(\ ptr\ ))\ );}
+\DoxyCodeLine{00254\ \ \ \}}
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \ \ \textcolor{comment}{//\ \#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}}
+\DoxyCodeLine{00257\ \ \ \textcolor{comment}{//\ Pointer\ wrapper\ implementations\ follow\ below}}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00262\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::shared\_ptr<T>\ \textcolor{keyword}{const}\ \&>\ \textcolor{keyword}{const}\ \&\ wrapper\ )}
+\DoxyCodeLine{00263\ \ \ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{auto}\ \&\ ptr\ =\ wrapper.ptr;}
+\DoxyCodeLine{00265\ }
+\DoxyCodeLine{00266\ \ \ \ \ uint32\_t\ \textcolor{keywordtype}{id}\ =\ ar.registerSharedPointer(\ ptr\ );}
+\DoxyCodeLine{00267\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}id"{}},\ \textcolor{keywordtype}{id})\ );}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordflow}{if}(\ \textcolor{keywordtype}{id}\ \&\ detail::msb\_32bit\ )}
+\DoxyCodeLine{00270\ \ \ \ \ \{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ *ptr)\ );}
+\DoxyCodeLine{00272\ \ \ \ \ \}}
+\DoxyCodeLine{00273\ \ \ \}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00278\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<traits::has\_load\_and\_construct<T,\ Archive>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00279\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::shared\_ptr<T>\ \&>\ \&\ wrapper\ )}
+\DoxyCodeLine{00280\ \ \ \{}
+\DoxyCodeLine{00281\ \ \ \ \ uint32\_t\ id;}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}id"{}},\ \textcolor{keywordtype}{id})\ );}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \ \ \ \ \textcolor{keywordflow}{if}(\ \textcolor{keywordtype}{id}\ \&\ detail::msb\_32bit\ )}
+\DoxyCodeLine{00286\ \ \ \ \ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \textcolor{comment}{//\ Storage\ type\ for\ the\ pointer\ -\/\ since\ we\ can't\ default\ construct\ this\ type,}}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \textcolor{comment}{//\ we'll\ allocate\ it\ using\ std::aligned\_storage\ and\ use\ a\ custom\ deleter}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \textcolor{keyword}{using\ }ST\ =\ \textcolor{keyword}{typename}\ std::aligned\_storage<\textcolor{keyword}{sizeof}(T),\ \mbox{\hyperlink{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d}{CEREAL\_ALIGNOF}}(T)>::type;}
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \textcolor{comment}{//\ Valid\ flag\ -\/\ set\ to\ true\ once\ construction\ finishes}}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \textcolor{comment}{//\ \ This\ prevents\ us\ from\ calling\ the\ destructor\ on}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \textcolor{comment}{//\ \ uninitialized\ data.}}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ valid\ =\ std::make\_shared<bool>(\ \textcolor{keyword}{false}\ );}
+\DoxyCodeLine{00295\ }
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \textcolor{comment}{//\ Allocate\ our\ storage,\ which\ we\ will\ treat\ as}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \textcolor{comment}{//\ \ uninitialized\ until\ initialized\ with\ placement\ new}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \textcolor{keyword}{using\ }NonConstT\ =\ \textcolor{keyword}{typename}\ std::remove\_const<T>::type;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ std::shared\_ptr<NonConstT>\ ptr(\textcolor{keyword}{reinterpret\_cast<}NonConstT\ *\textcolor{keyword}{>}(\textcolor{keyword}{new}\ ST()),}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ [=](\ NonConstT\ *\ t\ )}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ *valid\ )}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ t-\/>\string~T();}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ \textcolor{keyword}{reinterpret\_cast<}ST\ *\textcolor{keyword}{>}(\ t\ );}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \}\ );}
+\DoxyCodeLine{00307\ }
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \textcolor{comment}{//\ Register\ the\ pointer}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ ar.registerSharedPointer(\ \textcolor{keywordtype}{id},\ ptr\ );}
+\DoxyCodeLine{00310\ }
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \textcolor{comment}{//\ Perform\ the\ actual\ loading\ and\ allocation}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \mbox{\hyperlink{memory_8hpp_a4edca86bd2fbac9423b29d0d787704bf}{memory\_detail::loadAndConstructSharedPtr}}(\ ar,\ ptr.get(),\ typename\ ::cereal::traits::has\_shared\_from\_this<NonConstT>::type()\ );}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \textcolor{comment}{//\ Mark\ pointer\ as\ valid\ (initialized)}}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ *valid\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ wrapper.ptr\ =\ std::move(ptr);}
+\DoxyCodeLine{00317\ \ \ \ \ \}}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ wrapper.ptr\ =\ std::static\_pointer\_cast<T>(ar.getSharedPointer(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{00320\ \ \ \}}
+\DoxyCodeLine{00321\ }
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00325\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!traits::has\_load\_and\_construct<T,\ Archive>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00326\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::shared\_ptr<T>\ \&>\ \&\ wrapper\ )}
+\DoxyCodeLine{00327\ \ \ \{}
+\DoxyCodeLine{00328\ \ \ \ \ uint32\_t\ id;}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}id"{}},\ \textcolor{keywordtype}{id})\ );}
+\DoxyCodeLine{00331\ }
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{keywordflow}{if}(\ \textcolor{keywordtype}{id}\ \&\ detail::msb\_32bit\ )}
+\DoxyCodeLine{00333\ \ \ \ \ \{}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \textcolor{keyword}{using\ }NonConstT\ =\ \textcolor{keyword}{typename}\ std::remove\_const<T>::type;}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ std::shared\_ptr<NonConstT>\ ptr(\ detail::Construct<NonConstT,\ Archive>::load\_andor\_construct()\ );}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ ar.registerSharedPointer(\ \textcolor{keywordtype}{id},\ ptr\ );}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ *ptr)\ );}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ wrapper.ptr\ =\ std::move(ptr);}
+\DoxyCodeLine{00339\ \ \ \ \ \}}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ wrapper.ptr\ =\ std::static\_pointer\_cast<T>(ar.getSharedPointer(\textcolor{keywordtype}{id}));}
+\DoxyCodeLine{00342\ \ \ \}}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00345\ }
+\DoxyCodeLine{00346\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ D>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00347\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::unique\_ptr<T,\ D>\ \textcolor{keyword}{const}\ \&>\ \textcolor{keyword}{const}\ \&\ wrapper\ )}
+\DoxyCodeLine{00348\ \ \ \{}
+\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keyword}{auto}\ \&\ ptr\ =\ wrapper.ptr;}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{comment}{//\ unique\_ptr\ get\ one\ byte\ of\ metadata\ which\ signifies\ whether\ they\ were\ a\ nullptr}}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{comment}{//\ 0\ ==\ nullptr}}
+\DoxyCodeLine{00353\ \ \ \ \ \textcolor{comment}{//\ 1\ ==\ not\ null}}
+\DoxyCodeLine{00354\ }
+\DoxyCodeLine{00355\ \ \ \ \ \textcolor{keywordflow}{if}(\ !ptr\ )}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}valid"{}},\ uint8\_t(0))\ );}
+\DoxyCodeLine{00357\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00358\ \ \ \ \ \{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}valid"{}},\ uint8\_t(1))\ );}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ *ptr)\ );}
+\DoxyCodeLine{00361\ \ \ \ \ \}}
+\DoxyCodeLine{00362\ \ \ \}}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00365\ }
+\DoxyCodeLine{00366\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ D>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00367\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<traits::has\_load\_and\_construct<T,\ Archive>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00368\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::unique\_ptr<T,\ D>\ \&>\ \&\ wrapper\ )}
+\DoxyCodeLine{00369\ \ \ \{}
+\DoxyCodeLine{00370\ \ \ \ \ uint8\_t\ isValid;}
+\DoxyCodeLine{00371\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}valid"{}},\ isValid)\ );}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keyword}{auto}\ \&\ ptr\ =\ wrapper.ptr;}
+\DoxyCodeLine{00374\ }
+\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordflow}{if}(\ isValid\ )}
+\DoxyCodeLine{00376\ \ \ \ \ \{}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \textcolor{keyword}{using\ }NonConstT\ =\ \textcolor{keyword}{typename}\ std::remove\_const<T>::type;}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \textcolor{comment}{//\ Storage\ type\ for\ the\ pointer\ -\/\ since\ we\ can't\ default\ construct\ this\ type,}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \textcolor{comment}{//\ we'll\ allocate\ it\ using\ std::aligned\_storage}}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \textcolor{keyword}{using\ }ST\ =\ \textcolor{keyword}{typename}\ std::aligned\_storage<\textcolor{keyword}{sizeof}(NonConstT),\ \mbox{\hyperlink{macros_8hpp_a8cef221591f5c83a264cd1e6738b678d}{CEREAL\_ALIGNOF}}(NonConstT)>::type;}
+\DoxyCodeLine{00381\ }
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \textcolor{comment}{//\ Allocate\ storage\ -\/\ note\ the\ ST\ type\ so\ that\ deleter\ is\ correct\ if}}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ an\ exception\ is\ thrown\ before\ we\ are\ initialized}}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ std::unique\_ptr<ST>\ stPtr(\ \textcolor{keyword}{new}\ ST()\ );}
+\DoxyCodeLine{00385\ }
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \textcolor{comment}{//\ Use\ wrapper\ to\ enter\ into\ "{}data"{}\ nvp\ of\ ptr\_wrapper}}
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}{memory\_detail::LoadAndConstructLoadWrapper<Archive,\ NonConstT>}}\ loadWrapper(\ \textcolor{keyword}{reinterpret\_cast<}NonConstT\ *\textcolor{keyword}{>}(\ stPtr.get()\ )\ );}
+\DoxyCodeLine{00388\ }
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ storage}}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ loadWrapper)\ );}
+\DoxyCodeLine{00391\ }
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \textcolor{comment}{//\ Transfer\ ownership\ to\ correct\ unique\_ptr\ type}}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ ptr.reset(\ \textcolor{keyword}{reinterpret\_cast<}T\ *\textcolor{keyword}{>}(\ stPtr.release()\ )\ );}
+\DoxyCodeLine{00394\ \ \ \ \ \}}
+\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ ptr.reset(\ \textcolor{keyword}{nullptr}\ );}
+\DoxyCodeLine{00397\ \ \ \}}
+\DoxyCodeLine{00398\ }
+\DoxyCodeLine{00400\ }
+\DoxyCodeLine{00401\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive,\ \textcolor{keyword}{class}\ T,\ \textcolor{keyword}{class}\ D>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00402\ \ \ \textcolor{keyword}{typename}\ std::enable\_if<!traits::has\_load\_and\_construct<T,\ Archive>::value,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00403\ \ \ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ \mbox{\hyperlink{structcereal_1_1memory__detail_1_1_ptr_wrapper}{memory\_detail::PtrWrapper}}<std::unique\_ptr<T,\ D>\ \&>\ \&\ wrapper\ )}
+\DoxyCodeLine{00404\ \ \ \{}
+\DoxyCodeLine{00405\ \ \ \ \ uint8\_t\ isValid;}
+\DoxyCodeLine{00406\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}valid"{}},\ isValid)\ );}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00408\ \ \ \ \ \textcolor{keywordflow}{if}(\ isValid\ )}
+\DoxyCodeLine{00409\ \ \ \ \ \{}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \textcolor{keyword}{using\ }NonConstT\ =\ \textcolor{keyword}{typename}\ std::remove\_const<T>::type;}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ std::unique\_ptr<NonConstT,\ D>\ ptr(\ detail::Construct<NonConstT,\ Archive>::load\_andor\_construct()\ );}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\ \textcolor{stringliteral}{"{}data"{}},\ *ptr\ )\ );}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ wrapper.ptr\ =\ std::move(ptr);}
+\DoxyCodeLine{00414\ \ \ \ \ \}}
+\DoxyCodeLine{00415\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00416\ \ \ \ \ \{}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ wrapper.ptr.reset(\ \textcolor{keyword}{nullptr}\ );}
+\DoxyCodeLine{00418\ \ \ \ \ \}}
+\DoxyCodeLine{00419\ \ \ \}}
+\DoxyCodeLine{00420\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00421\ }
+\DoxyCodeLine{00422\ \textcolor{comment}{//\ automatically\ include\ polymorphic\ support}}
+\DoxyCodeLine{00423\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{polymorphic_8hpp}{cereal/types/polymorphic.hpp}}"{}}}
+\DoxyCodeLine{00424\ }
+\DoxyCodeLine{00425\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_SHARED\_PTR\_HPP\_}}
+
+\end{DoxyCode}

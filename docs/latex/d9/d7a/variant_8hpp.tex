@@ -1,0 +1,40 @@
+\doxysection{lib/cereal/types/variant.hpp File Reference}
+\hypertarget{variant_8hpp}{}\label{variant_8hpp}\index{lib/cereal/types/variant.hpp@{lib/cereal/types/variant.hpp}}
+
+
+Support for std\+::variant.  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$variant$>$}\newline
+{\ttfamily \#include $<$cstdint$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1variant__detail_1_1variant__save__visitor}{cereal\+::variant\+\_\+detail\+::variant\+\_\+save\+\_\+visitor$<$ Archive $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{variant_8hpp_a55de61d4fa2634232a602ce176bb3236}\label{variant_8hpp_a55de61d4fa2634232a602ce176bb3236} 
+{\footnotesize template$<$int N, class Variant, class Archive$>$ }\\std\+::enable\+\_\+if$<$ N==std\+::variant\+\_\+size\+\_\+v$<$ Variant $>$, void $>$\+::type {\bfseries cereal\+::variant\+\_\+detail\+::load\+\_\+variant} (Archive \&, int, Variant \&)
+\item 
+\Hypertarget{namespacecereal_a216f04eb0fd673671c399e76270d7f5c}\label{namespacecereal_a216f04eb0fd673671c399e76270d7f5c} 
+{\footnotesize template$<$class Archive, typename Variant\+Type1, typename... Variant\+Types$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::variant$<$ Variant\+Type1, Variant\+Types... $>$ const \&variant)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::variant. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_ac7d7a06a029441ecec4314f9fa64813e}\label{namespacecereal_ac7d7a06a029441ecec4314f9fa64813e} 
+{\footnotesize template$<$class Archive, typename... Variant\+Types$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::variant$<$ Variant\+Types... $>$ \&variant)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::variant. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a0e33aa2fc1bde7f59e9796f922cee3b9}\label{namespacecereal_a0e33aa2fc1bde7f59e9796f922cee3b9} 
+{\footnotesize template$<$class Archive$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&, std\+::monostate const \&)
+\begin{DoxyCompactList}\small\item\em Serializing a std\+::monostate. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for std\+::variant. 
+

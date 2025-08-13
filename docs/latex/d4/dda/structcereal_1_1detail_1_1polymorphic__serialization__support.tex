@@ -1,0 +1,40 @@
+\doxysection{cereal\+::detail\+::polymorphic\+\_\+serialization\+\_\+support\texorpdfstring{$<$}{<} Archive, T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1polymorphic__serialization__support}{}\label{structcereal_1_1detail_1_1polymorphic__serialization__support}\index{cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$@{cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$}}
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1polymorphic__serialization__support_af32ebd1e93fee3dbed819bf1cfbfd073}\label{structcereal_1_1detail_1_1polymorphic__serialization__support_af32ebd1e93fee3dbed819bf1cfbfd073} 
+typedef \mbox{\hyperlink{structcereal_1_1detail_1_1instantiate__function}{instantiate\+\_\+function}}$<$ \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d}{instantiate}} $>$ {\bfseries unused}
+\begin{DoxyCompactList}\small\item\em This typedef causes the compiler to instantiate this static function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\+\_\+\+DLL\+\_\+\+EXPORT}} void \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d}{instantiate}} () CEREAL\+\_\+\+USED
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T$>$\newline
+struct cereal\+::detail\+::polymorphic\+\_\+serialization\+\_\+support$<$ Archive, T $>$}
+This struct is used as the return type of instantiate\+\_\+polymorphic\+\_\+binding for specific Archive types. When the compiler looks for overloads of instantiate\+\_\+polymorphic\+\_\+binding, it will be forced to instantiate this struct during overload resolution, even though it will not be part of a valid overload 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1polymorphic__serialization__support_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d}\index{cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$@{cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$}!instantiate@{instantiate}}
+\index{instantiate@{instantiate}!cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$@{cereal::detail::polymorphic\_serialization\_support$<$ Archive, T $>$}}
+\doxysubsubsection{\texorpdfstring{instantiate()}{instantiate()}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1polymorphic__serialization__support_af36d034f2aa70a683dc198fc4de9192d} 
+template$<$class Archive, class T$>$ \\
+\mbox{\hyperlink{static__object_8hpp_afde52a096f363ebe6869a9c0f9ef4cbb}{CEREAL\+\_\+\+DLL\+\_\+\+EXPORT}} void \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support}{cereal\+::detail\+::polymorphic\+\_\+serialization\+\_\+support}}$<$ Archive, T $>$\+::instantiate (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Creates the appropriate bindings depending on whether the archive supports saving or loading 
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

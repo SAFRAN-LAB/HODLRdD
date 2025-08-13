@@ -1,0 +1,157 @@
+\doxysection{cereal\+::construct\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1construct}{}\label{classcereal_1_1construct}\index{cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}}
+
+
+Used to construct types with no default constructor.  
+
+
+
+
+{\ttfamily \#include $<$access.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class ... Args$>$ }\\void \mbox{\hyperlink{classcereal_1_1construct_aaba035d9e4f28e789055ee05f4de83e9}{operator()}} (Args \&\&... args)
+\begin{DoxyCompactList}\small\item\em Construct and initialize the type T with the given arguments. \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1construct_ae9a3def7525d6f7b039efac03bc023ae}{operator-\/$>$}} ()
+\begin{DoxyCompactList}\small\item\em Get a reference to the initialized underlying object. \end{DoxyCompactList}\item 
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1construct_a41ffab6ac35c486fd34e047714de26eb}{ptr}} ()
+\begin{DoxyCompactList}\small\item\em Returns a raw pointer to the initialized underlying object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1construct_a78310d6c4c678dd6afacbccc3feaf174}\label{classcereal_1_1construct_a78310d6c4c678dd6afacbccc3feaf174} 
+{\footnotesize template$<$class Ar, class TT$>$ }\\struct {\bfseries \+::cereal\+::memory\+\_\+detail\+::\+Load\+And\+Construct\+Load\+Wrapper}
+\item 
+\Hypertarget{classcereal_1_1construct_a8b518d294ce424a7304cd0a3d517ae48}\label{classcereal_1_1construct_a8b518d294ce424a7304cd0a3d517ae48} 
+{\footnotesize template$<$class Ar, class TT$>$ }\\struct {\bfseries \+::cereal\+::boost\+\_\+variant\+\_\+detail\+::\+Load\+And\+Construct\+Load\+Wrapper}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::construct$<$ T $>$}
+Used to construct types with no default constructor. 
+
+When serializing a type that has no default constructor, cereal will attempt to call either the class static function load\+\_\+and\+\_\+construct or the appropriate template specialization of \doxylink{structcereal_1_1_load_and_construct}{Load\+And\+Construct}. cereal will pass that function a reference to the archive as well as a reference to a construct object which should be used to perform the allocation once data has been appropriately loaded.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyType}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ note\ the\ lack\ of\ default\ constructor}}
+\DoxyCodeLine{\ \ MyType(\ \textcolor{keywordtype}{int}\ xx,\ \textcolor{keywordtype}{int}\ yy\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ x,\ y;}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{double}\ notInConstructor;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ ar(\ x,\ y\ );}
+\DoxyCodeLine{\ \ \ \ ar(\ notInConstructor\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ load\_and\_construct(\ Archive\ \&\ ar,\ cereal::construct<MyType>\ \&\ construct\ )}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{int}\ x,\ y;}
+\DoxyCodeLine{\ \ \ \ ar(\ x,\ y\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ use\ construct\ object\ to\ initialize\ with\ loaded\ data}}
+\DoxyCodeLine{\ \ \ \ construct(\ x,\ y\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ access\ to\ member\ variables\ and\ functions\ via\ -\/>\ operator}}
+\DoxyCodeLine{\ \ \ \ ar(\ construct-\/>notInConstructor\ );}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ could\ also\ do\ the\ above\ section\ by:}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{double}\ z;}
+\DoxyCodeLine{\ \ \ \ ar(\ z\ );}
+\DoxyCodeLine{\ \ \ \ construct-\/>notInConstructor\ =\ z;}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & The class type being serialized \\
+\hline
+\end{DoxyTemplParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1construct_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1construct_aaba035d9e4f28e789055ee05f4de83e9}\index{cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}!operator()@{operator()}}
+\index{operator()@{operator()}!cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily \label{classcereal_1_1construct_aaba035d9e4f28e789055ee05f4de83e9} 
+template$<$class T$>$ \\
+template$<$class ... Args$>$ \\
+void \mbox{\hyperlink{classcereal_1_1construct}{cereal\+::construct}}$<$ T $>$\+::operator() (\begin{DoxyParamCaption}\item[{Args \&\&...}]{args}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct and initialize the type T with the given arguments. 
+
+This will forward all arguments to the underlying type T, calling an appropriate constructor.
+
+Calling this function more than once will result in an exception being thrown.
+
+
+\begin{DoxyParams}{Parameters}
+{\em args} & The arguments to the constructor for T \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{structcereal_1_1_exception}{Exception}} & If called more than once \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcereal_1_1construct_ae9a3def7525d6f7b039efac03bc023ae}\index{cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}!operator-\/$>$@{operator-\/$>$}}
+\index{operator-\/$>$@{operator-\/$>$}!cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{operator-\/$>$()}{operator->()}}
+{\footnotesize\ttfamily \label{classcereal_1_1construct_ae9a3def7525d6f7b039efac03bc023ae} 
+template$<$class T$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1construct}{cereal\+::construct}}$<$ T $>$\+::operator-\/$>$ (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get a reference to the initialized underlying object. 
+
+This must be called after the object has been initialized.
+
+\begin{DoxyReturn}{Returns}
+A reference to the initialized object 
+\end{DoxyReturn}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em \doxylink{structcereal_1_1_exception}{Exception}} & If called before initialization \\
+\hline
+\end{DoxyExceptions}
+\Hypertarget{classcereal_1_1construct_a41ffab6ac35c486fd34e047714de26eb}\index{cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}!ptr@{ptr}}
+\index{ptr@{ptr}!cereal::construct$<$ T $>$@{cereal::construct$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ptr()}{ptr()}}
+{\footnotesize\ttfamily \label{classcereal_1_1construct_a41ffab6ac35c486fd34e047714de26eb} 
+template$<$class T$>$ \\
+T \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1construct}{cereal\+::construct}}$<$ T $>$\+::ptr (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns a raw pointer to the initialized underlying object. 
+
+This is mainly intended for use with passing an instance of a constructed object to \doxylink{structcereal_1_1base__class}{cereal\+::base\+\_\+class}.
+
+It is strongly recommended to avoid using this function in any other circumstance.
+
+\begin{DoxyReturn}{Returns}
+A raw pointer to the initialized type 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/\mbox{\hyperlink{access_8hpp}{access.\+hpp}}\end{DoxyCompactItemize}

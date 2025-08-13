@@ -1,0 +1,69 @@
+\doxysection{Generic\+String\+Stream\texorpdfstring{$<$}{<} Encoding \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_generic_string_stream}{}\label{struct_generic_string_stream}\index{GenericStringStream$<$ Encoding $>$@{GenericStringStream$<$ Encoding $>$}}
+
+
+Read-\/only string stream.  
+
+
+
+
+{\ttfamily \#include $<$stream.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_string_stream_a4289aca895330084ff3168e37e4f08bd}\label{struct_generic_string_stream_a4289aca895330084ff3168e37e4f08bd} 
+typedef Encoding\+::\+Ch {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_string_stream_a6b20885ed64e33f5d081a1e83b07da06}\label{struct_generic_string_stream_a6b20885ed64e33f5d081a1e83b07da06} 
+{\bfseries Generic\+String\+Stream} (const Ch \texorpdfstring{$\ast$}{*}src)
+\item 
+\Hypertarget{struct_generic_string_stream_a0c8fea9c2740c2953af9b3bb28bd469b}\label{struct_generic_string_stream_a0c8fea9c2740c2953af9b3bb28bd469b} 
+Ch {\bfseries Peek} () const
+\item 
+\Hypertarget{struct_generic_string_stream_a0d26e3e77e4fca64a87c2d71f48ac5e5}\label{struct_generic_string_stream_a0d26e3e77e4fca64a87c2d71f48ac5e5} 
+Ch {\bfseries Take} ()
+\item 
+\Hypertarget{struct_generic_string_stream_abc73d04baf4c7c58f383bc52536e8ac4}\label{struct_generic_string_stream_abc73d04baf4c7c58f383bc52536e8ac4} 
+size\+\_\+t {\bfseries Tell} () const
+\item 
+\Hypertarget{struct_generic_string_stream_a546c370fa1ea14a89a0bd717e1932c06}\label{struct_generic_string_stream_a546c370fa1ea14a89a0bd717e1932c06} 
+Ch \texorpdfstring{$\ast$}{*} {\bfseries Put\+Begin} ()
+\item 
+\Hypertarget{struct_generic_string_stream_aaa59dc5313151a4125bf7840f87a33eb}\label{struct_generic_string_stream_aaa59dc5313151a4125bf7840f87a33eb} 
+void {\bfseries Put} (Ch)
+\item 
+\Hypertarget{struct_generic_string_stream_a5ff1a870d9334cd054cf4ca34c86ddc3}\label{struct_generic_string_stream_a5ff1a870d9334cd054cf4ca34c86ddc3} 
+void {\bfseries Flush} ()
+\item 
+\Hypertarget{struct_generic_string_stream_a07b942bacda494afb3b2f7629cef14af}\label{struct_generic_string_stream_a07b942bacda494afb3b2f7629cef14af} 
+size\+\_\+t {\bfseries Put\+End} (Ch \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}\label{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80} 
+const Ch \texorpdfstring{$\ast$}{*} {\bfseries src\+\_\+}
+\begin{DoxyCompactList}\small\item\em Current read position. \end{DoxyCompactList}\item 
+\Hypertarget{struct_generic_string_stream_a3c86ef1e1f0655028cb8a3afce11ee4f}\label{struct_generic_string_stream_a3c86ef1e1f0655028cb8a3afce11ee4f} 
+const Ch \texorpdfstring{$\ast$}{*} {\bfseries head\+\_\+}
+\begin{DoxyCompactList}\small\item\em Original head of the string. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename \mbox{\hyperlink{classrapidjson_1_1_encoding}{Encoding}}$>$\newline
+struct Generic\+String\+Stream$<$ Encoding $>$}
+Read-\/only string stream. 
+
+\begin{DoxyNote}{Note}
+implements \doxylink{classrapidjson_1_1_stream}{Stream} concept 
+\end{DoxyNote}
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/fwd.\+h\item 
+lib/cereal/external/rapidjson/stream.\+h\end{DoxyCompactItemize}

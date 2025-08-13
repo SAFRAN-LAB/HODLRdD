@@ -1,0 +1,164 @@
+\doxysection{lib/cereal/details/polymorphic\+\_\+impl.hpp File Reference}
+\hypertarget{polymorphic__impl_8hpp}{}\label{polymorphic__impl_8hpp}\index{lib/cereal/details/polymorphic\_impl.hpp@{lib/cereal/details/polymorphic\_impl.hpp}}
+
+
+Internal polymorphism support.  
+
+
+{\ttfamily \#include "{}cereal/details/polymorphic\+\_\+impl\+\_\+fwd.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/details/static\+\_\+object.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/memory.\+hpp"{}}\newline
+{\ttfamily \#include "{}cereal/types/string.\+hpp"{}}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$typeindex$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$limits$>$}\newline
+{\ttfamily \#include $<$set$>$}\newline
+{\ttfamily \#include $<$stack$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_caster}{cereal\+::detail\+::\+Polymorphic\+Caster}}
+\begin{DoxyCompactList}\small\item\em Base type for polymorphic void casting. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_casters}{cereal\+::detail\+::\+Polymorphic\+Casters}}
+\begin{DoxyCompactList}\small\item\em Holds registered mappings between base and derived types for casting. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_polymorphic_virtual_caster}{cereal\+::detail\+::\+Polymorphic\+Virtual\+Caster$<$ Base, Derived $>$}}
+\begin{DoxyCompactList}\small\item\em Strongly typed derivation of \doxylink{structcereal_1_1detail_1_1_polymorphic_caster}{Polymorphic\+Caster}. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster}{cereal\+::detail\+::\+Register\+Polymorphic\+Caster$<$ Base, Derived $>$}}
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic casting relation between a Base and Derived type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1binding__name}{cereal\+::detail\+::binding\+\_\+name$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em Binds a compile time type with a user defined string. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map}{cereal\+::detail\+::\+Output\+Binding\+Map$<$ Archive $>$}}
+\begin{DoxyCompactList}\small\item\em A structure holding a map from type\+\_\+indices to output serializer functions. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_map_1_1_serializers}{cereal\+::detail\+::\+Output\+Binding\+Map$<$ Archive $>$\+::\+Serializers}}
+\begin{DoxyCompactList}\small\item\em Struct containing the serializer functions for all pointer types. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_empty_deleter}{cereal\+::detail\+::\+Empty\+Deleter$<$ T $>$}}
+\begin{DoxyCompactList}\small\item\em An empty noop deleter. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map}{cereal\+::detail\+::\+Input\+Binding\+Map$<$ Archive $>$}}
+\begin{DoxyCompactList}\small\item\em A structure holding a map from type name strings to input serializer functions. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_map_1_1_serializers}{cereal\+::detail\+::\+Input\+Binding\+Map$<$ Archive $>$\+::\+Serializers}}
+\begin{DoxyCompactList}\small\item\em Struct containing the serializer functions for all pointer types. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_input_binding_creator}{cereal\+::detail\+::\+Input\+Binding\+Creator$<$ Archive, T $>$}}
+\begin{DoxyCompactList}\small\item\em Creates a binding (map entry) between an input archive type and a polymorphic type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator}{cereal\+::detail\+::\+Output\+Binding\+Creator$<$ Archive, T $>$}}
+\begin{DoxyCompactList}\small\item\em Creates a binding (map entry) between an output archive type and a polymorphic type. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}{cereal\+::detail\+::\+Output\+Binding\+Creator$<$ Archive, T $>$\+::\+Polymorphic\+Shared\+Pointer\+Wrapper}}
+\begin{DoxyCompactList}\small\item\em Holds a properly typed shared\+\_\+ptr to the polymorphic type. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{cereal\+::detail\+::adl\+\_\+tag}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1create__bindings}{cereal\+::detail\+::create\+\_\+bindings$<$ Archive, T $>$}}
+\begin{DoxyCompactList}\small\item\em Causes the static object bindings between an archive type and a serializable type T. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1instantiate__function}{cereal\+::detail\+::instantiate\+\_\+function$<$$>$}}
+\begin{DoxyCompactList}\small\item\em When specialized, causes the compiler to instantiate its parameter. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1polymorphic__serialization__support}{cereal\+::detail\+::polymorphic\+\_\+serialization\+\_\+support$<$ Archive, T $>$}}
+\item 
+struct \mbox{\hyperlink{structcereal_1_1detail_1_1bind__to__archives}{cereal\+::detail\+::bind\+\_\+to\+\_\+archives$<$ T, Tag $>$}}
+\begin{DoxyCompactList}\small\item\em Begins the binding process of a type to all registered archives. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{polymorphic__impl_8hpp_a447a2becefa10fee587b8cd1d04c7dfc}\label{polymorphic__impl_8hpp_a447a2becefa10fee587b8cd1d04c7dfc} 
+\#define {\bfseries CEREAL\+\_\+\+BIND\+\_\+\+TO\+\_\+\+ARCHIVES\+\_\+\+UNUSED\+\_\+\+FUNCTION}~static void unused() \{ (void)b; \}
+\begin{DoxyCompactList}\small\item\em Helper macro to omit unused warning. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{polymorphic__impl_8hpp_a1287e4a45e8a9ce5d50d65c122d49d5f}{CEREAL\+\_\+\+BIND\+\_\+\+TO\+\_\+\+ARCHIVES}}(...)
+\begin{DoxyCompactList}\small\item\em Binds a polymorhic type to all registered archives. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df}{UNREGISTERED\+\_\+\+POLYMORPHIC\+\_\+\+CAST\+\_\+\+EXCEPTION}}(Load\+Save)
+\begin{DoxyCompactList}\small\item\em Error message used for unregistered polymorphic casts. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{polymorphic__impl_8hpp_a097903abd43faaf5d77e23eafbb5a1b0}{CEREAL\+\_\+\+EMPLACE\+\_\+\+MAP}}(map,  key,  value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$class T, typename Binding\+Tag$>$ }\\void \mbox{\hyperlink{polymorphic__impl_8hpp_a9c34d32da6bee20cb6609e78efc69174}{cereal\+::detail\+::instantiate\+\_\+polymorphic\+\_\+binding}} (T \texorpdfstring{$\ast$}{*}, int, Binding\+Tag, \mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\+\_\+tag}})
+\begin{DoxyCompactList}\small\item\em Base case overload for instantiation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Internal polymorphism support. 
+
+
+
+\label{doc-define-members}
+\Hypertarget{polymorphic__impl_8hpp_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{polymorphic__impl_8hpp_a1287e4a45e8a9ce5d50d65c122d49d5f}\index{polymorphic\_impl.hpp@{polymorphic\_impl.hpp}!CEREAL\_BIND\_TO\_ARCHIVES@{CEREAL\_BIND\_TO\_ARCHIVES}}
+\index{CEREAL\_BIND\_TO\_ARCHIVES@{CEREAL\_BIND\_TO\_ARCHIVES}!polymorphic\_impl.hpp@{polymorphic\_impl.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_BIND\_TO\_ARCHIVES}{CEREAL\_BIND\_TO\_ARCHIVES}}
+{\footnotesize\ttfamily \label{polymorphic__impl_8hpp_a1287e4a45e8a9ce5d50d65c122d49d5f} 
+\#define CEREAL\+\_\+\+BIND\+\_\+\+TO\+\_\+\+ARCHIVES(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{namespace\ }detail\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }init\_binding<\_\_VA\_ARGS\_\_>\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ \textcolor{keyword}{const}\&\ b;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{polymorphic__impl_8hpp_a447a2becefa10fee587b8cd1d04c7dfc}{CEREAL\_BIND\_TO\_ARCHIVES\_UNUSED\_FUNCTION}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ \textcolor{keyword}{const}\ \&\ init\_binding<\_\_VA\_ARGS\_\_>::b\ =\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classcereal_1_1detail_1_1_static_object}{::cereal::detail::StaticObject}}<\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ bind\_to\_archives<\_\_VA\_ARGS\_\_>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ >::getInstance().bind();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}\}\ \textcolor{comment}{/*\ end\ namespaces\ */}}
+
+\end{DoxyCode}
+
+
+Binds a polymorhic type to all registered archives. 
+
+This binds a polymorphic type to all compatible registered archives that have been registered with CEREAL\+\_\+\+REGISTER\+\_\+\+ARCHIVE. This must be called after all archives are registered (usually after the archives themselves have been included). \Hypertarget{polymorphic__impl_8hpp_a097903abd43faaf5d77e23eafbb5a1b0}\index{polymorphic\_impl.hpp@{polymorphic\_impl.hpp}!CEREAL\_EMPLACE\_MAP@{CEREAL\_EMPLACE\_MAP}}
+\index{CEREAL\_EMPLACE\_MAP@{CEREAL\_EMPLACE\_MAP}!polymorphic\_impl.hpp@{polymorphic\_impl.hpp}}
+\doxysubsubsection{\texorpdfstring{CEREAL\_EMPLACE\_MAP}{CEREAL\_EMPLACE\_MAP}}
+{\footnotesize\ttfamily \label{polymorphic__impl_8hpp_a097903abd43faaf5d77e23eafbb5a1b0} 
+\#define CEREAL\+\_\+\+EMPLACE\+\_\+\+MAP(\begin{DoxyParamCaption}\item[{}]{map}{, }\item[{}]{key}{, }\item[{}]{value}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ map.emplace(\ key,\ value\ );}
+
+\end{DoxyCode}
+\Hypertarget{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df}\index{polymorphic\_impl.hpp@{polymorphic\_impl.hpp}!UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION@{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}
+\index{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION@{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}!polymorphic\_impl.hpp@{polymorphic\_impl.hpp}}
+\doxysubsubsection{\texorpdfstring{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}{UNREGISTERED\_POLYMORPHIC\_CAST\_EXCEPTION}}
+{\footnotesize\ttfamily \label{polymorphic__impl_8hpp_aebe09f7b847560c8d63b9224008001df} 
+\#define UNREGISTERED\+\_\+\+POLYMORPHIC\+\_\+\+CAST\+\_\+\+EXCEPTION(\begin{DoxyParamCaption}\item[{}]{Load\+Save}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{cereal::Exception}}(\textcolor{stringliteral}{"{}Trying\ to\ "{}}\ \#LoadSave\ \textcolor{stringliteral}{"{}\ a\ registered\ polymorphic\ type\ with\ an\ unregistered\ polymorphic\ cast.\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Could\ not\ find\ a\ path\ to\ a\ base\ class\ ("{}}\ +\ util::demangle(baseInfo.name())\ +\ \textcolor{stringliteral}{"{})\ for\ type:\ "{}}\ +\ \mbox{\hyperlink{util_8hpp_ad2be99518dee5df2aee311262a1c6db0}{::cereal::util::demangledName<Derived>}}()\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Make\ sure\ you\ either\ serialize\ the\ base\ class\ at\ some\ point\ via\ cereal::base\_class\ or\ cereal::virtual\_base\_class.\(\backslash\)n"{}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{stringliteral}{"{}Alternatively,\ manually\ register\ the\ association\ with\ CEREAL\_REGISTER\_POLYMORPHIC\_RELATION."{}});}
+
+\end{DoxyCode}
+
+
+Error message used for unregistered polymorphic casts. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{polymorphic__impl_8hpp_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{polymorphic__impl_8hpp_a9c34d32da6bee20cb6609e78efc69174}\index{polymorphic\_impl.hpp@{polymorphic\_impl.hpp}!instantiate\_polymorphic\_binding@{instantiate\_polymorphic\_binding}}
+\index{instantiate\_polymorphic\_binding@{instantiate\_polymorphic\_binding}!polymorphic\_impl.hpp@{polymorphic\_impl.hpp}}
+\doxysubsubsection{\texorpdfstring{instantiate\_polymorphic\_binding()}{instantiate\_polymorphic\_binding()}}
+{\footnotesize\ttfamily \label{polymorphic__impl_8hpp_a9c34d32da6bee20cb6609e78efc69174} 
+template$<$class T, typename Binding\+Tag$>$ \\
+void cereal\+::detail\+::instantiate\+\_\+polymorphic\+\_\+binding (\begin{DoxyParamCaption}\item[{T \texorpdfstring{$\ast$}{*}}]{}{, }\item[{int}]{}{, }\item[{Binding\+Tag}]{}{, }\item[{\mbox{\hyperlink{structcereal_1_1detail_1_1adl__tag}{adl\+\_\+tag}}}]{}{}\end{DoxyParamCaption})}
+
+
+
+Base case overload for instantiation. 
+
+This will end up always being the best overload due to the second parameter always being passed as an int. All other overloads will accept pointers to archive types and have lower precedence than int.
+
+Since the compiler needs to check all possible overloads, the other overloads created via CEREAL\+\_\+\+REGISTER\+\_\+\+ARCHIVE, which will have lower precedence due to requring a conversion from int to (Archive\texorpdfstring{$\ast$}{*}), will cause their return types to be instantiated through the static object mechanisms even though they are never called.
+
+See the documentation for the other functions to try and understand this 

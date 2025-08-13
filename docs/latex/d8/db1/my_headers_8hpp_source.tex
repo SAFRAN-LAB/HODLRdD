@@ -1,0 +1,191 @@
+\doxysection{my\+Headers.\+hpp}
+\hypertarget{my_headers_8hpp_source}{}\label{my_headers_8hpp_source}\index{include/myHeaders.hpp@{include/myHeaders.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ myHeaders\_HPP}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ myHeaders\_HPP}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <set>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <complex>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <iterator>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <numeric>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <stack>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ \_USE\_MATH\_DEFINES}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <Eigen/Dense>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <Eigen/Sparse>}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{using\ namespace\ }Eigen;}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{//\ Provide\ the\ path\ of\ the\ directory\ where\ the\ rhs\ is\ stored\ in\ .bin\ format\ using\ CEREAL}}
+\DoxyCodeLine{00030\ \textcolor{keyword}{const}\ std::string\ data\_directory\ =\ \textcolor{stringliteral}{"{}\string~/Documents/GitHub/HODLRnD/data/"{}};}
+\DoxyCodeLine{00031\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ PI\ =\ 4.0\ *\ atan(1);}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ nThreads\ =\ 8;}
+\DoxyCodeLine{00035\ \textcolor{comment}{//\ HODLR\ matrix\ parameters}}
+\DoxyCodeLine{00036\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ NDIM\ =\ 4;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ Nmax\ =\ 100;}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{int}\ numPoints\ =\ 10;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Along\ 1D}}
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ The\ admissibility\ is\ based\ on\ the\ max\ norm\ of\ the\ center}}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{int}\ INTERACTION\_TYPE\_ALLOWED\ =\ 0;\ \textcolor{comment}{//\ This\ represents\ d'}}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{double}\ init\_time\ =\ 0.0;}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{double}\ meas\_time\ =\ 0.0;}
+\DoxyCodeLine{00043\ \textcolor{comment}{//\ 2D\ }}
+\DoxyCodeLine{00044\ \textcolor{comment}{//\ d'\ =\ 0\ -\/>\ Vertex,\ HODLR2D\ }}
+\DoxyCodeLine{00045\ \textcolor{comment}{//\ d'\ =\ 1\ -\/>\ HODLR\ in\ 2D}}
+\DoxyCodeLine{00046\ \textcolor{comment}{//\ 3D}}
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ d'\ =\ 0\ -\/>\ Vertex,\ HODLR3D}}
+\DoxyCodeLine{00048\ \textcolor{comment}{//\ d'\ =\ 1\ -\/>\ edge}}
+\DoxyCodeLine{00049\ \textcolor{comment}{//\ d'\ =\ 2\ -\/>\ face\ }}
+\DoxyCodeLine{00050\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ eps\_ACA\ =\ pow(10,-\/10);\ \textcolor{comment}{//\ ACA\ Tolerance\ }}
+\DoxyCodeLine{00051\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ SYS\_SIZE\ =\ 1000;\ \textcolor{comment}{//\ If\ the\ block\ size\ is\ greater\ than\ SYS\_SIZE\ mem\ efficient\ ACA\ kicks\ in}}
+\DoxyCodeLine{00052\ \textcolor{keywordtype}{size\_t}\ N\ =\ 1;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{int}\ mod(\textcolor{keywordtype}{int}\ a,\ \textcolor{keywordtype}{int}\ b)\{}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordflow}{return}\ ((a\ \%\ b\ +\ b)\ \%\ b);}
+\DoxyCodeLine{00058\ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{comment}{//\ \#ifdef\ USE\_FLOAT}}
+\DoxyCodeLine{00061\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\ =\ float;}}
+\DoxyCodeLine{00062\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\_base\ =\ float;}}
+\DoxyCodeLine{00063\ \textcolor{comment}{//\ \ \ \ \ using\ Mat\ =\ Eigen::MatrixXf;}}
+\DoxyCodeLine{00064\ \textcolor{comment}{//\ \ \ \ \ using\ Vec\ =\ Eigen::VectorXf;}}
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ \ \ \ \ \#define\ Calc\_dist(x1,\ y1,\ x2,\ y2)\ float(sqrt(pow(x1\ -\/\ x2,\ 2)\ +\ pow(y1\ -\/\ y2,\ 2)))}}
+\DoxyCodeLine{00066\ \textcolor{comment}{//\ \#endif}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{comment}{//\ \#ifdef\ USE\_DOUBLE}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{using\ }dtype\ =\ double;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keyword}{using\ }dtype\_base\ =\ double;}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{using\ }Mat\ =\ Eigen::MatrixXd;}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{using\ }Vec\ =\ Eigen::VectorXd;}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\ \ \ \ \#define\ abs\_(x)\ ((x\ <\ 0)\ ?\ (-\/x)\ :\ (x))}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\ \ \ \ \#define\ conj\_(x)\ (x)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\ \ \ \ \#define\ Calc\_dist(x1,\ y1,\ x2,\ y2)\ double(sqrt(pow(x1\ -\/\ x2,\ 2)\ +\ pow(y1\ -\/\ y2,\ 2)))}}
+\DoxyCodeLine{00076\ \textcolor{comment}{//\ \#endif}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \textcolor{comment}{//\ \#ifdef\ USE\_COMPLEX32}}
+\DoxyCodeLine{00079\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\ =\ std::complex<float>;}}
+\DoxyCodeLine{00080\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\_base\ =\ float;}}
+\DoxyCodeLine{00081\ \textcolor{comment}{//\ \ \ \ \ using\ Mat\ =\ Eigen::MatrixXcf;}}
+\DoxyCodeLine{00082\ \textcolor{comment}{//\ \ \ \ \ using\ Vec\ =\ Eigen::VectorXcf;}}
+\DoxyCodeLine{00083\ \textcolor{comment}{//\ \ \ \ \ const\ std::complex<float>\ I(0.0,\ 1.0);}}
+\DoxyCodeLine{00084\ \textcolor{comment}{//\ \#endif}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{comment}{//\ \#ifdef\ USE\_COMPLEX64}}
+\DoxyCodeLine{00087\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\ =\ std::complex<double>;}}
+\DoxyCodeLine{00088\ \textcolor{comment}{//\ \ \ \ \ using\ dtype\_base\ =\ double;}}
+\DoxyCodeLine{00089\ \textcolor{comment}{//\ \ \ \ \ using\ Mat\ =\ Eigen::MatrixXcd;}}
+\DoxyCodeLine{00090\ \textcolor{comment}{//\ \ \ \ \ using\ Vec\ =\ Eigen::VectorXcd;}}
+\DoxyCodeLine{00091\ \textcolor{comment}{//\ \ \ \ \ \#define\ abs\_(x)\ (std::abs((x)))}}
+\DoxyCodeLine{00092\ \textcolor{comment}{//\ \ \ \ \ \#define\ conj\_(x)\ (std::conj((x)))}}
+\DoxyCodeLine{00093\ \textcolor{comment}{//\ \ \ \ \ const\ std::complex<double>\ I(0.0,\ 1.0);}}
+\DoxyCodeLine{00094\ \textcolor{comment}{//\ \ \ \ \ \#define\ Calc\_dist(x1,\ y1,\ x2,\ y2)\ float(sqrt(pow(x1\ -\/\ x2,\ 2)\ +\ pow(y1\ -\/\ y2,\ 2)))}}
+\DoxyCodeLine{00095\ \textcolor{comment}{//\ \#endif}}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{//\ Cheb\ nodes}}
+\DoxyCodeLine{00099\ Eigen::VectorXd\ cheb\_nodes(\textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{int}\ n)}
+\DoxyCodeLine{00100\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ Eigen::VectorXd\ X(n);}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{double}\ l,\ l1,\ param;}
+\DoxyCodeLine{00103\ \ \ \ \ l\ =\ 0.5\ *\ (a\ +\ b);}
+\DoxyCodeLine{00104\ \ \ \ \ l1\ =\ 0.5\ *\ (b\ -\/\ a);}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n;\ k++)}
+\DoxyCodeLine{00106\ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ param\ =\ (double)(k\ +\ 0.5)\ /\ n;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ X(k)\ =\ l\ -\/\ l1\ *\ cos(param\ *\ 3.1412);}
+\DoxyCodeLine{00109\ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{00111\ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \textcolor{comment}{//\ Uniform\ nodes}}
+\DoxyCodeLine{00114\ Eigen::VectorXd\ uniform\_nodes(\textcolor{keywordtype}{double}\ a,\ \textcolor{keywordtype}{double}\ b,\ \textcolor{keywordtype}{int}\ n)}
+\DoxyCodeLine{00115\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ Eigen::VectorXd\ X(n);}
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keywordtype}{double}\ l\ =\ (b-\/a);}
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ n;\ k++)}
+\DoxyCodeLine{00119\ \ \ \ \ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ X(k)\ =\ a\ +\ l/(double)\ (n-\/1)\ *\ k;}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ std::string\ \textcolor{keyword}{inline}\ getTimeStamp()}
+\DoxyCodeLine{00126\ \{}
+\DoxyCodeLine{00127\ \ \ \ \ std::string\ s;}
+\DoxyCodeLine{00128\ \ \ \ \ s\ =\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}}\ +\ string(\_\_DATE\_\_)\ +\ \textcolor{stringliteral}{"{},"{}}\ +\ string(\_\_TIME\_\_)\ +\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordflow}{return}\ s;}
+\DoxyCodeLine{00130\ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{keyword}{namespace\ }Vec\_ops}
+\DoxyCodeLine{00133\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ dtype\_base\ \textcolor{keyword}{inline}\ relative\_error(Vec\ \&X\_ori,\ Vec\ \&X\_comp)}
+\DoxyCodeLine{00135\ \ \ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ dtype\_base\ result\ =\ 0.0;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ result\ =\ (X\_ori\ -\/\ X\_comp).norm()\ /\ X\_ori.norm();}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \ \ \ \ dtype\ \textcolor{keyword}{inline}\ dot\_product(\textcolor{keyword}{const}\ Vec\ \&x,\ \textcolor{keyword}{const}\ Vec\ \&y)}
+\DoxyCodeLine{00141\ \ \ \ \ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ dtype\ tmp\ =\ dtype(0.0);}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ x.size();\ i++)}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ tmp\ +=\ x(i)\ *\ y(i);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ tmp;}
+\DoxyCodeLine{00146\ \ \ \ \ \}}
+\DoxyCodeLine{00147\ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#ifdef\ USE\_CEREAL}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#include\ <cereal/archives/portable\_binary.hpp>}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{vector_8hpp}{cereal/types/vector.hpp}}>}}
+\DoxyCodeLine{00152\ \textcolor{keyword}{namespace\ }storedata}
+\DoxyCodeLine{00153\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ Eigen::VectorXd\ \textcolor{keyword}{inline}\ load\_vec(std::string\ fname)}
+\DoxyCodeLine{00155\ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ Eigen::VectorXd\ X;}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ std::vector<dtype\_base>\ K;}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ std::ifstream\ infile(fname,\ std::ios::binary);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ cereal::PortableBinaryInputArchive\ iarchive(infile);\ \textcolor{comment}{//\ Create\ an\ input\ archive}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ iarchive(K);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Read\ the\ data\ from\ the\ archive}}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ X\ =\ Eigen::Map<Eigen::VectorXd,\ Eigen::Unaligned>(K.data(),\ K.size());}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ X;}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordtype}{void}\ \textcolor{keyword}{inline}\ save\_vec(std::string\ fname,\ Eigen::VectorXd\ X)}
+\DoxyCodeLine{00166\ \ \ \ \ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ std::vector<dtype\_base>\ K(X.data(),\ X.data()\ +\ X.size());}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ std::ofstream\ outfile(fname,\ std::ios::binary);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ cereal::PortableBinaryOutputArchive\ oarchive(outfile);\ \textcolor{comment}{//\ Create\ an\ output\ archive}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ oarchive(\mbox{\hyperlink{cereal_8hpp_a78892c2ccfac7a5454639ca121e84439}{CEREAL\_NVP}}(K));\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Write\ the\ data\ to\ the\ archive}}
+\DoxyCodeLine{00171\ \ \ \ \ \}}
+\DoxyCodeLine{00172\ \}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00174\ }
+\DoxyCodeLine{00175\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{00176\ \textcolor{keywordtype}{void}\ \textcolor{keyword}{inline}\ print\_vec(std::vector<T>\ \&vec\_to\_print)}
+\DoxyCodeLine{00177\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ iter\ =\ vec\_to\_print.begin();\ iter\ !=\ vec\_to\_print.end();\ iter++)}
+\DoxyCodeLine{00179\ \ \ \ \ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (iter\ !=\ vec\_to\_print.begin())}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{},\ "{}};}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ std::cout\ <<\ *iter;}
+\DoxyCodeLine{00183\ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \}}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00187\ }
+
+\end{DoxyCode}

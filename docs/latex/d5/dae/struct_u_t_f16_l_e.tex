@@ -1,0 +1,67 @@
+\doxysection{UTF16\+LE\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_u_t_f16_l_e}{}\label{struct_u_t_f16_l_e}\index{UTF16LE$<$ CharType $>$@{UTF16LE$<$ CharType $>$}}
+
+
+UTF-\/16 little endian encoding.  
+
+
+
+
+{\ttfamily \#include $<$encodings.\+h$>$}
+
+Inheritance diagram for UTF16\+LE\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{d5/dae/struct_u_t_f16_l_e}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_u_t_f16_l_e_ab1d5f43903815155796733f76b21deea}\label{struct_u_t_f16_l_e_ab1d5f43903815155796733f76b21deea} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Char\+Type {\bfseries Take\+BOM} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_u_t_f16_l_e_a5927b3d75ff9ce02056d827c14bd0160}\label{struct_u_t_f16_l_e_a5927b3d75ff9ce02056d827c14bd0160} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Char\+Type {\bfseries Take} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_u_t_f16_l_e_a6bfd05f8cac35c1594c7fce47009f198}\label{struct_u_t_f16_l_e_a6bfd05f8cac35c1594c7fce47009f198} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put\+BOM} (Output\+Byte\+Stream \&os)
+\item 
+\Hypertarget{struct_u_t_f16_l_e_ac018cc43a1dba5a6ca232bd9a257072c}\label{struct_u_t_f16_l_e_ac018cc43a1dba5a6ca232bd9a257072c} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put} (Output\+Byte\+Stream \&os, Char\+Type c)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{struct_u_t_f16}{UTF16$<$ wchar\+\_\+t $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+static void {\bfseries Encode} (Output\+Stream \&os, unsigned codepoint)
+\item 
+static void {\bfseries Encode\+Unsafe} (Output\+Stream \&os, unsigned codepoint)
+\item 
+static bool {\bfseries Decode} (Input\+Stream \&is, unsigned \texorpdfstring{$\ast$}{*}codepoint)
+\item 
+static bool {\bfseries Validate} (Input\+Stream \&is, Output\+Stream \&os)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{struct_u_t_f16}{UTF16$<$ wchar\+\_\+t $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_u_t_f16_ac1faeed5861bb1b1a2166e841c5b4b06}\label{struct_u_t_f16_ac1faeed5861bb1b1a2166e841c5b4b06} 
+enum 
+\item 
+typedef wchar\+\_\+t {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{struct_u_t_f16}{UTF16$<$ wchar\+\_\+t $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries CEREAL\+\_\+\+RAPIDJSON\+\_\+\+STATIC\+\_\+\+ASSERT} (sizeof(Ch) $>$=2)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Char\+Type = wchar\+\_\+t$>$\newline
+struct UTF16\+LE$<$ Char\+Type $>$}
+UTF-\/16 little endian encoding. 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodings.\+h\end{DoxyCompactItemize}

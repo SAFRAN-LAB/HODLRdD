@@ -1,0 +1,145 @@
+\doxysection{cereal\+::Portable\+Binary\+Input\+Archive Class Reference}
+\hypertarget{classcereal_1_1_portable_binary_input_archive}{}\label{classcereal_1_1_portable_binary_input_archive}\index{cereal::PortableBinaryInputArchive@{cereal::PortableBinaryInputArchive}}
+
+
+An input archive designed to load data saved using \doxylink{classcereal_1_1_portable_binary_output_archive}{Portable\+Binary\+Output\+Archive}.  
+
+
+
+
+{\ttfamily \#include $<$portable\+\_\+binary.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Portable\+Binary\+Input\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{da/d5c/classcereal_1_1_portable_binary_input_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options}{Options}}
+\begin{DoxyCompactList}\small\item\em A class containing various advanced options for the Portable\+Binary\+Input archive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5}{Portable\+Binary\+Input\+Archive}} (std\+::istream \&stream, \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options}{Options}} const \&options=\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a965f5ff5784f38bbd080c30984bbd12a}{Options\+::\+Default}}())
+\begin{DoxyCompactList}\small\item\em Construct, loading from the provided stream. \end{DoxyCompactList}\item 
+{\footnotesize template$<$std\+::streamsize Data\+Size$>$ }\\void \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_ac4f71b625bb06db5fd0fec7b12a2cd97}{load\+Binary}} (void \texorpdfstring{$\ast$}{*}const data, std\+::streamsize size)
+\begin{DoxyCompactList}\small\item\em Reads size bytes of data from the input stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive$<$ Portable\+Binary\+Input\+Archive, Allow\+Empty\+Class\+Elision $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{Input\+Archive}} (\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{Portable\+Binary\+Input\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{Portable\+Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}{get\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves a shared pointer given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}{register\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id, std\+::shared\+\_\+ptr$<$ void $>$ ptr)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer to its unique identifier. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}{get\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves the string for a polymorphic type given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}{register\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id, std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic name string to its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{Portable\+Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive}{Portable\+Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}{operator$>$$>$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{cereal\+::detail\+::\+Input\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Input\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An input archive designed to load data saved using \doxylink{classcereal_1_1_portable_binary_output_archive}{Portable\+Binary\+Output\+Archive}. 
+
+This archive outputs data to a stream in an extremely compact binary representation with as little extra metadata as possible.
+
+This archive will load the endianness of the serialized data and if necessary transform it to match that of the local machine. This comes at a significant performance cost compared to non portable archives if the transformation is necessary, and also causes a small performance hit even if it is not necessary.
+
+It is recommended to use portable archives only if you know that you will be sending binary data to machines with different endianness.
+
+The archive will do nothing to ensure types are the same size -\/ that is the responsibility of the user.
+
+When using a binary archive and a file stream, you must use the std\+::ios\+::binary format flag to avoid having your data altered inadvertently.
+
+\begin{DoxyWarning}{Warning}
+This archive has not been thoroughly tested across different architectures. Please report any issues, optimizations, or feature requests at \href{www.github.com/USCiLab/cereal}{\texttt{the project github}}. 
+\end{DoxyWarning}
+
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1_portable_binary_input_archive_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5}\index{cereal::PortableBinaryInputArchive@{cereal::PortableBinaryInputArchive}!PortableBinaryInputArchive@{PortableBinaryInputArchive}}
+\index{PortableBinaryInputArchive@{PortableBinaryInputArchive}!cereal::PortableBinaryInputArchive@{cereal::PortableBinaryInputArchive}}
+\doxysubsubsection{\texorpdfstring{PortableBinaryInputArchive()}{PortableBinaryInputArchive()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_portable_binary_input_archive_a4a6ae3ee7ee953859822ba98346e16b5} 
+cereal\+::\+Portable\+Binary\+Input\+Archive\+::\+Portable\+Binary\+Input\+Archive (\begin{DoxyParamCaption}\item[{std\+::istream \&}]{stream}{, }\item[{\mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options}{Options}} const \&}]{options}{ = {\ttfamily \mbox{\hyperlink{classcereal_1_1_portable_binary_input_archive_1_1_options_a965f5ff5784f38bbd080c30984bbd12a}{Options\+::\+Default}}()}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Construct, loading from the provided stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em stream} & The stream to read from. Should be opened with std\+::ios\+::binary flag. \\
+\hline
+{\em options} & The Portable\+Binary specific options to use. See the \doxylink{classcereal_1_1_portable_binary_input_archive_1_1_options}{Options} struct for the values of default parameters \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1_portable_binary_input_archive_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1_portable_binary_input_archive_ac4f71b625bb06db5fd0fec7b12a2cd97}\index{cereal::PortableBinaryInputArchive@{cereal::PortableBinaryInputArchive}!loadBinary@{loadBinary}}
+\index{loadBinary@{loadBinary}!cereal::PortableBinaryInputArchive@{cereal::PortableBinaryInputArchive}}
+\doxysubsubsection{\texorpdfstring{loadBinary()}{loadBinary()}}
+{\footnotesize\ttfamily \label{classcereal_1_1_portable_binary_input_archive_ac4f71b625bb06db5fd0fec7b12a2cd97} 
+template$<$std\+::streamsize Data\+Size$>$ \\
+void cereal\+::\+Portable\+Binary\+Input\+Archive\+::load\+Binary (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}const}]{data}{, }\item[{std\+::streamsize}]{size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Reads size bytes of data from the input stream. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em data} & The data to save \\
+\hline
+{\em size} & The number of bytes in the data \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Data\+Size} & T The size of the actual type of the data elements being loaded \\
+\hline
+\end{DoxyTemplParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/portable\+\_\+binary.\+hpp\end{DoxyCompactItemize}

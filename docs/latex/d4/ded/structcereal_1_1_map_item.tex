@@ -1,0 +1,107 @@
+\doxysection{cereal\+::Map\+Item\texorpdfstring{$<$}{<} Key, Value \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1_map_item}{}\label{structcereal_1_1_map_item}\index{cereal::MapItem$<$ Key, Value $>$@{cereal::MapItem$<$ Key, Value $>$}}
+
+
+A wrapper around a key and value for serializing data into maps.  
+
+
+
+
+{\ttfamily \#include $<$helpers.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structcereal_1_1_map_item_a716600675de59ec66e7ab753126850db}{Key\+Type}}
+\item 
+using \mbox{\hyperlink{structcereal_1_1_map_item_aea753a7486ed49a538522bac58151879}{Value\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_map_item_a4f348c6c831ee140b28c2fda7f1075cb}\label{structcereal_1_1_map_item_a4f348c6c831ee140b28c2fda7f1075cb} 
+{\bfseries Map\+Item} (Key \&\&key\+\_\+, \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}} \&\&value\+\_\+)
+\begin{DoxyCompactList}\small\item\em Construct a \doxylink{structcereal_1_1_map_item}{Map\+Item} from a key and a value. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1_map_item_aba58fc45bbd795f3591f0dfdbde6b619}\label{structcereal_1_1_map_item_aba58fc45bbd795f3591f0dfdbde6b619} 
+\mbox{\hyperlink{structcereal_1_1_map_item}{Map\+Item}} \& {\bfseries operator=} (\mbox{\hyperlink{structcereal_1_1_map_item}{Map\+Item}} const \&)=delete
+\item 
+\Hypertarget{structcereal_1_1_map_item_aabc18ae871506e4965cd785ad314e1ec}\label{structcereal_1_1_map_item_aabc18ae871506e4965cd785ad314e1ec} 
+{\footnotesize template$<$class Archive$>$ }\\void {\bfseries CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&archive)
+\begin{DoxyCompactList}\small\item\em Serialize the \doxylink{structcereal_1_1_map_item}{Map\+Item} with the NVPs "{}key"{} and "{}value"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1_map_item_af4d4e11ae4f201877bc57952becf2eef}\label{structcereal_1_1_map_item_af4d4e11ae4f201877bc57952becf2eef} 
+Key\+Type {\bfseries key}
+\item 
+\Hypertarget{structcereal_1_1_map_item_afba0b9518e84a845eb2b6f1f74cf3f56}\label{structcereal_1_1_map_item_afba0b9518e84a845eb2b6f1f74cf3f56} 
+Value\+Type {\bfseries value}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Key, class \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}}$>$\newline
+struct cereal\+::\+Map\+Item$<$ Key, Value $>$}
+A wrapper around a key and value for serializing data into maps. 
+
+This class just provides a grouping of keys and values into a struct for human readable archives. For example, XML archives will use this wrapper to write maps like so\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<\textcolor{keywordtype}{mymap}>}
+\DoxyCodeLine{\ \ <\textcolor{keywordtype}{item0}>}
+\DoxyCodeLine{\ \ \ \ <\textcolor{keywordtype}{key}>\textcolor{keyword}{MyFirstKey}</\textcolor{keywordtype}{key}>}
+\DoxyCodeLine{\ \ \ \ <\textcolor{keywordtype}{value}>\textcolor{keyword}{MyFirstValue}</\textcolor{keywordtype}{value}>}
+\DoxyCodeLine{\ \ </\textcolor{keywordtype}{item0}>}
+\DoxyCodeLine{\ \ <\textcolor{keywordtype}{item1}>}
+\DoxyCodeLine{\ \ \ \ <\textcolor{keywordtype}{key}>\textcolor{keyword}{MySecondKey}</\textcolor{keywordtype}{key}>}
+\DoxyCodeLine{\ \ \ \ <\textcolor{keywordtype}{value}>\textcolor{keyword}{MySecondValue}</\textcolor{keywordtype}{value}>}
+\DoxyCodeLine{\ \ </\textcolor{keywordtype}{item1}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{mymap}>}
+
+\end{DoxyCode}
+
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{namespacecereal_a72323b9f6443491b5fe35133c22b7060}{make\+\_\+map\+\_\+item} 
+\end{DoxySeeAlso}
+
+
+\label{doc-typedef-members}
+\Hypertarget{structcereal_1_1_map_item_doc-typedef-members}
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structcereal_1_1_map_item_a716600675de59ec66e7ab753126850db}\index{cereal::MapItem$<$ Key, Value $>$@{cereal::MapItem$<$ Key, Value $>$}!KeyType@{KeyType}}
+\index{KeyType@{KeyType}!cereal::MapItem$<$ Key, Value $>$@{cereal::MapItem$<$ Key, Value $>$}}
+\doxysubsubsection{\texorpdfstring{KeyType}{KeyType}}
+{\footnotesize\ttfamily \label{structcereal_1_1_map_item_a716600675de59ec66e7ab753126850db} 
+template$<$class Key, class \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}}$>$ \\
+using \mbox{\hyperlink{structcereal_1_1_map_item}{cereal\+::\+Map\+Item}}$<$ Key, \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}} $>$\+::\+Key\+Type}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \textcolor{keyword}{typename}\ std::conditional<}
+\DoxyCodeLine{\ \ \ \ \ \ std::is\_lvalue\_reference<Key>::value,}
+\DoxyCodeLine{\ \ \ \ \ \ Key,}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<Key>::type>::type}
+
+\end{DoxyCode}
+\Hypertarget{structcereal_1_1_map_item_aea753a7486ed49a538522bac58151879}\index{cereal::MapItem$<$ Key, Value $>$@{cereal::MapItem$<$ Key, Value $>$}!ValueType@{ValueType}}
+\index{ValueType@{ValueType}!cereal::MapItem$<$ Key, Value $>$@{cereal::MapItem$<$ Key, Value $>$}}
+\doxysubsubsection{\texorpdfstring{ValueType}{ValueType}}
+{\footnotesize\ttfamily \label{structcereal_1_1_map_item_aea753a7486ed49a538522bac58151879} 
+template$<$class Key, class \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}}$>$ \\
+using \mbox{\hyperlink{structcereal_1_1_map_item}{cereal\+::\+Map\+Item}}$<$ Key, \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}} $>$\+::\+Value\+Type}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \textcolor{keyword}{typename}\ std::conditional<}
+\DoxyCodeLine{\ \ \ \ \ \ std::is\_lvalue\_reference<Value>::value,}
+\DoxyCodeLine{\ \ \ \ \ \ \mbox{\hyperlink{document_8h_a071cf97155ba72ac9a1fc4ad7e63d481}{Value}},}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{typename}\ std::decay<Value>::type>::type}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{helpers_8hpp}{helpers.\+hpp}}\end{DoxyCompactItemize}

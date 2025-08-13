@@ -1,0 +1,86 @@
+\doxysection{cluster Class Reference}
+\hypertarget{classcluster}{}\label{classcluster}\index{cluster@{cluster}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcluster_a34e16ec4f47924cd69c46ed79416e25a}\label{classcluster_a34e16ec4f47924cd69c46ed79416e25a} 
+{\bfseries cluster} (Eigen\+::\+Vector\+Xd x1, Eigen\+::\+Vector\+Xd x2)
+\item 
+\Hypertarget{classcluster_a6ad762e2869f6beebdcac9a9c5345bf2}\label{classcluster_a6ad762e2869f6beebdcac9a9c5345bf2} 
+void {\bfseries add\+\_\+point} (\mbox{\hyperlink{structptsn_d}{ptsnD}} a)
+\item 
+\Hypertarget{classcluster_abb263800dc11d42baf1db7a848f1fad2}\label{classcluster_abb263800dc11d42baf1db7a848f1fad2} 
+void {\bfseries add\+\_\+points} (std\+::vector$<$ \mbox{\hyperlink{structptsn_d}{ptsnD}} $>$ \&grid\+Points\+\_\+)
+\item 
+\Hypertarget{classcluster_ab643291c598ac0688d7caee41bf1efb0}\label{classcluster_ab643291c598ac0688d7caee41bf1efb0} 
+void {\bfseries remove\+\_\+point} (size\+\_\+t i)
+\item 
+\Hypertarget{classcluster_ab5de3440a84bcf43d143cdd9c3001680}\label{classcluster_ab5de3440a84bcf43d143cdd9c3001680} 
+void {\bfseries remove\+\_\+all\+\_\+points} ()
+\item 
+\Hypertarget{classcluster_a371ee0e1f66a54362f165763215bf685}\label{classcluster_a371ee0e1f66a54362f165763215bf685} 
+size\+\_\+t {\bfseries get\+\_\+cluster\+\_\+size} ()
+\item 
+\Hypertarget{classcluster_ada962a10de962be3a43b024ce665da19}\label{classcluster_ada962a10de962be3a43b024ce665da19} 
+{\bfseries cluster} (Eigen\+::\+Vector\+Xd \&x1\+\_\+, Eigen\+::\+Vector\+Xd \&x2\+\_\+, std\+::vector$<$ \mbox{\hyperlink{structptsn_d}{ptsnD}} $>$ \texorpdfstring{$\ast$}{*}\&g\+Points)
+\item 
+\Hypertarget{classcluster_aa44a7435f4ddce201ef3042201868835}\label{classcluster_aa44a7435f4ddce201ef3042201868835} 
+void {\bfseries print\+\_\+bounding\+\_\+box} ()
+\item 
+\Hypertarget{classcluster_a41d4f78f0393f9b7e1407895704372a4}\label{classcluster_a41d4f78f0393f9b7e1407895704372a4} 
+void {\bfseries add\+\_\+point} (size\+\_\+t a)
+\item 
+\Hypertarget{classcluster_ac5c80e91bcb8474d20ec3b6c9b826cde}\label{classcluster_ac5c80e91bcb8474d20ec3b6c9b826cde} 
+void {\bfseries add\+\_\+points} (std\+::vector$<$ size\+\_\+t $>$ a)
+\item 
+\Hypertarget{classcluster_a371ee0e1f66a54362f165763215bf685}\label{classcluster_a371ee0e1f66a54362f165763215bf685} 
+size\+\_\+t {\bfseries get\+\_\+cluster\+\_\+size} ()
+\item 
+\Hypertarget{classcluster_a758e0b4a063015e2b68b5ed88b7b4f10}\label{classcluster_a758e0b4a063015e2b68b5ed88b7b4f10} 
+double {\bfseries get\+\_\+diameter} ()
+\item 
+\Hypertarget{classcluster_a11052fbb0108e1350739e7347196f851}\label{classcluster_a11052fbb0108e1350739e7347196f851} 
+void {\bfseries compute\+\_\+cluster\+\_\+center} (\mbox{\hyperlink{structptsn_d}{ptsnD}} \&c)
+\item 
+\Hypertarget{classcluster_a119351dfe6451d40ed369f8c0931c406}\label{classcluster_a119351dfe6451d40ed369f8c0931c406} 
+void {\bfseries level\+\_\+clustering} (std\+::vector$<$ \mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}\&h\+\_\+clusters)
+\item 
+\Hypertarget{classcluster_af673dbc25839b61e630372cc925d90b5}\label{classcluster_af673dbc25839b61e630372cc925d90b5} 
+void {\bfseries binary\+\_\+clustering} (std\+::vector$<$ \mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*}\&binary\+\_\+clusters, int dim\+\_\+i)
+\item 
+\Hypertarget{classcluster_af2d22c20f9424f4eea2adc9f8c9c38d7}\label{classcluster_af2d22c20f9424f4eea2adc9f8c9c38d7} 
+double {\bfseries box\+\_\+length} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcluster_aafe9ce9261574ed0d4817870fa0fa99e}\label{classcluster_aafe9ce9261574ed0d4817870fa0fa99e} 
+double {\bfseries x1} \mbox{[}NDIM\mbox{]}
+\item 
+\Hypertarget{classcluster_ae10e02a9c1f4f41ae5831c59676ce4f5}\label{classcluster_ae10e02a9c1f4f41ae5831c59676ce4f5} 
+double {\bfseries x2} \mbox{[}NDIM\mbox{]}
+\item 
+\Hypertarget{classcluster_a20b291dda6e263e6fc65b2831b18d093}\label{classcluster_a20b291dda6e263e6fc65b2831b18d093} 
+std\+::vector$<$ \mbox{\hyperlink{structptsn_d}{ptsnD}} $>$ {\bfseries grid\+Points}
+\item 
+\Hypertarget{classcluster_a470c44a6bc38aed3009b8cdc6fc78b1d}\label{classcluster_a470c44a6bc38aed3009b8cdc6fc78b1d} 
+size\+\_\+t {\bfseries cluster\+\_\+id}
+\item 
+\Hypertarget{classcluster_adc890a4e32cfbc49f08b51ba9816e16e}\label{classcluster_adc890a4e32cfbc49f08b51ba9816e16e} 
+int {\bfseries level}
+\item 
+\Hypertarget{classcluster_a8dda8a770ed36c53f65bf846c1c2dd9e}\label{classcluster_a8dda8a770ed36c53f65bf846c1c2dd9e} 
+std\+::vector$<$ size\+\_\+t $>$ {\bfseries index\+\_\+of\+\_\+points}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcluster_af5dedc1226191a5fe5fbb186010add12}\label{classcluster_af5dedc1226191a5fe5fbb186010add12} 
+int {\bfseries interaction\+\_\+type} (\mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*}\&A, \mbox{\hyperlink{classcluster}{cluster}} \texorpdfstring{$\ast$}{*}\&B)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/Hclustering.\+hpp\item 
+include/HDD\+\_\+clusters.\+hpp\end{DoxyCompactItemize}

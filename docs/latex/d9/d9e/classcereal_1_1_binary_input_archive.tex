@@ -1,0 +1,77 @@
+\doxysection{cereal\+::Binary\+Input\+Archive Class Reference}
+\hypertarget{classcereal_1_1_binary_input_archive}{}\label{classcereal_1_1_binary_input_archive}\index{cereal::BinaryInputArchive@{cereal::BinaryInputArchive}}
+
+
+An input archive designed to load data saved using \doxylink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}.  
+
+
+
+
+{\ttfamily \#include $<$binary.\+hpp$>$}
+
+Inheritance diagram for cereal\+::Binary\+Input\+Archive\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{d9/d9e/classcereal_1_1_binary_input_archive}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1_binary_input_archive_a23eb5ff0ac7163632a2218361fe57c16}\label{classcereal_1_1_binary_input_archive_a23eb5ff0ac7163632a2218361fe57c16} 
+{\bfseries Binary\+Input\+Archive} (std\+::istream \&stream)
+\begin{DoxyCompactList}\small\item\em Construct, loading from the provided stream. \end{DoxyCompactList}\item 
+\Hypertarget{classcereal_1_1_binary_input_archive_aca99e259f54a79df62b09ad7771b9c92}\label{classcereal_1_1_binary_input_archive_aca99e259f54a79df62b09ad7771b9c92} 
+void {\bfseries load\+Binary} (void \texorpdfstring{$\ast$}{*}const data, std\+::streamsize size)
+\begin{DoxyCompactList}\small\item\em Reads size bytes of data from the input stream. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1_input_archive}{cereal\+::\+Input\+Archive$<$ Binary\+Input\+Archive, Allow\+Empty\+Class\+Elision $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive_a76455fba49795d1676664f634918c580}{Input\+Archive}} (\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \texorpdfstring{$\ast$}{*}const derived)
+\begin{DoxyCompactList}\small\item\em Construct the output archive. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1_input_archive}{Input\+Archive}} const \&)=delete
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a74ec8f1eab19703af75612e32d0a95b4}{operator()}} (Types \&\&... args)
+\begin{DoxyCompactList}\small\item\em Serializes all passed in data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a846b9482bf620966e2fa91921251a307}{serialize\+Deferments}} ()
+\begin{DoxyCompactList}\small\item\em Serializes any data marked for deferment using defer. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ void $>$ \mbox{\hyperlink{classcereal_1_1_input_archive_a973b6c5a6fdc65ab2e5420416cf33130}{get\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves a shared pointer given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_a5a8c43c2803faa0b78cfb42e10c91d93}{register\+Shared\+Pointer}} (std\+::uint32\+\_\+t const id, std\+::shared\+\_\+ptr$<$ void $>$ ptr)
+\begin{DoxyCompactList}\small\item\em Registers a shared pointer to its unique identifier. \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{classcereal_1_1_input_archive_a2d39247b893f26eecc863a7b321e6a00}{get\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id)
+\begin{DoxyCompactList}\small\item\em Retrieves the string for a polymorphic type given a unique key for it. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classcereal_1_1_input_archive_ae6602c484b49376ad1c392719d02ef56}{register\+Polymorphic\+Name}} (std\+::uint32\+\_\+t const id, std\+::string const \&name)
+\begin{DoxyCompactList}\small\item\em Registers a polymorphic name string to its unique identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_af116f10b84706be1da9cffa1ecf51243}{operator\&}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1_binary_input_archive}{Binary\+Input\+Archive}} \& \mbox{\hyperlink{classcereal_1_1_input_archive_a08ecef5deaf12b27f43b7956a8416507}{operator$>$$>$}} (T \&\&arg)
+\begin{DoxyCompactList}\small\item\em Serializes passed in data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{cereal\+::detail\+::\+Input\+Archive\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Input\+Archive\+Base} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classcereal_1_1detail_1_1_input_archive_base}{Input\+Archive\+Base}} \&\&) \mbox{\hyperlink{macros_8hpp_a6c37b2307b83bbe2a3de58d78a2b8c0b}{CEREAL\+\_\+\+NOEXCEPT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_adeb555e9b25f21391e4cc9eca9f04dbd}{is\+\_\+loading}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is intended for loading. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{classcereal_1_1_input_archive_af90a8d1dc2c9163367765817f7b704d4}{is\+\_\+saving}}
+\begin{DoxyCompactList}\small\item\em Indicates this archive is not intended for saving. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+An input archive designed to load data saved using \doxylink{classcereal_1_1_binary_output_archive}{Binary\+Output\+Archive}. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/archives/\mbox{\hyperlink{binary_8hpp}{binary.\+hpp}}\end{DoxyCompactItemize}

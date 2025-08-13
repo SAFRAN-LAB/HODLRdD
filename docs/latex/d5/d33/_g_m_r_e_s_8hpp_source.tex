@@ -1,0 +1,311 @@
+\doxysection{GMRES.\+hpp}
+\hypertarget{_g_m_r_e_s_8hpp_source}{}\label{_g_m_r_e_s_8hpp_source}\index{include/GMRES.hpp@{include/GMRES.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_GMRES\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_GMRES\_\_}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//*****************************************************************}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//\ Iterative\ template\ routine\ -\/-\/\ GMRES}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ Remodified\ from\ :\ https://github.com/amiraa127/Sparse\_MultiFrontal/blob/master/IML/include/gmres.h}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ GMRES\ solves\ the\ unsymmetric\ linear\ system\ Ax\ =\ b\ using\ the}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ Generalized\ Minimum\ Residual\ method}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ GMRES\ follows\ the\ algorithm\ described\ on\ p.\ 20\ of\ the}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ SIAM\ Templates\ book.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ The\ return\ value\ indicates\ convergence\ within\ max\_iter\ (input)}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ iterations\ (0),\ or\ no\ convergence\ within\ max\_iter\ iterations\ (1).}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ \textcolor{comment}{//\ Upon\ successful\ return,\ output\ arguments\ have\ the\ following\ values:}}
+\DoxyCodeLine{00017\ \textcolor{comment}{//}}
+\DoxyCodeLine{00018\ \textcolor{comment}{//\ \ \ \ \ \ \ \ x\ \ -\/-\/\ \ approximate\ solution\ to\ Ax\ =\ b}}
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ max\_iter\ \ -\/-\/\ \ the\ number\ of\ iterations\ performed\ before\ the}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tolerance\ was\ reached}}
+\DoxyCodeLine{00021\ \textcolor{comment}{//\ \ \ \ \ \ tol\ \ -\/-\/\ \ the\ residual\ after\ the\ final\ iteration}}
+\DoxyCodeLine{00022\ \textcolor{comment}{//\ Remodification:\ (Functionality\ remains\ the\ same)}}
+\DoxyCodeLine{00023\ \textcolor{comment}{//\ \ \ \ \ \ Preconditioned\ Mat-\/Vec\ can\ be\ user\ defined}}
+\DoxyCodeLine{00024\ \textcolor{comment}{//\ \ \ \ \ \ Modified\ for\ complex}}
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ \ \ \ \ \ myHeader\ has\ macro\ for\ different\ data\ types}}
+\DoxyCodeLine{00026\ \textcolor{comment}{//*****************************************************************}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00031\ \textcolor{keyword}{class\ }iterSolver}
+\DoxyCodeLine{00032\ \{}
+\DoxyCodeLine{00033\ \textcolor{keywordtype}{int}\ restart,max\_iter;}
+\DoxyCodeLine{00034\ \textcolor{keywordtype}{int}\ num\_iter;}
+\DoxyCodeLine{00035\ \textcolor{keywordtype}{string}\ fname;}
+\DoxyCodeLine{00036\ \textcolor{keywordtype}{double}\ tol;}
+\DoxyCodeLine{00037\ dtype\_base\ resid;}
+\DoxyCodeLine{00038\ \textcolor{keywordtype}{bool}\ ptofile\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00039\ std::ofstream\ fout;}
+\DoxyCodeLine{00040\ \textcolor{keywordtype}{void}\ GeneratePlaneRotation(dtype\&\ dx,\ dtype\&\ dy,dtype\&\ cs,\ dtype\&\ sn);}
+\DoxyCodeLine{00041\ \textcolor{keywordtype}{void}\ ApplyPlaneRotation(dtype\&\ dx,\ dtype\&\ dy,\ dtype\&\ cs,\ dtype\&\ sn);}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ Update(Vec\&\ x,\ \textcolor{keywordtype}{int}\ k,\ Mat\ \&h,\ Vec\&\ s,\ Vec*\&\ v);}
+\DoxyCodeLine{00043\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ iterSolver(\textcolor{keywordtype}{int}\ restart,\textcolor{keywordtype}{int}\ max\_iter,\textcolor{keywordtype}{double}\ tol);}
+\DoxyCodeLine{00045\ iterSolver(\textcolor{keywordtype}{int}\ max\_iter,\textcolor{keywordtype}{double}\ tol);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{keywordtype}{void}\ set\_output\_file(\textcolor{keywordtype}{string}\ fname);}
+\DoxyCodeLine{00048\ \textcolor{keywordtype}{double}\ getResidual();}
+\DoxyCodeLine{00049\ \textcolor{keywordtype}{int}\ getMaxIterations();}
+\DoxyCodeLine{00050\ \textcolor{keywordtype}{int}\ GMRES(Operator*\&\ A,Vec\&\ x,\ Vec\&\ b);}
+\DoxyCodeLine{00051\ \string~iterSolver()\ \{}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{comment}{//\ Constructor\ with\ restart,\ MAX\ Iterations\ and\ tolerance}}
+\DoxyCodeLine{00056\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00057\ iterSolver<Operator>::iterSolver(\textcolor{keywordtype}{int}\ restart,\textcolor{keywordtype}{int}\ max\_iter,\textcolor{keywordtype}{double}\ tol)}
+\DoxyCodeLine{00058\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ this-\/>restart\ =\ restart;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ this-\/>max\_iter\ =\ max\_iter;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ this-\/>tol\ =\ \ tol;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ resid\ =\ 0.0;}
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{comment}{//\ Constructor\ with\ MAX\ Iterations\ and\ tolerance\ Restart\ set\ to\ MAX\ iterations}}
+\DoxyCodeLine{00066\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00067\ iterSolver<Operator>::iterSolver(\textcolor{keywordtype}{int}\ max\_iter,\textcolor{keywordtype}{double}\ tol)}
+\DoxyCodeLine{00068\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ this-\/>restart\ =\ max\_iter;}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ this-\/>max\_iter\ =\ max\_iter;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ this-\/>tol\ =\ \ tol;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ resid\ =\ 0.0;}
+\DoxyCodeLine{00073\ \}}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{void}\ iterSolver<Operator>::set\_output\_file(\textcolor{keywordtype}{string}\ fname)}
+\DoxyCodeLine{00077\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ this-\/>fname\ =\ fname;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ ptofile\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00080\ \}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{void}\ iterSolver<Operator>::GeneratePlaneRotation(dtype\&\ dx,\ dtype\&\ dy,dtype\&\ cs,\ dtype\&\ sn)}
+\DoxyCodeLine{00084\ \{}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\ \ \#ifdef\ USE\_DOUBLE}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dy\ ==\ 0.0)}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ 1.0;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ 0.0;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (abs(dy)\ >\ abs(dx))}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dtype\ temp\ =\ dx\ /\ dy;}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ 1.0\ /\ sqrt(\ 1.0\ +\ temp*temp\ );}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ temp\ *\ sn;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dtype\ temp\ =\ dy\ /\ dx;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ 1.0\ /\ sqrt(\ 1.0\ +\ temp*temp\ );}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ temp\ *\ cs;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#ifdef\ USE\_COMPLEX64}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (dx\ ==\ dtype(0))}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ dtype(0);}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ dtype(1);}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dtype\_base\ scale\ =\ abs\_(dx)\ +\ abs\_(dy);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dtype\_base\ norm\ =\ scale\ *\ std::sqrt(abs\_(dx\ /\ scale)\ *\ abs\_(dx\ /\ scale)\ +}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ abs\_(dy\ /\ scale)\ *\ abs\_(dy\ /\ scale));}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dtype\ alpha\ =\ dx\ /\ abs\_(dx);}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ abs\_(dx)\ /\ norm;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ alpha\ *\ conj\_(dy)\ /\ norm;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00121\ \}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{void}\ iterSolver<Operator>::ApplyPlaneRotation(dtype\&\ dx,\ dtype\&\ dy,\ dtype\&\ cs,\ dtype\&\ sn)}
+\DoxyCodeLine{00125\ \{}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ dtype\ temp\ \ =\ \ cs\ *\ dx\ +\ sn\ *\ dy;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ dy\ =\ (-\/sn)\ *\ dx\ +\ cs\ *\ dy;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ dx\ =\ temp;}
+\DoxyCodeLine{00129\ \}}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00132\ \textcolor{keywordtype}{void}\ iterSolver<Operator>::Update(Vec\&\ x,\ \textcolor{keywordtype}{int}\ k,\ Mat\ \&h,\ Vec\&\ s,\ Vec*\&\ v)}
+\DoxyCodeLine{00133\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ Vec\ y\ =\ s;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Backsolve:}}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ k;\ i\ >=\ 0;\ i-\/-\/)}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y(i)\ /=\ h(i,i);}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ i\ -\/\ 1;\ j\ >=\ 0;\ j-\/-\/)}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y(j)\ -\/=\ h(j,i)\ *\ y(i);}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <=\ k;\ j++)}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ +=\ v[j]\ *\ y(j);}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Right\ preconditioning\ goes\ here}}
+\DoxyCodeLine{00146\ \}}
+\DoxyCodeLine{00147\ }
+\DoxyCodeLine{00148\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00149\ dtype\_base\ iterSolver<Operator>::getResidual()}
+\DoxyCodeLine{00150\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ resid;}
+\DoxyCodeLine{00152\ \}}
+\DoxyCodeLine{00153\ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00154\ \textcolor{keywordtype}{int}\ iterSolver<Operator>::getMaxIterations()}
+\DoxyCodeLine{00155\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ num\_iter;}
+\DoxyCodeLine{00157\ \}}
+\DoxyCodeLine{00158\ }
+\DoxyCodeLine{00159\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Operator>}
+\DoxyCodeLine{00160\ \textcolor{keywordtype}{int}\ iterSolver<Operator>::GMRES(Operator*\&\ A,\ Vec\ \&x,\ Vec\ \&b)}
+\DoxyCodeLine{00161\ \{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ counter\ =\ 0;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ start,end;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ MatVecTIME\ =\ 0.0;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout.open(fname);\textcolor{comment}{//,std::ios::app);}}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Restarted\ GMRES\ Parameters\ "{}}\ <<\ std::endl;}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Maximum\ Iterations\ :\ "{}}\ <<\ max\_iter\ <<\ std::endl;}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Tolerance\ :"{}}\ <<\ tol\ <<\ std::endl;}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Restart\ Iteration\ at\ "{}}\ <<\ restart\ <<\ std::endl;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00173\ }
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ m\ =\ restart;}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ It\ is\ expected\ that\ you\ apply\ the\ precondtioner\ to\ the\ rhs\ and\ supply}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ Upper\ Hessenberg\ Matrix}}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ Mat\ H\ =\ Mat::Zero(restart+1,restart);}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i,\ j\ =\ 1,\ k;}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Vectors\ for\ Rotation}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ Vec\ s\ =\ Vec::Zero(restart+1),}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ cs\ =\ Vec::Zero(restart+1),}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ sn\ =\ Vec::Zero(restart+1),\ w;}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ dtype\_base\ normb\ =\ b.norm();}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ start\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ Vec\ r\ =\ b\ -\/\ ((*A)\ *\ x);\ \textcolor{comment}{//Explict\ method\ to\ perform\ the\ MatVec}}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ end\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ counter++;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ MatVecTIME\ +=\ end\ -\/\ start;}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ dtype\_base\ beta\ =\ r.norm();}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (normb\ ==\ 0.0)}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ normb\ =\ 1;}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ resid\ =\ beta/normb;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(resid\ <=\ tol)}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ resid;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\_iter\ =\ 0;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_iter\ =\ 0;}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Exited\ before\ any\ Progress"{}\ <<std::endl;}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Exited\ before\ any\ Progress"{}}\ <<std::endl;}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Residual\ :\ "{}}\ <<\ resid\ <<std::endl;}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Mat-\/Vec\ Time\ :\ "{}}\ <<\ (double)\ MatVecTIME/counter<<\ std::endl;}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Print\ using\ templated\ GMRES....."{}}\ <<std::endl;}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout.close();}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ num\_iter;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ Vec\ *v\ =\ \textcolor{keyword}{new}\ Vec[restart+1];}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (j\ <=\ max\_iter)}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v[0]\ =\ r\ *\ (1.0\ /\ beta);\ \textcolor{comment}{//\ ???\ r\ /\ beta}}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s\ =\ Vec::Zero(restart+1);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ s(0)\ =\ beta;}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ m\ \&\&\ j\ <=\ max\_iter;\ i++,\ j++)}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Iter["{}<<j<<"{}]\ :\ "{}<<std::setprecision(4)<<resid<<std::endl;}}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Iter["{}}<<j<<\textcolor{stringliteral}{"{}]\ :\ "{}}<<std::setprecision(8)<<resid<<std::endl;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ start\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ ((*A)\ *\ v[i]);}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ counter++;}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MatVecTIME\ +=\ end\ -\/\ start;}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <=\ i;\ k++)}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H(k,\ i)\ =\ w.dot(v[k]);}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ -\/=\ H(k,\ i)\ *\ v[k];}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ H(i+1,\ i)\ =\ w.norm();}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ v[i+1]\ =\ (1.0\ /\ H(i+1,\ i))\ *\ w;\ \ \ \textcolor{comment}{//\ ???\ w\ /\ H(i+1,\ i)}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (k\ =\ 0;\ k\ <\ i;\ k++)}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ApplyPlaneRotation(H(k,i),\ H(k+1,i),\ cs(k),\ sn(k));}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ GeneratePlaneRotation(H(i,i),\ H(i+1,i),\ cs(i),\ sn(i));}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ApplyPlaneRotation(H(i,i),\ H(i+1,i),\ cs(i),\ sn(i));}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ApplyPlaneRotation(s(i),\ s(i+1),\ cs(i),\ sn(i));}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resid\ =\ abs\_(s(i+1))\ /\ normb;}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (resid\ <\ tol)}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Update(x,\ i,\ H,\ s,\ v);}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tol\ =\ resid;}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\_iter\ =\ j;}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_iter\ =\ j;}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Reached\ Solution\ before\ Max\_Iterations"{}\ <<std::endl;}}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Reached\ Solution\ before\ Max\_Iterations"{}}\ <<std::endl;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Residual\ :\ "{}}\ <<\ resid\ <<std::endl;}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Mat-\/Vec\ Time\ :\ "{}}\ <<\ (double)\ MatVecTIME/counter<<\ std::endl;}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Print\ using\ templated\ GMRES....."{}}\ <<std::endl;}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout.close();}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ v;}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ num\_iter;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout<<"{}Restarted"{}<<std::endl;}}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Update(x,\ m\ -\/\ 1,\ H,\ s,\ v);}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ start\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ b\ -\/\ ((*A)\ *\ x);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ end\ =\ omp\_get\_wtime();}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ counter++;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MatVecTIME\ +=\ end\ -\/\ start;}
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ beta\ =\ r.norm();}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ resid\ =\ beta\ /\ normb;}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(resid\ <\ tol)}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max\_iter\ =\ j;}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ num\_iter\ =\ j;}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Reached\ Solution\ before\ Max\_Iterations"{}\ <<std::endl;}}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Reached\ Solution\ before\ Max\_Iterations"{}}\ <<std::endl;}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Residual\ :\ "{}}\ <<\ resid\ <<std::endl;}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Mat-\/Vec\ Time\ :\ "{}}\ <<\ (double)\ MatVecTIME/counter<<\ std::endl;}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout\ <<\ \textcolor{stringliteral}{"{}Print\ using\ templated\ GMRES....."{}}\ <<std::endl;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout.close();}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ v;}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ num\_iter;}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Iter["{}<<j<<"{}]\ :\ "{}<<std::setprecision(4)<<"{}.."{}<<resid<<std::endl;}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ptofile)}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fout.close();}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ num\_iter\ =\ max\_iter;}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ []\ v;}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ max\_iter;}
+\DoxyCodeLine{00303\ \}}
+\DoxyCodeLine{00304\ }
+\DoxyCodeLine{00305\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

@@ -1,0 +1,110 @@
+\doxysection{tuple.\+hpp}
+\hypertarget{tuple_8hpp_source}{}\label{tuple_8hpp_source}\index{lib/cereal/types/tuple.hpp@{lib/cereal/types/tuple.hpp}}
+\mbox{\hyperlink{tuple_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_TUPLE\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_TUPLE\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <tuple>}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{namespace\ }tuple\_detail}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{char}...Cs>}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1char__seq__to__c__str}{char\_seq\_to\_c\_str}}}
+\DoxyCodeLine{00046\ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ size\ =\ 14;\textcolor{comment}{//\ Size\ of\ array\ for\ the\ word:\ tuple\_element}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{const}\ char\ (\&arr\_type)[\textcolor{keyword}{sizeof}...(Cs)\ +\ size];}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ str[\textcolor{keyword}{sizeof}...(Cs)\ +\ size];}
+\DoxyCodeLine{00050\ \ \ \ \ \};}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{comment}{//\ the\ word\ tuple\_element\ plus\ a\ number}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{char}...Cs>}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1char__seq__to__c__str}{char\_seq\_to\_c\_str}}<Cs...>::str[\textcolor{keyword}{sizeof}...(Cs)\ +\ size]\ =}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \{\textcolor{charliteral}{'t'},\textcolor{charliteral}{'u'},\textcolor{charliteral}{'p'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'\_'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'l'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'m'},\textcolor{charliteral}{'e'},\textcolor{charliteral}{'n'},\textcolor{charliteral}{'t'},\ Cs...,\ \textcolor{charliteral}{'\(\backslash\)0'}\};}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ Q,\ \textcolor{keywordtype}{size\_t}\ R,\ \textcolor{keywordtype}{char}\ ...\ C>}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\_string\_impl}}}
+\DoxyCodeLine{00065\ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\_string\_impl}}<Q/10,\ Q\%10,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{char}\textcolor{keyword}{>}(R+std::size\_t\{\textcolor{charliteral}{'0'}\}),\ C...>::type;}
+\DoxyCodeLine{00067\ \ \ \ \ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ R,\ \textcolor{keywordtype}{char}\ ...\ C>}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\_string\_impl}}<0,\ R,\ C...>}
+\DoxyCodeLine{00073\ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1char__seq__to__c__str}{char\_seq\_to\_c\_str<static\_cast<char>}}(R+std::size\_t\{\textcolor{charliteral}{'0'}\}),\ C...>;}
+\DoxyCodeLine{00075\ \ \ \ \ \};}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{size\_t}\ T>}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1tuple__element__name}{tuple\_element\_name}}}
+\DoxyCodeLine{00085\ \ \ \ \ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \textcolor{keyword}{using\ }type\ =\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1to__string__impl}{to\_string\_impl}}<T/10,\ T\%10>::type;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{typename}\ type::arr\_type\ c\_str()\{\ \textcolor{keywordflow}{return}\ type::str;\ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{comment}{//\ unwinds\ a\ tuple\ to\ save\ it}}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keywordtype}{size\_t}\ Height>}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize}{serialize}}}
+\DoxyCodeLine{00094\ \ \ \ \ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keyword}{class\ }...\ Types>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ apply(\ Archive\ \&\ ar,\ std::tuple<Types...>\ \&\ tuple\ )}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize}{serialize}}<Height\ -\/\ 1>::template\ apply(\ ar,\ tuple\ );}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(tuple\_element\_name<Height\ -\/\ 1>::c\_str(),}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ std::get<Height\ -\/\ 1>(\ tuple\ ))\ );}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \};}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{comment}{//\ Zero\ height\ specialization\ -\/\ nothing\ to\ do\ here}}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{template}\ <>}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize}{serialize}}<0>}
+\DoxyCodeLine{00108\ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keyword}{class\ }...\ Types>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ apply(\ Archive\ \&,\ std::tuple<Types...>\ \&\ )}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \};}
+\DoxyCodeLine{00113\ \ \ \}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keyword}{class\ }...\ Types>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::tuple<Types...>\ \&\ tuple\ )}
+\DoxyCodeLine{00118\ \ \ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1tuple__detail_1_1serialize}{tuple\_detail::serialize}}<std::tuple\_size<std::tuple<Types...>>::value>::template\ apply(\ ar,\ tuple\ );}
+\DoxyCodeLine{00120\ \ \ \}}
+\DoxyCodeLine{00121\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_TUPLE\_HPP\_}}
+
+\end{DoxyCode}

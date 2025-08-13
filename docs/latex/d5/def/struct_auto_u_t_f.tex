@@ -1,0 +1,51 @@
+\doxysection{Auto\+UTF\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_auto_u_t_f}{}\label{struct_auto_u_t_f}\index{AutoUTF$<$ CharType $>$@{AutoUTF$<$ CharType $>$}}
+
+
+Dynamically select encoding according to stream\textquotesingle{}s runtime-\/specified UTF encoding type.  
+
+
+
+
+{\ttfamily \#include $<$encodings.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_auto_u_t_f_af146859695278d4976ac4df36de58f73}\label{struct_auto_u_t_f_af146859695278d4976ac4df36de58f73} 
+enum \{ {\bfseries support\+Unicode} = 1
+ \}
+\item 
+\Hypertarget{struct_auto_u_t_f_a0609343de776df3bc31b4c980eb3cf1c}\label{struct_auto_u_t_f_a0609343de776df3bc31b4c980eb3cf1c} 
+typedef Char\+Type {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_auto_u_t_f_ac2b2fc57279b0dc5d8b51080707edabf}\label{struct_auto_u_t_f_ac2b2fc57279b0dc5d8b51080707edabf} 
+{\footnotesize template$<$typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE void {\bfseries Encode} (Output\+Stream \&os, unsigned codepoint)
+\item 
+\Hypertarget{struct_auto_u_t_f_a213d7cff132acfc3c1dd69f6811e4036}\label{struct_auto_u_t_f_a213d7cff132acfc3c1dd69f6811e4036} 
+{\footnotesize template$<$typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE void {\bfseries Encode\+Unsafe} (Output\+Stream \&os, unsigned codepoint)
+\item 
+\Hypertarget{struct_auto_u_t_f_a91d4699fca9d29e23462f1c6213ee07d}\label{struct_auto_u_t_f_a91d4699fca9d29e23462f1c6213ee07d} 
+{\footnotesize template$<$typename Input\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE bool {\bfseries Decode} (Input\+Stream \&is, unsigned \texorpdfstring{$\ast$}{*}codepoint)
+\item 
+\Hypertarget{struct_auto_u_t_f_ae8bf239547b93f4c930e965183fcc9ea}\label{struct_auto_u_t_f_ae8bf239547b93f4c930e965183fcc9ea} 
+{\footnotesize template$<$typename Input\+Stream, typename Output\+Stream$>$ }\\static CEREAL\+\_\+\+RAPIDJSON\+\_\+\+FORCEINLINE bool {\bfseries Validate} (Input\+Stream \&is, Output\+Stream \&os)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Char\+Type$>$\newline
+struct Auto\+UTF$<$ Char\+Type $>$}
+Dynamically select encoding according to stream\textquotesingle{}s runtime-\/specified UTF encoding type. 
+
+\begin{DoxyNote}{Note}
+This class can be used with Auto\+UTFInputt\+Stream and \doxylink{class_auto_u_t_f_output_stream}{Auto\+UTFOutput\+Stream}, which provides Get\+Type(). 
+\end{DoxyNote}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodings.\+h\end{DoxyCompactItemize}

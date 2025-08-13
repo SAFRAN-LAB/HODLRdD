@@ -1,0 +1,40 @@
+\doxysection{cereal\+::common\+\_\+detail\+::is\+\_\+enum\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1common__detail_1_1is__enum}{}\label{classcereal_1_1common__detail_1_1is__enum}\index{cereal::common\_detail::is\_enum$<$ T $>$@{cereal::common\_detail::is\_enum$<$ T $>$}}
+
+
+Checks if a type is an enum.  
+
+
+
+
+{\ttfamily \#include $<$common.\+hpp$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1common__detail_1_1is__enum_a0c4c7dba7e21e9ffe8c002c2ace423a2}\label{classcereal_1_1common__detail_1_1is__enum_a0c4c7dba7e21e9ffe8c002c2ace423a2} 
+using {\bfseries type} = StrippedT
+\item 
+\Hypertarget{classcereal_1_1common__detail_1_1is__enum_af6daf3ae8b0ec37540437016a22fd47a}\label{classcereal_1_1common__detail_1_1is__enum_af6daf3ae8b0ec37540437016a22fd47a} 
+using {\bfseries base\+\_\+type} = typename enum\+\_\+underlying\+\_\+type$<$StrippedT, value$>$\+::type
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classcereal_1_1common__detail_1_1is__enum_a6ccb8b9a314bdb2d584f3bf71b1ce22b}\label{classcereal_1_1common__detail_1_1is__enum_a6ccb8b9a314bdb2d584f3bf71b1ce22b} 
+static const bool {\bfseries value} = std\+::is\+\_\+enum$<$StrippedT$>$\+::value
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class T$>$\newline
+class cereal\+::common\+\_\+detail\+::is\+\_\+enum$<$ T $>$}
+Checks if a type is an enum. 
+
+This is needed over simply calling std\+::is\+\_\+enum because the type traits checking at compile time will attempt to call something like load\+\_\+minimal with a special No\+Convert\+Ref struct that wraps up the true type.
+
+This will strip away any of that and also expose the true underlying type. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{common_8hpp}{common.\+hpp}}\end{DoxyCompactItemize}

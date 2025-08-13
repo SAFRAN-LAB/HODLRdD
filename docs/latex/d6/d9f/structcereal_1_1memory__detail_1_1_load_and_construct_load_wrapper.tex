@@ -1,0 +1,41 @@
+\doxysection{cereal\+::memory\+\_\+detail\+::Load\+And\+Construct\+Load\+Wrapper\texorpdfstring{$<$}{<} Archive, T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}{}\label{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper}\index{cereal::memory\_detail::LoadAndConstructLoadWrapper$<$ Archive, T $>$@{cereal::memory\_detail::LoadAndConstructLoadWrapper$<$ Archive, T $>$}}
+
+
+A struct that acts as a wrapper around calling load\+\_\+andor\+\_\+construct.  
+
+
+
+
+{\ttfamily \#include $<$memory.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a5de7d664c309642b0f743135abc43336}\label{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a5de7d664c309642b0f743135abc43336} 
+{\bfseries Load\+And\+Construct\+Load\+Wrapper} (T \texorpdfstring{$\ast$}{*}ptr)
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a4a5d6680bcd070710a252ac285d96217}\label{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a4a5d6680bcd070710a252ac285d96217} 
+{\footnotesize template$<$class F$>$ }\\{\bfseries Load\+And\+Construct\+Load\+Wrapper} (T \texorpdfstring{$\ast$}{*}ptr, F \&\&shared\+From\+This\+Func)
+\begin{DoxyCompactList}\small\item\em Constructor for embedding an early call for restoring shared\+\_\+from\+\_\+this. \end{DoxyCompactList}\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a262480ae9842a6a8422c749bce7feb26}\label{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a262480ae9842a6a8422c749bce7feb26} 
+void {\bfseries CEREAL\+\_\+\+SERIALIZE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a188d8e5b61b92f9e20f9019ded6cd8c2}\label{structcereal_1_1memory__detail_1_1_load_and_construct_load_wrapper_a188d8e5b61b92f9e20f9019ded6cd8c2} 
+\mbox{\hyperlink{classcereal_1_1construct}{\+::cereal\+::construct}}$<$ T $>$ {\bfseries construct}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T$>$\newline
+struct cereal\+::memory\+\_\+detail\+::\+Load\+And\+Construct\+Load\+Wrapper$<$ Archive, T $>$}
+A struct that acts as a wrapper around calling load\+\_\+andor\+\_\+construct. 
+
+The purpose of this is to allow a load\+\_\+and\+\_\+construct call to properly enter into the \textquotesingle{}data\textquotesingle{} NVP of the ptr\+\_\+wrapper 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{memory_8hpp}{memory.\+hpp}}\end{DoxyCompactItemize}

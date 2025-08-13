@@ -1,0 +1,201 @@
+\doxysection{HDD\+\_\+clusters.\+hpp}
+\hypertarget{_h_d_d__clusters_8hpp_source}{}\label{_h_d_d__clusters_8hpp_source}\index{include/HDD\_clusters.hpp@{include/HDD\_clusters.hpp}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_HDD\_clusters\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_HDD\_clusters\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}myHeaders.hpp"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}points\_dt.hpp"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{comment}{//\ Uniform\ clustering\ of\ points\ provided\ the\ bounding\ box,\ results\ in\ a\ set\ of\ clusters\ with\ N\_max\ leaf\ points.}}
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcluster}{cluster}}}
+\DoxyCodeLine{00009\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ N;}
+\DoxyCodeLine{00011\ \ \ \ \ std::vector<ptsnD>\ *gridPoints;}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordtype}{double}\ diam;}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordtype}{double}\ L;}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{int}\ level;\ \textcolor{comment}{//\ This\ is\ the\ level\ in\ the\ hierarchical\ clustering}}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{comment}{//\ Bounding\ box\ of\ the\ cluster!\ [x1[1],\ x2[1]]\ is\ the\ interval\ in\ dimension\ 1\ and\ x1[1]\ <\ x2[1]}}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{comment}{//\ the\ bounding\ box\ here\ is\ provided\ by\ the\ user,\ TODO\ :\ If\ not\ provided\ the\ minimum\ possible\ hypercube\ that\ fits\ set\ of\ points\ needs\ to\ be\ done}}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{comment}{//\ The\ center\ of\ the\ cluster\ is\ not\ determined\ now,\ this\ we\ can\ do\ it\ while\ forming\ the\ Node\ of\ the\ tree.}}
+\DoxyCodeLine{00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ cluster\_id;}
+\DoxyCodeLine{00020\ \ \ \ \ std::vector<size\_t>\ index\_of\_points;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{double}\ x1[NDIM],\ x2[NDIM];}
+\DoxyCodeLine{00022\ \ \ \ \ cluster(Eigen::VectorXd\&\ x1\_,\ Eigen::VectorXd\&\ x2\_,\ \ std::vector<ptsnD>*\&\ gPoints)}
+\DoxyCodeLine{00023\ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ N\ =\ 0;}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ this-\/>gridPoints\ =\ gPoints;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ diam\ =\ 0.0;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ L\ =\ abs(x1\_(0)\ -\/\ x2\_(0));}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Optimize\ copy}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x1[i]\ =\ x1\_(i);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>x2[i]\ =\ x2\_(i);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (abs(this-\/>x1[i]\ -\/\ this-\/>x2[i])\ >\ L)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ L\ =\ abs(this-\/>x1[i]\ -\/\ this-\/>x2[i]);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ diam\ +=\ (x1\_(i)\ -\/\ x2\_(i))\ *\ (x1\_(i)\ -\/\ x2\_(i));}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}["{}\ <<\ this-\/>x1[i]\ <<\ "{},"{}\ <<\ this-\/>x2[i]\ <<\ "{}]\ "{};\ }}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ std::endl;}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ diam\ =\ sqrt(diam);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ cluster\_id\ =\ 0;}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ print\_bounding\_box()\{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl\ <<\ \textcolor{stringliteral}{"{}Bounding\ box\ :\ "{}}\ ;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(i\ !=\ NDIM-\/1)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ this-\/>x1[i]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ this-\/>x2[i]\ <<\ \textcolor{stringliteral}{"{}]x"{}};\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}["{}}\ <<\ this-\/>x1[i]\ <<\ \textcolor{stringliteral}{"{},"{}}\ <<\ this-\/>x2[i]\ <<\ \textcolor{stringliteral}{"{}]"{}};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}
+\DoxyCodeLine{00052\ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ add\_point(\textcolor{keywordtype}{size\_t}\ a)}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ index\_of\_points.push\_back(a);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ N++;}
+\DoxyCodeLine{00057\ \ \ \ \ \}}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{void}\ add\_points(std::vector<size\_t>\ a)}
+\DoxyCodeLine{00059\ \ \ \ \ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ index\_of\_points.insert(index\_of\_points.end(),\ a.begin(),\ a.end());}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ N\ =\ index\_of\_points.size();}
+\DoxyCodeLine{00062\ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ get\_cluster\_size()}
+\DoxyCodeLine{00064\ \ \ \ \ \{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ N;}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{double}\ get\_diameter()\{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ diam;}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{void}\ compute\_cluster\_center(ptsnD\&\ c)\{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Compute\ cluster\ center}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}cluster\ center.."{}<<std::endl;}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}c.."{}\ <<\ this-\/>x1[i]\ <<\ std::endl;}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}c.."{}\ <<\ this-\/>x2[i]\ <<\ std::endl;}}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ c.x[i]\ =\ 0.5\ *\ (this-\/>x1[i]\ +\ this-\/>x2[i]);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}cluster\ center\ computed.."{}<<std::endl;}}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{void}\ level\_clustering(std::vector<cluster\ *>*\&\ h\_clusters)\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ h\_clusters-\/>push\_back(\textcolor{keyword}{this});}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Form\ 2\string^NDIM\ empty\ cluster\ by\ initialising\ through\ the\ bounding\ box\ of\ the\ parent}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ NDIM;\ i++)}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clustering(h\_clusters,\ i);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ i\ <<\ "{}\ "{}\ <<\ h\_clusters-\/>size()\ <<\ std::endl;}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00088\ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{void}\ binary\_clustering(std::vector<cluster\ *>*\&\ binary\_clusters,\ \textcolor{keywordtype}{int}\ dim\_i)}
+\DoxyCodeLine{00090\ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ n\ =\ binary\_clusters-\/>size();}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ n;\ i++)}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Calculate\ boundary\ bdy}}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ bdy\ =\ 0.0;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ a\ =\ binary\_clusters-\/>at(0)-\/>x1[dim\_i];}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ b\ =\ binary\_clusters-\/>at(0)-\/>x2[dim\_i];}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ bdy\ +=\ 0.5\ *\ (a\ +\ b);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ x1\ =\ Eigen::VectorXd::Zero(NDIM);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ Eigen::VectorXd\ x2\ =\ Eigen::VectorXd::Zero(NDIM);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ the\ bounding\ box\ [x\_1,x\_2]\string^NDIM\ for\ the\ cluster}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ k\ =\ 0;\ k\ <\ NDIM;\ k++)}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x1(k)\ =\ binary\_clusters-\/>at(0)-\/>x1[k];}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x2(k)\ =\ binary\_clusters-\/>at(0)-\/>x2[k];}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Create\ two\ clusters!!\ this\ subdivide\ the\ particles\ two\ ways\ TODO\ :\ HPC\ way<>}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ x2(dim\_i)\ =\ bdy;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ cluster\ *A,\ *B;}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ A\ =\ \textcolor{keyword}{new}\ cluster(x1,\ x2,\ gridPoints);}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Assigning\ cluster\ id\ =\ parent*2\ in\ binary\ subdivision}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ A-\/>cluster\_id\ =\ binary\_clusters-\/>at(0)-\/>cluster\_id\ *\ 2;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ x1(dim\_i)\ =\ bdy;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ x2(dim\_i)\ =\ b;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ B\ =\ \textcolor{keyword}{new}\ cluster(x1,\ x2,\ gridPoints);}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Assigning\ cluster\ id\ =\ parent*2+1\ in\ binary\ subdivision\ (this\ holds\ being\ the\ binary\ division\ of\ the\ domain)}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ B-\/>cluster\_id\ =\ binary\_clusters-\/>at(0)-\/>cluster\_id\ *\ 2\ +\ 1;}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Here\ goes\ a\ while\ loop\ to\ subdivide\ the\ points\ in\ one\ dimension\ at\ the\ same\ time\ remove\ from\ source\ This\ ensure\ O(N)\ space\ for\ points\ at\ all\ times...}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ k\ =\ 0;\ k\ <\ binary\_clusters-\/>at(0)-\/>get\_cluster\_size();\ k++)}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ point\_i\ =\ binary\_clusters-\/>at(0)-\/>index\_of\_points[k];}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ TODO\ :\ Use\ toggle\ to\ place\ the\ points\ inside\ the\ cluster\ A\ and\ B\ if\ it\ lies\ in\ the\ boundary}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (gridPoints-\/>at(point\_i).x[dim\_i]\ <\ bdy)}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ A-\/>add\_point(point\_i);}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ B-\/>add\_point(point\_i);}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters-\/>erase(binary\_clusters-\/>begin());}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters-\/>push\_back(A);}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ \ \ binary\_clusters-\/>push\_back(B);}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordtype}{double}\ box\_length()\{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ L;}
+\DoxyCodeLine{00136\ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keywordtype}{int}\ interaction\_type(cluster*\&\ A,\ cluster*\&\ B);}
+\DoxyCodeLine{00138\ \ \ \ \ \string~cluster()\{}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ \};}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{keywordtype}{int}\ interaction\_type(\mbox{\hyperlink{classcluster}{cluster}}*\&\ A,\ \mbox{\hyperlink{classcluster}{cluster}}*\&\ B)\{}
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ int\ type\_sharing\ =\ NDIM;}}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{comment}{//\ for(int\ i=0;\ i<NDIM;\ i++)}}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ if\ (abs(A-\/>x2[i]\ -\/\ B-\/>x2[i])\ !=\ 0\ \&\&\ abs(A-\/>x1[i]\ -\/\ B-\/>x1[i])\ !=\ 0)\ }}
+\DoxyCodeLine{00146\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ type\_sharing-\/-\/;}}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ return\ type\_sharing;}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordtype}{int}\ type\_sharing\ =\ NDIM;}
+\DoxyCodeLine{00149\ \ \ \ \ \mbox{\hyperlink{structptsn_d}{ptsnD}}\ a,b;}
+\DoxyCodeLine{00150\ \ \ \ \ A-\/>compute\_cluster\_center(a);}
+\DoxyCodeLine{00151\ \ \ \ \ B-\/>compute\_cluster\_center(b);}
+\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordtype}{double}\ L\ =\ std::max(A-\/>box\_length(),B-\/>box\_length());}
+\DoxyCodeLine{00153\ \ \ \ \ \textcolor{comment}{//\ This\ ensures\ whether\ cluster\ |A|\ \ |B|\ in\ the\ ith\ dimension\ image}}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{double}\ dp\ =\ nd\_points::euclidean\_distance(a,\ b)\ /\ L;}
+\DoxyCodeLine{00155\ \ \ \ \ dp\ *=\ dp;}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{comment}{//std::cout\ <<\ "{}Frac\ :\ "{}<<\ dp\ <<std::endl;}}
+\DoxyCodeLine{00157\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{double}(NDIM)+1\ >\ dp)\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ type\_sharing\ -\/=\ std::round(dp);}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ type\_sharing\ =\ -\/1;}
+\DoxyCodeLine{00161\ \ \ \ \ \textcolor{keywordflow}{return}\ type\_sharing;}
+\DoxyCodeLine{00162\ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ }
+\DoxyCodeLine{00165\ \textcolor{comment}{//\ TODO\ :\ Find\ the\ bounding\ box}}
+\DoxyCodeLine{00166\ \textcolor{comment}{//\ TODO\ :\ Adaptive\ clustering\ at\ different\ levels}}
+\DoxyCodeLine{00167\ \textcolor{comment}{//\ TODO\ :\ Sort\ the\ points\ inside\ the\ cluster}}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00169\ }
+\DoxyCodeLine{00170\ \textcolor{comment}{/*\ Test\ case\ -\/\ Print\ points,\ binary\ clustering\ tested}}
+\DoxyCodeLine{00171\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ A-\/>print\_cluster();}}
+\DoxyCodeLine{00172\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ B-\/>print\_cluster();}}
+\DoxyCodeLine{00173\ \textcolor{comment}{\ \ \ \ //\ Print\ point}}
+\DoxyCodeLine{00174\ \textcolor{comment}{\ \ \ \ void\ print\_cluster()}}
+\DoxyCodeLine{00175\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{00176\ \textcolor{comment}{\ \ \ \ \ \ \ \ std::cout\ <<\ "{}Cluster\ id\ -\/\ "{}<<cluster\_id\ <<\ std::endl;}}
+\DoxyCodeLine{00177\ \textcolor{comment}{}}
+\DoxyCodeLine{00178\ \textcolor{comment}{\ \ \ \ \ \ \ \ std::cout\ <<\ "{}Bounding\ box\ "{}\ <<\ std::endl;}}
+\DoxyCodeLine{00179\ \textcolor{comment}{\ \ \ \ \ \ \ \ for\ (int\ j\ =\ 0;\ j\ <\ NDIM;\ j++)}}
+\DoxyCodeLine{00180\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ "{}["{}\ <<\ x1[j]}}
+\DoxyCodeLine{00181\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ "{},"{}\ <<\ x2[j]\ <<\ "{}]\ "{};}}
+\DoxyCodeLine{00182\ \textcolor{comment}{\ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}}
+\DoxyCodeLine{00183\ \textcolor{comment}{\ \ \ \ \ \ \ \ for\ (int\ j\ =\ 0;\ j\ <\ NDIM;\ j++)\ std::cout\ <<\ "{}x["{}\ <<\ j\ <<\ "{}]"{}}}
+\DoxyCodeLine{00184\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <<\ "{}\ \ \ \ \ "{};}}
+\DoxyCodeLine{00185\ \textcolor{comment}{\ \ \ \ \ \ \ \ std::cout\ <<\ N\ <<std::endl;}}
+\DoxyCodeLine{00186\ \textcolor{comment}{\ \ \ \ \ \ \ \ for\ (int\ i\ =\ 0;\ i\ <\ N;\ i++)}}
+\DoxyCodeLine{00187\ \textcolor{comment}{\ \ \ \ \ \ \ \ \{}}
+\DoxyCodeLine{00188\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ index\_of\_points[i]\ <<\ "{}\ \ \ \ "{};}}
+\DoxyCodeLine{00189\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ for\ (int\ j\ =\ 0;\ j\ <\ NDIM;\ j++)}}
+\DoxyCodeLine{00190\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ gridPoints-\/>at(index\_of\_points[i]).x[j]\ <<\ "{}\ \ \ \ \ "{};}}
+\DoxyCodeLine{00191\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ std::endl;}}
+\DoxyCodeLine{00192\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00193\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{00194\ \textcolor{comment}{}}
+\DoxyCodeLine{00195\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

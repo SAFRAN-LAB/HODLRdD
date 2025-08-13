@@ -1,0 +1,624 @@
+\doxysection{writer.\+h}
+\hypertarget{writer_8h_source}{}\label{writer_8h_source}\index{lib/cereal/external/rapidjson/writer.h@{lib/cereal/external/rapidjson/writer.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Tencent\ is\ pleased\ to\ support\ the\ open\ source\ community\ by\ making\ RapidJSON\ available.}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ }}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ Copyright\ (C)\ 2015\ THL\ A29\ Limited,\ a\ Tencent\ company,\ and\ Milo\ Yip.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ \textcolor{comment}{//\ Licensed\ under\ the\ MIT\ License\ (the\ "{}License"{});\ you\ may\ not\ use\ this\ file\ except}}
+\DoxyCodeLine{00006\ \textcolor{comment}{//\ in\ compliance\ with\ the\ License.\ You\ may\ obtain\ a\ copy\ of\ the\ License\ at}}
+\DoxyCodeLine{00007\ \textcolor{comment}{//}}
+\DoxyCodeLine{00008\ \textcolor{comment}{//\ http://opensource.org/licenses/MIT}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ Unless\ required\ by\ applicable\ law\ or\ agreed\ to\ in\ writing,\ software\ distributed\ }}
+\DoxyCodeLine{00011\ \textcolor{comment}{//\ under\ the\ License\ is\ distributed\ on\ an\ "{}AS\ IS"{}\ BASIS,\ WITHOUT\ WARRANTIES\ OR\ }}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ CONDITIONS\ OF\ ANY\ KIND,\ either\ express\ or\ implied.\ See\ the\ License\ for\ the\ }}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ specific\ language\ governing\ permissions\ and\ limitations\ under\ the\ License.}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_WRITER\_H\_}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_WRITER\_H\_}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ "{}stream.h"{}}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}internal/meta.h"{}}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ "{}internal/stack.h"{}}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ "{}internal/strfunc.h"{}}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ "{}internal/dtoa.h"{}}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ "{}internal/itoa.h"{}}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ "{}stringbuffer.h"{}}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <new>}\ \ \ \ \ \ \textcolor{comment}{//\ placement\ new}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#if\ defined(CEREAL\_RAPIDJSON\_SIMD)\ \&\&\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <intrin.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#pragma\ intrinsic(\_BitScanForward)}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#ifdef\ CEREAL\_RAPIDJSON\_SSE42}}
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ <nmmintrin.h>}}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#elif\ defined(CEREAL\_RAPIDJSON\_SSE2)}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <emmintrin.h>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#elif\ defined(CEREAL\_RAPIDJSON\_NEON)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#include\ <arm\_neon.h>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#ifdef\ \_\_clang\_\_}}
+\DoxyCodeLine{00040\ CEREAL\_RAPIDJSON\_DIAG\_PUSH}
+\DoxyCodeLine{00041\ CEREAL\_RAPIDJSON\_DIAG\_OFF(padded)}
+\DoxyCodeLine{00042\ CEREAL\_RAPIDJSON\_DIAG\_OFF(unreachable-\/code)}
+\DoxyCodeLine{00043\ CEREAL\_RAPIDJSON\_DIAG\_OFF(c++98-\/compat)}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#elif\ defined(\_MSC\_VER)}}
+\DoxyCodeLine{00045\ CEREAL\_RAPIDJSON\_DIAG\_PUSH}
+\DoxyCodeLine{00046\ CEREAL\_RAPIDJSON\_DIAG\_OFF(4127)\ \textcolor{comment}{//\ conditional\ expression\ is\ constant}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga69bf61966c74b09b5d90b386847f39be}{CEREAL\_RAPIDJSON\_NAMESPACE\_BEGIN}}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00052\ \textcolor{comment}{//\ WriteFlag}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_RAPIDJSON\_WRITE\_DEFAULT\_FLAGS}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#define\ CEREAL\_RAPIDJSON\_WRITE\_DEFAULT\_FLAGS\ kWriteNoFlags}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00065\ \textcolor{keyword}{enum}\ WriteFlag\ \{}
+\DoxyCodeLine{00066\ \ \ \ \ kWriteNoFlags\ =\ 0,\ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00067\ \ \ \ \ kWriteValidateEncodingFlag\ =\ 1,\ }
+\DoxyCodeLine{00068\ \ \ \ \ kWriteNanAndInfFlag\ =\ 2,\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00069\ \ \ \ \ kWriteDefaultFlags\ =\ CEREAL\_RAPIDJSON\_WRITE\_DEFAULT\_FLAGS\ \ }
+\DoxyCodeLine{00070\ \};}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00088\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ OutputStream,\ \textcolor{keyword}{typename}\ SourceEncoding\ =\ UTF8<>,\ \textcolor{keyword}{typename}\ TargetEncoding\ =\ UTF8<>,\ \textcolor{keyword}{typename}\ StackAllocator\ =\ CrtAllocator,\ \textcolor{keywordtype}{unsigned}\ writeFlags\ =\ kWriteDefaultFlags>}
+\DoxyCodeLine{00089\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}\ \{}
+\DoxyCodeLine{00090\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ SourceEncoding::Ch\ Ch;}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ kDefaultMaxDecimalPlaces\ =\ 324;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{explicit}}
+\DoxyCodeLine{00101\ \ \ \ \ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}(OutputStream\&\ os,\ StackAllocator*\ stackAllocator\ =\ 0,\ \textcolor{keywordtype}{size\_t}\ levelDepth\ =\ kDefaultLevelDepth)\ :\ }
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ os\_(\&os),\ level\_stack\_(stackAllocator,\ levelDepth\ *\ sizeof(Level)),\ maxDecimalPlaces\_(kDefaultMaxDecimalPlaces),\ hasRoot\_(false)\ \{\}}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{explicit}}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}(StackAllocator*\ allocator\ =\ 0,\ \textcolor{keywordtype}{size\_t}\ levelDepth\ =\ kDefaultLevelDepth)\ :}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ os\_(0),\ level\_stack\_(allocator,\ levelDepth\ *\ sizeof(Level)),\ maxDecimalPlaces\_(kDefaultMaxDecimalPlaces),\ hasRoot\_(false)\ \{\}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#if\ CEREAL\_RAPIDJSON\_HAS\_CXX11\_RVALUE\_REFS}}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}(\mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}\&\&\ rhs)\ :}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ os\_(rhs.os\_),\ level\_stack\_(std::move(rhs.level\_stack\_)),\ maxDecimalPlaces\_(rhs.maxDecimalPlaces\_),\ hasRoot\_(rhs.hasRoot\_)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ rhs.os\_\ =\ 0;}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_writer_a8b53e8f137f7fcf694f5500711b3f58d}{Reset}}(OutputStream\&\ os)\ \{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ os\_\ =\ \&os;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ hasRoot\_\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ level\_stack\_.Clear();}
+\DoxyCodeLine{00137\ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_writer_a07d74d36dd3191b06e0aab678c246157}{IsComplete}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ hasRoot\_\ \&\&\ level\_stack\_.Empty();}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{int}\ GetMaxDecimalPlaces()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ maxDecimalPlaces\_;}
+\DoxyCodeLine{00149\ \ \ \ \ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00152\ }
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_writer_a58e3f94dc5af1432a8eace5ba427eca7}{SetMaxDecimalPlaces}}(\textcolor{keywordtype}{int}\ maxDecimalPlaces)\ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ maxDecimalPlaces\_\ =\ maxDecimalPlaces;}
+\DoxyCodeLine{00174\ \ \ \ \ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \ \ \ \ \textcolor{keywordtype}{bool}\ Null()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7aa09befbfb4f2e1409f237817979d8087}{kNullType}});\ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteNull());\ \}}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{bool}\ Bool(\textcolor{keywordtype}{bool}\ b)\ \ \ \ \ \ \ \ \ \ \ \{\ Prefix(b\ ?\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7a209434e5edd66630011ca19d710d7cd6}{kTrueType}}\ :\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7a062b8296274a258acf0e142868684c54}{kFalseType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteBool(b));\ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{bool}\ Int(\textcolor{keywordtype}{int}\ i)\ \ \ \ \ \ \ \ \ \ \ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteInt(i));\ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{bool}\ Uint(\textcolor{keywordtype}{unsigned}\ u)\ \ \ \ \ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteUint(u));\ \}}
+\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordtype}{bool}\ Int64(int64\_t\ i64)\ \ \ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteInt64(i64));\ \}}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{bool}\ Uint64(uint64\_t\ u64)\ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteUint64(u64));\ \}}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00189\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_writer_a22a43e8a7193105deec6b808736f7a1a}{Double}}(\textcolor{keywordtype}{double}\ d)\ \ \ \ \ \ \ \{\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});\ \textcolor{keywordflow}{return}\ EndValue(WriteDouble(d));\ \}}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{bool}\ RawNumber(\textcolor{keyword}{const}\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ \textcolor{keywordtype}{bool}\ copy\ =\ \textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(str\ !=\ 0);}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ (void)copy;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7afc9f813b7aaf71911bdae20a86b2702d}{kNumberType}});}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteString(str,\ length));}
+\DoxyCodeLine{00200\ \ \ \ \ \}}
+\DoxyCodeLine{00201\ }
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordtype}{bool}\ String(\textcolor{keyword}{const}\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ \textcolor{keywordtype}{bool}\ copy\ =\ \textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(str\ !=\ 0);}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ (void)copy;}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7a2d823b89b055bc743d05c03183d3f338}{kStringType}});}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteString(str,\ length));}
+\DoxyCodeLine{00207\ \ \ \ \ \}}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\#if\ CEREAL\_RAPIDJSON\_HAS\_STDSTRING}}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordtype}{bool}\ String(\textcolor{keyword}{const}\ std::basic\_string<Ch>\&\ str)\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ String(str.data(),\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}(str.size()));}
+\DoxyCodeLine{00212\ \ \ \ \ \}}
+\DoxyCodeLine{00213\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00214\ }
+\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{bool}\ StartObject()\ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7a146f46700e905e8df96a6a90b5c7640f}{kObjectType}});}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ (level\_stack\_.template\ Push<Level>())\ \mbox{\hyperlink{struct_writer_1_1_level}{Level}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ WriteStartObject();}
+\DoxyCodeLine{00219\ \ \ \ \ \}}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{bool}\ Key(\textcolor{keyword}{const}\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length,\ \textcolor{keywordtype}{bool}\ copy\ =\ \textcolor{keyword}{false})\ \{\ \textcolor{keywordflow}{return}\ String(str,\ length,\ copy);\ \}}
+\DoxyCodeLine{00222\ }
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#if\ CEREAL\_RAPIDJSON\_HAS\_STDSTRING}}
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordtype}{bool}\ Key(\textcolor{keyword}{const}\ std::basic\_string<Ch>\&\ str)}
+\DoxyCodeLine{00225\ \ \ \ \ \{}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Key(str.data(),\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}(str.size()));}
+\DoxyCodeLine{00227\ \ \ \ \ \}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00229\ \ \ \ \ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordtype}{bool}\ EndObject(\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ memberCount\ =\ 0)\ \{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ (void)memberCount;}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(level\_stack\_.GetSize()\ >=\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_writer_1_1_level}{Level}}));\ \textcolor{comment}{//\ not\ inside\ an\ Object}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(!level\_stack\_.template\ Top<Level>()-\/>inArray);\ \textcolor{comment}{//\ currently\ inside\ an\ Array,\ not\ Object}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(0\ ==\ level\_stack\_.template\ Top<Level>()-\/>valueCount\ \%\ 2);\ \textcolor{comment}{//\ Object\ has\ a\ Key\ without\ a\ Value}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ level\_stack\_.template\ Pop<Level>(1);}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteEndObject());}
+\DoxyCodeLine{00237\ \ \ \ \ \}}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \textcolor{keywordtype}{bool}\ StartArray()\ \{}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7af41527d6925efa3c5c3dadb23dfef7c8}{kArrayType}});}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ (level\_stack\_.template\ Push<Level>())\ \mbox{\hyperlink{struct_writer_1_1_level}{Level}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ WriteStartArray();}
+\DoxyCodeLine{00243\ \ \ \ \ \}}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \textcolor{keywordtype}{bool}\ EndArray(\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ elementCount\ =\ 0)\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ (void)elementCount;}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(level\_stack\_.GetSize()\ >=\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{struct_writer_1_1_level}{Level}}));}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(level\_stack\_.template\ Top<Level>()-\/>inArray);}
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ level\_stack\_.template\ Pop<Level>(1);}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteEndArray());}
+\DoxyCodeLine{00251\ \ \ \ \ \}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_writer_a2a2c6f51644b2013471aec4dac0d7466}{String}}(\textcolor{keyword}{const}\ Ch*\ \textcolor{keyword}{const}\&\ str)\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{class_writer_a2a2c6f51644b2013471aec4dac0d7466}{String}}(str,\ internal::StrLen(str));\ \}}
+\DoxyCodeLine{00259\ \ \ \ \ \textcolor{keywordtype}{bool}\ Key(\textcolor{keyword}{const}\ Ch*\ \textcolor{keyword}{const}\&\ str)\ \{\ \textcolor{keywordflow}{return}\ Key(str,\ internal::StrLen(str));\ \}}
+\DoxyCodeLine{00260\ \ \ \ \ }
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00271\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_writer_ae0d1615104e4e88040b9640e6784008a}{RawValue}}(\textcolor{keyword}{const}\ Ch*\ json,\ \textcolor{keywordtype}{size\_t}\ length,\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}\ type)\ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(json\ !=\ 0);}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ Prefix(type);}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ EndValue(WriteRawValue(json,\ length));}
+\DoxyCodeLine{00275\ \ \ \ \ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00281\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_writer_a8ca4e364c546b2eb526caa68dde011d2}{Flush}}()\ \{}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ os\_-\/>Flush();}
+\DoxyCodeLine{00283\ \ \ \ \ \}}
+\DoxyCodeLine{00284\ }
+\DoxyCodeLine{00285\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00287\ \ \ \ \ \textcolor{keyword}{struct\ }Level\ \{}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ Level(\textcolor{keywordtype}{bool}\ inArray\_)\ :\ \mbox{\hyperlink{struct_writer_1_1_level_a4a09e5fda49d0d57b2adc041203f244f}{valueCount}}(0),\ \mbox{\hyperlink{struct_writer_1_1_level_aa009a2d675e98757c2997072aad78789}{inArray}}(inArray\_)\ \{\}}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{struct_writer_1_1_level_a4a09e5fda49d0d57b2adc041203f244f}{valueCount}};\ \ }
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_writer_1_1_level_aa009a2d675e98757c2997072aad78789}{inArray}};\ \ \ \ \ \ \ }
+\DoxyCodeLine{00291\ \ \ \ \ \};}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{size\_t}\ kDefaultLevelDepth\ =\ 32;}
+\DoxyCodeLine{00294\ }
+\DoxyCodeLine{00295\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteNull()\ \ \{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 4);}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'n'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'u'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'l'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'l'});\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00298\ \ \ \ \ \}}
+\DoxyCodeLine{00299\ }
+\DoxyCodeLine{00300\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteBool(\textcolor{keywordtype}{bool}\ b)\ \ \{}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (b)\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 4);}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'t'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'r'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'u'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'e'});}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 5);}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'f'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'a'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'l'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'s'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'e'});}
+\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00310\ \ \ \ \ \}}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteInt(\textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[11];}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::i32toa(i,\ buffer);}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ buffer));}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ buffer;\ p\ !=\ end;\ ++p)}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(*p));}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00319\ \ \ \ \ \}}
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteUint(\textcolor{keywordtype}{unsigned}\ u)\ \{}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[10];}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::u32toa(u,\ buffer);}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ buffer));}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ buffer;\ p\ !=\ end;\ ++p)}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(*p));}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00328\ \ \ \ \ \}}
+\DoxyCodeLine{00329\ }
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteInt64(int64\_t\ i64)\ \{}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[21];}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::i64toa(i64,\ buffer);}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ buffer));}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ buffer;\ p\ !=\ end;\ ++p)}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(*p));}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00337\ \ \ \ \ \}}
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteUint64(uint64\_t\ u64)\ \{}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[20];}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ end\ =\ internal::u64toa(u64,\ buffer);}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ buffer));}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}*\ p\ =\ buffer;\ p\ !=\ end;\ ++p)}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(*p));}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00346\ \ \ \ \ \}}
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteDouble(\textcolor{keywordtype}{double}\ d)\ \{}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (internal::Double(d).IsNanOrInf())\ \{}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(writeFlags\ \&\ kWriteNanAndInfFlag))}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (internal::Double(d).IsNan())\ \{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 3);}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'N'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'a'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'N'});}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (internal::Double(d).Sign())\ \{}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 9);}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 8);}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'I'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'n'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'f'});}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'i'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'n'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'i'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'t'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'y'});}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00367\ }
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ buffer[25];}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ end\ =\ internal::dtoa(d,\ buffer,\ maxDecimalPlaces\_);}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end\ -\/\ buffer));}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{char}*\ p\ =\ buffer;\ p\ !=\ end;\ ++p)}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(*p));}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00374\ \ \ \ \ \}}
+\DoxyCodeLine{00375\ }
+\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteString(\textcolor{keyword}{const}\ Ch*\ str,\ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ length)\ \ \{}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keyword}{typename}\ OutputStream::Ch\ hexDigits[16]\ =\ \{\ \textcolor{charliteral}{'0'},\ \textcolor{charliteral}{'1'},\ \textcolor{charliteral}{'2'},\ \textcolor{charliteral}{'3'},\ \textcolor{charliteral}{'4'},\ \textcolor{charliteral}{'5'},\ \textcolor{charliteral}{'6'},\ \textcolor{charliteral}{'7'},\ \textcolor{charliteral}{'8'},\ \textcolor{charliteral}{'9'},\ \textcolor{charliteral}{'A'},\ \textcolor{charliteral}{'B'},\ \textcolor{charliteral}{'C'},\ \textcolor{charliteral}{'D'},\ \textcolor{charliteral}{'E'},\ \textcolor{charliteral}{'F'}\ \};}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ escape[256]\ =\ \{}
+\DoxyCodeLine{00379\ \textcolor{preprocessor}{\#define\ Z16\ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//0\ \ \ \ 1\ \ \ \ 2\ \ \ \ 3\ \ \ \ 4\ \ \ \ 5\ \ \ \ 6\ \ \ \ 7\ \ \ \ 8\ \ \ \ 9\ \ \ \ A\ \ \ \ B\ \ \ \ C\ \ \ \ D\ \ \ \ E\ \ \ \ F}}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'b'},\ \textcolor{charliteral}{'t'},\ \textcolor{charliteral}{'n'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'f'},\ \textcolor{charliteral}{'r'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{comment}{//\ 00}}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{charliteral}{'u'},\ \textcolor{comment}{//\ 10}}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ 0,\ \textcolor{charliteral}{'"{}'},\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \textcolor{comment}{//\ 20}}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ Z16,\ Z16,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 30\string~4F}}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \ \ 0,\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \ \ 0,\ \ \ 0,\ \ \ 0,\ \textcolor{comment}{//\ 50}}
+\DoxyCodeLine{00386\ \ \ \ \ \ \ \ \ \ \ \ \ Z16,\ Z16,\ Z16,\ Z16,\ Z16,\ Z16,\ Z16,\ Z16,\ Z16,\ Z16\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ 60\string~FF}}
+\DoxyCodeLine{00387\ \textcolor{preprocessor}{\#undef\ Z16}}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00389\ }
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (TargetEncoding::supportUnicode)}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 2\ +\ length\ *\ 6);\ \textcolor{comment}{//\ "{}\(\backslash\)uxxxx..."{}}}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 2\ +\ length\ *\ 12);\ \ \textcolor{comment}{//\ "{}\(\backslash\)uxxxx\(\backslash\)uyyyy..."{}}}
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ GenericStringStream<SourceEncoding>\ is(str);}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (ScanWriteUnescapedString(is,\ length))\ \{}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ Ch\ c\ =\ is.Peek();}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!TargetEncoding::supportUnicode\ \&\&\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(c)\ >=\ 0x80)\ \{}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Unicode\ escaping}}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ codepoint;}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(!SourceEncoding::Decode(is,\ \&codepoint)))}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'u'});}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (codepoint\ <=\ 0xD7FF\ ||\ (codepoint\ >=\ 0xE000\ \&\&\ codepoint\ <=\ 0xFFFF))\ \{}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(codepoint\ >>\ 12)\ \&\ 15]);}
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(codepoint\ >>\ \ 8)\ \&\ 15]);}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(codepoint\ >>\ \ 4)\ \&\ 15]);}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(codepoint\ \ \ \ \ \ )\ \&\ 15]);}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(codepoint\ >=\ 0x010000\ \&\&\ codepoint\ <=\ 0x10FFFF);}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Surrogate\ pair}}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ s\ =\ codepoint\ -\/\ 0x010000;}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ lead\ =\ (s\ >>\ 10)\ +\ 0xD800;}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ trail\ =\ (s\ \&\ 0x3FF)\ +\ 0xDC00;}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(lead\ >>\ 12)\ \&\ 15]);}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(lead\ >>\ \ 8)\ \&\ 15]);}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(lead\ >>\ \ 4)\ \&\ 15]);}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(lead\ \ \ \ \ \ )\ \&\ 15]);}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'u'});}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(trail\ >>\ 12)\ \&\ 15]);}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(trail\ >>\ \ 8)\ \&\ 15]);}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(trail\ >>\ \ 4)\ \&\ 15]);}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[(trail\ \ \ \ \ \ )\ \&\ 15]);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ ((\textcolor{keyword}{sizeof}(Ch)\ ==\ 1\ ||\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\textcolor{keyword}{>}(c)\ <\ 256)\ \&\&\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(escape[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)]))\ \ \{}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ is.Take();}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{keyword}{static\_cast<}typename\ OutputStream::Ch\textcolor{keyword}{>}(escape[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)]));}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (escape[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)]\ ==\ \textcolor{charliteral}{'u'})\ \{}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'0'});}
+\DoxyCodeLine{00437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)\ >>\ 4]);}
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ hexDigits[\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\textcolor{keyword}{>}(c)\ \&\ 0xF]);}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(!(writeFlags\ \&\ kWriteValidateEncodingFlag\ ?\ }
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_transcoder_a9ce6f592f1197c4cb69920713e4acf4d}{Transcoder<SourceEncoding,\ TargetEncoding>::Validate}}(is,\ *os\_)\ :}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transcoder<SourceEncoding,\ TargetEncoding>::TranscodeUnsafe(is,\ *os\_))))}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'\(\backslash\)"{}'});}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00448\ \ \ \ \ \}}
+\DoxyCodeLine{00449\ }
+\DoxyCodeLine{00450\ \ \ \ \ \textcolor{keywordtype}{bool}\ ScanWriteUnescapedString(GenericStringStream<SourceEncoding>\&\ is,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00452\ \ \ \ \ \}}
+\DoxyCodeLine{00453\ }
+\DoxyCodeLine{00454\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteStartObject()\ \{\ os\_-\/>Put(\textcolor{charliteral}{'\{'});\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteEndObject()\ \ \ \{\ os\_-\/>Put(\textcolor{charliteral}{'\}'});\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00456\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteStartArray()\ \ \{\ os\_-\/>Put(\textcolor{charliteral}{'['});\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00457\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteEndArray()\ \ \ \ \{\ os\_-\/>Put(\textcolor{charliteral}{']'});\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \}}
+\DoxyCodeLine{00458\ }
+\DoxyCodeLine{00459\ \ \ \ \ \textcolor{keywordtype}{bool}\ WriteRawValue(\textcolor{keyword}{const}\ Ch*\ json,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ length);}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ GenericStringStream<SourceEncoding>\ is(json);}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length))\ \{}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(is.Peek()\ !=\ \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(!(writeFlags\ \&\ kWriteValidateEncodingFlag\ ?\ }
+\DoxyCodeLine{00465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_transcoder_a9ce6f592f1197c4cb69920713e4acf4d}{Transcoder<SourceEncoding,\ TargetEncoding>::Validate}}(is,\ *os\_)\ :}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Transcoder<SourceEncoding,\ TargetEncoding>::TranscodeUnsafe(is,\ *os\_))))}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00470\ \ \ \ \ \}}
+\DoxyCodeLine{00471\ }
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{keywordtype}{void}\ Prefix(\mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7}{Type}}\ type)\ \{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ (void)type;}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(level\_stack\_.GetSize()\ !=\ 0))\ \{\ \textcolor{comment}{//\ this\ value\ is\ not\ at\ root}}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{struct_writer_1_1_level}{Level}}*\ level\ =\ level\_stack\_.template\ Top<Level>();}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (level-\/>valueCount\ >\ 0)\ \{}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (level-\/>inArray)\ }
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\_-\/>Put(\textcolor{charliteral}{','});\ \textcolor{comment}{//\ add\ comma\ if\ it\ is\ not\ the\ first\ element\ in\ array}}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \ \textcolor{comment}{//\ in\ object}}
+\DoxyCodeLine{00480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\_-\/>Put((level-\/>valueCount\ \%\ 2\ ==\ 0)\ ?\ \textcolor{charliteral}{','}\ :\ \textcolor{charliteral}{':'});}
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!level-\/>inArray\ \&\&\ level-\/>valueCount\ \%\ 2\ ==\ 0)}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(type\ ==\ \mbox{\hyperlink{rapidjson_8h_a1d1cfd8ffb84e947f82999c682b666a7a2d823b89b055bc743d05c03183d3f338}{kStringType}});\ \ \textcolor{comment}{//\ if\ it's\ in\ object,\ then\ even\ number\ should\ be\ a\ name}}
+\DoxyCodeLine{00484\ \ \ \ \ \ \ \ \ \ \ \ \ level-\/>valueCount++;}
+\DoxyCodeLine{00485\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00486\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga06f04b87f6adff794a5a4bbe254dc15c}{CEREAL\_RAPIDJSON\_ASSERT}}(!hasRoot\_);\ \ \ \ \textcolor{comment}{//\ Should\ only\ has\ one\ and\ only\ one\ root.}}
+\DoxyCodeLine{00488\ \ \ \ \ \ \ \ \ \ \ \ \ hasRoot\_\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00490\ \ \ \ \ \}}
+\DoxyCodeLine{00491\ }
+\DoxyCodeLine{00492\ \ \ \ \ \textcolor{comment}{//\ Flush\ the\ value\ if\ it\ is\ the\ top\ level\ one.}}
+\DoxyCodeLine{00493\ \ \ \ \ \textcolor{keywordtype}{bool}\ EndValue(\textcolor{keywordtype}{bool}\ ret)\ \{}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(level\_stack\_.Empty()))\ \ \ \textcolor{comment}{//\ end\ of\ json\ text}}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_writer_a8ca4e364c546b2eb526caa68dde011d2}{Flush}}();}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ret;}
+\DoxyCodeLine{00497\ \ \ \ \ \}}
+\DoxyCodeLine{00498\ }
+\DoxyCodeLine{00499\ \ \ \ \ OutputStream*\ os\_;}
+\DoxyCodeLine{00500\ \ \ \ \ internal::Stack<StackAllocator>\ level\_stack\_;}
+\DoxyCodeLine{00501\ \ \ \ \ \textcolor{keywordtype}{int}\ maxDecimalPlaces\_;}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasRoot\_;}
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00505\ \ \ \ \ \textcolor{comment}{//\ Prohibit\ copy\ constructor\ \&\ assignment\ operator.}}
+\DoxyCodeLine{00506\ \ \ \ \ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}\&);}
+\DoxyCodeLine{00507\ \ \ \ \ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}\&\ operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{class_writer_af4f54830d6927d9daf5bd53bfd134dd3}{Writer}}\&);}
+\DoxyCodeLine{00508\ \};}
+\DoxyCodeLine{00509\ }
+\DoxyCodeLine{00510\ \textcolor{comment}{//\ Full\ specialization\ for\ StringStream\ to\ prevent\ memory\ copying}}
+\DoxyCodeLine{00511\ }
+\DoxyCodeLine{00512\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00513\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::WriteInt(\textcolor{keywordtype}{int}\ i)\ \{}
+\DoxyCodeLine{00514\ \ \ \ \ \textcolor{keywordtype}{char}\ *buffer\ =\ os\_-\/>Push(11);}
+\DoxyCodeLine{00515\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::i32toa(i,\ buffer);}
+\DoxyCodeLine{00516\ \ \ \ \ os\_-\/>Pop(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(11\ -\/\ (end\ -\/\ buffer)));}
+\DoxyCodeLine{00517\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00518\ \}}
+\DoxyCodeLine{00519\ }
+\DoxyCodeLine{00520\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00521\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::WriteUint(\textcolor{keywordtype}{unsigned}\ u)\ \{}
+\DoxyCodeLine{00522\ \ \ \ \ \textcolor{keywordtype}{char}\ *buffer\ =\ os\_-\/>Push(10);}
+\DoxyCodeLine{00523\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::u32toa(u,\ buffer);}
+\DoxyCodeLine{00524\ \ \ \ \ os\_-\/>Pop(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(10\ -\/\ (end\ -\/\ buffer)));}
+\DoxyCodeLine{00525\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00526\ \}}
+\DoxyCodeLine{00527\ }
+\DoxyCodeLine{00528\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00529\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::WriteInt64(int64\_t\ i64)\ \{}
+\DoxyCodeLine{00530\ \ \ \ \ \textcolor{keywordtype}{char}\ *buffer\ =\ os\_-\/>Push(21);}
+\DoxyCodeLine{00531\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::i64toa(i64,\ buffer);}
+\DoxyCodeLine{00532\ \ \ \ \ os\_-\/>Pop(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(21\ -\/\ (end\ -\/\ buffer)));}
+\DoxyCodeLine{00533\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00534\ \}}
+\DoxyCodeLine{00535\ }
+\DoxyCodeLine{00536\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00537\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::WriteUint64(uint64\_t\ u)\ \{}
+\DoxyCodeLine{00538\ \ \ \ \ \textcolor{keywordtype}{char}\ *buffer\ =\ os\_-\/>Push(20);}
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ internal::u64toa(u,\ buffer);}
+\DoxyCodeLine{00540\ \ \ \ \ os\_-\/>Pop(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(20\ -\/\ (end\ -\/\ buffer)));}
+\DoxyCodeLine{00541\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00542\ \}}
+\DoxyCodeLine{00543\ }
+\DoxyCodeLine{00544\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00545\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::WriteDouble(\textcolor{keywordtype}{double}\ d)\ \{}
+\DoxyCodeLine{00546\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classinternal_1_1_double}{internal::Double}}(d).IsNanOrInf())\ \{}
+\DoxyCodeLine{00547\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Note:\ This\ code\ path\ can\ only\ be\ reached\ if\ (CEREAL\_RAPIDJSON\_WRITE\_DEFAULT\_FLAGS\ \&\ kWriteNanAndInfFlag).}}
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!(kWriteDefaultFlags\ \&\ kWriteNanAndInfFlag))}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classinternal_1_1_double}{internal::Double}}(d).IsNan())\ \{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 3);}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'N'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'a'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'N'});}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classinternal_1_1_double}{internal::Double}}(d).Sign())\ \{}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 9);}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'-\/'});}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ PutReserve(*os\_,\ 8);}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'I'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'n'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'f'});}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ PutUnsafe(*os\_,\ \textcolor{charliteral}{'i'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'n'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'i'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'t'});\ PutUnsafe(*os\_,\ \textcolor{charliteral}{'y'});}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00564\ \ \ \ \ \}}
+\DoxyCodeLine{00565\ \ \ \ \ }
+\DoxyCodeLine{00566\ \ \ \ \ \textcolor{keywordtype}{char}\ *buffer\ =\ os\_-\/>Push(25);}
+\DoxyCodeLine{00567\ \ \ \ \ \textcolor{keywordtype}{char}*\ end\ =\ internal::dtoa(d,\ buffer,\ maxDecimalPlaces\_);}
+\DoxyCodeLine{00568\ \ \ \ \ os\_-\/>Pop(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(25\ -\/\ (end\ -\/\ buffer)));}
+\DoxyCodeLine{00569\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00570\ \}}
+\DoxyCodeLine{00571\ }
+\DoxyCodeLine{00572\ \textcolor{preprocessor}{\#if\ defined(CEREAL\_RAPIDJSON\_SSE2)\ ||\ defined(CEREAL\_RAPIDJSON\_SSE42)}}
+\DoxyCodeLine{00573\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00574\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::ScanWriteUnescapedString(StringStream\&\ is,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00575\ \ \ \ \ \textcolor{keywordflow}{if}\ (length\ <\ 16)}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00577\ }
+\DoxyCodeLine{00578\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length))}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00580\ }
+\DoxyCodeLine{00581\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}};}
+\DoxyCodeLine{00582\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ is.\mbox{\hyperlink{struct_generic_string_stream_a3c86ef1e1f0655028cb8a3afce11ee4f}{head\_}}\ +\ length;}
+\DoxyCodeLine{00583\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ nextAligned\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}((\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(p)\ +\ 15)\ \&\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(\string~15));}
+\DoxyCodeLine{00584\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ endAligned\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end)\ \&\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(\string~15));}
+\DoxyCodeLine{00585\ \ \ \ \ \textcolor{keywordflow}{if}\ (nextAligned\ >\ end)}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00588\ \ \ \ \ \textcolor{keywordflow}{while}\ (p\ !=\ nextAligned)}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*p\ <\ 0x20\ ||\ *p\ ==\ \textcolor{charliteral}{'\(\backslash\)"{}'}\ ||\ *p\ ==\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ \{}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}}\ =\ p;}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \ \ \ \ os\_-\/>PutUnsafe(*p++);}
+\DoxyCodeLine{00595\ }
+\DoxyCodeLine{00596\ \ \ \ \ \textcolor{comment}{//\ The\ rest\ of\ string\ using\ SIMD}}
+\DoxyCodeLine{00597\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ dquote[16]\ =\ \{\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'},\ \textcolor{charliteral}{'\(\backslash\)"{}'}\ \};}
+\DoxyCodeLine{00598\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ bslash[16]\ =\ \{\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'},\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}\ \};}
+\DoxyCodeLine{00599\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ space[16]\ \ =\ \{\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F,\ 0x1F\ \};}
+\DoxyCodeLine{00600\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ dq\ =\ \_mm\_loadu\_si128(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\_\_m128i\ *\textcolor{keyword}{>}(\&dquote[0]));}
+\DoxyCodeLine{00601\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ bs\ =\ \_mm\_loadu\_si128(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\_\_m128i\ *\textcolor{keyword}{>}(\&bslash[0]));}
+\DoxyCodeLine{00602\ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ sp\ =\ \_mm\_loadu\_si128(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\_\_m128i\ *\textcolor{keyword}{>}(\&space[0]));}
+\DoxyCodeLine{00603\ }
+\DoxyCodeLine{00604\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ p\ !=\ endAligned;\ p\ +=\ 16)\ \{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ s\ =\ \_mm\_load\_si128(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\_\_m128i\ *\textcolor{keyword}{>}(p));}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ t1\ =\ \_mm\_cmpeq\_epi8(s,\ dq);}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ t2\ =\ \_mm\_cmpeq\_epi8(s,\ bs);}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ t3\ =\ \_mm\_cmpeq\_epi8(\_mm\_max\_epu8(s,\ sp),\ sp);\ \textcolor{comment}{//\ s\ <\ 0x20\ <=>\ max(s,\ 0x1F)\ ==\ 0x1F}}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \_\_m128i\ x\ =\ \_mm\_or\_si128(\_mm\_or\_si128(t1,\ t2),\ t3);}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\ r\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{short}\textcolor{keyword}{>}(\_mm\_movemask\_epi8(x));}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(r\ !=\ 0))\ \{\ \ \ \textcolor{comment}{//\ some\ of\ characters\ is\ escaped}}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ len;}
+\DoxyCodeLine{00613\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER\ \ \ \ \ \ \ \ \ }\textcolor{comment}{//\ Find\ the\ index\ of\ first\ escaped}}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ offset;}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \ \ \ \ \_BitScanForward(\&offset,\ r);}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \ \ \ \ len\ =\ offset;}
+\DoxyCodeLine{00617\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \ \ \ \ len\ =\ \textcolor{keyword}{static\_cast<}\mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\textcolor{keyword}{>}(\_\_builtin\_ffs(r)\ -\/\ 1);}
+\DoxyCodeLine{00619\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ q\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(os\_-\/>PushUnsafe(len));}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ len;\ i++)}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q[i]\ =\ p[i];}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \ \ \ \ p\ +=\ len;}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \_mm\_storeu\_si128(\textcolor{keyword}{reinterpret\_cast<}\_\_m128i\ *\textcolor{keyword}{>}(os\_-\/>PushUnsafe(16)),\ s);}
+\DoxyCodeLine{00628\ \ \ \ \ \}}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ \ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}}\ =\ p;}
+\DoxyCodeLine{00631\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00632\ \}}
+\DoxyCodeLine{00633\ \textcolor{preprocessor}{\#elif\ defined(CEREAL\_RAPIDJSON\_NEON)}}
+\DoxyCodeLine{00634\ \textcolor{keyword}{template}<>}
+\DoxyCodeLine{00635\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ Writer<StringBuffer>::ScanWriteUnescapedString(StringStream\&\ is,\ \textcolor{keywordtype}{size\_t}\ length)\ \{}
+\DoxyCodeLine{00636\ \ \ \ \ \textcolor{keywordflow}{if}\ (length\ <\ 16)}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00638\ }
+\DoxyCodeLine{00639\ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length))}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00641\ }
+\DoxyCodeLine{00642\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ p\ =\ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}};}
+\DoxyCodeLine{00643\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ end\ =\ is.\mbox{\hyperlink{struct_generic_string_stream_a3c86ef1e1f0655028cb8a3afce11ee4f}{head\_}}\ +\ length;}
+\DoxyCodeLine{00644\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ nextAligned\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}((\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(p)\ +\ 15)\ \&\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(\string~15));}
+\DoxyCodeLine{00645\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ endAligned\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(end)\ \&\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{size\_t}\textcolor{keyword}{>}(\string~15));}
+\DoxyCodeLine{00646\ \ \ \ \ \textcolor{keywordflow}{if}\ (nextAligned\ >\ end)}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00648\ }
+\DoxyCodeLine{00649\ \ \ \ \ \textcolor{keywordflow}{while}\ (p\ !=\ nextAligned)}
+\DoxyCodeLine{00650\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*p\ <\ 0x20\ ||\ *p\ ==\ \textcolor{charliteral}{'\(\backslash\)"{}'}\ ||\ *p\ ==\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ \{}
+\DoxyCodeLine{00651\ \ \ \ \ \ \ \ \ \ \ \ \ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}}\ =\ p;}
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ \ \ os\_-\/>PutUnsafe(*p++);}
+\DoxyCodeLine{00656\ }
+\DoxyCodeLine{00657\ \ \ \ \ \textcolor{comment}{//\ The\ rest\ of\ string\ using\ SIMD}}
+\DoxyCodeLine{00658\ \ \ \ \ \textcolor{keyword}{const}\ uint8x16\_t\ s0\ =\ vmovq\_n\_u8(\textcolor{charliteral}{'"{}'});}
+\DoxyCodeLine{00659\ \ \ \ \ \textcolor{keyword}{const}\ uint8x16\_t\ s1\ =\ vmovq\_n\_u8(\textcolor{charliteral}{'\(\backslash\)\(\backslash\)'});}
+\DoxyCodeLine{00660\ \ \ \ \ \textcolor{keyword}{const}\ uint8x16\_t\ s2\ =\ vmovq\_n\_u8(\textcolor{charliteral}{'\(\backslash\)b'});}
+\DoxyCodeLine{00661\ \ \ \ \ \textcolor{keyword}{const}\ uint8x16\_t\ s3\ =\ vmovq\_n\_u8(32);}
+\DoxyCodeLine{00662\ }
+\DoxyCodeLine{00663\ \ \ \ \ \textcolor{keywordflow}{for}\ (;\ p\ !=\ endAligned;\ p\ +=\ 16)\ \{}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ uint8x16\_t\ s\ =\ vld1q\_u8(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const\ }uint8\_t\ *\textcolor{keyword}{>}(p));}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ uint8x16\_t\ x\ =\ vceqq\_u8(s,\ s0);}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ x\ =\ vorrq\_u8(x,\ vceqq\_u8(s,\ s1));}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ x\ =\ vorrq\_u8(x,\ vceqq\_u8(s,\ s2));}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ x\ =\ vorrq\_u8(x,\ vcltq\_u8(s,\ s3));}
+\DoxyCodeLine{00669\ }
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ x\ =\ vrev64q\_u8(x);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Rev\ in\ 64}}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ uint64\_t\ low\ =\ vgetq\_lane\_u64(\textcolor{keyword}{reinterpret\_cast<}uint64x2\_t\textcolor{keyword}{>}(x),\ 0);\ \ \ \textcolor{comment}{//\ extract}}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ uint64\_t\ high\ =\ vgetq\_lane\_u64(\textcolor{keyword}{reinterpret\_cast<}uint64x2\_t\textcolor{keyword}{>}(x),\ 1);\ \ \textcolor{comment}{//\ extract}}
+\DoxyCodeLine{00673\ }
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rapidjson_8h_a8f194bfff5bcc5b4b0d483ff0504a336}{SizeType}}\ len\ =\ 0;}
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ escaped\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (low\ ==\ 0)\ \{}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (high\ !=\ 0)\ \{}
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ lz\ =\ (unsigned)\_\_builtin\_clzll(high);}
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ len\ =\ 8\ +\ (lz\ >>\ 3);}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ escaped\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ lz\ =\ (unsigned)\_\_builtin\_clzll(low);}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \ \ \ \ len\ =\ lz\ >>\ 3;}
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \ \ \ \ escaped\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_ga8f8344bc8bcf87c96595b625aa1fe0a7}{CEREAL\_RAPIDJSON\_UNLIKELY}}(escaped))\ \{\ \ \ \textcolor{comment}{//\ some\ of\ characters\ is\ escaped}}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}*\ q\ =\ \textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(os\_-\/>PushUnsafe(len));}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ len;\ i++)}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ q[i]\ =\ p[i];}
+\DoxyCodeLine{00691\ }
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \ \ \ \ p\ +=\ len;}
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ vst1q\_u8(\textcolor{keyword}{reinterpret\_cast<}uint8\_t\ *\textcolor{keyword}{>}(os\_-\/>PushUnsafe(16)),\ s);}
+\DoxyCodeLine{00696\ \ \ \ \ \}}
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00698\ \ \ \ \ is.\mbox{\hyperlink{struct_generic_string_stream_aeda813798e3f2d6bfdac86afc11b6b80}{src\_}}\ =\ p;}
+\DoxyCodeLine{00699\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaab27cdd99aeb6cf058720f9258f0c5f6}{CEREAL\_RAPIDJSON\_LIKELY}}(is.Tell()\ <\ length);}
+\DoxyCodeLine{00700\ \}}
+\DoxyCodeLine{00701\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_RAPIDJSON\_NEON}}
+\DoxyCodeLine{00702\ }
+\DoxyCodeLine{00703\ \mbox{\hyperlink{group___c_e_r_e_a_l___r_a_p_i_d_j_s_o_n___c_o_n_f_i_g_gaddb083c1a6a5beaafbecc3f99973a3ff}{CEREAL\_RAPIDJSON\_NAMESPACE\_END}}}
+\DoxyCodeLine{00704\ }
+\DoxyCodeLine{00705\ \textcolor{preprocessor}{\#if\ defined(\_MSC\_VER)\ ||\ defined(\_\_clang\_\_)}}
+\DoxyCodeLine{00706\ CEREAL\_RAPIDJSON\_DIAG\_POP}
+\DoxyCodeLine{00707\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00708\ }
+\DoxyCodeLine{00709\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_RAPIDJSON\_CEREAL\_RAPIDJSON\_H\_}}
+
+\end{DoxyCode}

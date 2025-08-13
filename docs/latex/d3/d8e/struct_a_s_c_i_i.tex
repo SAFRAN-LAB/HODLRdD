@@ -1,0 +1,68 @@
+\doxysection{ASCII\texorpdfstring{$<$}{<} Char\+Type \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{struct_a_s_c_i_i}{}\label{struct_a_s_c_i_i}\index{ASCII$<$ CharType $>$@{ASCII$<$ CharType $>$}}
+
+
+\doxylink{struct_a_s_c_i_i}{ASCII} encoding.  
+
+
+
+
+{\ttfamily \#include $<$encodings.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_a_s_c_i_i_a5a7ebeb2aa21ba879c8127325b961072}\label{struct_a_s_c_i_i_a5a7ebeb2aa21ba879c8127325b961072} 
+enum \{ {\bfseries support\+Unicode} = 0
+ \}
+\item 
+\Hypertarget{struct_a_s_c_i_i_a1baf6e7914f165be952c30db664cefb4}\label{struct_a_s_c_i_i_a1baf6e7914f165be952c30db664cefb4} 
+typedef Char\+Type {\bfseries Ch}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{struct_a_s_c_i_i_af56b1605fe233c54693facc7de457f72}\label{struct_a_s_c_i_i_af56b1605fe233c54693facc7de457f72} 
+{\footnotesize template$<$typename Output\+Stream$>$ }\\static void {\bfseries Encode} (Output\+Stream \&os, unsigned codepoint)
+\item 
+\Hypertarget{struct_a_s_c_i_i_afeb90d6f04771067b83b35a0f366af46}\label{struct_a_s_c_i_i_afeb90d6f04771067b83b35a0f366af46} 
+{\footnotesize template$<$typename Output\+Stream$>$ }\\static void {\bfseries Encode\+Unsafe} (Output\+Stream \&os, unsigned codepoint)
+\item 
+\Hypertarget{struct_a_s_c_i_i_a44844bbfd0a4fc282993fd72f3f58eee}\label{struct_a_s_c_i_i_a44844bbfd0a4fc282993fd72f3f58eee} 
+{\footnotesize template$<$typename Input\+Stream$>$ }\\static bool {\bfseries Decode} (Input\+Stream \&is, unsigned \texorpdfstring{$\ast$}{*}codepoint)
+\item 
+\Hypertarget{struct_a_s_c_i_i_a398680588a09e6ce9b56e32195047c78}\label{struct_a_s_c_i_i_a398680588a09e6ce9b56e32195047c78} 
+{\footnotesize template$<$typename Input\+Stream, typename Output\+Stream$>$ }\\static bool {\bfseries Validate} (Input\+Stream \&is, Output\+Stream \&os)
+\item 
+\Hypertarget{struct_a_s_c_i_i_aad78500eb98f45582a4df020e3fb2278}\label{struct_a_s_c_i_i_aad78500eb98f45582a4df020e3fb2278} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Char\+Type {\bfseries Take\+BOM} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_a_s_c_i_i_ab1b9fdf0a5c05658d62fded913d923a3}\label{struct_a_s_c_i_i_ab1b9fdf0a5c05658d62fded913d923a3} 
+{\footnotesize template$<$typename Input\+Byte\+Stream$>$ }\\static Ch {\bfseries Take} (Input\+Byte\+Stream \&is)
+\item 
+\Hypertarget{struct_a_s_c_i_i_a3036dc1d604039c3224ca0a890ee0134}\label{struct_a_s_c_i_i_a3036dc1d604039c3224ca0a890ee0134} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put\+BOM} (Output\+Byte\+Stream \&os)
+\item 
+\Hypertarget{struct_a_s_c_i_i_a218b244b9cd961ea6c5775a734cec20e}\label{struct_a_s_c_i_i_a218b244b9cd961ea6c5775a734cec20e} 
+{\footnotesize template$<$typename Output\+Byte\+Stream$>$ }\\static void {\bfseries Put} (Output\+Byte\+Stream \&os, Ch c)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename Char\+Type = char$>$\newline
+struct ASCII$<$ Char\+Type $>$}
+\doxylink{struct_a_s_c_i_i}{ASCII} encoding. 
+
+\href{http://en.wikipedia.org/wiki/ASCII}{\texttt{http\+://en.\+wikipedia.\+org/wiki/\+ASCII}} 
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Char\+Type} & Code unit for storing 7-\/bit \doxylink{struct_a_s_c_i_i}{ASCII} data. Default is char. \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyNote}{Note}
+implements \doxylink{classrapidjson_1_1_encoding}{Encoding} concept 
+\end{DoxyNote}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidjson/encodings.\+h\end{DoxyCompactItemize}

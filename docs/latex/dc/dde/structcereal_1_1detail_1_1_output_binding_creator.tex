@@ -1,0 +1,93 @@
+\doxysection{cereal\+::detail\+::Output\+Binding\+Creator\texorpdfstring{$<$}{<} Archive, T \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1detail_1_1_output_binding_creator}{}\label{structcereal_1_1detail_1_1_output_binding_creator}\index{cereal::detail::OutputBindingCreator$<$ Archive, T $>$@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$}}
+
+
+Creates a binding (map entry) between an output archive type and a polymorphic type.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}{Polymorphic\+Shared\+Pointer\+Wrapper}}
+\begin{DoxyCompactList}\small\item\em Holds a properly typed shared\+\_\+ptr to the polymorphic type. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_creator_ae7fd60f4fd68a90e0fa53141141ed467}\label{structcereal_1_1detail_1_1_output_binding_creator_ae7fd60f4fd68a90e0fa53141141ed467} 
+{\bfseries Output\+Binding\+Creator} ()
+\begin{DoxyCompactList}\small\item\em Initialize the binding. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_creator_aa8421ea2f60481abd46f3fd59ab3680a}\label{structcereal_1_1detail_1_1_output_binding_creator_aa8421ea2f60481abd46f3fd59ab3680a} 
+static void {\bfseries write\+Metadata} (Archive \&ar)
+\begin{DoxyCompactList}\small\item\em Writes appropriate metadata to the archive for this polymorphic type. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555}{save\+Polymorphic\+Shared\+Ptr}} (Archive \&ar, T const \texorpdfstring{$\ast$}{*}dptr, std\+::true\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Does the actual work of saving a polymorphic shared\+\_\+ptr. \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator_a9ece659f4e7b869b6a8295e8be3847ab}{save\+Polymorphic\+Shared\+Ptr}} (Archive \&ar, T const \texorpdfstring{$\ast$}{*}dptr, std\+::false\+\_\+type)
+\begin{DoxyCompactList}\small\item\em Does the actual work of saving a polymorphic shared\+\_\+ptr. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T$>$\newline
+struct cereal\+::detail\+::\+Output\+Binding\+Creator$<$ Archive, T $>$}
+Creates a binding (map entry) between an output archive type and a polymorphic type. 
+
+Bindings are made when types are registered, assuming that at least one archive has already been registered. When this struct is created, it will insert (at run time) an entry into a map that properly handles casting for serializing polymorphic objects 
+
+\label{doc-func-members}
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_creator_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_creator_a9ece659f4e7b869b6a8295e8be3847ab}\index{cereal::detail::OutputBindingCreator$<$ Archive, T $>$@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$}!savePolymorphicSharedPtr@{savePolymorphicSharedPtr}}
+\index{savePolymorphicSharedPtr@{savePolymorphicSharedPtr}!cereal::detail::OutputBindingCreator$<$ Archive, T $>$@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$}}
+\doxysubsubsection{\texorpdfstring{savePolymorphicSharedPtr()}{savePolymorphicSharedPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_output_binding_creator_a9ece659f4e7b869b6a8295e8be3847ab} 
+template$<$class Archive, class T$>$ \\
+void \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator}{cereal\+::detail\+::\+Output\+Binding\+Creator}}$<$ Archive, T $>$\+::save\+Polymorphic\+Shared\+Ptr (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{T const \texorpdfstring{$\ast$}{*}}]{dptr}{, }\item[{std\+::false\+\_\+type}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Does the actual work of saving a polymorphic shared\+\_\+ptr. 
+
+This function will properly create a shared\+\_\+ptr from the void \texorpdfstring{$\ast$}{*} that is passed in before passing it to the archive for serialization.
+
+This version is for types that do not inherit from std\+::enable\+\_\+shared\+\_\+from\+\_\+this.
+
+
+\begin{DoxyParams}{Parameters}
+{\em ar} & The archive to serialize to \\
+\hline
+{\em dptr} & Pointer to the actual data held by the shared\+\_\+ptr \\
+\hline
+\end{DoxyParams}
+\Hypertarget{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555}\index{cereal::detail::OutputBindingCreator$<$ Archive, T $>$@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$}!savePolymorphicSharedPtr@{savePolymorphicSharedPtr}}
+\index{savePolymorphicSharedPtr@{savePolymorphicSharedPtr}!cereal::detail::OutputBindingCreator$<$ Archive, T $>$@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$}}
+\doxysubsubsection{\texorpdfstring{savePolymorphicSharedPtr()}{savePolymorphicSharedPtr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{structcereal_1_1detail_1_1_output_binding_creator_a75f9c27414802737b3a040edf9ab9555} 
+template$<$class Archive, class T$>$ \\
+void \mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator}{cereal\+::detail\+::\+Output\+Binding\+Creator}}$<$ Archive, T $>$\+::save\+Polymorphic\+Shared\+Ptr (\begin{DoxyParamCaption}\item[{Archive \&}]{ar}{, }\item[{T const \texorpdfstring{$\ast$}{*}}]{dptr}{, }\item[{std\+::true\+\_\+type}]{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Does the actual work of saving a polymorphic shared\+\_\+ptr. 
+
+This function will properly create a shared\+\_\+ptr from the void \texorpdfstring{$\ast$}{*} that is passed in before passing it to the archive for serialization.
+
+In addition, this will also preserve the state of any internal enable\+\_\+shared\+\_\+from\+\_\+this mechanisms
+
+
+\begin{DoxyParams}{Parameters}
+{\em ar} & The archive to serialize to \\
+\hline
+{\em dptr} & Pointer to the actual data held by the shared\+\_\+ptr \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

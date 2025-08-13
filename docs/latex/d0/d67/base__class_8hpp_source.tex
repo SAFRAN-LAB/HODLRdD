@@ -1,0 +1,93 @@
+\doxysection{base\+\_\+class.\+hpp}
+\hypertarget{base__class_8hpp_source}{}\label{base__class_8hpp_source}\index{lib/cereal/types/base\_class.hpp@{lib/cereal/types/base\_class.hpp}}
+\mbox{\hyperlink{base__class_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ Randolph\ Voorhies,\ Shane\ Grant}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_BASE\_CLASS\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_BASE\_CLASS\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{traits_8hpp}{cereal/details/traits.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{polymorphic__impl__fwd_8hpp}{cereal/details/polymorphic\_impl\_fwd.hpp}}"{}}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00037\ \{}
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{namespace\ }base\_class\_detail}
+\DoxyCodeLine{00039\ \ \ \{}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ template\ <class\ Base,\ class\ Derived,\ bool\ IsPolymorphic\ =\ std::is\_polymorphic<Base>::value>}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1base__class__detail_1_1_register_polymorphic_base_class}{RegisterPolymorphicBaseClass}}}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ bind()}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00048\ \ \ \ \ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Base,\ \textcolor{keyword}{class}\ Derived>}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcereal_1_1base__class__detail_1_1_register_polymorphic_base_class}{RegisterPolymorphicBaseClass}}<Base,\ Derived,\ true>}
+\DoxyCodeLine{00054\ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ bind()}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \{\ \mbox{\hyperlink{structcereal_1_1detail_1_1_register_polymorphic_caster_afca38758d3a1c7c7530780a69e00aa9f}{detail::RegisterPolymorphicCaster<Base,\ Derived>::bind}}();\ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ \ \ \}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Base>}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{struct\ }base\_class\ :\ \textcolor{keyword}{private}\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_base_cast_base}{traits::detail::BaseCastBase}}}
+\DoxyCodeLine{00101\ \ \ \ \ \{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Derived>}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ base\_class(Derived\ \textcolor{keyword}{const}\ *\ derived)\ :}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ base\_ptr(\textcolor{keyword}{const\_cast<}Base*\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}Base\ \textcolor{keyword}{const\ }*\textcolor{keyword}{>}(derived)))}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ std::is\_base\_of<Base,\ Derived>::value,\ \textcolor{stringliteral}{"{}Can\ only\ use\ base\_class\ on\ a\ valid\ base\ class"{}}\ );}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ base\_class\_detail::RegisterPolymorphicBaseClass<Base,\ Derived>::bind();}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ Base\ *\ base\_ptr;}
+\DoxyCodeLine{00111\ \ \ \ \ \};}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00114\ }
+\DoxyCodeLine{00187\ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Base>}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keyword}{struct\ }virtual\_base\_class\ :\ \textcolor{keyword}{private}\ \mbox{\hyperlink{structcereal_1_1traits_1_1detail_1_1_base_cast_base}{traits::detail::BaseCastBase}}}
+\DoxyCodeLine{00189\ \ \ \ \ \{}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ Derived>}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ virtual\_base\_class(Derived\ \textcolor{keyword}{const}\ *\ derived)\ :}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \ \ base\_ptr(\textcolor{keyword}{const\_cast<}Base*\textcolor{keyword}{>}(\textcolor{keyword}{static\_cast<}Base\ \textcolor{keyword}{const\ }*\textcolor{keyword}{>}(derived)))}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static\_assert}(\ std::is\_base\_of<Base,\ Derived>::value,\ \textcolor{stringliteral}{"{}Can\ only\ use\ virtual\_base\_class\ on\ a\ valid\ base\ class"{}}\ );}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ base\_class\_detail::RegisterPolymorphicBaseClass<Base,\ Derived>::bind();}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00197\ }
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ Base\ *\ base\_ptr;}
+\DoxyCodeLine{00199\ \ \ \ \ \};}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_BASE\_CLASS\_HPP\_}}
+
+\end{DoxyCode}

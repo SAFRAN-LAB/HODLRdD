@@ -1,0 +1,78 @@
+\doxysection{cereal\+::base\+\_\+class\texorpdfstring{$<$}{<} Base \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structcereal_1_1base__class}{}\label{structcereal_1_1base__class}\index{cereal::base\_class$<$ Base $>$@{cereal::base\_class$<$ Base $>$}}
+
+
+Casts a derived class to its non-\/virtual base class in a way that safely supports abstract classes.  
+
+
+
+
+{\ttfamily \#include $<$base\+\_\+class.\+hpp$>$}
+
+Inheritance diagram for cereal\+::base\+\_\+class\texorpdfstring{$<$}{<} Base \texorpdfstring{$>$}{>}\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{df/d11/structcereal_1_1base__class}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1base__class_a7d896451c036c78b21498900556f21ca}\label{structcereal_1_1base__class_a7d896451c036c78b21498900556f21ca} 
+{\footnotesize template$<$class Derived$>$ }\\{\bfseries base\+\_\+class} (Derived const \texorpdfstring{$\ast$}{*}derived)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcereal_1_1base__class_a104db3f222397a826d0c046372fde64e}\label{structcereal_1_1base__class_a104db3f222397a826d0c046372fde64e} 
+Base \texorpdfstring{$\ast$}{*} {\bfseries base\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Base$>$\newline
+struct cereal\+::base\+\_\+class$<$ Base $>$}
+Casts a derived class to its non-\/virtual base class in a way that safely supports abstract classes. 
+
+This should be used in cases when a derived type needs to serialize its base type. This is better than directly using static\+\_\+cast, as it allows for serialization of pure virtual (abstract) base classes.
+
+This also automatically registers polymorphic relation between the base and derived class, assuming they are indeed polymorphic. Note this is not the same as polymorphic type registration. For more information see the documentation on polymorphism. If using a polymorphic class, be sure to include support for polymorphism (\doxylink{polymorphic_8hpp}{cereal/types/polymorphic.\+hpp}).
+
+\begin{DoxySeeAlso}{See also}
+\doxylink{structcereal_1_1virtual__base__class}{virtual\+\_\+base\+\_\+class}
+\end{DoxySeeAlso}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyBase}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ x;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ foo()\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ ar(\ x\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }MyDerived\ :\ \textcolor{keyword}{public}\ MyBase\ \textcolor{comment}{//<-\/-\/\ Note\ non-\/virtual\ inheritance}}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{int}\ y;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ foo()\ \{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{\ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecereal_a02f9cfc9a4055c8a49eb050b02cd3357}{serialize}}(\ Archive\ \&\ ar\ )}
+\DoxyCodeLine{\ \ \{}
+\DoxyCodeLine{\ \ \ \ ar(\ cereal::base\_class<MyBase>(\textcolor{keyword}{this})\ );}
+\DoxyCodeLine{\ \ \ \ ar(\ y\ );}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+ 
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/types/\mbox{\hyperlink{base__class_8hpp}{base\+\_\+class.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,98 @@
+\doxysection{cereal\+::rapidxml\+::file\texorpdfstring{$<$}{<} Ch \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcereal_1_1rapidxml_1_1file}{}\label{classcereal_1_1rapidxml_1_1file}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+
+
+Represents data loaded from a file.  
+
+
+
+
+{\ttfamily \#include $<$rapidxml\+\_\+utils.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_aa31b389f9563d7b21ab13bd0058df178}{file}} (const char \texorpdfstring{$\ast$}{*}filename)
+\item 
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a1d53059d5eb752b49103483566dfde15}{file}} (std\+::basic\+\_\+istream$<$ Ch $>$ \&stream)
+\item 
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a35175257994f336bc113af05751185a0}{data}} ()
+\item 
+const Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_ad82097c772501529b8d493f2fc5cc310}{data}} () const
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}{size}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Ch = char$>$\newline
+class cereal\+::rapidxml\+::file$<$ Ch $>$}
+Represents data loaded from a file. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_aa31b389f9563d7b21ab13bd0058df178}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}!file@{file}}
+\index{file@{file}!cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{file()}{file()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1file_aa31b389f9563d7b21ab13bd0058df178} 
+template$<$class Ch = char$>$ \\
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file}{cereal\+::rapidxml\+::file}}$<$ Ch $>$\+::file (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Loads file into the memory. Data will be automatically destroyed by the destructor. 
+\begin{DoxyParams}{Parameters}
+{\em filename} & Filename to load. \\
+\hline
+\end{DoxyParams}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_a1d53059d5eb752b49103483566dfde15}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}!file@{file}}
+\index{file@{file}!cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{file()}{file()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1file_a1d53059d5eb752b49103483566dfde15} 
+template$<$class Ch = char$>$ \\
+\mbox{\hyperlink{classcereal_1_1rapidxml_1_1file}{cereal\+::rapidxml\+::file}}$<$ Ch $>$\+::file (\begin{DoxyParamCaption}\item[{std\+::basic\+\_\+istream$<$ Ch $>$ \&}]{stream}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Loads file into the memory. Data will be automatically destroyed by the destructor 
+\begin{DoxyParams}{Parameters}
+{\em stream} & \doxylink{classrapidjson_1_1_stream}{Stream} to load from \\
+\hline
+\end{DoxyParams}
+
+
+\label{doc-func-members}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_a35175257994f336bc113af05751185a0}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}!data@{data}}
+\index{data@{data}!cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1file_a35175257994f336bc113af05751185a0} 
+template$<$class Ch = char$>$ \\
+Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file}{cereal\+::rapidxml\+::file}}$<$ Ch $>$\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets file data. \begin{DoxyReturn}{Returns}
+Pointer to data of file. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_ad82097c772501529b8d493f2fc5cc310}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}!data@{data}}
+\index{data@{data}!cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{data()}{data()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1file_ad82097c772501529b8d493f2fc5cc310} 
+template$<$class Ch = char$>$ \\
+const Ch \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file}{cereal\+::rapidxml\+::file}}$<$ Ch $>$\+::data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets file data. \begin{DoxyReturn}{Returns}
+Pointer to data of file. 
+\end{DoxyReturn}
+\Hypertarget{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198}\index{cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}!size@{size}}
+\index{size@{size}!cereal::rapidxml::file$<$ Ch $>$@{cereal::rapidxml::file$<$ Ch $>$}}
+\doxysubsubsection{\texorpdfstring{size()}{size()}}
+{\footnotesize\ttfamily \label{classcereal_1_1rapidxml_1_1file_a176ed6c8dc420aa16807765806256198} 
+template$<$class Ch = char$>$ \\
+std\+::size\+\_\+t \mbox{\hyperlink{classcereal_1_1rapidxml_1_1file}{cereal\+::rapidxml\+::file}}$<$ Ch $>$\+::size (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Gets file data size. \begin{DoxyReturn}{Returns}
+Size of file data, in characters. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/external/rapidxml/rapidxml\+\_\+utils.\+hpp\end{DoxyCompactItemize}

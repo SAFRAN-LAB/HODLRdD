@@ -1,0 +1,106 @@
+\doxysection{variant.\+hpp}
+\hypertarget{variant_8hpp_source}{}\label{variant_8hpp_source}\index{lib/cereal/types/variant.hpp@{lib/cereal/types/variant.hpp}}
+\mbox{\hyperlink{variant_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ \ Copyright\ (c)\ 2014,\ 2017,\ Randolph\ Voorhies,\ Shane\ Grant,\ Juan\ Pedro}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ \ Bolivar\ Puente.\ All\ rights\ reserved.}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ \ Redistribution\ and\ use\ in\ source\ and\ binary\ forms,\ with\ or\ without}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ \ modification,\ are\ permitted\ provided\ that\ the\ following\ conditions\ are\ met:}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ of\ source\ code\ must\ retain\ the\ above\ copyright}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer.}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ \ \ \ \ \ *\ Redistributions\ in\ binary\ form\ must\ reproduce\ the\ above\ copyright}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ \ \ \ \ \ \ \ notice,\ this\ list\ of\ conditions\ and\ the\ following\ disclaimer\ in\ the}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ \ \ \ \ \ \ \ documentation\ and/or\ other\ materials\ provided\ with\ the\ distribution.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ \ \ \ \ \ *\ Neither\ the\ name\ of\ cereal\ nor\ the}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ \ \ \ \ \ \ \ names\ of\ its\ contributors\ may\ be\ used\ to\ endorse\ or\ promote\ products}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ \ \ \ \ \ \ \ derived\ from\ this\ software\ without\ specific\ prior\ written\ permission.}}
+\DoxyCodeLine{00018\ \textcolor{comment}{}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ \ THIS\ SOFTWARE\ IS\ PROVIDED\ BY\ THE\ COPYRIGHT\ HOLDERS\ AND\ CONTRIBUTORS\ "{}AS\ IS"{}\ AND}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ \ ANY\ EXPRESS\ OR\ IMPLIED\ WARRANTIES,\ INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ THE\ IMPLIED}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ \ WARRANTIES\ OF\ MERCHANTABILITY\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ ARE}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ \ DISCLAIMED.\ IN\ NO\ EVENT\ SHALL\ RANDOLPH\ VOORHIES\ OR\ SHANE\ GRANT\ BE\ LIABLE\ FOR\ ANY}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ \ DIRECT,\ INDIRECT,\ INCIDENTAL,\ SPECIAL,\ EXEMPLARY,\ OR\ CONSEQUENTIAL\ DAMAGES}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ \ (INCLUDING,\ BUT\ NOT\ LIMITED\ TO,\ PROCUREMENT\ OF\ SUBSTITUTE\ GOODS\ OR\ SERVICES;}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ \ LOSS\ OF\ USE,\ DATA,\ OR\ PROFITS;\ OR\ BUSINESS\ INTERRUPTION)\ HOWEVER\ CAUSED\ AND}}
+\DoxyCodeLine{00026\ \textcolor{comment}{\ \ ON\ ANY\ THEORY\ OF\ LIABILITY,\ WHETHER\ IN\ CONTRACT,\ STRICT\ LIABILITY,\ OR\ TORT}}
+\DoxyCodeLine{00027\ \textcolor{comment}{\ \ (INCLUDING\ NEGLIGENCE\ OR\ OTHERWISE)\ ARISING\ IN\ ANY\ WAY\ OUT\ OF\ THE\ USE\ OF\ THIS}}
+\DoxyCodeLine{00028\ \textcolor{comment}{\ \ SOFTWARE,\ EVEN\ IF\ ADVISED\ OF\ THE\ POSSIBILITY\ OF\ SUCH\ DAMAGE.}}
+\DoxyCodeLine{00029\ \textcolor{comment}{*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CEREAL\_TYPES\_STD\_VARIANT\_HPP\_}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CEREAL\_TYPES\_STD\_VARIANT\_HPP\_}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cereal_8hpp}{cereal/cereal.hpp}}"{}}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#include\ <variant>}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecereal}{cereal}}}
+\DoxyCodeLine{00038\ \{}
+\DoxyCodeLine{00039\ \ \ \textcolor{keyword}{namespace\ }variant\_detail}
+\DoxyCodeLine{00040\ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{struct\ }variant\_save\_visitor}
+\DoxyCodeLine{00044\ \ \ \ \ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ variant\_save\_visitor(Archive\ \&\ ar\_)\ :\ ar(ar\_)\ \{\}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ operator()(T\ \textcolor{keyword}{const}\ \&\ value)\textcolor{keyword}{\ const}}
+\DoxyCodeLine{00049\ \textcolor{keyword}{\ \ \ \ \ \ \ \ }\{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ value)\ );}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ Archive\ \&\ ar;}
+\DoxyCodeLine{00054\ \ \ \ \ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ N,\ \textcolor{keyword}{class}\ Variant,\ \textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{typename}\ std::enable\_if<N\ ==\ std::variant\_size\_v<Variant>,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00059\ \ \ \ \ load\_variant(Archive\ \&\ \textcolor{comment}{/*ar*/},\ \textcolor{keywordtype}{int}\ \textcolor{comment}{/*target*/},\ Variant\ \&\ \textcolor{comment}{/*variant*/})}
+\DoxyCodeLine{00060\ \ \ \ \ \{}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ throw\ ::cereal::Exception(\textcolor{stringliteral}{"{}Error\ traversing\ variant\ during\ load"{}});}
+\DoxyCodeLine{00062\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keywordtype}{int}\ N,\ \textcolor{keyword}{class}\ Variant,\ \textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{typename}\ std::enable\_if<N\ <\ std::variant\_size\_v<Variant>,\ \textcolor{keywordtype}{void}>::type}
+\DoxyCodeLine{00066\ \ \ \ \ load\_variant(Archive\ \&\ ar,\ \textcolor{keywordtype}{int}\ target,\ Variant\ \&\ variant)}
+\DoxyCodeLine{00067\ \ \ \ \ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordflow}{if}(N\ ==\ target)}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ variant.template\ emplace<N>();}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}data"{}},\ std::get<N>(variant))\ );}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ load\_variant<N+1>(ar,\ target,\ variant);}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \}\ \textcolor{comment}{//\ namespace\ variant\_detail}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00080\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keyword}{typename}\ VariantType1,\ \textcolor{keyword}{typename}...\ VariantTypes>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00081\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a85b7884671ac5a804b66ec7c34d0ca71}{CEREAL\_SAVE\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::variant<VariantType1,\ VariantTypes...>\ \textcolor{keyword}{const}\ \&\ variant\ )}
+\DoxyCodeLine{00082\ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ std::int32\_t\ index\ =\ \textcolor{keyword}{static\_cast<}std::int32\_t\textcolor{keyword}{>}(variant.index());}
+\DoxyCodeLine{00084\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}index"{}},\ index)\ );}
+\DoxyCodeLine{00085\ \ \ \ \ \mbox{\hyperlink{structcereal_1_1variant__detail_1_1variant__save__visitor}{variant\_detail::variant\_save\_visitor<Archive>}}\ visitor(ar);}
+\DoxyCodeLine{00086\ \ \ \ \ std::visit(visitor,\ variant);}
+\DoxyCodeLine{00087\ \ \ \}}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00090\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class\ }Archive,\ \textcolor{keyword}{typename}...\ VariantTypes>\ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_a854de4fbe2b80753b27264b7dda740e8}{CEREAL\_LOAD\_FUNCTION\_NAME}}(\ Archive\ \&\ ar,\ std::variant<VariantTypes...>\ \&\ variant\ )}
+\DoxyCodeLine{00092\ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{using\ }variant\_t\ =\ \textcolor{keyword}{typename}\ std::variant<VariantTypes...>;}
+\DoxyCodeLine{00094\ }
+\DoxyCodeLine{00095\ \ \ \ \ std::int32\_t\ index;}
+\DoxyCodeLine{00096\ \ \ \ \ ar(\ \mbox{\hyperlink{helpers_8hpp_a45c4798e6de29f0f970b658771a4fbf0}{CEREAL\_NVP\_}}(\textcolor{stringliteral}{"{}index"{}},\ index)\ );}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{if}(index\ >=\ \textcolor{keyword}{static\_cast<}std::int32\_t\textcolor{keyword}{>}(std::variant\_size\_v<variant\_t>))}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{structcereal_1_1_exception}{Exception}}(\textcolor{stringliteral}{"{}Invalid\ 'index'\ selector\ when\ deserializing\ std::variant"{}});}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ variant\_detail::load\_variant<0>(ar,\ index,\ variant);}
+\DoxyCodeLine{00101\ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00104\ \ \ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ Archive>}
+\DoxyCodeLine{00105\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{macros_8hpp_ad6b40d3472fa3d7f2148657c5bd6a07a}{CEREAL\_SERIALIZE\_FUNCTION\_NAME}}(\ Archive\ \&,\ std::monostate\ \textcolor{keyword}{const}\ \&\ )\ \{\}}
+\DoxyCodeLine{00106\ \}\ \textcolor{comment}{//\ namespace\ cereal}}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ CEREAL\_TYPES\_STD\_VARIANT\_HPP\_}}
+
+\end{DoxyCode}

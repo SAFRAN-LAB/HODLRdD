@@ -1,0 +1,52 @@
+\doxysection{cereal\+::detail\+::Output\+Binding\+Creator\texorpdfstring{$<$}{<} Archive, T \texorpdfstring{$>$}{>}\+::Polymorphic\+Shared\+Pointer\+Wrapper Class Reference}
+\hypertarget{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}{}\label{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper}\index{cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper}}
+
+
+Holds a properly typed shared\+\_\+ptr to the polymorphic type.  
+
+
+
+
+{\ttfamily \#include $<$polymorphic\+\_\+impl.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_a5829b5ea0be50c066261fcf36b4fb6fd}{Polymorphic\+Shared\+Pointer\+Wrapper}} (T const \texorpdfstring{$\ast$}{*}dptr)
+\item 
+\Hypertarget{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_af778df4052fdbf2c83f98cf3ff0da44c}\label{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_af778df4052fdbf2c83f98cf3ff0da44c} 
+std\+::shared\+\_\+ptr$<$ T const $>$ const \& {\bfseries operator()} () const
+\begin{DoxyCompactList}\small\item\em Get the wrapped shared\+\_\+ptr \texorpdfstring{$\ast$}{*}/. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$class Archive, class T$>$\newline
+class cereal\+::detail\+::\+Output\+Binding\+Creator$<$ Archive, T $>$\+::\+Polymorphic\+Shared\+Pointer\+Wrapper}
+Holds a properly typed shared\+\_\+ptr to the polymorphic type. 
+
+\label{doc-constructors}
+\Hypertarget{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_doc-constructors}
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_a5829b5ea0be50c066261fcf36b4fb6fd}\index{cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper}!PolymorphicSharedPointerWrapper@{PolymorphicSharedPointerWrapper}}
+\index{PolymorphicSharedPointerWrapper@{PolymorphicSharedPointerWrapper}!cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper@{cereal::detail::OutputBindingCreator$<$ Archive, T $>$::PolymorphicSharedPointerWrapper}}
+\doxysubsubsection{\texorpdfstring{PolymorphicSharedPointerWrapper()}{PolymorphicSharedPointerWrapper()}}
+{\footnotesize\ttfamily \label{classcereal_1_1detail_1_1_output_binding_creator_1_1_polymorphic_shared_pointer_wrapper_a5829b5ea0be50c066261fcf36b4fb6fd} 
+template$<$class Archive, class T$>$ \\
+\mbox{\hyperlink{structcereal_1_1detail_1_1_output_binding_creator}{cereal\+::detail\+::\+Output\+Binding\+Creator}}$<$ Archive, T $>$\+::\+Polymorphic\+Shared\+Pointer\+Wrapper\+::\+Polymorphic\+Shared\+Pointer\+Wrapper (\begin{DoxyParamCaption}\item[{T const \texorpdfstring{$\ast$}{*}}]{dptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Wrap a raw polymorphic pointer in a shared\+\_\+ptr to its true type
+
+The wrapped pointer will not be responsible for ownership of the held pointer so it will not attempt to destroy it; instead the refcount of the wrapped pointer will be tied to a fake \textquotesingle{}ownership pointer\textquotesingle{} that will do nothing when it ultimately goes out of scope.
+
+The main reason for doing this, other than not to destroy the true object with our wrapper pointer, is to avoid meddling with the internal reference count in a polymorphic type that inherits from std\+::enable\+\_\+shared\+\_\+from\+\_\+this.
+
+
+\begin{DoxyParams}{Parameters}
+{\em dptr} & A void pointer to the contents of the shared\+\_\+ptr to serialize \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+lib/cereal/details/\mbox{\hyperlink{polymorphic__impl_8hpp}{polymorphic\+\_\+impl.\+hpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,40 @@
+\doxysection{lib/cereal/types/set.hpp File Reference}
+\hypertarget{set_8hpp}{}\label{set_8hpp}\index{lib/cereal/types/set.hpp@{lib/cereal/types/set.hpp}}
+
+
+Support for types found in \texorpdfstring{$<$}{<}set\texorpdfstring{$>$}{>}  
+
+
+{\ttfamily \#include "{}cereal/cereal.\+hpp"{}}\newline
+{\ttfamily \#include $<$set$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecereal}{cereal}}
+\begin{DoxyCompactList}\small\item\em in certain simple scenarios. They should probably not be used if maximizing performance is the main objective. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{set_8hpp_a3adfe6125ed8f203e6fc6d3eb4dd6e44}\label{set_8hpp_a3adfe6125ed8f203e6fc6d3eb4dd6e44} 
+{\footnotesize template$<$class Archive, class SetT$>$ }\\void {\bfseries cereal\+::set\+\_\+detail\+::save} (Archive \&ar, SetT const \&set)
+\item 
+\Hypertarget{set_8hpp_a6fdac57da048dec0b529eee9a170959f}\label{set_8hpp_a6fdac57da048dec0b529eee9a170959f} 
+{\footnotesize template$<$class Archive, class SetT$>$ }\\void {\bfseries cereal\+::set\+\_\+detail\+::load} (Archive \&ar, SetT \&set)
+\item 
+\Hypertarget{namespacecereal_a76a8cea063806602d60157cf1fb90878}\label{namespacecereal_a76a8cea063806602d60157cf1fb90878} 
+{\footnotesize template$<$class Archive, class K, class C, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::set$<$ K, C, A $>$ const \&set)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::set. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a79a65f7506d96c59b25e5ad4bb6d6ad5}\label{namespacecereal_a79a65f7506d96c59b25e5ad4bb6d6ad5} 
+{\footnotesize template$<$class Archive, class K, class C, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::set$<$ K, C, A $>$ \&set)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::set. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_aba7424502dce9a6a12bc8b0c34c8fa04}\label{namespacecereal_aba7424502dce9a6a12bc8b0c34c8fa04} 
+{\footnotesize template$<$class Archive, class K, class C, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+SAVE\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::multiset$<$ K, C, A $>$ const \&multiset)
+\begin{DoxyCompactList}\small\item\em Saving for std\+::multiset. \end{DoxyCompactList}\item 
+\Hypertarget{namespacecereal_a6668a1fc6b49fcf9c53633e3eb385826}\label{namespacecereal_a6668a1fc6b49fcf9c53633e3eb385826} 
+{\footnotesize template$<$class Archive, class K, class C, class A$>$ }\\void {\bfseries cereal\+::\+CEREAL\+\_\+\+LOAD\+\_\+\+FUNCTION\+\_\+\+NAME} (Archive \&ar, std\+::multiset$<$ K, C, A $>$ \&multiset)
+\begin{DoxyCompactList}\small\item\em Loading for std\+::multiset. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Support for types found in \texorpdfstring{$<$}{<}set\texorpdfstring{$>$}{>} 
+
